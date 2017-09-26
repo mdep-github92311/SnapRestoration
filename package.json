@@ -1,0 +1,45 @@
+{
+  "name": "MDEP_Leaflet-master",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node .",
+    "posttest": "npm run lint && nsp check",
+    "build": "browserify /loopback-getting-started/views/app.js -o bundle.js",
+    "watch": "watchify /loopback-getting-started/views/app.js -o bundle.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "browserify": "^14.4.0",
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "dexie": "^1.5.1",
+    "form-data": "^2.2.0",
+    "gasparesganga-jquery-loading-overlay": "^1.5.3",
+    "geojson": "^0.4.1",
+    "helmet": "^1.3.0",
+    "kinto": "^9.0.2",
+    "loopback": "^3.0.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^4.0.0",
+    "loopback-connector-postgresql": "^2.8.0",
+    "serve-favicon": "^2.0.1",
+    "strong-error-handler": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-loopback": "^8.0.0",
+    "nsp": "^2.1.0",
+    "watchify": "^3.9.0"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "description": "loopback-getting-started"
+}
