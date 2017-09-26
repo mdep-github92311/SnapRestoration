@@ -1,0 +1,252 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "../common/models/Barrier",
+      "../common/models/Boundaries",
+      "../common/models/Regions_Counties",
+      "../common/models/Disturbance",
+      "../common/models/Restoration",
+      "../common/models/Roads",
+      "../common/models/Snap_Soil",
+      "./models",
+      "../Barrier",
+      "../Boundaries",
+      "../Regions_Counties",
+      "../Disturbance",
+      "../Restoration",
+      "../Roads",
+      "../Snap_Soil"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Barrier": {
+    "dataSource": "mip",
+    "public": true
+  },
+  "BlmRegions": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "blmRegionsGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistLine": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPoint": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroid": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygon": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyGeoJSON": true
+        }
+      }
+    }
+  },
+  "FsRegions": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "fsRegionsGeoJSON": true
+        }
+      }
+    }
+  },
+  "MdepBoundary": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "mdepBoundGeoJSON": true
+        }
+      }
+    }
+  },
+  "MdiBoundary": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "mdiBoundGeoJSON": true
+        }
+      }
+    }
+  },
+  "NvCounties": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "nvCountiesGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLine": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPoint": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygon": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroid": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentGeoJSON": true
+        }
+      }
+    }
+  },
+  "Roads": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "roadsGeoJSON": true
+        }
+      }
+    }
+  },
+  "SnapExtent": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "snapExtentGeoJSON": true
+        }
+      }
+    }
+  },
+  "SoilVulnerability": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "soilVulnGeoJSON": true
+        }
+      }
+    }
+  },
+  "BarrierSub": {
+    "dataSource": "mip",
+    "public": true
+  }
+}

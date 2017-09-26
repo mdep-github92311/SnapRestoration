@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "sources": [
+      "../../common/models",
+      "./models"
+    ]
+  },
+  "RemoteBarrier": {
+    "dataSource": "remote"
+  },
+  "LocalBarrier": {
+    "dataSource": "local"
+  }
+}

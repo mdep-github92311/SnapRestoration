@@ -1,0 +1,185 @@
+//
+   Created by msgis-student on 6/9/2017.
+
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css')
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
+    link(rel='stylesheet', href='/public/css/styledLayerControl.css')
+    script(src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous")
+    script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
+    script(src="https://unpkg.com/dexie@latest/dist/dexie.js")
+    script(src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
+    script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
+    script(src='/public/scripts/featureStyles.js')
+    script(src='/public/scripts/styledLayerControl.js')
+
+    style(type='text/css').
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #map {
+        float: left;
+        width: 80%;
+        height: 100%;
+      }
+
+      #popUp_FormDIV {
+        float: right;
+        width: 20%;
+        height: 100%;
+        overflow: auto;
+      }
+
+      #popUpDIV {
+        display: block;
+        /* float: left; */
+        width: 100%;
+        height: 50%;
+        overflow: auto;
+        margin: 5%;
+      }
+
+      #formPopDIV {
+        /* float: right; */
+        width: 100%;
+        bottom: 40%;
+        height: 50%;
+        /* position: absolute; */
+        overflow: auto;
+        margin: 5%;
+      }
+
+      .featureSelection * {
+        width: 200px;
+        margin: 0;
+
+        -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+        -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+        box-sizing: border-box;
+      }
+
+      .collectionForm * {
+        width: 200px;
+        margin: 0;
+
+        -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+        -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+        box-sizing: border-box;
+      }
+
+    body
+      #overlay
+      #map
+        script(src='/public/scripts/asyncAddLayers.js')
+        script.
+          var map = L.map('map').setView([36.211303, -115.114929], 8);
+
+          // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+          // createPane was used in this thread to control the order of the layers
+          map.createPane('Points').style.zIndex = 390;
+          map.createPane('Lines').style.zIndex = 380;
+          map.createPane('Polygons').style.zIndex = 370;
+          map.createPane('Regions').style.zIndex = 360;
+          map.createPane('Bounds_County').style.zIndex = 350;
+          map.createPane('Misc').style.zIndex = 340;
+
+          L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://' +
+            'mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'rogerdodger617.2p4pk9co',
+            accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+          }).addTo(map);
+
+          (async function () {
+            try {
+              await getLayers();
+            }
+            catch (err) {
+              console.error(err)
+            }
+          }());
+
+
+          var controlOptions = {
+            container_width: "300px",
+            container_maxHeight: "350px",
+            group_maxHeight: "80px",
+            autoZIndex: false,
+            exclusive: false
+          };
+
+          var overLay = []
+
+          var control = L.Control.styledLayerControl(null, overLay, controlOptions);
+          map.addControl(control);
+
+          // creates a temp layer so it can store the new features
+          var editableLayers = new L.FeatureGroup();
+          map.addLayer(editableLayers);
+
+          var options = {
+            position: 'topleft',
+            draw: {
+              polyline: {
+                allowIntersection: false,
+                drawError: {
+                  color: '#e10100', // Color the shape will turn when intersects
+                  message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                },
+                shapeOptions: {
+                  color: '#e10100',
+                  weight: 3
+                }
+              },
+              polygon: {
+                allowIntersection: false, // Restricts shapes to simple polygons
+                drawError: {
+                  color: '#e10100', // Color the shape will turn when intersects
+                  message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                },
+                shapeOptions: {
+                  color: '#e10100'
+                }
+              },
+              circle: false, // Turns off this drawing tool
+              rectangle: false,
+              marker: {
+                icon: new L.Icon.Default()
+              }
+            },
+            edit: {
+              featureGroup: editableLayers, //REQUIRED!!
+              edit: true,
+              remove: true
+            }
+          };
+
+          var drawControl = new L.Control.Draw(options);
+          map.addControl(drawControl);
+
+          var thisLayer
+
+          map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+            editableLayers.addLayer(layer);
+            thisLayer = layer.toGeoJSON();
+            console.log(thisLayer);
+          });
+
+      #popUp_FormDIV
+        #popUpDIV
+        #formPopDIV
+          script(src='/public/scripts/formDIV.js')

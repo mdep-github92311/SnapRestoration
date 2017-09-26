@@ -1,0 +1,7 @@
+{
+  "name": "RemoteBarrier",
+  "base": "BarrierSub",
+  "plural": "BarrierSubs",
+  "trackChanges": false,
+  "enableRemoteReplication": true
+}

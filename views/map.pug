@@ -1,0 +1,709 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css')
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
+    link(rel='stylesheet', href='/public/css/styledLayerControl.css')
+    script(src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
+    script(src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous")
+    script(src='/public/scripts/featureStyles.js')
+    script(src='/public/scripts/styledLayerControl.js')
+    style(type='text/css').
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      #map {
+        width: 100%;
+        height: 80%;
+      }
+
+      #formDIV {
+        width: 100%;
+        height: 20%;
+        overflow: auto;
+      }
+
+      #formDIV2 {
+        width: 100%;
+        height: 20%;
+        overflow: auto;
+      }
+
+      .featureSelection * {
+        width: 200px;
+        margin: 0;
+
+        -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+        -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+        box-sizing: border-box;
+      }
+
+      .collectionForm * {
+        width: 200px;
+        margin: 0;
+
+        -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+        -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+        box-sizing: border-box;
+      }
+  body
+    #map
+      //script(src='/javascripts/dataForm/jQueryTest.js')
+      script.
+        const barrierLayer = !{JSON.stringify(barrier)};
+
+        const distLineLayer = !{JSON.stringify(distLine)},
+          distPointLayer = !{JSON.stringify(distPoint)},
+          distPolyLayer = !{JSON.stringify(distPoly)},
+          distPolyCentLayer = !{JSON.stringify(distPolyCent)};
+
+        const restoPointLayer = !{JSON.stringify(resto_point)},
+          restoLineLayer = !{JSON.stringify(restoLine)},
+          restoPolyLayer = !{JSON.stringify(restoPoly)},
+          restoPolyCentLayer = !{JSON.stringify(restoPolyCent)};
+
+        const blmRegionLayer = !{JSON.stringify(blmRegions)},
+          fsRegionLayer = !{JSON.stringify(fsRegions)},
+          mdepBoundLayer = !{JSON.stringify(mdepBound)},
+          mdiBoundLayer = !{JSON.stringify(mdiBound)},
+          nvCountLayer = !{JSON.stringify(nvCount)},
+          //roadsLayer = !{JSON.stringify(roads)},
+          //snapExtLayer = !{JSON.stringify(snapExt)},
+          soilVulnLayer = !{JSON.stringify(soilVuln)};
+
+        var map = L.map('map').setView([36.211303, -115.114929], 8);
+
+
+        // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+        // createPane was used in this thread to control the order of the layers
+        map.createPane('Points').style.zIndex = 390;
+        map.createPane('Lines').style.zIndex = 380;
+        map.createPane('Polygons').style.zIndex = 370;
+        map.createPane('Regions').style.zIndex = 360;
+        map.createPane('Bounds_County').style.zIndex = 350;
+        map.createPane('Misc').style.zIndex = 340;
+
+        // Add MapBox tile layer to map element
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+          '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://' +
+          'mapbox.com">Mapbox</a>',
+          maxZoom: 18,
+          id: 'rogerdodger617.2p4pk9co',
+          accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+        }).addTo(map);
+
+        function addDataToMap(data) {
+          var dataLayer = L.geoJson(data, {
+            pane: 'Lines'
+          });
+          dataLayer.addTo(map)
+        }
+
+        async function example() {
+          try {
+            const JSON = await $.getJSON('http://localhost:3000/api/Barriers/getJSON', function (data) {
+              data[0].row_to_json;
+            });
+
+            console.log(JSON)
+
+          } catch(err) {
+            console.log(err)
+          }
+        }
+
+        example()
+
+        $.getJSON('http://localhost:3000/api/Barriers/getJSON', barrier1);
+
+
+        function barrier1 (data) {
+          L.geoJson(data[0].row_to_json, {
+            pane: 'Lines',
+            style: myStyleLines,
+            onEachFeature: onEachBarrier
+          }).addTo(map);
+        }
+
+        // Add JSON to map
+        /*var barrier1 = L.geoJson(barrierLayer, {
+          pane: 'Lines',
+          style: myStyleLines,
+          onEachFeature: onEachBarrier
+        }).addTo(map);*/
+
+        var distLine1 = L.geoJson(distLineLayer, {
+          style: myStyleLines,
+          onEachFeature: onEachDistLine
+        }).addTo(map);
+
+        var distPoint1 = L.geoJson(distPointLayer, {
+          pane: 'Points',
+          style: myStylePoints,
+          // changing the default point makers to circle markers
+          pointToLayer: pointToLayer,
+          onEachFeature: onEachDistPoint
+        }).addTo(map);
+
+        var distPoly1 = L.geoJson(distPolyLayer, {
+          pane: 'Polygons',
+          style: myStyleDistPoly,
+          onEachFeature: onEachDistPoly
+        }).addTo(map);
+
+        var distPolyCent1 = L.geoJson(distPolyCentLayer, {
+          pane: 'Points',
+          style: myStyleDistPoly,
+          // changing the default point makers to circle markers
+          pointToLayer: pointToLayer,
+          onEachFeature: onEachDistPolyCent
+        }).addTo(map);
+
+        var restoPoly1 = L.geoJson(restoPolyLayer, {
+          pane: 'Polygons',
+          style: myStyleRestoPoly,
+          onEachFeature: onEachRestoPoly
+        }).addTo(map);
+
+        var resto = L.geoJson(restoPointLayer, {
+          pane: 'Points',
+          style: myStylePoints,
+          // changing the default point makers to circle markers
+          pointToLayer: pointToLayer,
+          onEachFeature: onEachRestoPoint
+        }).addTo(map);
+
+        var restoPolyCent1 = L.geoJson(restoPolyCentLayer, {
+          pane: 'Points',
+          style: myStylePoints,
+          // changing the default point makers to circle markers
+          pointToLayer: pointToLayer,
+          onEachFeature: onEachRestoPolyCent
+        }).addTo(map);
+
+        var restoLine1 = L.geoJson(restoLineLayer, {
+          pane: 'Lines',
+          style: myStyleLines,
+          onEachFeature: onEachRestoLine
+        }).addTo(map);
+
+        var blmRegion = L.geoJson(blmRegionLayer, {
+          pane: 'Regions',
+          style: blmRegion,
+          onEachFeature: onEachBLMRegion
+        }).addTo(map);
+
+        var fsRegion = L.geoJson(fsRegionLayer, {
+          pane: 'Regions',
+          style: fsRegion,
+          onEachFeature: onEachFSRegion
+        }).addTo(map);
+
+        var mdepBound = L.geoJson(mdepBoundLayer, {
+          pane: 'Bounds_County',
+          style: mdep_i,
+          onEachFeature: onEachMDEPBound
+        }).addTo(map);
+
+        var mdiBound = L.geoJson(mdiBoundLayer, {
+          pane: 'Bounds_County',
+          style: mdep_i,
+          onEachFeature: onEachMDIBound
+        }).addTo(map);
+
+        var nvCounties = L.geoJson(nvCountLayer, {
+          pane: 'Bounds_County',
+          style: nv_county,
+          onEachFeature: onEachNVCounty
+        }).addTo(map);
+
+        /*
+         var roads = L.geoJson(roadsLayer, {
+         onEachFeature: function (feature, layer) {
+         var popUpContent = [];
+         // iterating through the "properties" so it can be displayed in the pop-ups
+         for (var prop in feature.properties) {
+         popUpContent.push(prop + ' : ' + feature.properties[prop]);
+         }
+         layer.bindPopup("<B><U>Roads</U></B><br />" + popUpContent.join("<br />"));
+         }
+         }).addTo(map);
+
+         var snapExt = L.geoJson(snapExtLayer, {
+         pane: 'Misc',
+         onEachFeature: function (feature, layer) {
+         var popUpContent = [];
+         // iterating through the "properties" so it can be displayed in the pop-ups
+         for (var prop in feature.properties) {
+         popUpContent.push(prop + ' : ' + feature.properties[prop]);
+         }
+         layer.bindPopup("<B><U>Snap Extent</U></B><br />" + popUpContent.join("<br />"));
+         }
+         }).addTo(map);
+         */
+
+        var soilVuln = L.geoJson(soilVulnLayer, {
+          pane: 'Misc',
+          style: soil_vuln,
+          onEachFeature: onEachSoilVuln
+        }).addTo(map);
+
+        // var OverLay will be used for Layer Controls so we can toggle on and off different layers on the map
+        var overLay = [
+          {
+            groupName: 'Resoration Data',
+            expanded: true,
+            layers: {
+              "Resto Points": resto,
+              //"Barrier": barrier1,
+              "Dist Lines": distLine1,
+              "Dist Polygons": distPoly1,
+              "Dist Points": distPoint1,
+              "Resto Lines": restoLine1,
+              "Resto Polygons": restoPoly1
+            }
+          }, {
+            groupName: 'Centroids',
+            expanded: false,
+            layers: {
+              'Disturbance Poly Cent': distPolyCent1,
+              'Restoration Poly Cent': restoPolyCent1
+            }
+          }, {
+            groupName: 'Regions',
+            expanded: false,
+            layers: {
+              'BLM': blmRegion,
+              'FS': fsRegion
+            }
+          }, {
+            groupName: 'Counties/ Boundaries',
+            expanded: false,
+            layers: {
+              'NV Counties': nvCounties,
+              'MDEP': mdepBound,
+              'MDI': mdiBound
+            }
+          }, /*{
+           groupName: 'Roads',
+           expanded: false,
+           layers: {
+           'Roads': roads
+           }
+           }, */{
+            groupName: 'Misc',
+            expanded: false,
+            layers: {
+              //'Snap Extent': snapExt,
+              'Soil Vulnerability': soilVuln
+            }
+          }
+        ];
+
+        var options = {
+          container_width: "300px",
+          container_maxHeight: "350px",
+          group_maxHeight: "80px",
+          autoZIndex: false,
+          exclusive: false
+        };
+
+        //var shapeLayers = L.layerGroup([resto, barrier1, distLine1, distPoly1, distPoint1, restoLine1, restoPoly1]);
+
+        // creates the toggle menus based on var overLay
+        const control = L.Control.styledLayerControl(null, overLay, options);
+        map.addControl(control);
+        control.unSelectGroup('Centroids');
+        control.unSelectGroup('Regions');
+        control.unSelectGroup('Counties/ Boundaries');
+        //control.unSelectGroup('Roads');
+        control.unSelectGroup('Misc');
+
+        //L.control.layers(null, overLay).addTo(map);
+
+        // creates a temp layer so it can store the new features
+        var editableLayers = new L.FeatureGroup();
+        map.addLayer(editableLayers);
+
+        var options = {
+          position: 'topleft',
+          draw: {
+            polyline: {
+              allowIntersection: false,
+              drawError: {
+                color: '#e10100', // Color the shape will turn when intersects
+                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+              },
+              shapeOptions: {
+                color: '#e10100',
+                weight: 3
+              }
+            },
+            polygon: {
+              allowIntersection: false, // Restricts shapes to simple polygons
+              drawError: {
+                color: '#e10100', // Color the shape will turn when intersects
+                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+              },
+              shapeOptions: {
+                color: '#e10100'
+              }
+            },
+            circle: false, // Turns off this drawing tool
+            rectangle: false,
+            marker: {
+              icon: new L.Icon.Default()
+            }
+          },
+          edit: {
+            featureGroup: editableLayers, //REQUIRED!!
+            edit: true,
+            remove: true
+          }
+        };
+
+        var drawControl = new L.Control.Draw(options);
+        map.addControl(drawControl);
+
+        /*const formTest = `<div class="form"><div class="featureSelection"><select id="featureType"><option value="test">Select Featurer Type...</option><option value="point">Point</option><option value="line">Line</option><option value="poly">Polygon</option></select><br><select id="featureStyle"><option value="test">Select Feature Style...</option><option value="barrier">Barrier</option><option value="resto">Restoration</option><option value="disturb">Disturbance</option></select><br><br></div><div class="collectionForm"><form id="restoPointForm" action="/restoPointFormSubmit" method="POST" style="display: none;">
+         <label for="restoPointForm">Restoration Point Collection</label><br>
+         <lable for="gidRPT">gid: <br>
+         <input type="text" name="gidRPT"><br></lable><lable for="agencyRPT">agency: <br>
+         <select id="agencyRPT" name="agencyRPT"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionRPT">region: <br>
+         <select id="regionRPT" name="regionRPT"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemRPT">ecosystem: <br>
+         <select id="ecosystemRPT" name="ecosystemRPT"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="gps_dateRPT">gps_date: <br>
+         <input type="date" name="gps_dateRPT"><br></lable><lable for="resto_codeRPT">resto_code: <br>
+         <input type="text" name="resto_codeRPT"><br></lable><lable for="resto_actiRPT">resto_acti: <br>
+         <select id="resto_actiRPT" name="resto_actiRPT"><option value="select"></option><option value="Fire Ring Removal">Fire Ring Removal</option><option value="Graffiti Removal">Graffiti Removal</option><option value="Garbage Removal">Garbage Removal</option><option value="Outplanting">Outplanting</option><option value="Transplanting">Transplanting</option><option value="*Other - See Comments">*Other - See Comments</option></select><br></lable><lable for="commentsRPT">comments: <br>
+         <input type="text" name="commentsRPT"><br></lable><lable for="primary_obRPT">primary_ob: <br>
+         <input type="text" name="primary_obRPT"><br></lable><lable for="secondary_RPT">secondary_: <br>
+         <input type="text" name="secondary_RPT"><br></lable><lable for="project_naRPT">project_na: <br>
+         <input type="text" name="project_naRPT"><br></lable><lable for="sqft_restoRPT">sqft_resto: <br>
+         <input type="text" name="sqft_restoRPT"><br></lable><lable for="gps_photoRPT">gps_photo: <br>
+         <select id="gps_photoRPT" name="gps_photoRPT"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="photo_azimRPT">photo_azim: <br>
+         <input type="text" name="photo_azimRPT"><br></lable><lable for="previouslyRPT">previously: <br>
+         <select id="previouslyRPT" name="previouslyRPT"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select><br></lable><lable for="qa_qcRPT">qa_qc: <br>
+         <input type="text" name="qa_qcRPT"><br></lable><lable for="geomRPT">geom: <br>
+         <input type="text" name="geomRPT"></lable><br><br><input type="submit" value="Submit"></form>
+         <form id="restoPolyForm" action="/restoPolyFormSubmit" method="POST" style="display: none;">
+         <label for="restoPolyForm">Restoration Polygon Collection</label><br>
+         <lable for="gidRPY">gid: <br>
+         <input type="text" name="gidRPY"><br></lable><lable for="agencyRPY">agency: <br>
+         <select id="agencyRPY" name="agencyRPY"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionRPY">region: <br>
+         <select id="regionRPY" name="regionRPY"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemRPY">ecosystem: <br>
+         <select id="ecosystemRPY" name="ecosystemRPY"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="resto_codeRPY">resto_code: <br>
+         <input type="text" name="resto_codeRPY"><br></lable><lable for="resto_actiRPY">resto_acti: <br>
+         <select id="resto_actiRPY" name="resto_actiRPY"><option value="select"></option><option value="Garbage Removal">Garbage Removal</option><option value="Habitat Enhancement">Habitat Enhancement</option><option value="Outplanting">Outplanting</option><option value="Transplanting">Transplanting</option><option value="Seeding">Seeding</option><option value="Wiillow Pole Planting">Wiillow Pole Planting</option><option value="Herbicide">Herbicide</option><option value="Raking">Raking</option><option value="Surface Roughening">Surface Roughening</option><option value="Invasive Removal">Invasive Removal</option><option value="*Other - See Comments">*Other - See Comments</option></select><br></lable><lable for="te_actionRPY">te_action: <br>
+         <select id="te_actionRPY" name="te_actionRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="non_list_aRPY">non_list_a: <br>
+         <select id="non_list_aRPY" name="non_list_aRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="commentsRPY">comments: <br>
+         <input type="text" name="commentsRPY"><br></lable><lable for="primary_obRPY">primary_ob: <br>
+         <input type="text" name="primary_obRPY"><br></lable><lable for="secondary_RPY">secondary_: <br>
+         <input type="text" name="secondary_RPY"><br></lable><lable for="project_naRPY">project_na: <br>
+         <input type="text" name="project_naRPY"><br></lable><lable for="treatment_RPY">treatment_: <br>
+         <select id="treatment_RPY" name="treatment_RPY"><option value="select"></option><option value="Active">Active</option><option value="Passive">Passive</option></select><br></lable><lable for="acres_restRPY">acres_rest: <br>
+         <input type="text" name="acres_restRPY"><br></lable><lable for="kmsq_restoRPY">kmsq_resto: <br>
+         <input type="text" name="kmsq_restoRPY"><br></lable><lable for="gps_dateRPY">gps_date: <br>
+         <input type="date" name="gps_dateRPY"><br></lable><lable for="gps_photoRPY">gps_photo: <br>
+         <select id="gps_photoRPY" name="gps_photoRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="photo_azimRPY">photo_azim: <br>
+         <input type="text" name="photo_azimRPY"><br></lable><lable for="signedRPY">signed: <br>
+         <select id="signedRPY" name="signedRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A</option></select><br></lable><lable for="deep_tillRPY">deep_till: <br>
+         <select id="deep_tillRPY" name="deep_tillRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A</option></select><br></lable><lable for="barrier_inRPY">barrier_in: <br>
+         <select id="barrier_inRPY" name="barrier_inRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A</option></select><br></lable><lable for="mulchRPY">mulch: <br>
+         <select id="mulchRPY" name="mulchRPY"><option value="select"></option><option value="None">None</option><option value="Verticle">Verticle</option><option value="Horizontal">Horizontal</option><option value="N/A">N/A</option><option value="Both">Both</option></select><br></lable><lable for="monitoringRPY">monitoring: <br>
+         <select id="monitoringRPY" name="monitoringRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="previouslyRPY">previously: <br>
+         <select id="previouslyRPY" name="previouslyRPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select><br></lable><lable for="shape_starRPY">shape_star: <br>
+         <input type="text" name="shape_starRPY"><br></lable><lable for="shape_stleRPY">shape_stle: <br>
+         <input type="text" name="shape_stleRPY"><br></lable><lable for="shape_lengRPY">shape_leng: <br>
+         <input type="text" name="shape_lengRPY"><br></lable><lable for="shape_areaRPY">shape_area: <br>
+         <input type="text" name="shape_areaRPY"><br></lable><lable for="geomRPY">geom: <br>
+         <input type="text" name="geomRPY"></lable><br><br><input type="submit" value="Submit"></form><form id="restoLineForm" action="/restoLineFormSubmit" method="POST" style="display: none;">
+         <label for="restoLineForm">Restoration Line Collection</label><br>
+         <lable for="gidRL">gid: <br>
+         <input type="text" name="gidRL"><br></lable><lable for="agencyRL">agency: <br>
+         <select id="agencyRL" name="agencyRL"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionRL">region: <br>
+         <select id="regionRL" name="regionRL"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemRL">ecosystem: <br>
+         <select id="ecosystemRL" name="ecosystemRL"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="gps_dateRL">gps_date: <br>
+         <input type="date" name="gps_dateRL"><br></lable><lable for="resto_codeRL">resto_code: <br>
+         <input type="text" name="resto_codeRL"><br></lable><lable for="resto_actRL">resto_act: <br>
+         <select id="resto_actRL" name="resto_actRL"><option value="select"></option><option value="Road Decommissioning">Road Decommissioning*</option><option value="Trail Decommissioning">Trail Decommissioning</option><option value="Habitat Enhancement">Habitat Enhancement</option><option value="Stream/Spring Bed Restoration">Stream/Spring Bed Restoration</option><option value="Spring/Stream Channel Restoration">Spring/Stream Channel Restoration</option><option value="*Other - See Comments">*Other - See Comments</option></select><br></lable><lable for="te_actRL">te_act: <br>
+         <select id="te_actRL" name="te_actRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A*</option></select><br></lable><lable for="nonlists_aRL">nonlists_a: <br>
+         <select id="nonlists_aRL" name="nonlists_aRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A*</option></select><br></lable><lable for="commentsRL">comments: <br>
+         <input type="text" name="commentsRL"><br></lable><lable for="primary_obRL">primary_ob: <br>
+         <input type="text" name="primary_obRL"><br></lable><lable for="secondary_RL">secondary_: <br>
+         <input type="text" name="secondary_RL"><br></lable><lable for="project_naRL">project_na: <br>
+         <input type="text" name="project_naRL"><br></lable><lable for="treatment_RL">treatment_: <br>
+         <select id="treatment_RL" name="treatment_RL"><option value="select"></option><option value="Active">Active</option><option value="Passive">Passive</option></select><br></lable><lable for="signedRL">signed: <br>
+         <select id="signedRL" name="signedRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A*</option></select><br></lable><lable for="mulchRL">mulch: <br>
+         <select id="mulchRL" name="mulchRL"><option value="select"></option><option value="None">None</option><option value="Verticle">Verticle</option><option value="Horizontal">Horizontal</option><option value="N/A">N/A*</option><option value="Both">Both</option></select><br></lable><lable for="deep_tillRL">deep_till: <br>
+         <select id="deep_tillRL" name="deep_tillRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A*</option></select><br></lable><lable for="barrier_inRL">barrier_in: <br>
+         <select id="barrier_inRL" name="barrier_inRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="N/A">N/A*</option></select><br></lable><lable for="miles_restRL">miles_rest: <br>
+         <input type="text" name="miles_restRL"><br></lable><lable for="km_restoRL">km_resto: <br>
+         <input type="text" name="km_restoRL"><br></lable><lable for="gps_photoRL">gps_photo: <br>
+         <select id="gps_photoRL" name="gps_photoRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="photo_azimRL">photo_azim: <br>
+         <input type="text" name="photo_azimRL"><br></lable><lable for="monitoringRL">monitoring: <br>
+         <select id="monitoringRL" name="monitoringRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="previouslyRL">previously: <br>
+         <select id="previouslyRL" name="previouslyRL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select><br></lable><lable for="qa_qcRL">qa_qc: <br>
+         <input type="text" name="qa_qcRL"><br></lable><lable for="shape_stleRL">shape_stle: <br>
+         <input type="text" name="shape_stleRL"><br></lable><lable for="shape_lengRL">shape_leng: <br>
+         <input type="text" name="shape_lengRL"><br></lable><lable for="geomRL">geom: <br>
+         <input type="text" name="geomRL"></lable><br><br><input type="submit" value="Submit"></form><form id="barrierForm" action="/barrierFormSubmit" method="POST" style="display: none;">
+         <label for="barrierForm">Barrier Collection</label><br>
+         <lable for="gidBarr">gid: <br>
+         <input type="text" name="gidBarr"><br></lable><lable for="agencyBarr">agency: <br>
+         <select id="agencyBarr" name="agencyBarr"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionsBarr">regions: <br>
+         <select id="regionsBarr" name="regionsBarr"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemBarr">ecosystem: <br>
+         <select id="ecosystemBarr" name="ecosystemBarr"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="gps_dateBarr">gps_date: <br>
+         <input type="date" name="gps_dateBarr"><br></lable><lable for="barr_codeBarr">barr_code: <br>
+         <input type="text" name="barr_codeBarr"><br></lable><lable for="barr_actioBarr">barr_actio: <br>
+         <select id="barr_actioBarr" name="barr_actioBarr"><option value="select"></option><option value="Repaired">Repaired</option><option value="Removed">Removed</option><option value="Existing">Existing</option><option value="Proposed">Proposed</option><option value="Installed">Installed</option></select><br></lable><lable for="barr_typeBarr">barr_type: <br>
+         <select id="barr_typeBarr" name="barr_typeBarr"><option value="select"></option><option value="Boulders">Boulders</option><option value="Gate">Gate</option><option value="Metal Post">Metal Post</option><option value="Metal Post &amp; Cable">Metal Post &amp; Cable</option><option value="Tank Traps">Tank Traps</option><option value="Telephone Posts">Telephone Posts</option><option value="Telephone Posts &amp; Cable">Telephone Posts &amp; Cable</option><option value="T-Post">T-Post</option><option value="T-Post Fence">T-Post Fence</option><option value="*Other - See Notes*">*Other - See Notes*</option></select><br></lable><lable for="commentsBarr">comments: <br>
+         <input type="text" name="commentsBarr"><br></lable><lable for="primary_obBarr">primary_ob: <br>
+         <input type="text" name="primary_obBarr"><br></lable><lable for="secondary_Barr">secondary_: <br>
+         <input type="text" name="secondary_Barr"><br></lable><lable for="project_naBarr">project_na: <br>
+         <input type="text" name="project_naBarr"><br></lable><lable for="barr_milesBarr">barr_miles: <br>
+         <input type="text" name="barr_milesBarr"><br></lable><lable for="barr_kmBarr">barr_km: <br>
+         <input type="text" name="barr_kmBarr"><br></lable><lable for="previouslyBarr">previously: <br>
+         <select id="previouslyBarr" name="previouslyBarr"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option><option value="Unknown">Unknown</option></select><br></lable><lable for="gps_photoBarr">gps_photo: <br>
+         <select id="gps_photoBarr" name="gps_photoBarr"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="photo_azimBarr">photo_azim: <br>
+         <input type="text" name="photo_azimBarr"><br></lable><lable for="qa_qcBarr">qa_qc: <br>
+         <input type="text" name="qa_qcBarr"><br></lable><lable for="shape_stleBarr">shape_stle: <br>
+         <input type="text" name="shape_stleBarr"><br></lable><lable for="shape_lengBarr">shape_leng: <br>
+         <input type="text" name="shape_lengBarr"><br></lable><lable for="geomBarr">geom: <br><input type="text" name="geomBarr"></lable><br><br><input type="submit" value="Submit"></form><form id="distPointForm" action="/distPointFormSubmit" method="POST" style="display: none;">
+         <label for="distPointForm">Disturbance Point Collection</label><br>
+         <lable for="gidDBP">gid: <br>
+         <input type="text" name="gidDBP"><br></lable><lable for="agencyDBP">agency: <br>
+         <select id="agencyDBP" name="agencyDBP"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionDBP">region: <br>
+         <select id="regionDBP" name="regionDBP"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemDBP">ecosystem: <br>
+         <select id="ecosystemDBP" name="ecosystemDBP"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="gps_dateDBP">gps_date: <br>
+         <input type="date" name="gps_dateDBP"><br></lable><lable for="dist_codeDBP">dist_code: <br><input type="text" name="dist_codeDBP"><br></lable><lable for="use_freqDBP">use_freq: <br>
+         <select id="use_freqDBP" name="use_freqDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="use_recentDBP">use_recent: <br>
+         <select id="use_recentDBP" name="use_recentDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="dist_pt_tyDBP">dist_pt_ty: <br>
+         <select id="dist_pt_tyDBP" name="dist_pt_tyDBP"><option value="select"></option><option value="Dumpsite">Dumpsite</option><option value="Fire Ring">Fire Ring</option><option value="Graffiti">Graffiti</option><option value="Plant Collection">Plant Collection</option><option value="Mine Shaft">Mine Shaft</option><option value="Shooting Range">Shooting Range</option><option value="Bike Trail">Location along Bike Trail</option><option value="Campsite">Campsite</option><option value="Incursion">Incursion</option><option value="Hillclimb">Hillclimb</option><option value="*Other - See Notes*">*Other - See Notes*</option></select><br></lable><lable for="accessibilDBP">accessibil: <br>
+         <select id="accessibilDBP" name="accessibilDBP"><option value="select"></option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select><br></lable><lable for="visibilityDBP">visibility: <br>
+         <select id="visibilityDBP" name="visibilityDBP"><option value="select"></option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select><br></lable><lable for="commentsDBP">comments: <br>
+         <input type="text" name="commentsDBP"><br></lable><lable for="primary_obDBP">primary_ob: <br>
+         <input type="text" name="primary_obDBP"><br></lable><lable for="secondary_DBP">secondary_: <br>
+         <input type="text" name="secondary_DBP"><br></lable><lable for="previouslyDBP">previously: <br>
+         <select id="previouslyDBP" name="previouslyDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="project_naDBP">project_na: <br>
+         <input type="text" name="project_naDBP"><br></lable><lable for="estimate_sDBP">estimate_s: <br>
+         <input type="text" name="estimate_sDBP"><br></lable><lable for="treatedDBP">treated: <br>
+         <select id="treatedDBP" name="treatedDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No*</option></select><br></lable><lable for="culturalDBP">cultural: <br>
+         <select id="culturalDBP" name="culturalDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="t_e_specieDBP">t_e_specie: <br>
+         <select id="t_e_specieDBP" name="t_e_specieDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="gps_photoDBP">gps_photo: <br>
+         <select id="gps_photoDBP" name="gps_photoDBP"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="soil_vulneDBP">soil_vulne: <br>
+         <select id="soil_vulneDBP" name="soil_vulneDBP"><option value="select"></option><option value="Low">Low</option><option value="Low/ Medium">Low/ Medium</option><option value="Medium">Medium</option><option value="Medium/ High">Medium/ High</option><option value="High">High</option><option value="Not Characterized">Not Characterized</option></select><br></lable><lable for="dist_useDBP">dist_use: <br>
+         <select id="dist_useDBP" name="dist_useDBP"><option value="select"></option><option value="Social">Social</option><option value="Mine">Mine</option><option value="Old utility">Old utility</option><option value="Random / Blazed">Random / Blazed</option><option value="Gov_Operation">Gov_Operation</option><option value="*Other - See Commnets">*Other - See Commnets</option></select><br></lable><lable for="photo_azimDBP">photo_azim: <br>
+         <input type="text" name="photo_azimDBP"><br></lable><lable for="qa_qcDBP">qa_qc: <br>
+         <input type="text" name="qa_qcDBP"><br></lable><lable for="old_distcoDBP">old_distco: <br>
+         <input type="text" name="old_distcoDBP"><br></lable><lable for="geomDBP">geom: <br>
+         <input type="text" name="geomDBP"></lable><br><br><input type="submit" value="Submit"></form><form id="distPolyForm" action="/distPolyFormSubmit" method="POST" style="display: none;">
+         <label for="distPolyForm">Disturbance Polygon Collection</label><br>
+         <lable for="gidDBPY">gid: <br>
+         <input type="text" name="gidDBPY"><br></lable><lable for="agenceyDBPY">agencey: <br>
+         <select id="agenceyDBPY" name="agenceyDBPY"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionsDBPY">regions: <br>
+         <select id="regionsDBPY" name="regionsDBPY"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemDBPY">ecosystem: <br>
+         <select id="ecosystemDBPY" name="ecosystemDBPY"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="gps_dateDBPY">gps_date: <br>
+         <input type="date" name="gps_dateDBPY"><br></lable><lable for="dist_codeDBPY">dist_code: <br>
+         <input type="text" name="dist_codeDBPY"><br></lable><lable for="dist_useDBPY">dist_use: <br>
+         <select id="dist_useDBPY" name="dist_useDBPY"><option value="select"></option><option value="Social">Social</option><option value="Mine">Mine</option><option value="Old utility">Old utility</option><option value="Random / Blazed">Random / Blazed</option><option value="Gov_Operation">Gov_Operation</option><option value="*Other - See Commnets">*Other - See Commnets</option></select><br></lable><lable for="use_freqDBPY">use_freq: <br>
+         <select id="use_freqDBPY" name="use_freqDBPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="use_recentDBPY">use_recent: <br>
+         <select id="use_recentDBPY" name="use_recentDBPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="site_stabiDBPY">site_stabi: <br>
+         <select id="site_stabiDBPY" name="site_stabiDBPY"><option value="select"></option><option value="Unstable">Unstable</option><option value="Poor">Poor</option><option value="Moderate">Moderate</option><option value="Good">Good</option><option value="Stable">Stable</option></select><br></lable><lable for="dist_crustDBPY">dist_crust: <br>
+         <select id="dist_crustDBPY" name="dist_crustDBPY"><option value="select"></option><option value="0 - No Crust">0 - No Crust</option><option value="1 - Alkali">1 - Alkali</option><option value="2 - Cyano-patchy">2 - Cyano-patchy</option><option value="3 - Cyano-continuous">3 - Cyano-continuous</option><option value="4 - Lichen-patchy">4 - Lichen-patchy</option><option value="5 - Lichen-continuous">5 - Lichen-continuous</option></select><br></lable><lable for="undist_cruDBPY">undist_cru: <br>
+         <select id="undist_cruDBPY" name="undist_cruDBPY"><option value="select"></option><option value="0 - No Crust">0 - No Crust</option><option value="1 - Alkali">1 - Alkali</option><option value="2 - Cyano-patchy">2 - Cyano-patchy</option><option value="3 - Cyano-continuous">3 - Cyano-continuous</option><option value="4 - Lichen-patchy">4 - Lichen-patchy</option><option value="5 - Lichen-continuous">5 - Lichen-continuous</option></select><br></lable><lable for="depthDBPY">depth: <br>
+         <select id="depthDBPY" name="depthDBPY"><option value="select"></option><option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option><option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option><option value="3 - Rut 4" '="" -="" 8'''="">3 - Rut 4'' - 8''</option><option value="4 - Rut > 8" ''="">4 - Rut &gt; 8''</option></select><br></lable><lable for="dist_poly_DBPY">dist_poly_: <br>
+         <select id="dist_poly_DBPY" name="dist_poly_DBPY"><option value="select"></option><option value="Donuts/ Random Tracks">Donuts/ Random Tracks</option><option value="Pullouts">Pullouts</option><option value="Denuded Area">Denuded Area</option><option value="Scrape">Scrape</option><option value="Burn">Burn</option><option value="*Other - See Comments">*Other - See Comments</option></select><br></lable><lable for="plant_damaDBPY">plant_dama: <br>
+         <select id="plant_damaDBPY" name="plant_damaDBPY"><option value="select"></option><option value="0 - Intact">0 - Intact</option><option value="1 - Most symmetrical">1 - Most symmetrical</option><option value="2 - Many irregular, few dissected">2 - Many irregular, few dissected</option><option value="3 - Many dissected, few highly dissected">3 - Many dissected, few highly dissected</option><option value="4 - Many highly dissected, roots exposed">4 - Many highly dissected, roots exposed</option><option value="5 - Many with roots exposed or detached">5 - Many with roots exposed or detached</option><option value="6 - Denuded">6 - Denuded</option></select><br></lable><lable for="assessibilDBPY">assessibil: <br>
+         <select id="assessibilDBPY" name="assessibilDBPY"><option value="select"></option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select><br></lable><lable for="visibilityDBPY">visibility: <br>
+         </lable><lable for="commentsDBPY">comments: <br>
+         <input type="text" name="commentsDBPY"><br></lable><lable for="primary_obDBPY">primary_ob: <br>
+         <input type="text" name="primary_obDBPY"><br></lable><lable for="secondary_DBPY">secondary_: <br>
+         <input type="text" name="secondary_DBPY"><br></lable><lable for="acres_restDBPY">acres_rest: <br>
+         <input type="text" name="acres_restDBPY"><br></lable><lable for="kmsq_restoDBPY">kmsq_resto: <br>
+         <input type="text" name="kmsq_restoDBPY"><br></lable><lable for="treatedDBPY">treated: <br>
+         <select id="treatedDBPY" name="treatedDBPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No*</option></select><br></lable><lable for="dist_severDBPY">dist_sever: <br>
+         <input type="text" name="dist_severDBPY"><br></lable><lable for="culturalDBPY">cultural: <br>
+         <select id="culturalDBPY" name="culturalDBPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="t_e_specieDBPY">t_e_specie: <br>
+         <select id="t_e_specieDBPY" name="t_e_specieDBPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="gps_photoDBPY">gps_photo: <br>
+         <select id="gps_photoDBPY" name="gps_photoDBPY"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="site_vulneDBPY">site_vulne: <br>
+         <select id="site_vulneDBPY" name="site_vulneDBPY"><option value="select"></option><option value="Low">Low</option><option value="Low/ Medium">Low/ Medium</option><option value="Medium">Medium</option><option value="Medium/ High">Medium/ High</option><option value="High">High</option><option value="Not Characterized">Not Characterized</option></select><br></lable><lable for="photo_azimDBPY">photo_azim: <br>
+         <input type="text" name="photo_azimDBPY"><br></lable><lable for="qa_qcDBPY">qa_qc: <br>
+         <input type="text" name="qa_qcDBPY"><br></lable><lable for="old_distcoDBPY">old_distco: <br>
+         <input type="text" name="old_distcoDBPY"><br></lable><lable for="shape_starDBPY">shape_star: <br>
+         <input type="text" name="shape_starDBPY"><br></lable><lable for="shape_stleDBPY">shape_stle: <br>
+         <input type="text" name="shape_stleDBPY"><br></lable><lable for="shape_lengDBPY">shape_leng: <br>
+         <input type="text" name="shape_lengDBPY"><br></lable><lable for="shape_areaDBPY">shape_area: <br>
+         <input type="text" name="shape_areaDBPY"><br></lable><lable for="geomDBPY">geom: <br>
+         <input type="text" name="geomDBPY"></lable><br><br><input type="submit" value="Submit"></form><form id="distLineForm" action="/distLineFormSubmit" method="POST" style="display: none;">
+         <label for="distLineForm">Disturbance Line Collection</label><br>
+         <lable for="gidDBL">gid: <br>
+         <input type="text" name="gidDBL"><br></lable><lable for="agencyDBL">agency: <br>
+         <select id="agencyDBL" name="agencyDBL"><option value="0">BLM</option><option value="1">NPS</option><option value="2">FS</option><option value="3">FWS</option><option selected="selected" value="select"></option></select><br></lable><lable for="regionDBL">region: <br>
+         <select id="regionDBL" name="regionDBL"><option value="select"></option><option value="Amargosa Desert E">Amargosa Desert E</option><option value="Amargosa Desert W">Amargosa Desert W</option><option value="Black Mt Area">Black Mt Area</option><option value="California Wash">California Wash</option><option value="Colorado Valley">Colorado Valley</option><option value="Coyote Springs Valley">Coyote Springs Valley</option><option value="Crater Flat">Crater Flat</option><option value="Eldorado Valley">Eldorado Valley</option><option value="Forty-mile Canyon">Forty-mile Canyon</option><option value="Frenchman Flat">Frenchman Flat</option><option value="Garnet Valley">Garnet Valley</option><option value="Gold Butte Area">Gold Butte Area</option><option value="Greasewood Basin">Greasewood Basin</option><option value="Hidden Valley N">Hidden Valley N</option><option value="Hidden Valley S">Hidden Valley S</option><option value="Indian Springs Valley N">Indian Springs Valley N</option><option value="Indian Springs Valley S">Indian Springs Valley S</option><option value="Ivanpah N">Ivanpah N</option><option value="Ivanpah S">Ivanpah S</option><option value="Jean Lake Valley">Jean Lake Valley</option><option value="Las Vegas Valley">Las Vegas Valley</option><option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option><option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option><option value="Mercury Valley">Mercury Valley</option><option value="Mesquite Valley">Mesquite Valley</option><option value="Moapa Valley">Moapa Valley</option><option value="Muddy River Springs Area">Muddy River Springs Area</option><option value="Pahrump Valley">Pahrump Valley</option><option value="Piute Valley">Piute Valley</option><option value="Rock Valley">Rock Valley</option><option value="Three Lakes Valley N">Three Lakes Valley N</option><option value="Three Lakes Valley S">Three Lakes Valley S</option><option value="Tikapoo Valley">Tikapoo Valley</option><option value="Virgin River Valley">Virgin River Valley</option></select><br></lable><lable for="ecosystemDBL">ecosystem: <br>
+         <select id="ecosystemDBL" name="ecosystemDBL"><option value="select"></option><option value="Alpine">Alpine</option><option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option><option value="Mixed Conifer">Mixed Conifer</option><option value="Pinon-Juniper">Pinon-Juniper</option><option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option><option value="Riparian">Riparian</option><option value="Wetland">Wetland</option><option value="Open Water">Open Water</option><option value="Spring">Spring</option><option value="Spring Channel">Spring Channel</option><option value="Mojave Desert Scrub">Mojave Desert Scrub*</option></select><br></lable><lable for="gps_dateDBL">gps_date: <br>
+         <input type="date" name="gps_dateDBL"><br></lable><lable for="dist_codeDBL">dist_code: <br>
+         <input type="text" name="dist_codeDBL"><br></lable><lable for="dist_useDBL">dist_use: <br>
+         <select id="dist_useDBL" name="dist_useDBL"><option value="select"></option><option value="Social">Social</option><option value="Mine">Mine</option><option value="Old utility">Old utility</option><option value="Random / Blazed">Random / Blazed</option><option value="Gov_Operation">Gov_Operation</option><option value="*Other - See Commnets">*Other - See Commnets</option></select><br></lable><lable for="use_freqDBL">use_freq: <br>
+         <select id="use_freqDBL" name="use_freqDBL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="use_recentDBL">use_recent: <br>
+         <select id="use_recentDBL" name="use_recentDBL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="site_stabiDBL">site_stabi: <br>
+         <select id="site_stabiDBL" name="site_stabiDBL"><option value="select"></option><option value="Unstable">Unstable</option><option value="Poor">Poor</option><option value="Moderate">Moderate</option><option value="Good">Good</option><option value="Stable">Stable</option></select><br></lable><lable for="dist_crustDBL">dist_crust: <br>
+         <select id="dist_crustDBL" name="dist_crustDBL"><option value="select"></option><option value="0 - No Crust">0 - No Crust</option><option value="1 - Alkali">1 - Alkali</option><option value="2 - Cyano-patchy">2 - Cyano-patchy</option><option value="3 - Cyano-continuous">3 - Cyano-continuous</option><option value="4 - Lichen-patchy">4 - Lichen-patchy</option><option value="5 - Lichen-continuous">5 - Lichen-continuous</option></select><br></lable><lable for="undist_cruDBL">undist_cru: <br>
+         <select id="undist_cruDBL" name="undist_cruDBL"><option value="select"></option><option value="0 - No Crust">0 - No Crust</option><option value="1 - Alkali">1 - Alkali</option><option value="2 - Cyano-patchy">2 - Cyano-patchy</option><option value="3 - Cyano-continuous">3 - Cyano-continuous</option><option value="4 - Lichen-patchy">4 - Lichen-patchy</option><option value="5 - Lichen-continuous">5 - Lichen-continuous</option></select><br></lable><lable for="depthDBL">depth: <br>
+         <select id="depthDBL" name="depthDBL"><option value="select"></option><option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option><option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option><option value="3 - Rut 4" '="" -="" 8'''="">3 - Rut 4'' - 8''</option><option value="4 - Rut > 8" ''="">4 - Rut &gt; 8''</option></select><br></lable><lable for="widthDBL">width: <br>
+         <select id="widthDBL" name="widthDBL"><option value="select"></option><option value="1 - 2 ft - Dirt Bike">1 - 2 ft - Dirt Bike</option><option value="2 - 4 ft - ATV">2 - 4 ft - ATV</option><option value="3 - 6 ft - Vehicle">3 - 6 ft - Vehicle</option><option value="4 - > 6ft">4 - &gt; 6ft</option><option value="*Other - See Notes*">*Other - See Notes*</option></select><br></lable><lable for="typeDBL">type: <br>
+         <select id="typeDBL" name="typeDBL"><option value="select"></option><option value="One-track">One-track</option><option value="Two-track">Two-track</option><option value="Random">Random</option><option value="Road">Road</option><option value="*Other - See Comments">*Other - See Comments</option></select><br></lable><lable for="plant_damaDBL">plant_dama: <br>
+         <select id="plant_damaDBL" name="plant_damaDBL"><option value="select"></option><option value="0 - Intact">0 - Intact</option><option value="1 - Most symmetrical">1 - Most symmetrical</option><option value="2 - Many irregular, few dissected">2 - Many irregular, few dissected</option><option value="3 - Many dissected, few highly dissected">3 - Many dissected, few highly dissected</option><option value="4 - Many highly dissected, roots exposed">4 - Many highly dissected, roots exposed</option><option value="5 - Many with roots exposed or detached">5 - Many with roots exposed or detached</option><option value="6 - Denuded">6 - Denuded</option></select><br></lable><lable for="accessibilDBL">accessibil: <br>
+         <select id="accessibilDBL" name="accessibilDBL"><option value="select"></option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select><br></lable><lable for="visibilityDBL">visibility: <br>
+         <select id="visibilityDBL" name="visibilityDBL"><option value="select"></option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select><br></lable><lable for="commentsDBL">comments: <br>
+         <input type="text" name="commentsDBL"><br></lable><lable for="primary_obDBL">primary_ob: <br>
+         <input type="text" name="primary_obDBL"><br></lable><lable for="secondary_DBL">secondary_: <br>
+         <input type="text" name="secondary_DBL"><br></lable><lable for="miles_distDBL">miles_dist: <br>
+         <input type="text" name="miles_distDBL"><br></lable><lable for="km_distDBL">km_dist: <br>
+         <input type="text" name="km_distDBL"><br></lable><lable for="treatedDBL">treated: <br>
+         <select id="treatedDBL" name="treatedDBL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="dist_severDBL">dist_sever: <br>
+         <input type="text" name="dist_severDBL"><br></lable><lable for="culturalDBL">cultural: <br>
+         <select id="culturalDBL" name="culturalDBL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="t_e_specieDBL">t_e_specie: <br>
+         <select id="t_e_specieDBL" name="t_e_specieDBL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="gps_photoDBL">gps_photo: <br>
+         <select id="gps_photoDBL" name="gps_photoDBL"><option value="select"></option><option value="Yes">Yes</option><option value="No">No</option></select><br></lable><lable for="soil_vulneDBL">soil_vulne: <br>
+         <select id="soil_vulneDBL" name="soil_vulneDBL"><option value="select"></option><option value="Low">Low</option><option value="Low/ Medium">Low/ Medium</option><option value="Medium">Medium</option><option value="Medium/ High">Medium/ High</option><option value="High">High</option><option value="Not Characterized">Not Characterized</option></select><br></lable><lable for="photo_azimDBL">photo_azim: <br>
+         <input type="text" name="photo_azimDBL"><br></lable><lable for="qa_qcDBL">qa_qc: <br>
+         <input type="text" name="qa_qcDBL"><br></lable><lable for="old_dist_cDBL">old_dist_c: <br>
+         <input type="text" name="old_dist_cDBL"><br></lable><lable for="shape_stleDBL">shape_stle: <br>
+         <input type="text" name="shape_stleDBL"><br></lable><lable for="shape_lengDBL">shape_leng: <br>
+         <input type="text" name="shape_lengDBL"><br></lable><lable for="geomDBL">geom: <br>
+         <input type="text" name="geomDBL"></lable><br><br><input type="submit" value="Submit"></form></div></div>`;
+         */
+
+        map.on(L.Draw.Event.CREATED, function (event) {
+          var layer = event.layer;
+          /*
+           layer.bindPopup(
+           formTest
+           );
+
+           // create new element target for formtest get ID and class. put styling for 25% bottom. innerHTML og the new element i just created
+
+           $(layer).on('click', function () {
+           $('#featureType, #featureStyle').change(function () {
+
+           const featureTypeSel = $('#featureType').val();
+           const featureStyleSel = $('#featureStyle').val();
+
+           $('#restoPointForm').toggle(
+           featureStyleSel === 'resto' && featureTypeSel === 'point'
+           );
+           $('#restoPolyForm').toggle(
+           featureStyleSel === 'resto' && featureTypeSel === 'poly'
+           );
+           $('#restoLineForm').toggle(
+           featureStyleSel === 'resto' && featureTypeSel === 'line'
+           );
+           $('#barrierForm').toggle(
+           featureTypeSel === 'test' && featureStyleSel === 'barrier'
+           );
+           $('#distPointForm').toggle(
+           featureStyleSel === 'disturb' && featureTypeSel === 'point'
+           );
+           $('#distPolyForm').toggle(
+           featureStyleSel === 'disturb' && featureTypeSel === 'poly'
+           );
+           $('#distLineForm').toggle(
+           featureStyleSel === 'disturb' && featureTypeSel === 'line'
+           );
+           })
+           $('form').submit(function (event) {
+           // what this code is doing is stopping the browser from refreshing when a form is submitted
+           event.preventDefault();
+           var $this = $(this); // this is the current form that is selected
+           // this is posting to the desired action ex "/restoLineFormSubmit" on the server side
+           $.post($this.attr('action'), $this.serialize(), function (data) {
+           // once posted is will switch the top two selections to default and reset the form that was submitted and
+           // hide that form
+
+           // idea came from here
+           //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
+           $('#featureType').prop('selectedIndex', 0);
+           $('#featureStyle').prop('selectedIndex', 0);
+           // idea came from here
+           //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
+           $this.trigger('reset');
+           // idea come from here
+           // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
+           $this.hide();
+           alert(data.message);
+           console.log(data);
+           })
+           });
+           }); */
+          editableLayers.addLayer(layer);
+
+        });
+
+    #formDIV
+
+    #formDIV2
+      script(src='/public/scripts/formDIV.js')
+      script.
+        $(document).ready(function () {
+          $('#featureType, #featureStyle').change(function () {
+
+            const featureTypeSel = $('#featureType').val();
+            const featureStyleSel = $('#featureStyle').val();
+
+            $('#restoPointForm').toggle(
+              featureStyleSel === 'resto' && featureTypeSel === 'point'
+            );
+            $('#restoPolyForm').toggle(
+              featureStyleSel === 'resto' && featureTypeSel === 'poly'
+            );
+            $('#restoLineForm').toggle(
+              featureStyleSel === 'resto' && featureTypeSel === 'line'
+            );
+            $('#barrierForm').toggle(
+              featureTypeSel === 'test' && featureStyleSel === 'barrier'
+            );
+            $('#distPointForm').toggle(
+              featureStyleSel === 'disturb' && featureTypeSel === 'point'
+            );
+            $('#distPolyForm').toggle(
+              featureStyleSel === 'disturb' && featureTypeSel === 'poly'
+            );
+            $('#distLineForm').toggle(
+              featureStyleSel === 'disturb' && featureTypeSel === 'line'
+            );
+          })
+
+          $(`input[type='date']`).val('test')
+
+          $('form').submit(function (event) {
+            // what this code is doing is stopping the browser from refreshing when a form is submitted
+            event.preventDefault();
+            var $this = $(this); // this is the current form that is selected
+            // this is posting to the desired action ex "/restoLineFormSubmit" on the server side
+            $.post($this.attr('action'), $this.serialize(), function (data) {
+              // once posted is will switch the top two selections to default and reset the form that was submitted and
+              // hide that form
+
+              // idea came from here
+              //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
+              $('#featureType').prop('selectedIndex', 0);
+              $('#featureStyle').prop('selectedIndex', 0);
+              // idea came from here
+              //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
+              $this.trigger('reset');
+              // idea come from here
+              // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
+              $this.hide();
+              alert(data.message);
+              console.log(data);
+            })
+          })
+        });
