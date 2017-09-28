@@ -31,7 +31,7 @@ html
       #map {
         float: left;
         width: 80%;
-        height: 100%;
+        height: 90%;
       }
 
       #popUp_FormDIV {
@@ -58,6 +58,13 @@ html
         /* position: absolute; */
         overflow: auto;
         margin: 5%;
+      }
+      
+      #footerDIV {
+        text-align: center;
+        padding:40px;
+        font-size: 14px;
+        text-align: center;
       }
 
       .featureSelection * {
@@ -183,3 +190,16 @@ html
         #popUpDIV
         #formPopDIV
           script(src='/public/scripts/formDIV.js')
+          
+    footer
+      #footerDIV
+      .row
+        .col-md-12
+          p
+            a(href='sitemap.html') Site Map
+            a(href='security.html') Privacy & Security
+            a(href='foia.html') FOIA
+            a(href='nofear.html') No Fear Act
+            a(href='license.html') License
+            a(href='http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx', target='_blank') Accessibility/Section 508
+            a(href='http://www.usa.gov', target='_blank') USA.gov
