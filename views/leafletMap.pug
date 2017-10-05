@@ -135,6 +135,7 @@ html
                                 |  keep me logged-in
       #overlay
       #map
+
         script(src='/public/scripts/asyncAddLayers.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
@@ -170,8 +171,7 @@ html
               console.error(err)
             }
           }());
-
-
+        
           var controlOptions = {
             container_width: "300px",
             container_maxHeight: "350px",
@@ -184,7 +184,9 @@ html
 
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
-
+          
+          
+          
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
@@ -247,7 +249,15 @@ html
       //script( src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js' )
       //script( src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js' )
       
-        
+    ////Side bar for leaflet map
+          //var sidebar = L.control.sidebar('sidebar', {
+            position: 'left'
+          //});
+          //map.addControl(sidebar);
+
+          //setTimeout(function () {
+            sidebar.show();
+          //}, 500);
     //footer
       #footerDIV
       .row

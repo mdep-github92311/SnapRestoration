@@ -3,9 +3,29 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var bodyParser = require('body-parser');
+var $ = require('jquery');
 
 var app = module.exports = loopback();
 
+/*GLOBAL.window = {};
+GLOBAL.document = {
+  documentElement: {
+    style: {}
+  },
+  getElementsByTagName: function() { return []; },
+  createElement: function() { return {}; }
+};
+GLOBAL.navigator = {
+  userAgent: 'nodejs'
+};
+GLOBAL.L = require('leaflet');
+//var L = require('leaflet');
+require('leaflet-sidebar');
+require('leaflet.markercluster');
+
+GLOBAL.L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
+
+*/
 var path = require('path');
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
@@ -25,6 +45,10 @@ app.start = function() {
     }
   });
 };
+// This is to check for errors on startup 
+// Comment out when errors are found. //
+//process.on('uncaughtException', function (err) { console.log(err); });
+
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
