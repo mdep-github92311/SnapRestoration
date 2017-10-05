@@ -37,13 +37,13 @@ html
       #map {
         float: left;
         width: 80%;
-        height: 80%;
+        height: 90%;
       }
 
       #popUp_FormDIV {
         float: right;
         width: 20%;
-        height: 80%;
+        height: 90%;
         overflow: auto;
       }
 
@@ -150,9 +150,7 @@ html
           map.createPane('Misc').style.zIndex = 340;
 
           L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://' +
-            'mapbox.com">Mapbox</a>',
+            attribution: '<p><a href="sitemap.html">Site Map</a>&nbsp;&nbsp;&nbsp;<a href="security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;<a href="foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;<a href="nofear.html">No Fear Act</a>&nbsp;&nbsp;&nbsp;<a href="license.html">License</a>&nbsp;&nbsp;&nbsp;<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;<a href="http://www.usa.gov" target="_blank">USA.gov</a></p>',
             maxZoom: 18,
             id: 'rogerdodger617.2p4pk9co',
             accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
@@ -226,6 +224,7 @@ html
           map.addControl(drawControl);
 
           var thisLayer
+          
 
           map.on(L.Draw.Event.CREATED, function (event) {
             var layer = event.layer;
@@ -243,7 +242,7 @@ html
       //script( src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js' )
       
         
-    footer
+    //footer
       #footerDIV
       .row
         .col-md-12
