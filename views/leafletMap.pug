@@ -193,6 +193,7 @@ html
       
       .leaflet-right {
         transition: right 0.5s; }
+        
 
     body
       #header
@@ -285,7 +286,7 @@ html
       #overlay
       #map
 
-        //script(src='/public/scripts/asyncAddLayers.js')
+        script(src='/public/scripts/asyncAddLayers.js')
         //script(src='/public/scripts/sidebar.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
@@ -394,6 +395,7 @@ html
 
       script.
         var sidebar = L.control.sidebar('sidebar', {
+              closeButton: true,
               position: 'left'
         });
         map.addControl(sidebar);
@@ -401,7 +403,6 @@ html
         setTimeout(function () {
             sidebar.show();
         }, 500);
-        sidebar.setContent('test <b>test</b> test');
         
       #popUp_FormDIV
         #popUpDIV
