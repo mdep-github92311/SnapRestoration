@@ -5,6 +5,8 @@ var fs = require('fs');
 var browserify = require('browserify');
 var boot = require('loopback-boot');
 
+//var Lsidebar = require('leaflet-sidebar-v2');
+
 module.exports = function buildBrowserBundle(env, callback) {
   var b = browserify({ basedir: __dirname });
   b.require('/server/server.js', { expose: 'server' });

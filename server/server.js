@@ -7,6 +7,10 @@ var $ = require('jquery');
 
 var app = module.exports = loopback();
 
+// The important additions!
+//var Lsidebar = require('leaflet-sidebar-v2');
+
+
 /*GLOBAL.window = {};
 GLOBAL.document = {
   documentElement: {
