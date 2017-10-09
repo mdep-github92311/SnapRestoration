@@ -5,7 +5,13 @@ var boot = require('loopback-boot');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
 
+require('leaflet-sidebar');
+
 var app = module.exports = loopback();
+
+// The important additions!
+//var Lsidebar = require('leaflet-sidebar-v2');
+
 
 /*GLOBAL.window = {};
 GLOBAL.document = {

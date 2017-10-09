@@ -19,6 +19,8 @@ html
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
     //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
     
+    script(src='https://unpkg.com/leaflet-sidebar')
+    
     script(src='/public/scripts/featureStyles.js')
     script(src='/public/scripts/styledLayerControl.js')
     link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")
@@ -89,6 +91,109 @@ html
         -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
         box-sizing: border-box;
       }
+      .leaflet-sidebar {
+        position: absolute;
+        height: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        z-index: 2000; }
+        .leaflet-sidebar.left {
+          left: -500px;
+          transition: left 0.5s, width 0.5s;
+          padding-right: 0; }
+          .leaflet-sidebar.left.visible {
+            left: 0; }
+        .leaflet-sidebar.right {
+          right: -500px;
+          transition: right 0.5s, width 0.5s;
+          padding-left: 0; }
+          .leaflet-sidebar.right.visible {
+            right: 0; }
+        .leaflet-sidebar > .leaflet-control {
+          height: 100%;
+          width: 100%;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          padding: 8px 24px;
+          font-size: 1.1em;
+          background: white;
+          box-shadow: 0 1px 7px rgba(0, 0, 0, 0.65);
+          -webkit-border-radius: 4px;
+          border-radius: 4px; }
+          .leaflet-touch .leaflet-sidebar > .leaflet-control {
+            box-shadow: none;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            background-clip: padding-box; }
+        @media (max-width: 767px) {
+          .leaflet-sidebar {
+            width: 100%;
+            padding: 0; }
+            .leaflet-sidebar.left.visible ~ .leaflet-left {
+              left: 100%; }
+            .leaflet-sidebar.right.visible ~ .leaflet-right {
+              right: 100%; }
+            .leaflet-sidebar.left {
+              left: -100%; }
+              .leaflet-sidebar.left.visible {
+                left: 0; }
+            .leaflet-sidebar.right {
+              right: -100%; }
+              .leaflet-sidebar.right.visible {
+                right: 0; }
+            .leaflet-sidebar > .leaflet-control {
+              box-shadow: none;
+              -webkit-border-radius: 0;
+              border-radius: 0; }
+              .leaflet-touch .leaflet-sidebar > .leaflet-control {
+                border: 0; } }
+        @media (min-width: 768px) and (max-width: 991px) {
+          .leaflet-sidebar {
+            width: 305px; }
+            .leaflet-sidebar.left.visible ~ .leaflet-left {
+              left: 305px; }
+            .leaflet-sidebar.right.visible ~ .leaflet-right {
+              right: 305px; } }
+        @media (min-width: 992px) and (max-width: 1199px) {
+          .leaflet-sidebar {
+            width: 390px; }
+            .leaflet-sidebar.left.visible ~ .leaflet-left {
+              left: 390px; }
+            .leaflet-sidebar.right.visible ~ .leaflet-right {
+              right: 390px; } }
+        @media (min-width: 1200px) {
+          .leaflet-sidebar {
+            width: 460px; }
+            .leaflet-sidebar.left.visible ~ .leaflet-left {
+              left: 460px; }
+            .leaflet-sidebar.right.visible ~ .leaflet-right {
+              right: 460px; } }
+        .leaflet-sidebar .close {
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          width: 31px;
+          height: 31px;
+          color: #333;
+          font-size: 25px;
+          line-height: 1em;
+          text-align: center;
+          background: white;
+          -webkit-border-radius: 16px;
+          border-radius: 16px;
+          cursor: pointer;
+          z-index: 8; }
+      
+      .leaflet-left {
+        transition: left 0.5s; }
+      
+      .leaflet-right {
+        transition: right 0.5s; }
+        
 
     body
       #header
@@ -133,10 +238,56 @@ html
                               label
                                 input(type='checkbox')
                                 |  keep me logged-in
+                                
+      //#sidebar.sidebar.collapsed
+        // Nav tabs
+        .sidebar-tabs
+          ul(role='tablist')
+            li
+              a(href='#home', role='tab')
+                i.fa.fa-bars
+            li
+              a(href='#profile', role='tab')
+                i.fa.fa-user
+            li.disabled
+              a(href='#messages', role='tab')
+                i.fa.fa-envelope
+            li
+              a(href='https://github.com/Turbo87/sidebar-v2', role='tab', target='_blank')
+                i.fa.fa-github
+          ul(role='tablist')
+            li
+              a(href='#settings', role='tab')
+                i.fa.fa-gear
+        // Tab panes
+        .sidebar-content
+          #home.sidebar-pane
+            h1.sidebar-header
+              | sidebar-v2
+              span.sidebar-close
+                i.fa.fa-caret-left
+          #profile.sidebar-pane
+            h1.sidebar-header
+              | Profile
+              span.sidebar-close
+                i.fa.fa-caret-left
+          #messages.sidebar-pane
+            h1.sidebar-header
+              | Messages
+              span.sidebar-close
+                i.fa.fa-caret-left
+          #settings.sidebar-pane
+            h1.sidebar-header
+              | Settings
+              span.sidebar-close
+                i.fa.fa-caret-left
+                
+                
       #overlay
       #map
 
         script(src='/public/scripts/asyncAddLayers.js')
+        //script(src='/public/scripts/sidebar.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
 
@@ -184,9 +335,7 @@ html
 
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
-          
-          
-          
+            
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
@@ -240,7 +389,21 @@ html
             thisLayer = layer.toGeoJSON();
             console.log(thisLayer);
           });
+      
+      #sidebar
+        h1 leaflet-sidebar
 
+      script.
+        var sidebar = L.control.sidebar('sidebar', {
+              closeButton: true,
+              position: 'left'
+        });
+        map.addControl(sidebar);
+        
+        setTimeout(function () {
+            sidebar.show();
+        }, 500);
+        
       #popUp_FormDIV
         #popUpDIV
         #formPopDIV
