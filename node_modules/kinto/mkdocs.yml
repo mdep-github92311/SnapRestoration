@@ -1,0 +1,12 @@
+site_name: Kinto.js documentation
+pages:
+- Home: index.md
+- Installation: installation.md
+- Tutorial: tutorial.md
+- Api: api.md
+- Extending: extending.md
+- Contributing: contributing.md
+- Upgrading: upgrading.md
+- Releasing: releasing.md
+- Limitations: limitations.md
+theme: readthedocs
