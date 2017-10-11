@@ -1632,8 +1632,8 @@ $(document).ready(function () {
 
   const sync = `<button id="sync" class="btn">Synchronize</button>`;
 
-  $(formTest2).appendTo('#formPopDIV');
-  $(sync).appendTo('#formPopDIV');
+  $(formTest2).appendTo('#sidebar2');
+  $(sync).appendTo('#sidebar2');
 
   //https://stackoverflow.com/questions/18602331/why-is-this-jquery-click-function-not-working
   // link above helped with the on click event which then leads to grabbing the data from IndexedDB

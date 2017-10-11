@@ -162,11 +162,11 @@ function onEachBarrier(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -178,11 +178,11 @@ function onEachDistLine(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -194,11 +194,11 @@ function onEachDistPoint(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -210,11 +210,11 @@ function onEachDistPoly(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -226,11 +226,11 @@ function onEachDistPolyCent(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -242,11 +242,11 @@ function onEachRestoPoly(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -258,11 +258,11 @@ function onEachRestoPoint(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -274,11 +274,11 @@ function onEachRestoPolyCent(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -290,11 +290,11 @@ function onEachRestoLine(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -306,11 +306,11 @@ function onEachBLMRegion(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -322,11 +322,11 @@ function onEachFSRegion(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -338,11 +338,11 @@ function onEachMDEPBound(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -354,11 +354,11 @@ function onEachMDIBound(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }
@@ -370,11 +370,11 @@ function onEachNVCounty(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar')
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar1')
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar')
+            $(`#sidebar1`).empty();
+            $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar1')
         }
     })
 }
@@ -386,11 +386,11 @@ function onEachSoilVuln(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
-        if ($(`#sidebar`).is(`:empty`)) {
-            $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+        if ($(`#sidebar1`).is(`:empty`)) {
+            $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
-            $(`#sidebar`).empty();
-            $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar');
+            $(`#sidebar1`).empty();
+            $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         }
     })
 }

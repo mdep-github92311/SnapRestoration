@@ -38,7 +38,7 @@ html
 
       #map {
         float: left;
-        width: 80%;
+        width: 100%;
         height: 90%;
       }
 
@@ -392,6 +392,9 @@ html
       
       #sidebar
         h1 leaflet-sidebar
+        #sidebar1
+        #sidebar2
+          script(src='/public/scripts/formDIV.js')
 
       script.
         var sidebar = L.control.sidebar('sidebar', {
@@ -405,7 +408,7 @@ html
         }, 500);
         sidebar.getContainer('#popUpDIV');
         
-      #popUp_FormDIV
+      //#popUp_FormDIV
         #popUpDIV
         #formPopDIV
           script(src='/public/scripts/formDIV.js')
