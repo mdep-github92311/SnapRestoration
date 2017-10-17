@@ -373,7 +373,7 @@ html
       #overlay
       #map
 
-        //script(src='/public/scripts/asyncAddLayers.js')
+        script(src='/public/scripts/asyncAddLayers.js')
         //script(src='/public/scripts/sidebar.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
@@ -501,39 +501,45 @@ html
           ul(role='tablist')
             // top aligned tabs
             li
-              a(href='#home', role='tab')
+              a(href='#layers', role='tab')
                 span.glyphicon.glyphicon-menu-hamburger(aria-hidden='true')
             li
-              a(href='#messages', role='tab')
+              a(href='#drawTools', role='tab')
                 span.glyphicon.glyphicon-pencil(aria-hidden='true')
             li
-              a(href='#profile', role='tab')
+              a(href='#formTools', role='tab')
                 span.glyphicon.glyphicon-search(aria-hidden='true')
 
           ul(role='tablist')
             // bottom aligned tabs
             li
               a(href='#settings', role='tab')
-                span.glyphicon.glyphicon-menu-hamburger(aria-hidden='true')
+                span.glyphicon.glyphicon-cog(aria-hidden='true')
 
         // Tab panes
         .sidebar-content
-          #home.sidebar-pane
+          #layers.sidebar-pane
             h1.sidebar-header
-              | sidebar-v2
+              | Layers
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             span.glyphicon.glyphicon-search(aria-hidden='true')
 
-          #messages.sidebar-pane
+          #drawTools.sidebar-pane
             h1.sidebar-header
-              | Messages
+              | Draw Tools
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
 
-          #profile.sidebar-pane
+          #formTools.sidebar-pane
             h1.sidebar-header
-              | Profile
+              | Form Tools
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+                
+          #settings.sidebar-pane
+            h1.sidebar-header
+              | Settings
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
                 
