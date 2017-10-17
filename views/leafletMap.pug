@@ -134,7 +134,7 @@ html
           padding: 0; }
           .sidebar-tabs > li, .sidebar-tabs > ul > li {
             width: 100%;
-            height: 40px;
+            height: 90px;
             color: #333;
             font-size: 12pt;
             overflow: hidden;
@@ -502,10 +502,10 @@ html
             // top aligned tabs
             li
               a(href='#home', role='tab')
-                i.fa.fa-bars
+                span.glyphicon.glyphicon-menu-hamburger(aria-hidden='true')
             li
               a(href='#messages', role='tab')
-                i.fa.fa-envelope
+                span.glyphicon.glyphicon-pencil(aria-hidden='true')
             li
               a(href='#profile', role='tab')
                 span.glyphicon.glyphicon-search(aria-hidden='true')
@@ -514,7 +514,7 @@ html
             // bottom aligned tabs
             li
               a(href='#settings', role='tab')
-                span.glyphicon.glyphicon-search(aria-hidden='true')
+                span.glyphicon.glyphicon-menu-hamburger(aria-hidden='true')
 
         // Tab panes
         .sidebar-content
@@ -522,20 +522,20 @@ html
             h1.sidebar-header
               | sidebar-v2
               .sidebar-close
-                i.fa.fa-caret-left
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             span.glyphicon.glyphicon-search(aria-hidden='true')
 
           #messages.sidebar-pane
             h1.sidebar-header
               | Messages
               .sidebar-close
-                span.glyphicon.glyphicon-search(aria-hidden='true')
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
 
           #profile.sidebar-pane
             h1.sidebar-header
               | Profile
               .sidebar-close
-                i.fa.fa-caret-left
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
                 
       script. 
         var sidebar = L.control.sidebar('sidebar').addTo(map);
