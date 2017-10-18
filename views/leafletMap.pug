@@ -524,13 +524,14 @@ html
               | Layers
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-              #drawTools2
+              #layerTools2
 
           #drawTools.sidebar-pane
             h1.sidebar-header
               | Draw Tools
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+              #drawTools2
 
           #formTools.sidebar-pane
             h1.sidebar-header
@@ -547,7 +548,22 @@ html
                 
       script. 
         var sidebar = L.control.sidebar('sidebar').addTo(map);
+        
+        // Moves the layer controls into the sidebar
         var htmlObject = control.getContainer();
+        // Get the desired parent node.
+        var a = document.getElementById('layerTools2');
+        
+        // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
+        function setParent(el, newParent)
+        {
+          newParent.appendChild(el);
+        }
+        setParent(htmlObject, a);
+        
+        
+        // Moves the drawing controls into the sidebar
+        var htmlObject = drawControl.getContainer();
         // Get the desired parent node.
         var a = document.getElementById('drawTools2');
         
@@ -557,7 +573,6 @@ html
           newParent.appendChild(el);
         }
         setParent(htmlObject, a);
-          
       //#popUp_FormDIV
         #popUpDIV
         #formPopDIV
