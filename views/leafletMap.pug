@@ -523,7 +523,7 @@ html
               | Layers
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-            span.glyphicon.glyphicon-search(aria-hidden='true')
+            p this is some text
 
           #drawTools.sidebar-pane
             h1.sidebar-header
@@ -536,6 +536,7 @@ html
               | Form Tools
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+              #sidebar1
                 
           #settings.sidebar-pane
             h1.sidebar-header
@@ -545,7 +546,6 @@ html
                 
       script. 
         var sidebar = L.control.sidebar('sidebar').addTo(map);
-        
           
       //#popUp_FormDIV
         #popUpDIV

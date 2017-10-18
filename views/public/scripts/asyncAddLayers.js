@@ -222,6 +222,7 @@ async function createLayer(data, layerName) {
     console.error(err);
   }
 };
+
 async function getLayers() {
   const progress = new LoadingOverlayProgress({
     bar     : {
