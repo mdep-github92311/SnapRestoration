@@ -162,6 +162,7 @@ function onEachBarrier(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -178,6 +179,7 @@ function onEachDistLine(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -194,6 +196,7 @@ function onEachDistPoint(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -210,6 +213,7 @@ function onEachDistPoly(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -226,6 +230,7 @@ function onEachDistPolyCent(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -242,6 +247,7 @@ function onEachRestoPoly(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -258,6 +264,7 @@ function onEachRestoPoint(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -274,6 +281,7 @@ function onEachRestoPolyCent(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -290,6 +298,7 @@ function onEachRestoLine(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -306,6 +315,7 @@ function onEachBLMRegion(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -322,6 +332,7 @@ function onEachFSRegion(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -338,6 +349,7 @@ function onEachMDEPBound(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -354,6 +366,7 @@ function onEachMDIBound(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
@@ -370,6 +383,7 @@ function onEachNVCounty(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar1')
         } else {
@@ -386,6 +400,7 @@ function onEachSoilVuln(feature, layer) {
         popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        sidebar.open('formTools');
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
