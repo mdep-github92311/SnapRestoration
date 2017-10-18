@@ -79,7 +79,7 @@ html
       #sidebar1 {
         color: black;
         font-size: 14px;
-        
+        padding: 0;
       }
       
 
@@ -509,7 +509,7 @@ html
                 span.glyphicon.glyphicon-pencil(aria-hidden='true')
             li
               a(href='#formTools', role='tab')
-                span.glyphicon.glyphicon-search(aria-hidden='true')
+                span.glyphicon.glyphicon-info-sign(aria-hidden='true')
 
           ul(role='tablist')
             // bottom aligned tabs
@@ -524,7 +524,7 @@ html
               | Layers
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-            p this is some text
+              #drawTools2
 
           #drawTools.sidebar-pane
             h1.sidebar-header
@@ -534,7 +534,7 @@ html
 
           #formTools.sidebar-pane
             h1.sidebar-header
-              | Form Tools
+              | Marker Info
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #sidebar1
@@ -547,6 +547,16 @@ html
                 
       script. 
         var sidebar = L.control.sidebar('sidebar').addTo(map);
+        var htmlObject = control.getContainer();
+        // Get the desired parent node.
+        var a = document.getElementById('drawTools2');
+        
+        // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
+        function setParent(el, newParent)
+        {
+          newParent.appendChild(el);
+        }
+        setParent(htmlObject, a);
           
       //#popUp_FormDIV
         #popUpDIV
