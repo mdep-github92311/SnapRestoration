@@ -375,7 +375,6 @@ html
       #map
 
         script(src='/public/scripts/asyncAddLayers.js')
-        //script(src='/public/scripts/sidebar.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
 
@@ -533,6 +532,8 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #drawTools2
+              #sidebar2
+                script(src='/public/scripts/formDIV.js')
 
           #formTools.sidebar-pane
             h1.sidebar-header
