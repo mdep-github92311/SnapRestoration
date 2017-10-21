@@ -197,6 +197,7 @@ function onEachDistPoint(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        console.log(feature);
         if ($(`#sidebar1`).is(`:empty`)) {
             $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
         } else {
