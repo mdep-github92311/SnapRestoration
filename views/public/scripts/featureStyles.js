@@ -163,11 +163,10 @@ function onEachBarrier(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Barrier</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Barrier</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -180,30 +179,36 @@ function onEachDistLine(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Dist Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
 
 function onEachDistPoint(feature, layer) {
     var popUpContent = [];
+    var lastPart;
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if (feature.properties[prop] == null) {
+            popUpContent.push(`<B>${prop}</B>: NULL`);
+            lastPart = feature.properties[prop];
+        }
+        else {
+            popUpContent.push(`<B>${prop}: </B>` + feature.properties[prop].toString());
+            lastPart = feature.properties[prop];
+        }
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        console.log(feature);
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Dist Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
+        
     })
 }
 
@@ -215,11 +220,10 @@ function onEachDistPoly(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Dist Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -232,11 +236,10 @@ function onEachDistPolyCent(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Dist Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Dist Poly Cent</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -249,11 +252,10 @@ function onEachRestoPoly(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Resto Polygon</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -266,11 +268,10 @@ function onEachRestoPoint(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Resto Point</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Resto Point</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -283,11 +284,10 @@ function onEachRestoPolyCent(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Resto Poly Cent</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Resto Poly Cent</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -300,11 +300,10 @@ function onEachRestoLine(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Resto Line</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -317,11 +316,10 @@ function onEachBLMRegion(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>BLM Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>BLM Region</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -334,11 +332,10 @@ function onEachFSRegion(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>FS Region</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>FS Region</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -351,11 +348,10 @@ function onEachMDEPBound(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>MDEP Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>MDEP Bound</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -368,11 +364,10 @@ function onEachMDIBound(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>MDI Bound</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>MDI Bound</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -385,11 +380,10 @@ function onEachNVCounty(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar1')
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>NV Counties</U></B><br>" + popUpContent.join("<br>")).appendTo('#sidebar1')
+        $(`#sidebar1`).empty();
+        $("<B><U>NV Counties</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
@@ -402,11 +396,10 @@ function onEachSoilVuln(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
-        if ($(`#sidebar1`).is(`:empty`)) {
-            $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
-        } else {
-            $(`#sidebar1`).empty();
-            $("<B><U>Soil Vulnerability</U></B><br />" + popUpContent.join("<br />")).appendTo('#sidebar1');
+        $(`#sidebar1`).empty();
+        $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
     })
 }
