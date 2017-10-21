@@ -306,7 +306,11 @@ html
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-              a.navbar-brand Snap Restoration
+              a.pull-left(href='#')
+                img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
+                img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
+                img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
+                img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
             // Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               ul.nav.navbar-nav
@@ -342,7 +346,7 @@ html
       #overlay
       #map
 
-        script(src='/public/scripts/asyncAddLayers.js')
+        //script(src='/public/scripts/asyncAddLayers.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
 
