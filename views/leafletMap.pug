@@ -5,8 +5,8 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='https://unpkg.com/leaflet@1.0.3/dist/leaflet.css')
-    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
+    link(rel='stylesheet', href='/public/css/leaflet.css')
+    link(rel='stylesheet', href="/public/css/leaflet.draw.css")
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
     script(src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -77,6 +77,18 @@ html
       }
       
       #sidebar1 {
+        color: black;
+        font-size: 14px;
+        padding: 0 !important;
+      }
+      
+      #drawTools2 {
+        clear:none !important;
+        text-align: center;
+      }
+      
+      #sidebar2 {
+        display: inline-block;
         color: black;
         font-size: 14px;
         padding: 0;
@@ -327,50 +339,6 @@ html
                                 input(type='checkbox')
                                 |  keep me logged-in
                                 
-      //#sidebar.sidebar.collapsed
-        // Nav tabs
-        .sidebar-tabs
-          ul(role='tablist')
-            li
-              a(href='#home', role='tab')
-                i.fa.fa-bars
-            li
-              a(href='#profile', role='tab')
-                i.fa.fa-user
-            li.disabled
-              a(href='#messages', role='tab')
-                i.fa.fa-envelope
-            li
-              a(href='https://github.com/Turbo87/sidebar-v2', role='tab', target='_blank')
-                i.fa.fa-github
-          ul(role='tablist')
-            li
-              a(href='#settings', role='tab')
-                i.fa.fa-gear
-        // Tab panes
-        .sidebar-content
-          #home.sidebar-pane
-            h1.sidebar-header
-              | sidebar-v2
-              span.sidebar-close
-                i.fa.fa-caret-left
-          #profile.sidebar-pane
-            h1.sidebar-header
-              | Profile
-              span.sidebar-close
-                i.fa.fa-caret-left
-          #messages.sidebar-pane
-            h1.sidebar-header
-              | Messages
-              span.sidebar-close
-                i.fa.fa-caret-left
-          #settings.sidebar-pane
-            h1.sidebar-header
-              | Settings
-              span.sidebar-close
-                i.fa.fa-caret-left
-                
-                
       #overlay
       #map
 
