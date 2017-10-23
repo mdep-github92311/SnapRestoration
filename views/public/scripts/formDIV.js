@@ -3,7 +3,7 @@ $(document).ready(function () {
     `<div class="form">
    <div class="featureSelection">
       <select id="featureType">
-         <option value="test">Select Featurer Type...</option>
+         <option value="test">Select Feature Type...</option>
          <option value="point">Point</option>
          <option value="line">Line</option>
          <option value="poly">Polygon</option>
@@ -1027,7 +1027,7 @@ $(document).ready(function () {
             <input type="text" name="gid"><br>
          </label>
          <label for="agencey">
-            agencey: <br>
+            agency: <br>
             <select id="agencey" name="agencey">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
@@ -1176,7 +1176,8 @@ $(document).ready(function () {
             <select id="depth" name="depth">
                <option value="select"></option>
                <option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option>
-               <option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option><option value="3 - Rut 4" '="" -="" 8'''="">3 - Rut 4'' - 8''</option>
+               <option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option>
+               <option value="3 - Rut 4" '="" -="" 8'''="">3 - Rut 4'' - 8''</option>
                <option value="4 - Rut > 8" ''="">4 - Rut &gt; 8''</option>
             </select>
             <br>
@@ -1632,8 +1633,8 @@ $(document).ready(function () {
 
   const sync = `<button id="sync" class="btn">Synchronize</button>`;
 
-  $(formTest2).appendTo('#formPopDIV');
-  $(sync).appendTo('#formPopDIV');
+  $(formTest2).appendTo('#sidebar2');
+  $(sync).appendTo('#sidebar2');
 
   //https://stackoverflow.com/questions/18602331/why-is-this-jquery-click-function-not-working
   // link above helped with the on click event which then leads to grabbing the data from IndexedDB

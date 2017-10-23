@@ -5,32 +5,9 @@ var boot = require('loopback-boot');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
 
-
 var app = module.exports = loopback();
 
-// The important additions!
-//var Lsidebar = require('leaflet-sidebar-v2');
 
-
-/*GLOBAL.window = {};
-GLOBAL.document = {
-  documentElement: {
-    style: {}
-  },
-  getElementsByTagName: function() { return []; },
-  createElement: function() { return {}; }
-};
-GLOBAL.navigator = {
-  userAgent: 'nodejs'
-};
-GLOBAL.L = require('leaflet');
-//var L = require('leaflet');
-require('leaflet-sidebar');
-require('leaflet.markercluster');
-
-GLOBAL.L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
-
-*/
 var path = require('path');
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');

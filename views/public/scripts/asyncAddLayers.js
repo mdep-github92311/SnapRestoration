@@ -221,7 +221,7 @@ async function createLayer(data, layerName) {
   catch (err) {
     console.error(err);
   }
-}
+};
 
 async function getLayers() {
   const progress = new LoadingOverlayProgress({
@@ -254,50 +254,50 @@ async function getLayers() {
     $.when(
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/Barriers/barrierGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Barrier');
-        count += 5
+        count += 5;
       }),
 
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/DistPoints/distPointGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Points');
-        count += 5
+        count += 5;
       }),
 
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/DistLines/distLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Lines');
-        count += 5
+        count += 5;
       }),
 
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/DistPolygons/distPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Polygon');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
-        count += 5
+        count += 5;
       }),
 
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/RestoPoints/restoPointGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Points');
-        count += 5
+        count += 5;
       }),
 
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/Roads/roadsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Roads');
-        count += 15
+        count += 15;
       })
       .fail(function(jqXHR, textStatus, error) {
-        console.log(JSON.stringify(jqXHR))
+        console.log(JSON.stringify(jqXHR));
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Soil Vulnerability');
-        count += 10
+        count += 10;
       })
       .fail(function(jqXHR, textStatus, error) {
         console.log(error)
@@ -305,49 +305,49 @@ async function getLayers() {
 
       await $.getJSON('http://restoration.mojavedata.gov:3000/api/RestoPolygons/restoPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Polygon');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Poly Cent');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/SnapExtents/snapExtentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Snap Extent');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/BlmRegions/blmRegionsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'BLM');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/FsRegions/fsRegionsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'FS Regions');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'MDEP Boundary');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/MdiBoundaries/mdiBoundGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'MDI Boundary');
-        count += 5
+        count += 5;
       }),
 
       $.getJSON('http://restoration.mojavedata.gov:3000/api/NvCounties/nvCountiesGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Nevada Counties');
-        count += 5
+        count += 5;
       })
     ).then(function () {
       //$.LoadingOverlay("hide");
-      console.log(count)
-    })
+      console.log(count);
+    });
   }
   catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
