@@ -192,14 +192,7 @@ function onEachDistPoint(feature, layer) {
     var lastPart;
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if (feature.properties[prop] == null) {
-            popUpContent.push(`<B>${prop}</B>: NULL`);
-            lastPart = feature.properties[prop];
-        }
-        else {
-            popUpContent.push(`<B>${prop}: </B>` + feature.properties[prop].toString());
-            lastPart = feature.properties[prop];
-        }
+        popUpContent.push(`<B>${prop} </B> : ` + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
