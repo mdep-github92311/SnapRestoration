@@ -181,7 +181,8 @@ async function createLayer(data, layerName) {
 
       case 'Roads':
         const roads = await L.geoJson(data, {
-          pane: 'Lines'
+          pane: 'Lines',
+          style: roadColor
         }).addTo(map);
 
         control.addOverlay(roads, layerName, {groupName: 'Roads', expanded: false});

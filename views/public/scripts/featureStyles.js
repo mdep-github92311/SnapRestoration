@@ -1,20 +1,4 @@
-// snaps map to center the point that is clicked
-var clickedMarker;
 
-function clickFeature(e) {
-    if(clickedMarker) {
-          clickedMarker.setIcon('/public/css/images/arrow_down.png');
-    }
-    var layer = e.target;
-    e.target.setIcon('/public/css/images/arrow_down.png');
-    clickedMarker = e.target;
-
-    info.update(layer.feature.properties);
-}
-var icon = L.icon({
-        iconUrl: 'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Azure.png',
-        iconSize: [ 48, 48 ],
-    });
 // creating a style function for points in the map based on the agency number
 function myStylePoints(feature) {
     switch (feature.properties.agency) {
@@ -170,6 +154,13 @@ function nv_county(feature) {
 
 function soil_vuln(feature) {
     return {color: "#a65628"}
+}
+
+function roadColor(feature) {
+    return {color: "#000000",
+                weight: 3,
+                opacity: 1
+    }
 }
 
 function onEachBarrier(feature, layer) {

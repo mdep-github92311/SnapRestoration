@@ -118,6 +118,7 @@
         padding: 0 20px;
         line-height: 40px;
         font-size: 14.4pt;
+        display: block;
         color: #fff;
         background-color: #0074d9; }
         .sidebar-right .sidebar-header {
