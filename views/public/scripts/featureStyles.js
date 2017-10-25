@@ -1,8 +1,20 @@
 // snaps map to center the point that is clicked
-function clickZoom(e) {
-	map.setView(e.target.getLatLng(),15);
-}
+var clickedMarker;
 
+function clickFeature(e) {
+    if(clickedMarker) {
+          clickedMarker.setIcon('/public/css/images/arrow_down.png');
+    }
+    var layer = e.target;
+    e.target.setIcon('/public/css/images/arrow_down.png');
+    clickedMarker = e.target;
+
+    info.update(layer.feature.properties);
+}
+var icon = L.icon({
+        iconUrl: 'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Azure.png',
+        iconSize: [ 48, 48 ],
+    });
 // creating a style function for points in the map based on the agency number
 function myStylePoints(feature) {
     switch (feature.properties.agency) {
@@ -196,7 +208,6 @@ function onEachDistLine(feature, layer) {
 
 function onEachDistPoint(feature, layer) {
     var popUpContent = [];
-    var lastPart;
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
         popUpContent.push(`<B>${prop} </B> : ` + feature.properties[prop]);
