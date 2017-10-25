@@ -1,3 +1,8 @@
+// snaps map to center the point that is clicked
+function clickZoom(e) {
+	map.setView(e.target.getLatLng(),15);
+}
+
 // creating a style function for points in the map based on the agency number
 function myStylePoints(feature) {
     switch (feature.properties.agency) {
@@ -163,6 +168,7 @@ function onEachBarrier(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Barrier</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -179,6 +185,7 @@ function onEachDistLine(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -196,6 +203,7 @@ function onEachDistPoint(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -213,6 +221,7 @@ function onEachDistPoly(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -229,6 +238,7 @@ function onEachDistPolyCent(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -245,6 +255,7 @@ function onEachRestoPoly(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -261,6 +272,7 @@ function onEachRestoPoint(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -277,6 +289,7 @@ function onEachRestoPolyCent(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -293,6 +306,7 @@ function onEachRestoLine(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -309,6 +323,7 @@ function onEachBLMRegion(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>BLM Region</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -325,6 +340,7 @@ function onEachFSRegion(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>FS Region</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -341,6 +357,7 @@ function onEachMDEPBound(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>MDEP Bound</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -357,6 +374,7 @@ function onEachMDIBound(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>MDI Bound</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -373,6 +391,7 @@ function onEachNVCounty(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>NV Counties</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -389,6 +408,7 @@ function onEachSoilVuln(feature, layer) {
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
