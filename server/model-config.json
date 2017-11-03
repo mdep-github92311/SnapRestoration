@@ -248,5 +248,17 @@
   "BarrierSub": {
     "dataSource": "mip",
     "public": true
+  },
+  "RestoPointSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointSubGeoJSON": true
+        }
+      }
+    }
   }
 }

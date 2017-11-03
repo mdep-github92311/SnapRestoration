@@ -101,6 +101,22 @@ exports.restoPoint_query =
       gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
       sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
     FROM resto_point As lg) As f) As fc`;
+    
+exports.restoPointSub_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
+      sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
+    FROM resto_point_sub As lg) As f) As fc`;
 
 exports.resto_line_query =
     `SELECT 
