@@ -3,11 +3,11 @@
 // both links above were used  so i can make a custom REST API based on my native SQL Query
 
 module.exports = function (RestoPointSub) {
-  const testQuery = require("../javascripts/query.js");
+  const testQuery = require("../../javascripts/query.js");
 
-  RestoPointSub.restoPointGeoJSON = function (query, cb) {
+  RestoPointSub.restoPointSubGeoJSON = function (query, cb) {
     const dataSource = RestoPointSub.app.datasources.mip;
-    const sql = testQuery.restoPoint_query;
+    const sql = testQuery.restoPointSub_query;
 
     dataSource.connector.query(sql, query, function (err, barrierQ) {
       if (err) return cb(err);

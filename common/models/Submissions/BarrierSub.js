@@ -1,5 +1,5 @@
 module.exports = function (BarrierSub) {
-  const subQuery = require("../javascripts/upsertQuery.js");
+  const subQuery = require("../../javascripts/upsertQuery.js");
 
   BarrierSub.exports = function (BarrierSub) {
 

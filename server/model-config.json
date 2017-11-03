@@ -11,6 +11,7 @@
       "../common/models/Restoration",
       "../common/models/Roads",
       "../common/models/Snap_Soil",
+      "../common/models/Submissions",
       "./models",
       "../Barrier",
       "../Boundaries",
@@ -18,7 +19,8 @@
       "../Disturbance",
       "../Restoration",
       "../Roads",
-      "../Snap_Soil"
+      "../Snap_Soil",
+      "../Submissions"
     ],
     "mixins": [
       "loopback/common/mixins",
