@@ -251,6 +251,54 @@
     "dataSource": "mip",
     "public": true
   },
+  "DistLineSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPointSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygonSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolySubGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLineSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineSubGeoJSON": true
+        }
+      }
+    }
+  },
   "RestoPointSub": {
     "dataSource": "mip",
     "public": true,
@@ -259,6 +307,18 @@
         "sharedMethods": {
           "*": false,
           "restoPointSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygonSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolySubGeoJSON": true
         }
       }
     }
