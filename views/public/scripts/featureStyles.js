@@ -314,7 +314,7 @@ function onEachDistPolyCent(feature, layer) {
     for (var prop in feature.properties) {
         //console.log(prop + ' : ' + feature.properties[prop]);
         if(prop == 'agency' || prop == 'agencey'){
-            console.log(prop + ' : ' + feature.properties[prop]);
+            //console.log(prop + ' : ' + feature.properties[prop]);
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -387,7 +387,7 @@ function onEachRestoPoint(feature, layer) {
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
         if(prop == 'agency' || prop == 'agencey'){
-            console.log(prop + ' : ' + feature.properties[prop]);
+            //console.log(prop + ' : ' + feature.properties[prop]);
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
