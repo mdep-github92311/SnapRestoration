@@ -62,9 +62,9 @@
         <div id="reviewItems"></div>
         
         <script>
-          let promise = [];
+          //let promise = [];
           getSubmissions().then(function(defs){
-              promise = (defs);
+              //promise = (defs);
               var elem = document.getElementById('reviewItems');
               elem.innerHTML = "There are " + defs.overallCount + " submissions to add";
               console.log(defs);

@@ -63,7 +63,7 @@
 module.exports = function (BarrierSub) {
   const testQuery = require("../../javascripts/query.js");
 
-  BarrierSub.barrierGeoJSON = function (query, cb) {
+  BarrierSub.barrierSubGeoJSON = function (query, cb) {
     const dataSource = BarrierSub.app.datasources.mip;
     const sql = testQuery.barrier_sub_query;
 
