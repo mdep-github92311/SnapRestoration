@@ -288,7 +288,22 @@ exports.soil_vulnerability_query =
       perimete_3, county_n_1, area__sq_1, comment_1, acres_1, fid_swla_1, area_12_14, perimete_4, ca_lando_1, ca_lando_2, 
       region_1, owner_1, source_1, macode_1, status_1, matype_1, owner_na_1, new_owne_1, name_1, state_1) As l)) As properties
     FROM soil_vulnerability As lg) As f) As fc`;
-
+    
+exports.barrier_sub_query =
+    `SELECT 
+      Row_to_json(fc)
+    FROM (SELECT
+      'FeatureCollection' AS type,
+      Array_to_json(Array_agg(f)) AS features
+    FROM (SELECT
+      'Feature' AS type,
+      St_asgeojson(geom) ::json AS geometry,
+      Row_to_json((SELECT
+        l
+    FROM (SELECT
+      gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc) AS l) ) AS properties
+    FROM barrier_sub AS lg) AS f) AS fc;`;
 
 exports.dist_line_sub_query =
     `SELECT 
