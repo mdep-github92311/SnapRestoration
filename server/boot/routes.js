@@ -54,6 +54,7 @@ module.exports = function (app) {
         restoPointArray.push(restoPointProp)
       }
 
+
       db.none(`INSERT INTO resto_point_sub (gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments,
       primary_ob, secondary_, project_na, sqft_resto, gps_photo, photo_azim, previously, qa_qc, geom) VALUES $1` +
         restoPointUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,

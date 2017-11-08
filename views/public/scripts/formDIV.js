@@ -2056,7 +2056,7 @@ $(document).ready(function () {
           console.warn(err);
         });
     } else if (Object.keys(restoPointObj).length > 0) {
-
+      console.log(thisLayer);
       thisLayer["properties"] = restoPointObj;
       //thisLayer['geometry']['type'] = 'MultiLineString';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};

@@ -1,3 +1,4 @@
+
 // creating a style function for points in the map based on the agency number
 function myStylePoints(feature) {
     switch (feature.properties.agency) {
@@ -155,14 +156,41 @@ function soil_vuln(feature) {
     return {color: "#a65628"}
 }
 
+function roadColor(feature) {
+    return {color: "#000000",
+                weight: 3,
+                opacity: 1
+    }
+}
+
 function onEachBarrier(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Barrier</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -175,10 +203,30 @@ function onEachDistLine(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -189,13 +237,32 @@ function onEachDistLine(feature, layer) {
 
 function onEachDistPoint(feature, layer) {
     var popUpContent = [];
-    var lastPart;
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop} </B> : ` + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -209,10 +276,30 @@ function onEachDistPoly(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -225,10 +312,32 @@ function onEachDistPolyCent(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        //console.log(prop + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            //console.log(prop + ' : ' + feature.properties[prop]);
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -241,10 +350,30 @@ function onEachRestoPoly(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -257,10 +386,31 @@ function onEachRestoPoint(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            //console.log(prop + ' : ' + feature.properties[prop]);
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -273,10 +423,30 @@ function onEachRestoPolyCent(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -289,10 +459,30 @@ function onEachRestoLine(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -305,10 +495,30 @@ function onEachBLMRegion(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>BLM Region</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -321,10 +531,30 @@ function onEachFSRegion(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>FS Region</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -337,10 +567,30 @@ function onEachMDEPBound(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>MDEP Bound</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -353,10 +603,30 @@ function onEachMDIBound(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>MDI Bound</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -369,10 +639,30 @@ function onEachNVCounty(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>NV Counties</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -385,10 +675,30 @@ function onEachSoilVuln(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if(prop == 'agency' || prop == 'agencey'){
+            switch (feature.properties[prop]) {
+                case 0:
+                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
+                    break;
+                case 1:
+                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
+                    break;
+                case 2:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
+                    break;
+                case 3:
+                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {

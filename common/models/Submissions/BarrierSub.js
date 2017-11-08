@@ -1,5 +1,5 @@
-module.exports = function (BarrierSub) {
-  const subQuery = require("../javascripts/upsertQuery.js");
+/*module.exports = function (BarrierSub) {
+  const subQuery = require("../../javascripts/upsertQuery.js");
 
   BarrierSub.exports = function (BarrierSub) {
 
@@ -57,4 +57,39 @@ module.exports = function (BarrierSub) {
       }
     }
   )
+};
+*/
+
+module.exports = function (BarrierSub) {
+  const testQuery = require("../../javascripts/query.js");
+
+  BarrierSub.barrierSubGeoJSON = function (query, cb) {
+    const dataSource = BarrierSub.app.datasources.mip;
+    const sql = testQuery.barrier_sub_query;
+
+    dataSource.connector.query(sql, query, function (err, barrierQ) {
+      if (err) return cb(err);
+      cb(err, barrierQ);
+    });
+
+  };
+  BarrierSub.remoteMethod(
+    'barrierSubGeoJSON',
+    {
+      http: {verb: 'get'},
+      description: 'This will query Postgres and return a GeoJSON for Leaflet',
+      accepts: {
+        arg: 'filter',
+        type: 'array',
+        http: {
+          source: 'query'
+        }
+      },
+      returns: {
+        arg:'data',
+        type: ['BarrierSub'],
+        root: true
+      }
+    }
+  );
 };

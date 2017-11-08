@@ -1,0 +1,1988 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.3
+-- Dumped by pg_dump version 9.6.3
+
+-- Started on 2017-09-27 14:05:04
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 12387)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3753 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- TOC entry 1 (class 3079 OID 24948)
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3754 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
+
+--
+-- TOC entry 3 (class 3079 OID 24957)
+-- Name: postgis; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+
+
+--
+-- TOC entry 3755 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 202 (class 1259 OID 26430)
+-- Name: barrier; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE barrier (
+    gid integer NOT NULL,
+    agency integer,
+    regions character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    barr_code character varying(20),
+    barr_actio character varying(10),
+    barr_type character varying(25),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    barr_miles numeric,
+    barr_km numeric,
+    previously character varying(10),
+    gps_photo character varying(3),
+    photo_azim integer,
+    qa_qc character varying(10),
+    shape_leng numeric,
+    geom geometry(MultiLineString,4326)
+);
+
+
+ALTER TABLE barrier OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 26436)
+-- Name: barrier_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE barrier_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE barrier_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3756 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: barrier_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE barrier_gid_seq OWNED BY barrier.gid;
+
+
+--
+-- TOC entry 204 (class 1259 OID 26438)
+-- Name: barrier_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE barrier_sub (
+    gid integer NOT NULL,
+    agency integer,
+    regions character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    barr_code character varying(20),
+    barr_actio character varying(10),
+    barr_type character varying(25),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    barr_miles numeric,
+    barr_km numeric,
+    previously character varying(10),
+    gps_photo character varying(3),
+    photo_azim integer,
+    qa_qc character varying(10),
+    shape_stle numeric,
+    shape_leng numeric,
+    geom geometry(MultiLineString,4326)
+);
+
+
+ALTER TABLE barrier_sub OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 26444)
+-- Name: blm_regions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE blm_regions (
+    gid integer NOT NULL,
+    objectid numeric(10,0),
+    area_ numeric,
+    perimeter numeric,
+    ha750_2003 numeric,
+    ha750_2004 numeric,
+    hyd_area character varying(4),
+    hyd_area_n character varying(30),
+    subarea_na character varying(30),
+    hyd_region numeric,
+    hyd_regi_1 character varying(30),
+    pltsym numeric,
+    desig character varying(1),
+    des_reas character varying(6),
+    scale numeric,
+    desig_orde character varying(10),
+    shape_leng numeric,
+    ird numeric(10,0),
+    ird_name character varying(50),
+    shape_le_1 numeric,
+    shape_le_2 numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE blm_regions OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 26450)
+-- Name: blm_regions_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE blm_regions_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE blm_regions_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3757 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: blm_regions_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE blm_regions_gid_seq OWNED BY blm_regions.gid;
+
+
+--
+-- TOC entry 207 (class 1259 OID 26452)
+-- Name: dist_line; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_line (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    dist_use character varying(25),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    site_stabi character varying(10),
+    dist_crust character varying(25),
+    undist_cru character varying(25),
+    depth character varying(20),
+    width character varying(20),
+    type character varying(15),
+    plant_dama character varying(40),
+    accessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    miles_dist numeric,
+    km_dist numeric,
+    treated character varying(3),
+    dist_sever numeric(10,0),
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    soil_vulne character varying(20),
+    photo_azim numeric(10,0),
+    qa_qc character varying(10),
+    old_dist_c character varying(100),
+    shape_leng numeric,
+    geom geometry(MultiLineString)
+);
+
+
+ALTER TABLE dist_line OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 26458)
+-- Name: dist_line_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE dist_line_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dist_line_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3758 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: dist_line_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE dist_line_gid_seq OWNED BY dist_line.gid;
+
+
+--
+-- TOC entry 209 (class 1259 OID 26460)
+-- Name: dist_line_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_line_sub (
+    gid integer NOT NULL,
+    agency integer,
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    dist_use character varying(25),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    site_stabi character varying(10),
+    dist_crust character varying(25),
+    undist_cru character varying(25),
+    depth character varying(20),
+    width character varying(20),
+    type character varying(15),
+    plant_dama character varying(40),
+    accessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    miles_dist numeric,
+    km_dist numeric,
+    treated character varying(3),
+    dist_sever integer,
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    soil_vulne character varying(20),
+    photo_azim integer,
+    qa_qc character varying(10),
+    old_dist_c character varying(100),
+    shape_stle numeric,
+    shape_leng numeric,
+    geom geometry(MultiLineString,4326)
+);
+
+
+ALTER TABLE dist_line_sub OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 26466)
+-- Name: dist_point; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_point (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    dist_pt_ty character varying(25),
+    accessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    previously character varying(3),
+    project_na character varying(25),
+    estimate_s numeric(10,0),
+    treated character varying(3),
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    soil_vulne character varying(20),
+    dist_use character varying(25),
+    photo_azim numeric(10,0),
+    qa_qc character varying(10),
+    old_distco character varying(50),
+    geom geometry(Point)
+);
+
+
+ALTER TABLE dist_point OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 26472)
+-- Name: dist_point_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE dist_point_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dist_point_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3759 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: dist_point_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE dist_point_gid_seq OWNED BY dist_point.gid;
+
+
+--
+-- TOC entry 212 (class 1259 OID 26474)
+-- Name: dist_point_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_point_sub (
+    gid integer NOT NULL,
+    agency integer,
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    dist_pt_ty character varying(25),
+    accessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    previously character varying(3),
+    project_na character varying(25),
+    estimate_s numeric(10,0),
+    treated character varying(3),
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    soil_vulne character varying(20),
+    dist_use character varying(25),
+    photo_azim integer,
+    qa_qc character varying(10),
+    old_distco character varying(50),
+    geom geometry(Point,4326)
+);
+
+
+ALTER TABLE dist_point_sub OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 26480)
+-- Name: dist_poly_centroid; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_poly_centroid (
+    gid integer NOT NULL,
+    agencey numeric(10,0),
+    regions character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    dist_use character varying(25),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    site_stabi character varying(10),
+    dist_crust character varying(25),
+    undist_cru character varying(25),
+    depth character varying(20),
+    dist_poly_ character varying(30),
+    plant_dama character varying(40),
+    assessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    acres_rest numeric,
+    kmsq_resto numeric,
+    treated character varying(3),
+    dist_sever numeric(10,0),
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    site_vulne character varying(20),
+    photo_azim numeric(10,0),
+    qa_qc character varying(10),
+    old_distco character varying(50),
+    orig_fid numeric(10,0),
+    geom geometry(Point)
+);
+
+
+ALTER TABLE dist_poly_centroid OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 26486)
+-- Name: dist_poly_centroid_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE dist_poly_centroid_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dist_poly_centroid_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3760 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: dist_poly_centroid_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE dist_poly_centroid_gid_seq OWNED BY dist_poly_centroid.gid;
+
+
+--
+-- TOC entry 215 (class 1259 OID 26488)
+-- Name: dist_polygon; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_polygon (
+    gid integer NOT NULL,
+    agencey numeric(10,0),
+    regions character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    dist_use character varying(25),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    site_stabi character varying(10),
+    dist_crust character varying(25),
+    undist_cru character varying(25),
+    depth character varying(20),
+    dist_poly_ character varying(30),
+    plant_dama character varying(40),
+    assessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    acres_rest numeric,
+    kmsq_resto numeric,
+    treated character varying(3),
+    dist_sever numeric(10,0),
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    site_vulne character varying(20),
+    photo_azim numeric(10,0),
+    qa_qc character varying(10),
+    old_distco character varying(50),
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE dist_polygon OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 26494)
+-- Name: dist_polygon_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE dist_polygon_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dist_polygon_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3761 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: dist_polygon_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE dist_polygon_gid_seq OWNED BY dist_polygon.gid;
+
+
+--
+-- TOC entry 217 (class 1259 OID 26496)
+-- Name: dist_polygon_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE dist_polygon_sub (
+    gid integer NOT NULL,
+    agencey integer,
+    regions character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    dist_code character varying(20),
+    dist_use character varying(25),
+    use_freq character varying(3),
+    use_recent character varying(3),
+    site_stabi character varying(10),
+    dist_crust character varying(25),
+    undist_cru character varying(25),
+    depth character varying(20),
+    dist_poly_ character varying(30),
+    plant_dama character varying(40),
+    assessibil character varying(10),
+    visibility character varying(10),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    acres_rest numeric,
+    kmsq_resto numeric,
+    treated character varying(3),
+    dist_sever integer,
+    cultural character varying(3),
+    t_e_specie character varying(3),
+    gps_photo character varying(3),
+    site_vulne character varying(20),
+    photo_azim integer,
+    qa_qc character varying(10),
+    old_distco character varying(50),
+    shape_star numeric,
+    shape_stle numeric,
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon,4326)
+);
+
+
+ALTER TABLE dist_polygon_sub OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 26502)
+-- Name: fs_regions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE fs_regions (
+    gid integer NOT NULL,
+    objectid numeric(10,0),
+    region character varying(50),
+    area_acres numeric,
+    code character varying(5),
+    shape_leng numeric,
+    shape_le_1 numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE fs_regions OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 26508)
+-- Name: fs_regions_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE fs_regions_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE fs_regions_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3762 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: fs_regions_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE fs_regions_gid_seq OWNED BY fs_regions.gid;
+
+
+--
+-- TOC entry 220 (class 1259 OID 26510)
+-- Name: mdep_boundary; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE mdep_boundary (
+    gid integer NOT NULL,
+    sde_sde_bo numeric,
+    perimeter numeric,
+    bndpmoj_ numeric,
+    bndpmoj_id numeric,
+    inside numeric,
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE mdep_boundary OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 26516)
+-- Name: mdep_boundary_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE mdep_boundary_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mdep_boundary_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3763 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: mdep_boundary_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE mdep_boundary_gid_seq OWNED BY mdep_boundary.gid;
+
+
+--
+-- TOC entry 222 (class 1259 OID 26518)
+-- Name: mdi_boundary; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE mdi_boundary (
+    gid integer NOT NULL,
+    id numeric(10,0),
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE mdi_boundary OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 26524)
+-- Name: mdi_boundary_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE mdi_boundary_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE mdi_boundary_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3764 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: mdi_boundary_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE mdi_boundary_gid_seq OWNED BY mdi_boundary.gid;
+
+
+--
+-- TOC entry 224 (class 1259 OID 26526)
+-- Name: monitoring_1; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE monitoring_1 (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    gps_date date,
+    gps_photo character varying(3),
+    photo_azim numeric(10,0),
+    reuse_disc character varying(3),
+    resto_inte character varying(15),
+    reveg_succ character varying(15),
+    comments character varying(254),
+    qa_qc character varying(10),
+    geom geometry(Point)
+);
+
+
+ALTER TABLE monitoring_1 OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 26532)
+-- Name: monitoring_1_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE monitoring_1_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE monitoring_1_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3765 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: monitoring_1_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE monitoring_1_gid_seq OWNED BY monitoring_1.gid;
+
+
+--
+-- TOC entry 226 (class 1259 OID 26534)
+-- Name: nv_counties; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE nv_counties (
+    gid integer NOT NULL,
+    objectid numeric(10,0),
+    restoratio numeric,
+    perimeter numeric,
+    nv_county_ numeric(10,0),
+    nv_count_1 numeric(10,0),
+    name character varying(20),
+    state_name character varying(25),
+    state_fips character varying(2),
+    cnty_fips character varying(3),
+    fips character varying(5),
+    pop1990 numeric(10,0),
+    pop1999 numeric(10,0),
+    pop90_sqmi numeric(10,0),
+    households numeric(10,0),
+    males numeric(10,0),
+    females numeric(10,0),
+    white numeric(10,0),
+    black numeric(10,0),
+    ameri_es numeric(10,0),
+    asian_pi numeric(10,0),
+    other numeric(10,0),
+    hispanic numeric(10,0),
+    age_under5 numeric(10,0),
+    age_5_17 numeric(10,0),
+    age_18_29 numeric(10,0),
+    age_30_49 numeric(10,0),
+    age_50_64 numeric(10,0),
+    age_65_up numeric(10,0),
+    nevermarry numeric(10,0),
+    married numeric(10,0),
+    separated numeric(10,0),
+    widowed numeric(10,0),
+    divorced numeric(10,0),
+    hsehld_1_m numeric(10,0),
+    hsehld_1_f numeric(10,0),
+    marhh_chd numeric(10,0),
+    marhh_no_c numeric(10,0),
+    mhh_child numeric(10,0),
+    fhh_child numeric(10,0),
+    hse_units numeric(10,0),
+    vacant numeric(10,0),
+    owner_occ numeric(10,0),
+    renter_occ numeric(10,0),
+    median_val numeric(10,0),
+    medianrent numeric(10,0),
+    units_1det numeric(10,0),
+    units_1att numeric(10,0),
+    units2 numeric(10,0),
+    units3_9 numeric(10,0),
+    units10_49 numeric(10,0),
+    units50_up numeric(10,0),
+    mobilehome numeric(10,0),
+    no_farms87 numeric(10,0),
+    avg_size87 numeric(10,0),
+    crop_acr87 numeric(10,0),
+    avg_sale87 numeric(10,0),
+    shape_leng numeric,
+    shape_le_1 numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE nv_counties OWNER TO postgres;
+
+--
+-- TOC entry 227 (class 1259 OID 26540)
+-- Name: nv_counties_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE nv_counties_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE nv_counties_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3766 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: nv_counties_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE nv_counties_gid_seq OWNED BY nv_counties.gid;
+
+
+--
+-- TOC entry 228 (class 1259 OID 26542)
+-- Name: rest_poly_centroid; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE rest_poly_centroid (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    region character varying(30),
+    ecosystem character varying(50),
+    resto_code character varying(20),
+    resto_acti character varying(30),
+    te_action character varying(3),
+    non_list_a character varying(3),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    treatment_ character varying(7),
+    acres_rest numeric,
+    kmsq_resto numeric,
+    gps_date date,
+    gps_photo character varying(3),
+    photo_azim numeric(10,0),
+    signed character varying(5),
+    deep_till character varying(5),
+    barrier_in character varying(5),
+    mulch character varying(11),
+    monitoring character varying(3),
+    previously character varying(10),
+    orig_fid numeric(10,0),
+    geom geometry(Point)
+);
+
+
+ALTER TABLE rest_poly_centroid OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 26548)
+-- Name: rest_poly_centroid_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE rest_poly_centroid_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE rest_poly_centroid_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3767 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: rest_poly_centroid_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE rest_poly_centroid_gid_seq OWNED BY rest_poly_centroid.gid;
+
+
+--
+-- TOC entry 230 (class 1259 OID 26550)
+-- Name: resto_line; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE resto_line (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    resto_code character varying(25),
+    resto_act character varying(50),
+    te_act character varying(5),
+    nonlists_a character varying(5),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    treatment_ character varying(10),
+    signed character varying(5),
+    mulch character varying(10),
+    deep_till character varying(5),
+    barrier_in character varying(5),
+    miles_rest numeric,
+    km_resto numeric,
+    gps_photo character varying(3),
+    photo_azim numeric(10,0),
+    monitoring character varying(3),
+    previously character varying(10),
+    qa_qc character varying(10),
+    shape_leng numeric,
+    geom geometry(MultiLineString)
+);
+
+
+ALTER TABLE resto_line OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 26556)
+-- Name: resto_line_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE resto_line_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE resto_line_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3768 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: resto_line_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE resto_line_gid_seq OWNED BY resto_line.gid;
+
+
+--
+-- TOC entry 232 (class 1259 OID 26558)
+-- Name: resto_line_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE resto_line_sub (
+    gid integer NOT NULL,
+    agency integer,
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    resto_code character varying(25),
+    resto_act character varying(50),
+    te_act character varying(5),
+    nonlists_a character varying(5),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    treatment_ character varying(10),
+    signed character varying(5),
+    mulch character varying(10),
+    deep_till character varying(5),
+    barrier_in character varying(5),
+    miles_rest numeric,
+    km_resto numeric,
+    gps_photo character varying(3),
+    photo_azim integer,
+    monitoring character varying(3),
+    previously character varying(10),
+    qa_qc character varying(10),
+    shape_stle numeric,
+    shape_leng numeric,
+    geom geometry(MultiLineString,4326)
+);
+
+
+ALTER TABLE resto_line_sub OWNER TO postgres;
+
+--
+-- TOC entry 233 (class 1259 OID 26564)
+-- Name: resto_point; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE resto_point (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    resto_code character varying(20),
+    resto_acti character varying(25),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    sqft_resto numeric(10,0),
+    gps_photo character varying(3),
+    photo_azim numeric(10,0),
+    previously character varying(10),
+    qa_qc character varying(10),
+    geom geometry(Point)
+);
+
+
+ALTER TABLE resto_point OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1259 OID 26570)
+-- Name: resto_point_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE resto_point_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE resto_point_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3769 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: resto_point_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE resto_point_gid_seq OWNED BY resto_point.gid;
+
+
+--
+-- TOC entry 235 (class 1259 OID 26572)
+-- Name: resto_point_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE resto_point_sub (
+    gid integer NOT NULL,
+    agency integer,
+    region character varying(30),
+    ecosystem character varying(30),
+    gps_date date,
+    resto_code character varying(20),
+    resto_acti character varying(25),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    sqft_resto numeric(10,0),
+    gps_photo character varying(3),
+    photo_azim integer,
+    previously character varying(10),
+    qa_qc character varying(10),
+    geom geometry(Point,4326)
+);
+
+
+ALTER TABLE resto_point_sub OWNER TO postgres;
+
+--
+-- TOC entry 236 (class 1259 OID 26578)
+-- Name: resto_polygon; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE resto_polygon (
+    gid integer NOT NULL,
+    agency numeric(10,0),
+    region character varying(30),
+    ecosystem character varying(50),
+    resto_code character varying(20),
+    resto_acti character varying(30),
+    te_action character varying(3),
+    non_list_a character varying(3),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    treatment_ character varying(7),
+    acres_rest numeric,
+    kmsq_resto numeric,
+    gps_date date,
+    gps_photo character varying(3),
+    photo_azim numeric(10,0),
+    signed character varying(5),
+    deep_till character varying(5),
+    barrier_in character varying(5),
+    mulch character varying(11),
+    monitoring character varying(3),
+    previously character varying(10),
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE resto_polygon OWNER TO postgres;
+
+--
+-- TOC entry 237 (class 1259 OID 26584)
+-- Name: resto_polygon_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE resto_polygon_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE resto_polygon_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3770 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: resto_polygon_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE resto_polygon_gid_seq OWNED BY resto_polygon.gid;
+
+
+--
+-- TOC entry 238 (class 1259 OID 26586)
+-- Name: resto_polygon_sub; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE resto_polygon_sub (
+    gid integer NOT NULL,
+    agency integer,
+    region character varying(30),
+    ecosystem character varying(50),
+    resto_code character varying(20),
+    resto_acti character varying(30),
+    te_action character varying(3),
+    non_list_a character varying(3),
+    comments character varying(254),
+    primary_ob character varying(25),
+    secondary_ character varying(25),
+    project_na character varying(25),
+    treatment_ character varying(7),
+    acres_rest numeric,
+    kmsq_resto numeric,
+    gps_date date,
+    gps_photo character varying(3),
+    photo_azim integer,
+    signed character varying(5),
+    deep_till character varying(5),
+    barrier_in character varying(5),
+    mulch character varying(11),
+    monitoring character varying(3),
+    previously character varying(10),
+    shape_star numeric,
+    shape_stle numeric,
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon,4326)
+);
+
+
+ALTER TABLE resto_polygon_sub OWNER TO postgres;
+
+--
+-- TOC entry 239 (class 1259 OID 26592)
+-- Name: roads; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE roads (
+    gid integer NOT NULL,
+    route_type character varying(20),
+    dominantsu character varying(20),
+    route_widt character varying(20),
+    name character varying(30),
+    comment character varying(30),
+    sourcethm character varying(16),
+    status character varying(20),
+    rd_number character varying(10),
+    rs2477_id character varying(9),
+    rd_status character varying(10),
+    indicator_ numeric,
+    length_mi numeric,
+    no numeric(10,0),
+    gtlf_id numeric(10,0),
+    admin_st character varying(2),
+    gtlf_plan_ character varying(20),
+    famslink character varying(10),
+    gtlf_own character varying(20),
+    gtlf_nu character varying(10),
+    gtlf_nm character varying(40),
+    gtlf_nu2 character varying(10),
+    gtlf_nm2 character varying(40),
+    gtlf_surfa character varying(20),
+    gtlf_carto character varying(3),
+    noshow_rsn character varying(20),
+    use_restri character varying(20),
+    fun_class character varying(10),
+    spec_dsgtn character varying(4),
+    esmtrow character varying(3),
+    use_class character varying(20),
+    coord_src_ character varying(5),
+    coord_src2 character varying(25),
+    date_ date,
+    miles numeric,
+    condition character varying(20),
+    use_level character varying(20),
+    created_us character varying(254),
+    created_da date,
+    last_edite character varying(254),
+    last_edi_1 date,
+    objectid_1 numeric(10,0),
+    road_statu character varying(254),
+    shape_leng numeric,
+    geom geometry(MultiLineStringZM)
+);
+
+
+ALTER TABLE roads OWNER TO postgres;
+
+--
+-- TOC entry 240 (class 1259 OID 26598)
+-- Name: roads_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE roads_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE roads_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3771 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: roads_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE roads_gid_seq OWNED BY roads.gid;
+
+
+--
+-- TOC entry 241 (class 1259 OID 26600)
+-- Name: snap_extent; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE snap_extent (
+    gid integer NOT NULL,
+    id numeric(10,0),
+    shape_leng numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE snap_extent OWNER TO postgres;
+
+--
+-- TOC entry 242 (class 1259 OID 26606)
+-- Name: snap_extent_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE snap_extent_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE snap_extent_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3772 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: snap_extent_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE snap_extent_gid_seq OWNED BY snap_extent.gid;
+
+
+--
+-- TOC entry 243 (class 1259 OID 26608)
+-- Name: soil_vulnerability; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE soil_vulnerability (
+    gid integer NOT NULL,
+    objectid numeric(10,0),
+    fid_nevada numeric(10,0),
+    fid_neva_1 numeric(10,0),
+    restoratio numeric,
+    perimeter numeric,
+    fmatn character varying(6),
+    l_name character varying(50),
+    geologicfm character varying(16),
+    statemap character varying(16),
+    county character varying(50),
+    bioagemax numeric(10,0),
+    bioagemin numeric(10,0),
+    modpoly character varying(50),
+    notes character varying(250),
+    refs character varying(50),
+    reviewed character varying(10),
+    shape_leng numeric,
+    vulfmatn numeric,
+    vulgeologi numeric,
+    fid_nvcoun numeric(10,0),
+    fid_nvco_1 numeric(10,0),
+    area_1 numeric,
+    perimete_1 numeric,
+    county_nam character varying(32),
+    area__sq_m numeric,
+    comment character varying(64),
+    acres numeric,
+    fid_swland numeric(10,0),
+    area_12 numeric,
+    perimete_2 numeric,
+    ca_landow_ numeric(10,0),
+    ca_landow1 numeric(10,0),
+    region character varying(3),
+    owner numeric(10,0),
+    source numeric(10,0),
+    macode character varying(10),
+    status numeric(10,0),
+    matype character varying(5),
+    owner_name character varying(50),
+    new_owner character varying(50),
+    name character varying(50),
+    state character varying(50),
+    fid_surfac numeric(10,0),
+    fid_surf_1 numeric(10,0),
+    areasymbol character varying(20),
+    spatialver numeric,
+    musym character varying(6),
+    mukey character varying(30),
+    mukey_1 character varying(10),
+    surftext character varying(254),
+    stmergevul numeric,
+    fid_nvco_2 numeric(10,0),
+    fid_nvco_3 numeric(10,0),
+    area_12_13 numeric,
+    perimete_3 numeric,
+    county_n_1 character varying(32),
+    area__sq_1 numeric,
+    comment_1 character varying(64),
+    acres_1 numeric,
+    fid_swla_1 numeric(10,0),
+    area_12_14 numeric,
+    perimete_4 numeric,
+    ca_lando_1 numeric(10,0),
+    ca_lando_2 numeric(10,0),
+    region_1 character varying(3),
+    owner_1 numeric(10,0),
+    source_1 numeric(10,0),
+    macode_1 character varying(10),
+    status_1 numeric(10,0),
+    matype_1 character varying(5),
+    owner_na_1 character varying(50),
+    new_owne_1 character varying(50),
+    name_1 character varying(50),
+    state_1 character varying(50),
+    shape_le_1 numeric,
+    shape_le_2 numeric,
+    shape_area numeric,
+    geom geometry(MultiPolygon)
+);
+
+
+ALTER TABLE soil_vulnerability OWNER TO postgres;
+
+--
+-- TOC entry 244 (class 1259 OID 26614)
+-- Name: soil_vulnerability_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE soil_vulnerability_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE soil_vulnerability_gid_seq OWNER TO postgres;
+
+--
+-- TOC entry 3773 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: soil_vulnerability_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE soil_vulnerability_gid_seq OWNED BY soil_vulnerability.gid;
+
+
+--
+-- TOC entry 3537 (class 2604 OID 26616)
+-- Name: barrier gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY barrier ALTER COLUMN gid SET DEFAULT nextval('barrier_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3538 (class 2604 OID 26617)
+-- Name: blm_regions gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blm_regions ALTER COLUMN gid SET DEFAULT nextval('blm_regions_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3539 (class 2604 OID 26618)
+-- Name: dist_line gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_line ALTER COLUMN gid SET DEFAULT nextval('dist_line_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3540 (class 2604 OID 26619)
+-- Name: dist_point gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_point ALTER COLUMN gid SET DEFAULT nextval('dist_point_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3541 (class 2604 OID 26620)
+-- Name: dist_poly_centroid gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_poly_centroid ALTER COLUMN gid SET DEFAULT nextval('dist_poly_centroid_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3542 (class 2604 OID 26621)
+-- Name: dist_polygon gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_polygon ALTER COLUMN gid SET DEFAULT nextval('dist_polygon_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3543 (class 2604 OID 26622)
+-- Name: fs_regions gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fs_regions ALTER COLUMN gid SET DEFAULT nextval('fs_regions_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3544 (class 2604 OID 26623)
+-- Name: mdep_boundary gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mdep_boundary ALTER COLUMN gid SET DEFAULT nextval('mdep_boundary_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3545 (class 2604 OID 26624)
+-- Name: mdi_boundary gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mdi_boundary ALTER COLUMN gid SET DEFAULT nextval('mdi_boundary_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3546 (class 2604 OID 26625)
+-- Name: monitoring_1 gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monitoring_1 ALTER COLUMN gid SET DEFAULT nextval('monitoring_1_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3547 (class 2604 OID 26626)
+-- Name: nv_counties gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY nv_counties ALTER COLUMN gid SET DEFAULT nextval('nv_counties_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3548 (class 2604 OID 26627)
+-- Name: rest_poly_centroid gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY rest_poly_centroid ALTER COLUMN gid SET DEFAULT nextval('rest_poly_centroid_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3549 (class 2604 OID 26628)
+-- Name: resto_line gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_line ALTER COLUMN gid SET DEFAULT nextval('resto_line_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3550 (class 2604 OID 26629)
+-- Name: resto_point gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_point ALTER COLUMN gid SET DEFAULT nextval('resto_point_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3551 (class 2604 OID 26630)
+-- Name: resto_polygon gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_polygon ALTER COLUMN gid SET DEFAULT nextval('resto_polygon_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3552 (class 2604 OID 26631)
+-- Name: roads gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY roads ALTER COLUMN gid SET DEFAULT nextval('roads_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3553 (class 2604 OID 26632)
+-- Name: snap_extent gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY snap_extent ALTER COLUMN gid SET DEFAULT nextval('snap_extent_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3554 (class 2604 OID 26633)
+-- Name: soil_vulnerability gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY soil_vulnerability ALTER COLUMN gid SET DEFAULT nextval('soil_vulnerability_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3557 (class 2606 OID 33444)
+-- Name: barrier barrier_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY barrier
+    ADD CONSTRAINT barrier_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3559 (class 2606 OID 33446)
+-- Name: barrier_sub barrier_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY barrier_sub
+    ADD CONSTRAINT barrier_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3562 (class 2606 OID 33448)
+-- Name: blm_regions blm_regions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY blm_regions
+    ADD CONSTRAINT blm_regions_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3565 (class 2606 OID 33450)
+-- Name: dist_line dist_line_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_line
+    ADD CONSTRAINT dist_line_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3567 (class 2606 OID 33452)
+-- Name: dist_line_sub dist_line_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_line_sub
+    ADD CONSTRAINT dist_line_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3570 (class 2606 OID 33454)
+-- Name: dist_point dist_point_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_point
+    ADD CONSTRAINT dist_point_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3572 (class 2606 OID 33456)
+-- Name: dist_point_sub dist_point_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_point_sub
+    ADD CONSTRAINT dist_point_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3575 (class 2606 OID 33458)
+-- Name: dist_poly_centroid dist_poly_centroid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_poly_centroid
+    ADD CONSTRAINT dist_poly_centroid_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3578 (class 2606 OID 33460)
+-- Name: dist_polygon dist_polygon_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_polygon
+    ADD CONSTRAINT dist_polygon_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3580 (class 2606 OID 33462)
+-- Name: dist_polygon_sub dist_polygon_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dist_polygon_sub
+    ADD CONSTRAINT dist_polygon_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3583 (class 2606 OID 33464)
+-- Name: fs_regions fs_regions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fs_regions
+    ADD CONSTRAINT fs_regions_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3586 (class 2606 OID 33466)
+-- Name: mdep_boundary mdep_boundary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mdep_boundary
+    ADD CONSTRAINT mdep_boundary_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3589 (class 2606 OID 33468)
+-- Name: mdi_boundary mdi_boundary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mdi_boundary
+    ADD CONSTRAINT mdi_boundary_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3592 (class 2606 OID 33470)
+-- Name: monitoring_1 monitoring_1_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY monitoring_1
+    ADD CONSTRAINT monitoring_1_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3595 (class 2606 OID 33472)
+-- Name: nv_counties nv_counties_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY nv_counties
+    ADD CONSTRAINT nv_counties_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3598 (class 2606 OID 33474)
+-- Name: rest_poly_centroid rest_poly_centroid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY rest_poly_centroid
+    ADD CONSTRAINT rest_poly_centroid_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3601 (class 2606 OID 33476)
+-- Name: resto_line resto_line_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_line
+    ADD CONSTRAINT resto_line_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3603 (class 2606 OID 33478)
+-- Name: resto_line_sub resto_line_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_line_sub
+    ADD CONSTRAINT resto_line_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3606 (class 2606 OID 33480)
+-- Name: resto_point resto_point_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_point
+    ADD CONSTRAINT resto_point_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3608 (class 2606 OID 33482)
+-- Name: resto_point_sub resto_point_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_point_sub
+    ADD CONSTRAINT resto_point_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3611 (class 2606 OID 33484)
+-- Name: resto_polygon resto_polygon_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_polygon
+    ADD CONSTRAINT resto_polygon_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3613 (class 2606 OID 33486)
+-- Name: resto_polygon_sub resto_polygon_sub_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY resto_polygon_sub
+    ADD CONSTRAINT resto_polygon_sub_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3616 (class 2606 OID 33488)
+-- Name: roads roads_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY roads
+    ADD CONSTRAINT roads_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3619 (class 2606 OID 33490)
+-- Name: snap_extent snap_extent_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY snap_extent
+    ADD CONSTRAINT snap_extent_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3622 (class 2606 OID 33492)
+-- Name: soil_vulnerability soil_vulnerability_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY soil_vulnerability
+    ADD CONSTRAINT soil_vulnerability_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3555 (class 1259 OID 33493)
+-- Name: barrier_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX barrier_geom_idx ON barrier USING gist (geom);
+
+
+--
+-- TOC entry 3560 (class 1259 OID 33494)
+-- Name: blm_regions_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX blm_regions_geom_idx ON blm_regions USING gist (geom);
+
+
+--
+-- TOC entry 3563 (class 1259 OID 33495)
+-- Name: dist_line_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX dist_line_geom_idx ON dist_line USING gist (geom);
+
+
+--
+-- TOC entry 3568 (class 1259 OID 33496)
+-- Name: dist_point_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX dist_point_geom_idx ON dist_point USING gist (geom);
+
+
+--
+-- TOC entry 3573 (class 1259 OID 33497)
+-- Name: dist_poly_centroid_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX dist_poly_centroid_geom_idx ON dist_poly_centroid USING gist (geom);
+
+
+--
+-- TOC entry 3576 (class 1259 OID 33498)
+-- Name: dist_polygon_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX dist_polygon_geom_idx ON dist_polygon USING gist (geom);
+
+
+--
+-- TOC entry 3581 (class 1259 OID 33499)
+-- Name: fs_regions_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fs_regions_geom_idx ON fs_regions USING gist (geom);
+
+
+--
+-- TOC entry 3584 (class 1259 OID 33500)
+-- Name: mdep_boundary_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX mdep_boundary_geom_idx ON mdep_boundary USING gist (geom);
+
+
+--
+-- TOC entry 3587 (class 1259 OID 33501)
+-- Name: mdi_boundary_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX mdi_boundary_geom_idx ON mdi_boundary USING gist (geom);
+
+
+--
+-- TOC entry 3590 (class 1259 OID 33502)
+-- Name: monitoring_1_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX monitoring_1_geom_idx ON monitoring_1 USING gist (geom);
+
+
+--
+-- TOC entry 3593 (class 1259 OID 33503)
+-- Name: nv_counties_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX nv_counties_geom_idx ON nv_counties USING gist (geom);
+
+
+--
+-- TOC entry 3596 (class 1259 OID 33504)
+-- Name: rest_poly_centroid_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX rest_poly_centroid_geom_idx ON rest_poly_centroid USING gist (geom);
+
+
+--
+-- TOC entry 3599 (class 1259 OID 33505)
+-- Name: resto_line_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX resto_line_geom_idx ON resto_line USING gist (geom);
+
+
+--
+-- TOC entry 3604 (class 1259 OID 33506)
+-- Name: resto_point_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX resto_point_geom_idx ON resto_point USING gist (geom);
+
+
+--
+-- TOC entry 3609 (class 1259 OID 33507)
+-- Name: resto_polygon_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX resto_polygon_geom_idx ON resto_polygon USING gist (geom);
+
+
+--
+-- TOC entry 3614 (class 1259 OID 33508)
+-- Name: roads_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX roads_geom_idx ON roads USING gist (geom);
+
+
+--
+-- TOC entry 3617 (class 1259 OID 33509)
+-- Name: snap_extent_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX snap_extent_geom_idx ON snap_extent USING gist (geom);
+
+
+--
+-- TOC entry 3620 (class 1259 OID 33510)
+-- Name: soil_vulnerability_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX soil_vulnerability_geom_idx ON soil_vulnerability USING gist (geom);
+
+
+-- Completed on 2017-09-27 14:05:05
+
+--
+-- PostgreSQL database dump complete
+--
+

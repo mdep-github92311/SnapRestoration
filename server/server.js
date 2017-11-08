@@ -4,6 +4,8 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
+//require('localforage');
+//require('leaflet.offline');
 
 var app = module.exports = loopback();
 

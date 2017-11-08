@@ -11,6 +11,7 @@
       "../common/models/Restoration",
       "../common/models/Roads",
       "../common/models/Snap_Soil",
+      "../common/models/Submissions",
       "./models",
       "../Barrier",
       "../Boundaries",
@@ -18,7 +19,8 @@
       "../Disturbance",
       "../Restoration",
       "../Roads",
-      "../Snap_Soil"
+      "../Snap_Soil",
+      "../Submissions"
     ],
     "mixins": [
       "loopback/common/mixins",
@@ -248,5 +250,77 @@
   "BarrierSub": {
     "dataSource": "mip",
     "public": true
+  },
+  "DistLineSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPointSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygonSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolySubGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLineSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPointSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointSubGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygonSub": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolySubGeoJSON": true
+        }
+      }
+    }
   }
 }
