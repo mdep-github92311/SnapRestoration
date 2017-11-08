@@ -45,6 +45,12 @@ html
       .navbar {
         margin-bottom: 0;
       }
+      
+      .legend {
+        color: black;
+        background-color: white;
+        padding: 5px;
+      }
 
       #map {
         float: left;
@@ -282,6 +288,16 @@ html
               | Layers
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+              br
+              p.legend
+                img(src='/public/css/images/greenSquare.png', width='10%', height='40%') 
+                |  NPS 
+                img(src='/public/css/images/redSquare.png', width='10%', height='40%')  
+                |  BLM 
+                img(src='/public/css/images/orangeSquare.png', width='10%', height='40%') 
+                |  FWS 
+                img(src='/public/css/images/purpleSquare.png', width='10%', height='40%') 
+                |  FS 
               #layerTools2
 
           #drawTools.sidebar-pane
