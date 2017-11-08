@@ -288,7 +288,7 @@ async function getLayers() {
         count += 5;
       }),
 
-      $.getJSON('http://216.117.167.186/api/Roads/roadsGeoJSON', function (data) {
+      $.getJSON('http://snap-restoration-brstillwell.c9users.io/api/Roads/roadsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Roads');
         count += 15;
       })
@@ -296,7 +296,7 @@ async function getLayers() {
         console.log(JSON.stringify(jqXHR));
       }),
 
-      $.getJSON('http://216.117.167.186/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
+      $.getJSON('http://snap-restoration-brstillwell.c9users.io/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Soil Vulnerability');
         count += 10;
       })

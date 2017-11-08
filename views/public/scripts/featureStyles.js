@@ -189,6 +189,7 @@ function onEachBarrier(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -225,8 +226,14 @@ function onEachDistLine(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        
+        // gets the point in the middle of the line to pan the camera to
+        var latLang = this.getLatLngs();
+        var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+        map.panTo(middleLatLong);
+        
         $(`#sidebar1`).empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -261,8 +268,10 @@ function onEachDistPoint(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
+        console.log("Dist Point - " + this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -298,8 +307,34 @@ function onEachDistPoly(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        
+        if (this.getLatLngs() != null)
+            console.log(this.getLatLngs());
+        //gets the center of the poly to pan the camera
+        var latLang = this.getLatLngs();
+        var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
+        leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
+        topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
+        latLang[0].forEach(function(outerElem) {
+            outerElem.forEach(function(elem) {
+                if (elem.lat > topMostCoord)
+                    topMostCoord = elem.lat;
+                if (elem.lng > leftMostCoord)
+                    leftMostCoord = elem.lng;
+                if (elem.lat < bottomMostCoord)
+                    bottomMostCoord = elem.lat;
+                if (elem.lng < rightMostCoord)
+                    rightMostCoord = elem.lng;
+            });
+        });
+        var centerCoord = {
+            lng:(leftMostCoord + rightMostCoord)/2,
+            lat:(topMostCoord + bottomMostCoord)/2
+        };
+        map.panTo(centerCoord);
+        
         $(`#sidebar1`).empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -336,6 +371,7 @@ function onEachDistPolyCent(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -372,7 +408,33 @@ function onEachRestoPoly(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
+        
+        if (this.getLatLngs() != null)
+            console.log(this.getLatLngs());
+        //gets the center of the poly to pan the camera
+        var latLang = this.getLatLngs();
+        var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
+        leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
+        topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
+        latLang[0].forEach(function(outerElem) {
+            outerElem.forEach(function(elem) {
+                if (elem.lat > topMostCoord)
+                    topMostCoord = elem.lat;
+                if (elem.lng > leftMostCoord)
+                    leftMostCoord = elem.lng;
+                if (elem.lat < bottomMostCoord)
+                    bottomMostCoord = elem.lat;
+                if (elem.lng < rightMostCoord)
+                    rightMostCoord = elem.lng;
+            });
+        });
+        var centerCoord = {
+            lng:(leftMostCoord + rightMostCoord)/2,
+            lat:(topMostCoord + bottomMostCoord)/2
+        };
+        map.panTo(centerCoord);
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
@@ -409,6 +471,7 @@ function onEachRestoPoint(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -445,6 +508,7 @@ function onEachRestoPolyCent(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -481,8 +545,14 @@ function onEachRestoLine(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        
+        // gets the point in the middle of the line to pan the camera to
+        var latLang = this.getLatLngs();
+        var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+        map.panTo(middleLatLong);
+        
         $(`#sidebar1`).empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -517,6 +587,7 @@ function onEachBLMRegion(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -553,6 +624,7 @@ function onEachFSRegion(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -589,6 +661,7 @@ function onEachMDEPBound(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -625,6 +698,7 @@ function onEachMDIBound(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -661,6 +735,7 @@ function onEachNVCounty(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -697,6 +772,7 @@ function onEachSoilVuln(feature, layer) {
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
