@@ -310,8 +310,6 @@ function onEachDistPoly(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         
-        if (this.getLatLngs() != null)
-            console.log(this.getLatLngs());
         //gets the center of the poly to pan the camera
         var latLang = this.getLatLngs();
         var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
@@ -411,8 +409,6 @@ function onEachRestoPoly(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         
-        if (this.getLatLngs() != null)
-            console.log(this.getLatLngs());
         //gets the center of the poly to pan the camera
         var latLang = this.getLatLngs();
         var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
