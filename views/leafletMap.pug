@@ -50,6 +50,7 @@ html
         color: black;
         background-color: white;
         padding: 5px;
+        font-size: 0.7em;
       }
 
       #map {
@@ -156,7 +157,7 @@ html
       #overlay
       #map
 
-        script(src='/public/scripts/asyncAddLayers.js')
+        //script(src='/public/scripts/asyncAddLayers.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
 
@@ -290,14 +291,16 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               br
               p.legend
-                img(src='/public/css/images/greenSquare.png', width='10%', height='40%') 
-                |  NPS 
-                img(src='/public/css/images/redSquare.png', width='10%', height='40%')  
-                |  BLM 
-                img(src='/public/css/images/orangeSquare.png', width='10%', height='40%') 
-                |  FWS 
-                img(src='/public/css/images/purpleSquare.png', width='10%', height='40%') 
-                |  FS 
+                span.legend-item
+                  img(src='/public/css/images/greenSquare.png', width='8%', height='35%') 
+                  |  NPS 
+                  img(src='/public/css/images/redSquare.png', width='8%', height='35%')  
+                  |  BLM 
+                span.legend-item
+                  img(src='/public/css/images/orangeSquare.png', width='8%', height='35%') 
+                  |  FWS 
+                  img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
+                  |  FS 
               #layerTools2
 
           #drawTools.sidebar-pane
