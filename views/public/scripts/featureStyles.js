@@ -80,9 +80,9 @@ function myStyleLines(feature) {
     }
 }
 
-//creating a style function for Dist polygons in the map based on the agencey number
+//creating a style function for Dist polygons in the map based on the agency number
 function myStyleDistPoly(feature) {
-    switch (feature.properties.agencey) {
+    switch (feature.properties.agency) {
         case 0:
             return {
                 color: "#e41a1c"
@@ -167,7 +167,7 @@ function onEachBarrier(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -204,7 +204,7 @@ function onEachDistLine(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -246,7 +246,7 @@ function onEachDistPoint(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -285,7 +285,7 @@ function onEachDistPoly(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -346,7 +346,7 @@ function onEachDistPolyCent(feature, layer) {
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
         //console.log(prop + ' : ' + feature.properties[prop]);
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             //console.log(prop + ' : ' + feature.properties[prop]);
             switch (feature.properties[prop]) {
                 case 0:
@@ -384,7 +384,7 @@ function onEachRestoPoly(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -444,7 +444,7 @@ function onEachRestoPoint(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             //console.log(prop + ' : ' + feature.properties[prop]);
             switch (feature.properties[prop]) {
                 case 0:
@@ -482,7 +482,7 @@ function onEachRestoPolyCent(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -519,7 +519,7 @@ function onEachRestoLine(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -561,7 +561,7 @@ function onEachBLMRegion(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -598,7 +598,7 @@ function onEachFSRegion(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -635,7 +635,7 @@ function onEachMDEPBound(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -672,7 +672,7 @@ function onEachMDIBound(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -709,7 +709,7 @@ function onEachNVCounty(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');
@@ -746,7 +746,7 @@ function onEachSoilVuln(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             switch (feature.properties[prop]) {
                 case 0:
                     popUpContent.push(`<B>${prop}</B>` + ' : BLM');

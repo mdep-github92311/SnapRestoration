@@ -93,7 +93,7 @@ exports.distPointSub =
 exports.distPolySub =
     `ON CONFLICT (gid) DO UPDATE
       SET
-        agencey = excluded.agencey,
+        agency = excluded.agency,
         regions = excluded.regions,
         ecosystem = excluded.ecosystem,
         gps_date = excluded.gps_date,

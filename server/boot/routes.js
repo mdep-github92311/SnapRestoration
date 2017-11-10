@@ -280,7 +280,7 @@ module.exports = function (app) {
         distPolyArrary.push(distPolyProp)
       }
 
-      db.none(`INSERT INTO dist_polygon_sub (gid, agencey, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
+      db.none(`INSERT INTO dist_polygon_sub (gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
       use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
       primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
       photo_azim, qa_qc, old_distco, shape_star, shape_stle, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
@@ -305,7 +305,7 @@ module.exports = function (app) {
 //           distPolySub.push(parseInt(req.body[k]));
 //         } else if (k === 'acres_restDBPY' || k === 'kmsq_restoDBPY' || k === 'shape_starDBPY' || k ===
 // 'shape_stleDBPY' || k === 'shape_lengDBPY' || k === 'shape_areaDBPY') { distPolySub.push(parseFloat(req.body[k])); }
-// else { distPolySub.push(req.body[k]); } } db.none('INSERT INTO dist_polygon_sub (gid, agencey, regions, ecosystem,
+// else { distPolySub.push(req.body[k]); } } db.none('INSERT INTO dist_polygon_sub (gid, agency, regions, ecosystem,
 // gps_date, dist_code, dist_use,' + ' use_freq, use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_,
 // plant_dama, assessibil,' + ' visibility, comments, primary_ob, secondary_, acres_rest, kmsq_resto, treated,
 // dist_sever, cultural,' + ' t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, shape_star, shape_stle,

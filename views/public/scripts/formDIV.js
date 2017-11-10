@@ -1026,9 +1026,9 @@ $(document).ready(function () {
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
          </label>
-         <label for="agencey">
+         <label for="agency">
             agency: <br>
-            <select id="agencey" name="agencey">
+            <select id="agency" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
@@ -1938,7 +1938,7 @@ $(document).ready(function () {
       } else if (thisForm === 'distPolyForm') {
         if (fieldValue === '' || fieldValue === 'select') {
           distPolyObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agencey' || fieldName === 'dist_sever' || fieldName === 'photo_azim') {
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'dist_sever' || fieldName === 'photo_azim') {
           distPolyObj[fieldName] = parseInt(fieldValue);
         } else if (fieldName === 'acres_rest' || fieldName === 'kmsq_resto' || fieldName === 'shape_star' || fieldName === 'shape_stle'
           || fieldName === 'shape_leng' || fieldName === 'shape_area') {

@@ -440,7 +440,7 @@ ALTER TABLE dist_point_sub OWNER TO postgres;
 
 CREATE TABLE dist_poly_centroid (
     gid integer NOT NULL,
-    agencey numeric(10,0),
+    agency numeric(10,0),
     regions character varying(30),
     ecosystem character varying(30),
     gps_date date,
@@ -508,7 +508,7 @@ ALTER SEQUENCE dist_poly_centroid_gid_seq OWNED BY dist_poly_centroid.gid;
 
 CREATE TABLE dist_polygon (
     gid integer NOT NULL,
-    agencey numeric(10,0),
+    agency numeric(10,0),
     regions character varying(30),
     ecosystem character varying(30),
     gps_date date,
@@ -577,7 +577,7 @@ ALTER SEQUENCE dist_polygon_gid_seq OWNED BY dist_polygon.gid;
 
 CREATE TABLE dist_polygon_sub (
     gid integer NOT NULL,
-    agencey integer,
+    agency integer,
     regions character varying(30),
     ecosystem character varying(30),
     gps_date date,

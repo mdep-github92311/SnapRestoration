@@ -6,7 +6,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="../public/scripts/asyncGetSubmitted.js"> </script>
-        
+        <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+        </style>
     </head>
     <body>
         <div id="header">
@@ -60,14 +69,119 @@
         </div>
         
         <div id="reviewItems"></div>
+        <table>
+          <div id="tableItems"></div>
+        </table>
         
         <script>
           //let promise = [];
+          function getAgency(agency){
+            switch (agency) {
+                case 0:
+                  return "BLM";
+                  break;
+                case 1:
+                  return "NPS";
+                  break;
+                case 2:
+                  return "FS";
+                  break;
+                case 3: 
+                  return "FWS";
+                  break;
+                default:
+                  return "NULL";
+                  break;
+            }
+          }
           getSubmissions().then(function(defs){
               //promise = (defs);
-              var elem = document.getElementById('reviewItems');
-              elem.innerHTML = "There are " + defs.overallCount + " submissions to add";
               console.log(defs);
+              var count = document.getElementById('reviewItems');
+              var item = document.getElementById('tableItems');
+              count.innerHTML = "There are " + defs.overallCount + " submissions to add";
+              $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th></tr>");
+              defs.barriers.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td colspan='2'> Barriers"
+                          +"</td></tr>");
+                    
+              });
+              defs.distLines.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td> Disturbance"
+                          + "</td><td> Lines"
+                          +"</td></tr>");
+                    
+              });
+              defs.distPoints.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td> Disturbance"
+                          + "</td><td> Points"
+                          +"</td></tr>");
+                    
+              });
+              defs.distPolys.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td> Disturbance"
+                          + "</td><td> Polygon"
+                          +"</td></tr>");
+                    
+              });
+              defs.restoLines.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td> Restoration"
+                          + "</td><td> Lines"
+                          +"</td></tr>");
+                    
+              });
+              defs.restoPoints.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td> Restoration"
+                          + "</td><td> Point"
+                          +"</td></tr>");
+                    
+              });
+              defs.restoPolys.features.forEach(function(features) {
+                var agen = getAgency(features.properties.agency);
+                $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                          + "</td><td>"+agen
+                          + "</td><td> Restoration"
+                          + "</td><td> Polygon"
+                          +"</td></tr>");
+                //if (features == defs.restoPolys.features[defs.restoPolys.features.length-1])
+                  //$("#tableItems").append("</table>");
+                    
+              });
+              
+              /*defs.forEach(function(elem) {
+                if (elem == defs.overallCount){
+                  //Do Nothing
+                }
+                else {
+                  elem.features.forEach(function(features) {
+                    elements += "<tr><td>"+ features.properties.gid 
+                              + "</td><td>"+features.properties.gid
+                              + "</td><td>"+features.properties.gid
+                              + "</td><td>"+features.properties.gid
+                              +"</td></tr>";
+                    
+                  });
+                  
+                }
+              });*/
           });
           /*setTimeout(function(){ 
             console.log(promise); 
