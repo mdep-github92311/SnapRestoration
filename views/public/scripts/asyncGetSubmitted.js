@@ -62,7 +62,7 @@ try {
       })
     );
 
-    let subs = {
+    var subs = {
         barriers, 
         distPoints, 
         distPolys, 

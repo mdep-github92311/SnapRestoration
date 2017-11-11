@@ -94,21 +94,50 @@
                   break;
             }
           }
+          function populateModal(data, type) {
+            console.log(data);
+            $("#myModalLabel").html("<h1>"+type +"</h1>");
+            
+            $("#pInfo").html("GID#: " + data.properties.gid +"<br/>Agency: " + data.properties.agency + "<br/>Date: " + data.properties.gps_date + "<br/>Region: " + data.properties.regions + "<br/>Ecosystem: " + data.properties.ecosystem);
+            /*$("#pInfo").append("<br/><p style='text-align:left !important;'>Prescriptions: </p>")
+            if (data.prescriptions.length > 0) {
+              $("#pTable").html("<tr><th>Drug Name</th><th>Quantity</th><th>Date</th><th>Prescribed by: </th><th>Doctor ID</th></tr>")
+              for (var i=0; i<data.prescriptions.length; i++) {
+                $("#pTable").append("<tr><td>"+ data.prescriptions[i].trade_name+"</td><td>"+data.prescriptions[i].quantity+"</td><td>"+data.prescriptions[i].date+"</td><td>"+data.prescriptions[i].last_name+", " + data.prescriptions[i].first_name+"</td><td>"+data.prescriptions[i].doctor_id+"</td></tr>")
+              }
+            }
+            else
+              $("#pTable").html("No prescriptions on record");*/
+          }
           getSubmissions().then(function(defs){
               //promise = (defs);
               console.log(defs);
               var count = document.getElementById('reviewItems');
               var item = document.getElementById('tableItems');
               count.innerHTML = "There are " + defs.overallCount + " submissions to add";
-              $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th></tr>");
+              $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
+              var count = 0;
+              
               defs.barriers.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td colspan='2'> Barriers"
+                          + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
-                    
+                var barrID = "#barr" + count;
+                  
+                  $(barrID).click(function(){
+                      populateModal(features, "Barrier");
+                  });
+                  
+                  
               });
+              
               defs.distLines.features.forEach(function(features) {
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
@@ -189,7 +218,30 @@
           }, 3000);*/
           
         </script>
-        
+        <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"> </h4>
+                      </div>
+                      <div class="modal-body">
+                        
+                          <div id="pInfo">
+                                
+                          </div>
+                          <table>
+                               <div id="pTable">
+                                   
+                               </div>
+                          </table>
+                        
+                      </div>
+            
+                    </div>
+                  </div>
+                </div>
         
         
 
