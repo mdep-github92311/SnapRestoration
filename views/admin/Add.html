@@ -155,23 +155,7 @@
               
             for (var prop in data.properties) {
               if(prop == 'agency'){
-                  switch (data.properties[prop]) {
-                      case 0:
-                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : BLM');
-                          break;
-                      case 1:
-                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : NPS');
-                          break;
-                      case 2:
-                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : FS');
-                          break;
-                      case 3:
-                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : FWS');
-                          break;
-                      default:
-                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : NULL')
-                          break;
-                  }
+                $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + getAgency(data.properties[prop]));
               }
               else
                   $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + data.properties[prop]);
@@ -343,7 +327,7 @@
         
         
         <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -360,6 +344,9 @@
                         
                           <td><div id="mapID"></div></td>
                         </table>
+                        
+                        <button>Edit</button>
+                        <button>Confirm Submission</button>
                           
                       </div>
             
