@@ -4,12 +4,21 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript'></script>
         <script src="../public/scripts/asyncGetSubmitted.js"> </script>
         <style>
+        #mapID { 
+          height: 280px;
+          width: 280px;
+        }
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
+            text-align:center;
         }
         th, td {
             padding: 5px;
@@ -96,9 +105,16 @@
           }
           function populateModal(data, type) {
             console.log(data);
+            $('#myModal').on('shown.bs.modal', function(){
+            setTimeout(function() {
+              map.invalidateSize();
+            }, 10);
+           });
+            if (type == "Disturbance Point")
+              map.setView([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
             $("#myModalLabel").html("<h1>"+type +"</h1>");
-            
-            $("#pInfo").html("GID#: " + data.properties.gid +"<br/>Agency: " + data.properties.agency + "<br/>Date: " + data.properties.gps_date + "<br/>Region: " + data.properties.regions + "<br/>Ecosystem: " + data.properties.ecosystem);
+            $("#pInfo").html("");
+            //$("#pInfo").html("GID#: " + data.properties.gid +"<br/>Agency: " + data.properties.agency + "<br/>Date: " + data.properties.gps_date + "<br/>Region: " + data.properties.regions + "<br/>Ecosystem: " + data.properties.ecosystem);
             /*$("#pInfo").append("<br/><p style='text-align:left !important;'>Prescriptions: </p>")
             if (data.prescriptions.length > 0) {
               $("#pTable").html("<tr><th>Drug Name</th><th>Quantity</th><th>Date</th><th>Prescribed by: </th><th>Doctor ID</th></tr>")
@@ -108,6 +124,30 @@
             }
             else
               $("#pTable").html("No prescriptions on record");*/
+              
+            for (var prop in data.properties) {
+              if(prop == 'agency'){
+                  switch (data.properties[prop]) {
+                      case 0:
+                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : BLM');
+                          break;
+                      case 1:
+                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : NPS');
+                          break;
+                      case 2:
+                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : FS');
+                          break;
+                      case 3:
+                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : FWS');
+                          break;
+                      default:
+                          $("#pInfo").append(`<br /><B>${prop}</B>` + ' : NULL')
+                          break;
+                  }
+              }
+              else
+                  $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + data.properties[prop]);
+            }
           }
           getSubmissions().then(function(defs){
               //promise = (defs);
@@ -131,29 +171,52 @@
                           +"</td></tr>");
                 var barrID = "#barr" + count;
                   
-                  $(barrID).click(function(){
-                      populateModal(features, "Barrier");
-                  });
+                $(barrID).click(function(){
+                    populateModal(features, "Barrier");
+                });
                   
                   
               });
+              count = 0;
               
               defs.distLines.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td> Disturbance"
                           + "</td><td> Lines"
+                          + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
+                var barrID = "#dLine" + count;
+                  
+                $(barrID).click(function(){
+                    populateModal(features, "Disturbance Line");
+                });
                     
               });
+              count = 0;
+              
               defs.distPoints.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td> Disturbance"
                           + "</td><td> Points"
+                          + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
+                var barrID = "#dPoint" + count;
+                  
+                $(barrID).click(function(){
+                    populateModal(features, "Disturbance Point");
+                });
                     
               });
               defs.distPolys.features.forEach(function(features) {
@@ -218,6 +281,8 @@
           }, 3000);*/
           
         </script>
+        
+        
         <!-- Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
@@ -228,21 +293,40 @@
                       </div>
                       <div class="modal-body">
                         
+                        <table><td>
                           <div id="pInfo">
                                 
                           </div>
-                          <table>
-                               <div id="pTable">
-                                   
-                               </div>
-                          </table>
+                          </td>
                         
+                          <td><div id="mapID"></div></td>
+                        </table>
+                          
                       </div>
             
                     </div>
                   </div>
                 </div>
-        
+                
+        <script>
+              var map = L.map('mapID').setView([36.211303, -115.114929], 10);
+    
+              // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+              // createPane was used in this thread to control the order of the layers
+              
+              //map.createPane('Points').style.zIndex = 390;
+              //map.createPane('Lines').style.zIndex = 380;
+              //map.createPane('Polygons').style.zIndex = 370;
+              
+    
+              L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                attribution: '',
+                maxZoom: 18,
+                id: 'rogerdodger617.2p4pk9co',
+                accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+              }).addTo(map);
+              
+            </script>
         
 
     </body>
