@@ -26,7 +26,7 @@ function myStylePoints(feature) {
         case 2:
             return {
                 radius: 8,
-                FillColor: "#984ea3",
+                fillColor: "#984ea3",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -36,7 +36,17 @@ function myStylePoints(feature) {
         case 3:
             return {
                 radius: 8,
-                FillColor: "#ff7f00",
+                fillColor: "#ff7f00",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+        default:
+            return {
+                radius: 8,
+                fillColor: "#ffffff",
                 color: "#000",
                 weight: 1,
                 opacity: 1,

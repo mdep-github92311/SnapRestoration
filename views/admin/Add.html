@@ -10,6 +10,7 @@
         
         <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript'></script>
         <script src="../public/scripts/asyncGetSubmitted.js"> </script>
+        <script src="../public/scripts/featureStyles.js"> </script>
         <style>
         #mapID { 
           height: 380px;
@@ -83,7 +84,7 @@
         </table>
         
         <script>
-          //let promise = [];
+          mapMarkers = [];
           function getAgency(agency){
             switch (agency) {
                 case 0:
@@ -99,20 +100,56 @@
                   return "FWS";
                   break;
                 default:
-                  return "NULL";
+                  return "null";
                   break;
             }
           }
-          function populateModal(data, type) {
+          function populateModal(data, type, draw) {
+            var style;
+            if (this.mapMarkers != null)
+              for(var i = 0; i < this.mapMarkers.length; i++){
+                  this.map.removeLayer(this.mapMarkers[i]);
+              }
             console.log(data);
+            switch (draw) {
+              case 1:
+                style = myStylePoints(data);
+                console.log(style);
+                var marker = L.circle([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
+                    radius: 8,
+                    fillColor: style.fillColor,
+                    color: style.color,
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8,
+                    radius:500
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                
+                if (data.geometry != null)
+                  if (data.geometry.coordinates.length >1)
+                    map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
+                break;
+              case 2:
+                var marker = L.geoJson(data, {
+                  style: myStyleLines,
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                break;
+              case 3:
+                var marker = L.geoJson(data, {
+                  style: myStyleDistPoly
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                break;
+              default:
+                // code
+            }
             $('#myModal').on('shown.bs.modal', function(){
             setTimeout(function() {
               map.invalidateSize();
             }, 5);
            });
-            if (data.geometry != null)
-              if (data.geometry.coordinates.length >1)
-                map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
             $("#myModalLabel").html("<h1>"+type +"</h1>");
             $("#pInfo").html("");
               
@@ -149,6 +186,8 @@
               $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
               var count = 0;
               
+              
+              /// !!ADD CHECK FOR NULL SUBMISSIONS!!
               defs.barriers.features.forEach(function(features) {
                 count++;
                 var agen = getAgency(features.properties.agency);
@@ -163,7 +202,7 @@
                 var barrID = "#barr" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Barrier");
+                    populateModal(features, "Barrier", 2);
                 });
                   
                   
@@ -185,7 +224,7 @@
                 var barrID = "#dLine" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Disturbance Line");
+                    populateModal(features, "Disturbance Line", 2);
                 });
                     
               });
@@ -206,7 +245,7 @@
                 var barrID = "#dPoint" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Disturbance Point");
+                    populateModal(features, "Disturbance Point",1);
                 });
                     
               });
@@ -227,7 +266,7 @@
                 var barrID = "#dPoly" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Disturbance Polygon");
+                    populateModal(features, "Disturbance Polygon",3);
                 });
                     
               });
@@ -248,7 +287,7 @@
                 var barrID = "#rLine" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Restoration Line");
+                    populateModal(features, "Restoration Line",2);
                 });
                     
               });
@@ -269,7 +308,7 @@
                 var barrID = "#rPoint" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Restoration Point");
+                    populateModal(features, "Restoration Point",1);
                 });
                     
               });
@@ -290,7 +329,7 @@
                 var barrID = "#rPoly" + count;
                   
                 $(barrID).click(function(){
-                    populateModal(features, "Restoration Polygon");
+                    populateModal(features, "Restoration Polygon",3);
                 });
                     
               });
