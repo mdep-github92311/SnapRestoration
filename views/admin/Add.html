@@ -12,7 +12,7 @@
         <script src="../public/scripts/asyncGetSubmitted.js"> </script>
         <style>
         #mapID { 
-          height: 280px;
+          height: 380px;
           width: 280px;
         }
         table, th, td {
@@ -108,22 +108,13 @@
             $('#myModal').on('shown.bs.modal', function(){
             setTimeout(function() {
               map.invalidateSize();
-            }, 10);
+            }, 5);
            });
-            if (type == "Disturbance Point")
-              map.setView([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
+            if (data.geometry != null)
+              if (data.geometry.coordinates.length >1)
+                map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
             $("#myModalLabel").html("<h1>"+type +"</h1>");
             $("#pInfo").html("");
-            //$("#pInfo").html("GID#: " + data.properties.gid +"<br/>Agency: " + data.properties.agency + "<br/>Date: " + data.properties.gps_date + "<br/>Region: " + data.properties.regions + "<br/>Ecosystem: " + data.properties.ecosystem);
-            /*$("#pInfo").append("<br/><p style='text-align:left !important;'>Prescriptions: </p>")
-            if (data.prescriptions.length > 0) {
-              $("#pTable").html("<tr><th>Drug Name</th><th>Quantity</th><th>Date</th><th>Prescribed by: </th><th>Doctor ID</th></tr>")
-              for (var i=0; i<data.prescriptions.length; i++) {
-                $("#pTable").append("<tr><td>"+ data.prescriptions[i].trade_name+"</td><td>"+data.prescriptions[i].quantity+"</td><td>"+data.prescriptions[i].date+"</td><td>"+data.prescriptions[i].last_name+", " + data.prescriptions[i].first_name+"</td><td>"+data.prescriptions[i].doctor_id+"</td></tr>")
-              }
-            }
-            else
-              $("#pTable").html("No prescriptions on record");*/
               
             for (var prop in data.properties) {
               if(prop == 'agency'){
@@ -219,61 +210,90 @@
                 });
                     
               });
+              count = 0;
+              
               defs.distPolys.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td> Disturbance"
                           + "</td><td> Polygon"
+                          + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
+                var barrID = "#dPoly" + count;
+                  
+                $(barrID).click(function(){
+                    populateModal(features, "Disturbance Polygon");
+                });
                     
               });
+              count = 0;
+              
               defs.restoLines.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td> Restoration"
                           + "</td><td> Lines"
+                          + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
+                var barrID = "#rLine" + count;
+                  
+                $(barrID).click(function(){
+                    populateModal(features, "Restoration Line");
+                });
                     
               });
+              count = 0;
+              
               defs.restoPoints.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td> Restoration"
                           + "</td><td> Point"
+                          + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
+                var barrID = "#rPoint" + count;
+                  
+                $(barrID).click(function(){
+                    populateModal(features, "Restoration Point");
+                });
                     
               });
+              count = 0;
+              
               defs.restoPolys.features.forEach(function(features) {
+                count++;
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
                           + "</td><td> Restoration"
                           + "</td><td> Polygon"
+                          + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                          + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "</button></a>"
                           +"</td></tr>");
-                //if (features == defs.restoPolys.features[defs.restoPolys.features.length-1])
-                  //$("#tableItems").append("</table>");
+                var barrID = "#rPoly" + count;
+                  
+                $(barrID).click(function(){
+                    populateModal(features, "Restoration Polygon");
+                });
                     
               });
-              
-              /*defs.forEach(function(elem) {
-                if (elem == defs.overallCount){
-                  //Do Nothing
-                }
-                else {
-                  elem.features.forEach(function(features) {
-                    elements += "<tr><td>"+ features.properties.gid 
-                              + "</td><td>"+features.properties.gid
-                              + "</td><td>"+features.properties.gid
-                              + "</td><td>"+features.properties.gid
-                              +"</td></tr>";
-                    
-                  });
-                  
-                }
-              });*/
           });
           /*setTimeout(function(){ 
             console.log(promise); 
