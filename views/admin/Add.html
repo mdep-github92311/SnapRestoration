@@ -178,6 +178,7 @@
               /// !!ADD CHECK FOR NULL SUBMISSIONS!!
               defs.barriers.features.forEach(function(features) {
                 count++;
+                features.dataType = "barriers";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -201,6 +202,7 @@
               
               defs.distLines.features.forEach(function(features) {
                 count++;
+                features.dataType = "distLines";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -222,6 +224,7 @@
               
               defs.distPoints.features.forEach(function(features) {
                 count++;
+                features.dataType = "distPoints";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -243,6 +246,7 @@
               
               defs.distPolys.features.forEach(function(features) {
                 count++;
+                features.dataType = "distPolys";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -264,6 +268,7 @@
               
               defs.restoLines.features.forEach(function(features) {
                 count++;
+                features.dataType = "restoLines";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -285,6 +290,7 @@
               
               defs.restoPoints.features.forEach(function(features) {
                 count++;
+                features.dataType = "restoPoints";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -306,6 +312,7 @@
               
               defs.restoPolys.features.forEach(function(features) {
                 count++;
+                features.dataType = "restoPolys";
                 var agen = getAgency(features.properties.agency);
                 $("#tableItems").append("<tr><td>"+ features.properties.gid 
                           + "</td><td>"+agen
@@ -393,8 +400,7 @@
                         type = $el.attr('type');
                     
                     console.log("something is happenning = " + name + " -- " + val);
-                    console.log($el[0]);
-                    console.log(type);
+                    //console.log(type);
                     switch(type){
                         case 'checkbox':
                             $el.attr('checked', 'checked');
@@ -406,6 +412,30 @@
                             $el.val(val);
                     }
                 }); 
+                  console.log(this.currentData.dataType)
+                    
+                    $('#restoPointForm').toggle(
+                      this.currentData.dataType === 'restoPoints'
+                    );
+                    $('#restoPolyForm').toggle(
+                      this.currentData.dataType === 'restoPolys'
+                    );
+                    $('#restoLineForm').toggle(
+                      this.currentData.dataType === 'restoLines'
+                    );
+                    $('#barrierForm').toggle(
+                      this.currentData.dataType === 'barriers'
+                    );
+                    $('#distPointForm').toggle(
+                      this.currentData.dataType === 'distPoints'
+                    );
+                    $('#distPolyForm').toggle(
+                      this.currentData.dataType === 'distPolys'
+                    );
+                    $('#distLineForm').toggle(
+                      this.currentData.dataType === 'distLines'
+                    );
+                
                   
                 }, 300);
                 
