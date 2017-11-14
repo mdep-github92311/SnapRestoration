@@ -85,6 +85,7 @@
         
         <script>
           mapMarkers = [];
+          var currentData = [];
           function getAgency(agency){
             switch (agency) {
                 case 0:
@@ -106,6 +107,9 @@
           }
           function populateModal(data, type, draw) {
             var style;
+            this.currentData = data;
+            var div = document.getElementById("editInfo");
+                div.innerHTML = "";
             if (this.mapMarkers != null)
               for(var i = 0; i < this.mapMarkers.length; i++){
                   this.map.removeLayer(this.mapMarkers[i]);
@@ -180,12 +184,14 @@
                           + "</td><td colspan='2'> Barriers"
                           + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#barr" + count;
                   
                 $(barrID).click(function(){
+                    var elem = document.getElementById("tableMap");
+                    elem.style.display = ""; 
                     populateModal(features, "Barrier", 2);
                 });
                   
@@ -202,7 +208,7 @@
                           + "</td><td> Lines"
                           + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#dLine" + count;
@@ -223,7 +229,7 @@
                           + "</td><td> Points"
                           + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#dPoint" + count;
@@ -244,7 +250,7 @@
                           + "</td><td> Polygon"
                           + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#dPoly" + count;
@@ -265,7 +271,7 @@
                           + "</td><td> Lines"
                           + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#rLine" + count;
@@ -286,7 +292,7 @@
                           + "</td><td> Point"
                           + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#rPoint" + count;
@@ -307,7 +313,7 @@
                           + "</td><td> Polygon"
                           + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> More Info"
+                          + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                           + "</button></a>"
                           +"</td></tr>");
                 var barrID = "#rPoly" + count;
@@ -336,17 +342,15 @@
                       </div>
                       <div class="modal-body">
                         
-                        <table><td>
-                          <div id="pInfo">
-                                
-                          </div>
-                          </td>
+                        <table id='tableMap'>
+                          <td><div id="pInfo"></div></td>
                         
                           <td><div id="mapID"></div></td>
                         </table>
-                        
-                        <button>Edit</button>
-                        <button>Confirm Submission</button>
+                        <div id='editInfo'></div>
+                        <div id='sidebar2'></div>
+                        <button id="editButton">Edit</button>
+                        <button id="confirmButton">Confirm Submission</button>
                           
                       </div>
             
@@ -371,6 +375,59 @@
                 id: 'rogerdodger617.2p4pk9co',
                 accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
               }).addTo(map);
+              
+              function editData(){
+                console.log(this.currentData);
+                /*for (var prop in this.currentData.properties) {
+                  if(prop == 'agency'){
+                    $("#editInfo").append(`<br /><B>${prop}</B>` + ' : ' + getAgency(currentData.properties[prop]));
+                  }
+                  else
+                      $("#editInfo").append(`<br /><B>${prop}</B>` + ' : ' + currentData.properties[prop]);
+                }*/
+                //document.getElementById("editInfo").innerHTML='<object type="text/html" data="../public/scripts/editForm.html" ></object>';
+                $("#editInfo").load("../public/scripts/editForm.html");
+                setTimeout(function(){ 
+                  $.each(this.currentData.properties, function(name, val){
+                    var $el = $('[name="'+name+'"]'),
+                        type = $el.attr('type');
+                    
+                    console.log("something is happenning = " + name + " -- " + val);
+                    console.log($el[0]);
+                    console.log(type);
+                    switch(type){
+                        case 'checkbox':
+                            $el.attr('checked', 'checked');
+                            break;
+                        case 'radio':
+                            $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+                            break;
+                        default:
+                            $el.val(val);
+                    }
+                }); 
+                  
+                }, 300);
+                
+                
+                /*for(key in this.currentData.properties)
+                {
+                  if(this.currentData.properties.hasOwnProperty(key)) {
+                    console.log("something is happenning = " + key);
+                    $('input[name='+key+']').val(this.currentData[key]);
+                  }
+                }
+                   */             
+              }
+              // Listener for the Edit Button
+              document.getElementById("editButton").addEventListener('click',function () {
+                var table = document.getElementById("tableMap");
+                table.style.display = "none";  
+                var div = document.getElementById("editInfo");
+                div.innerHTML = "";
+                editData();
+                
+              }); 
               
             </script>
         
