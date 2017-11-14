@@ -110,6 +110,9 @@
             this.currentData = data;
             var div = document.getElementById("editInfo");
                 div.innerHTML = "";
+            var table = document.getElementById("tableMap");
+                table.style.display = "";  
+                
             if (this.mapMarkers != null)
               for(var i = 0; i < this.mapMarkers.length; i++){
                   this.map.removeLayer(this.mapMarkers[i]);
@@ -449,6 +452,7 @@
                 }
                    */             
               }
+              
               // Listener for the Edit Button
               document.getElementById("editButton").addEventListener('click',function () {
                 var table = document.getElementById("tableMap");
