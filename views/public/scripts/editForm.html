@@ -1615,25 +1615,117 @@
 
 <script>
 
-function editRestPoint(restoPointSub) {
-      console.log(restoPointSub)
+   function editRestPoint(submission) {
+      console.log(submission)
           $.ajax({
             type: "POST",
             url: "/restoPointFormEdit",
             contentType: 'application/json',
-            data: JSON.stringify(restoPointSub),
+            data: JSON.stringify(submission),
             success: function (data) {
               console.log(data)
-            }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
           })
-          .then(function () {
-            console.log('submitted restoPoint to PG')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
+   }
    
-}
+   function editRestPoly(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            url: "/restoPolyFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              console.log(data)
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
+          })
+   }
+   
+   function editLinePoint(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            url: "/restoLineFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              console.log(data)
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
+          })
+   }
+   
+   function editBarrier(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            url: "/barrierFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              console.log(data)
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
+          })
+   }
+   
+   function editDistPoint(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            url: "/distPointFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              console.log(data)
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
+          })
+   }
+   
+   function editDistPoly(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            url: "/distPolyFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              console.log(data)
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
+          })
+   }
+   
+   function editDistLine(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            url: "/distLineFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              console.log(data)
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              alert("some error");
+           }
+          })
+   }
    $("#restopointbutton").on("click", function(event) {
       var count = 0;
       var obj = [];
@@ -1649,14 +1741,10 @@ function editRestPoint(restoPointSub) {
             obj[count] = item.value;
          }
          count++;
-          //obj[item.name] = item.value;
-          //return obj;
       }, {});
-       //$("#restoPointForm").on("submit", function (event) {
       console.log("resto point update form button click");
       console.log(obj);
       editRestPoint(obj);
-   //});
    });
    
    /*
