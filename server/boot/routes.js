@@ -374,157 +374,92 @@ module.exports = function (app) {
     
     
     .post('/restoPointFormEdit', (req, res) => {
+      //const restoPointUpsert = upsert.restoPointSub;
+      const restoPointUpdate = req.body;
 
-      const restoPointUpsert = upsert.restoPointSub;
-
-      const restoPointIndexedDB = req.body;
-      var restoPointArray = [];
-/*
-      for (var o in restoPointIndexedDB) {
-        var restoPointProp = [];
-        for (var i in restoPointIndexedDB[o].properties) {
-          restoPointProp.push(restoPointIndexedDB[o].properties[i]);
-        }
-        restoPointArray.push(restoPointProp)
-      }*/
-      console.log(restoPointIndexedDB);
-
-///UPDATE table_name
-///SET column1 = value1, column2 = value2, ...
-///WHERE condition;
-
-      db.none(`UPDATE resto_point_sub 
+      db.none(`UPDATE resto_point_sub
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_acti = $7, comments = $8,
         primary_ob = $9, secondary_ = $10, project_na = $11, sqft_resto = $12, gps_photo = $13, photo_azim = $14, previously = $15, qa_qc = $16
-      WHERE gid = $1 `,  restoPointIndexedDB)
+      WHERE gid = $1 `,  restoPointUpdate)
         .then(function () {
           console.log('restoration point updated');
-          console.log(restoPointIndexedDB);
+          console.log(restoPointUpdate);
           res.status(200)
         })
         .catch(function (err) {
           throw err;
         })
         
-      /*db.none(`INSERT INTO resto_point_sub (gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments,
-      primary_ob, secondary_, project_na, sqft_resto, gps_photo, photo_azim, previously, qa_qc, geom) VALUES $1` +
-        restoPointUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
-        ST_Force2D(ST_GeomFromGeoJSON($17))`, restoPointArray))
-        .then(function () {
-          console.log('restoPoint forms submitted');
-          console.log(restoPointIndexedDB);
-          res.status(200)
-        })
-        .catch(function (err) {
-          throw err;
-        })*/
     })
+    
     .post('/restoPolyFormEdit', (req, res) => {
-      const restoPolyUpsert = upsert.restoPolySub;
+      const restoPolyUpdate = req.body;
 
-      const restoPolyIndexedDB = req.body;
-      var restoPolyArray = [];
-
-      for (var o in restoPolyIndexedDB) {
-        var restoPolyProp = [];
-        for (var i in restoPolyIndexedDB[o].properties) {
-          restoPolyProp.push(restoPolyIndexedDB[o].properties[i]);
-        }
-        restoPolyArray.push(restoPolyProp)
-      }
-      
-
-      db.none(`INSERT INTO resto_polygon_sub (gid, agency, region, ecosystem, resto_code, resto_acti, te_action,
-      non_list_a, comments, primary_ob, secondary_, project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo,
-      photo_azim, signed, deep_till, barrier_in, mulch, monitoring, previously, shape_star, shape_stle, shape_leng,
-      shape_area, geom) VALUES $1` + restoPolyUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, ST_Force2D(ST_GeomFromGeoJSON($28))`, restoPolyArray))
+      db.none(`UPDATE resto_polygon_sub
+      SET agency = $2, region = $3, ecosystem = $4, resto_code = $5, resto_acti = $6, te_action = $7,
+      non_list_a = $8, comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, treatment_ = $13, acres_rest = $14, kmsq_resto = $15, gps_date = $16, gps_photo = $17,
+      photo_azim = $18, signed = $19, deep_till = $20, barrier_in = $21, mulch = $22, monitoring = $23, previously = $24, shape_star = $25, shape_stle = $26, shape_leng = $27,
+      shape_area = $28
+      WHERE gid = $1 `,  restoPolyUpdate)
         .then(function () {
-          console.log('restoPoly forms submitted');
-          console.log(restoPolyIndexedDB);
+          console.log('restoration polygon updated');
+          console.log(restoPolyUpdate);
           res.status(200)
         })
         .catch(function (err) {
           throw err;
         })
     })
+    
     .post('/restoLineFormEdit', (req, res) => {
-      const restoLineUpSert = upsert.restoLineSub;
+      const restoLineUpdate = req.body;
 
-      const restoLineIndexedDB = req.body;
-      var restoLineArray = [];
-
-      for (var o in restoLineIndexedDB) {
-        var restoLineProp = [];
-        for (var i in restoLineIndexedDB[o].properties) {
-          restoLineProp.push(restoLineIndexedDB[o].properties[i]);
-        }
-        restoLineArray.push(restoLineProp)
-      }
-
-      db.none(`INSERT INTO resto_line_sub (gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act,
-      nonlists_a, comments, primary_ob, secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in,
-      miles_rest, km_resto, gps_photo, photo_azim, monitoring, previously, qa_qc, shape_stle, shape_leng, geom) VALUES $1`
-        + restoLineUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, $21, $22, $23, $24, $25, $26, $27, ST_Force2D(ST_GeomFromGeoJSON($28))`, restoLineArray))
+      db.none(`UPDATE resto_line_sub
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_act = $7, te_act = $8,
+      nonlists_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
+      miles_rest = $19, km_resto = $20, gps_photo = $21, photo_azim = $22, monitoring = $23, previously = $24, qa_qc = $25, shape_stle = $26, shape_leng = $27
+      WHERE gid = $1 `,  restoLineUpdate)
         .then(function () {
-          console.log('restoLine forms submitted');
-          console.log(restoLineIndexedDB);
+          console.log('restoration line updated');
+          console.log(restoLineUpdate);
           res.status(200)
         })
         .catch(function (err) {
           throw err;
         })
     })
+    
+    
+    
     .post('/barrierFormEdit', (req, res) => {
-      const barrierUpsert = upsert.barrierSub;
+      const barrierUpdate = req.body;
 
-      const barrierIndexedDB = req.body;
-      var barrierArray = [];
-
-      for (var o in barrierIndexedDB) {
-        var barrierProperties = [];
-        for (var i in barrierIndexedDB[o].properties) {
-          barrierProperties.push(barrierIndexedDB[o].properties[i]);
-        }
-        barrierArray.push(barrierProperties)
-      }
-
-      db.none(`INSERT INTO barrier_sub (gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
-           comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
-           shape_stle, shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-           $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, ST_Force2D(ST_GeomFromGeoJSON($21))`, barrierArray))
+      db.none(`UPDATE barrier_sub
+      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
+           comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, qa_qc = $18,
+           shape_stle = $19, shape_leng = $20
+      WHERE gid = $1 `,  barrierUpdate)
         .then(function () {
-          console.log('barrier form submitted');
-          console.log(barrierIndexedDB);
+          console.log('barrier updated');
+          console.log(barrierUpdate);
           res.status(200)
         })
         .catch(function (err) {
           throw err;
         })
     })
+    
     .post('/distPointFormEdit', (req, res) => {
-      const distPointUpSert = upsert.distPointSub;
+      const distPointUpdate = req.body;
 
-      const distPointIndexedDB = req.body;
-      var distPointArray = [];
-
-      for (var o in distPointIndexedDB) {
-        var distPointProp = [];
-        for (var i in distPointIndexedDB[o].properties) {
-          distPointProp.push(distPointIndexedDB[o].properties[i]);
-        }
-        distPointArray.push(distPointProp)
-      }
-
-      db.none(`INSERT INTO dist_point_sub (gid, agency, region, ecosystem, gps_date, dist_code, use_freq, use_recent,
-      dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
-      cultural, t_e_specie, gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
-        distPointUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, 21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
+      db.none(`UPDATE dist_point_sub
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, use_freq = $7, use_recent = $8,
+        dist_pt_ty = $9, accessibil = $10, visibility = $11, comments = $12, primary_ob = $13, secondary_ = $14, previously = $15, project_na = $16, estimate_s = $17, treated = $18,
+        cultural = $19, t_e_specie = $20, gps_photo = $21, soil_vulne = $22, dist_use = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+      WHERE gid = $1 `,  distPointUpdate)
         .then(function () {
-          console.log('distPoint form submitted');
-          console.log(distPointIndexedDB);
+          console.log('dist point updated');
+          console.log(distPointUpdate);
           res.status(200)
         })
         .catch(function (err) {
@@ -532,59 +467,36 @@ module.exports = function (app) {
         })
     })
     .post('/distPolyFormEdit', (req, res) => {
-      const distPolyUpSert = upsert.distPolySub;
+      const distPolyUpdate = req.body;
 
-      const distPolyIndexedDB = req.body;
-      var distPolyArrary = [];
-
-      for (var o in distPolyIndexedDB) {
-        var distPolyProp = [];
-        for (var i in distPolyIndexedDB[o].properties) {
-          distPolyProp.push(distPolyIndexedDB[o].properties[i]);
-        }
-        distPolyArrary.push(distPolyProp)
-      }
-
-      db.none(`INSERT INTO dist_polygon_sub (gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
-      use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
-      primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
-      photo_azim, qa_qc, old_distco, shape_star, shape_stle, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
-        Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, ST_Force2D(ST_GeomFromGeoJSON($36))`,
-          distPolyArrary))
+      db.none(`UPDATE dist_polygon_sub
+      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
+        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, assessibil = $16, visibility = $17, comments = $18,
+        primary_ob = $19, secondary_ = $20, acres_rest = $21, kmsq_resto = $22, treated = $23, dist_sever = $24, cultural = $25, t_e_specie = $26, gps_photo = $27, site_vulne = $28,
+        photo_azim = $29, qa_qc = $30, old_distco = $31, shape_star = $32, shape_stle = $33, shape_leng = $34, shape_area = $35
+      WHERE gid = $1 `,  distPolyUpdate)
         .then(function () {
-          console.log('distPoly forms submitted');
-          console.log(distPolyIndexedDB);
+          console.log('dist polygon updated');
+          console.log(distPolyUpdate);
           res.status(200)
         })
         .catch(function (err) {
           throw err;
         })
     })
+    
     .post('/distLineFormEdit', (req, res) => {
-      const distLineUpsert = upsert.distLineSub;
+      const distLineUpdate = req.body;
 
-      const distLineIndexedDB = req.body;
-      var distLineArrary = [];
-
-      for (var o in distLineIndexedDB) {
-        var distLineProp = [];
-        for (var i in distLineIndexedDB[o].properties) {
-          distLineProp.push(distLineIndexedDB[o].properties[i]);
-        }
-        distLineArrary.push(distLineProp)
-      }
-
-      db.none(`INSERT INTO dist_line_sub (gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq,
-      use_recent, site_stabi, dist_crust, undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments,
-     primary_ob, secondary_, miles_dist, km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne,
-     photo_azim, qa_qc, old_dist_c, shape_stle, shape_leng, geom) VALUES $1` + distLineUpsert, Inserts(`$1, $2, $3, $4,
-     $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, 21, $22, $23, $24, $25, $26, $27, $28,
-     $29, $30, $31, $32, $33, $34, ST_Force2D(ST_GeomFromGeoJSON($35))`,
-        distLineArrary))
+      db.none(`UPDATE dist_line_sub
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
+        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, width = $14, type = $15, plant_dama = $16, accessibil = $17, visibility = $18, comments = $19,
+        primary_ob = $20, secondary_ = $21, miles_dist = $22, km_dist = $23, treated = $24, dist_sever = $25, cultural = $26, t_e_specie = $27, gps_photo = $28, soil_vulne = $29,
+        photo_azim = $30, qa_qc = $31, old_dist_c = $32, shape_stle = $33, shape_leng = $34
+      WHERE gid = $1 `,  distLineUpdate)
         .then(function () {
-          console.log('distLine forms submitted');
-          console.log(distLineIndexedDB);
+          console.log('dist line updated');
+          console.log(distLineUpdate);
           res.status(200)
         })
         .catch(function (err) {

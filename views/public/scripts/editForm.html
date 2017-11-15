@@ -1635,23 +1635,27 @@ function editRestPoint(restoPointSub) {
    
 }
    $("#restopointbutton").on("click", function(event) {
-      var data = $('#restoPointForm').serializeArray().reduce(function(obj, item) {
-         if (item.name === '' || item.value === 'select') {
-            obj[item.name] = null;
+      var count = 0;
+      var obj = [];
+      $('#restoPointForm').serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
          } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
-            obj[item.name] = parseInt(item.value);
+            obj[count] = parseInt(item.value);
          } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
-            obj[item.name] = parseFloat(item.value);
+            obj[count] = parseFloat(item.value);
          } else {
-            obj[item.name] = item.value;
+            obj[count] = item.value;
          }
+         count++;
           //obj[item.name] = item.value;
-          return obj;
+          //return obj;
       }, {});
        //$("#restoPointForm").on("submit", function (event) {
       console.log("resto point update form button click");
-      //console.log(data);
-      //editRestPoint(data);
+      console.log(obj);
+      editRestPoint(obj);
    //});
    });
    

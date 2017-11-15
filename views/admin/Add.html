@@ -397,7 +397,7 @@
                     var $el = $('[name="'+name+'"]'),
                         type = $el.attr('type');
                     
-                    console.log("something is happenning = " + name + " -- " + val);
+                    //console.log("something is happenning = " + name + " -- " + val);
                     //console.log(type);
                     switch(type){
                         case 'checkbox':
@@ -445,6 +445,7 @@
                 table.style.display = "none";  
                 var div = document.getElementById("editInfo");
                 div.innerHTML = "";
+                div.style.display ="";
                 editData();
                 
               }); 
