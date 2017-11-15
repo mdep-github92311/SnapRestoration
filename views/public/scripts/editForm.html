@@ -1,6 +1,6 @@
 <div class="form">
    <div class="collectionForm">
-      <form id="restoPointForm" method="POST" style="display: none;">
+      <form id="restoPointForm" style="display: none;">
          <label for="restoPointForm">Restoration Point Collection</label>
          <br>
          <label for="gid">gid: <br>
@@ -140,7 +140,7 @@
             <input type="text" name="geom">
          </label>
          <br><br>
-         <input type="submit" value="Submit">
+         <input id="restopointbutton" type="button" value="Submit">
       </form>
       <form id="restoPolyForm" action="/restoPolyFormSubmit" method="POST" style="display: none;">
          <label for="restoPolyForm">Restoration Polygon Collection</label><br>
@@ -154,14 +154,14 @@
                <option value="1">NPS</option>
                <option value="2">FS</option>
                <option value="3">FWS</option>
-               <option selected="selected" value="select"></option>
+               <option selected="selected" value="select"> </option>
             </select>
             <br>
          </label>
          <label for="region">
             region: <br>
             <select id="regionRPoly" name="region">
-               <option value="select"></option>
+               <option value="select"> </option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
                <option value="Black Mt Area">Black Mt Area</option>
@@ -1612,3 +1612,271 @@
       </form>
    </div>
 </div>
+
+<script>
+
+function editRestPoint(restoPointSub) {
+      console.log(restoPointSub)
+          $.ajax({
+            type: "POST",
+            url: "/restoPointFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(restoPointSub),
+            success: function (data) {
+              console.log(data)
+            }
+          })
+          .then(function () {
+            console.log('submitted restoPoint to PG')
+          })
+          .catch(function (err) {
+            console.log(err)
+          })
+   
+}
+   $("#restopointbutton").on("click", function(event) {
+      var data = $('#restoPointForm').serializeArray().reduce(function(obj, item) {
+         if (item.name === '' || item.value === 'select') {
+            obj[item.name] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+            obj[item.name] = parseInt(item.value);
+         } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
+            obj[item.name] = parseFloat(item.value);
+         } else {
+            obj[item.name] = item.value;
+         }
+          //obj[item.name] = item.value;
+          return obj;
+      }, {});
+       //$("#restoPointForm").on("submit", function (event) {
+      console.log("resto point update form button click");
+      //console.log(data);
+      //editRestPoint(data);
+   //});
+   });
+   
+   /*
+   $("form").on("submit", function (event) {
+    const $this = $(this); // this is the current form that is selected
+    event.preventDefault();
+
+    //https://stackoverflow.com/questions/9685177/get-the-id-of-a-form
+    //this is grabbing the current form ID on submission
+    const thisForm = $this.closest("form").attr("id");
+    const form = $this.serializeArray();
+
+    const barrierObj = {},
+      barrierArray = [],
+      distLineObj = {},
+      distLineArray = [],
+      distPointObj = {},
+      distPointArray = [],
+      distPolyObj = {},
+      distPolyArray = [],
+      restoLineObj = {},
+      restoLineArray = [],
+      restoPointObj = {},
+      restoPointArray = [],
+      restoPolyObj = {},
+      restoPolyArray = [];
+
+    //idea came from here
+    //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
+    $('#featureType').prop('selectedIndex', 0);
+    $('#featureStyle').prop('selectedIndex', 0);
+    // idea came from here
+    //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
+    $this.trigger('reset');
+    // idea come from here
+    // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
+    $this.hide();
+
+
+    $(form).each(function (i, field) {
+      const fieldValue = field.value;
+      const fieldName = field.name;
+
+      if (thisForm === "barrierForm") {
+        //https://www.youtube.com/watch?v=Sb8xyCa2p7A this post and the ones below came
+        //came from this youtube video
+        if (fieldValue === '' || fieldValue === 'select') {
+          barrierObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
+          barrierObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'barr_miles' || fieldName === 'bar_km' || fieldName === 'shape_stle' ||
+          fieldName === 'shape_leng') {
+          barrierObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          barrierObj[fieldName] = fieldValue;
+        }
+      } else if (thisForm === 'distLineForm') {
+        if (fieldValue === '' || fieldValue === 'select') {
+          distLineObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'dist_sever' || fieldName === 'photo_azim') {
+          distLineObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'miles_dist' || fieldName === 'km_dist' || fieldName === 'shape_stle' || fieldName === 'shape_leng') {
+          distLineObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          distLineObj[fieldName] = fieldValue;
+        }
+      } else if (thisForm === 'distPointForm') {
+        if (fieldValue === '' || fieldValue === 'select') {
+          distPointObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
+          distPointObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'estimate_s') {
+          distPointObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          distPointObj[fieldName] = fieldValue;
+        }
+      } else if (thisForm === 'distPolyForm') {
+        if (fieldValue === '' || fieldValue === 'select') {
+          distPolyObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'dist_sever' || fieldName === 'photo_azim') {
+          distPolyObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'acres_rest' || fieldName === 'kmsq_resto' || fieldName === 'shape_star' || fieldName === 'shape_stle'
+          || fieldName === 'shape_leng' || fieldName === 'shape_area') {
+          distPolyObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          distPolyObj[fieldName] = fieldValue;
+        }
+      } else if (thisForm === 'restoLineForm') {
+        if (fieldValue === '' || fieldValue === 'select') {
+          restoLineObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
+          restoLineObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'miles_rest' || fieldName === 'km_resto' || fieldName === 'shape_stle' || fieldName === 'shape_leng') {
+          restoLineObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          restoLineObj[fieldName] = fieldValue;
+        }
+      } else if (thisForm === 'restoPointForm') {
+        if (fieldValue === '' || fieldValue === 'select') {
+          restoPointObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
+          restoPointObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'miles_rest' || fieldName === 'km_resto' || fieldName === 'shape_stle' || fieldName === 'shape_leng') {
+          restoPointObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          restoPointObj[fieldName] = fieldValue;
+        }
+        console.log(fieldName + "  --  " + fieldValue)
+      } else if (thisForm === 'restoPolyForm') {
+        if (fieldValue === '' || fieldValue === 'select') {
+          restoPolyObj[fieldName] = null;
+        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
+          restoPolyObj[fieldName] = parseInt(fieldValue);
+        } else if (fieldName === 'acres_rest' || fieldName === 'kmsq_resto' || fieldName === 'shape_star' || fieldName === 'shape_stle'
+          || fieldName === 'shape_leng' || fieldName === 'shape_area') {
+          restoPolyObj[fieldName] = parseFloat(fieldValue);
+        } else {
+          restoPolyObj[fieldName] = fieldValue;
+        }
+      }
+    });
+
+    if (Object.keys(barrierObj).length > 0) {
+      thisLayer["properties"] = barrierObj;
+      thisLayer['geometry']['type'] = 'MultiLineString';
+      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+
+      barrierArray.push(thisLayer);
+
+      db.barrierSub.bulkPut(barrierArray)
+        .then(function (data) {
+          console.log(`Barrier form submitted: ${data}`);
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        })
+    } else if (Object.keys(distLineObj).length > 0) {
+      thisLayer["properties"] = distLineObj;
+      thisLayer['geometry']['type'] = 'MultiLineString';
+      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+
+      distLineArray.push(thisLayer);
+
+      db.distLineSub.bulkPut(distLineArray)
+        .then(function (data) {
+          console.log(`Disturbance Line form submitted: ${data}`);
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        });
+    } else if (Object.keys(distPointObj).length > 0) {
+
+      thisLayer["properties"] = distPointObj;
+      //thisLayer['geometry']['type'] = 'MultiLineString';
+      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+
+      distPointArray.push(thisLayer);
+      db.distPointSub.bulkPut(distPointArray)
+        .then(function (data) {
+          console.log(`Disturbance Point form submitted: ${data}`);
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        });
+    } else if (Object.keys(distPolyObj).length > 0) {
+      thisLayer["properties"] = distPolyObj;
+      thisLayer['geometry']['type'] = 'MultiPolygon';
+      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+
+      distPolyArray.push(thisLayer);
+
+      db.distPolySub.bulkPut(distPolyArray)
+        .then(function (data) {
+          console.log(`Disturbance Polygon form submitted: ${data}`);
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        });
+    } else if (Object.keys(restoLineObj).length > 0) {
+      thisLayer["properties"] = restoLineObj;
+      thisLayer['geometry']['type'] = 'MultiLineString';
+      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+
+      restoLineArray.push(thisLayer);
+
+      db.restoLineSub.bulkPut(restoLineArray)
+        .then(function (data) {
+          console.log(`Restoration Line form submitted: ${data}`);
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        });
+    } else if (Object.keys(restoPointObj).length > 0) {
+      //console.log(thisLayer);
+      
+      editRestPoint(restoPointObj)
+      /*db.restoPointSub.bulkPut(restoPointArray)
+        .then(function (data) {
+          console.log(`Restoration Point edit form submitted: ${data}`);
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        });
+    } else if (Object.keys(restoPolyObj).length > 0) {
+      thisLayer["properties"] = restoPolyObj;
+      //thisLayer['geometry']['type'] = 'MultiLineString';
+      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+
+      restoPolyArray.push(thisLayer);
+
+      db.restoPolySub.bulkPut(restoPolyArray)
+        .then(function (data) {
+          console.log(`Restoration Polygon form submitted: ${data}`)
+        })
+        .catch(Dexie.BulkError, function (err) {
+          console.warn(err);
+        });
+    }
+  });
+  */
+</script>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title></title>
@@ -387,16 +388,10 @@
               }).addTo(map);
               
               function editData(){
-                console.log(this.currentData);
-                /*for (var prop in this.currentData.properties) {
-                  if(prop == 'agency'){
-                    $("#editInfo").append(`<br /><B>${prop}</B>` + ' : ' + getAgency(currentData.properties[prop]));
-                  }
-                  else
-                      $("#editInfo").append(`<br /><B>${prop}</B>` + ' : ' + currentData.properties[prop]);
-                }*/
-                //document.getElementById("editInfo").innerHTML='<object type="text/html" data="../public/scripts/editForm.html" ></object>';
+                //console.log(this.currentData);
                 $("#editInfo").load("../public/scripts/editForm.html");
+                
+                // Waits for form to be loaded before populating Data
                 setTimeout(function(){ 
                   $.each(this.currentData.properties, function(name, val){
                     var $el = $('[name="'+name+'"]'),
@@ -412,9 +407,10 @@
                             $el.filter('[value="'+val+'"]').attr('checked', 'checked');
                             break;
                         default:
-                            $el.val(val);
+                            if (val != null && val != '')
+                              $el.val(val);
                     }
-                }); 
+                  }); 
                   console.log(this.currentData.dataType)
                     
                     $('#restoPointForm').toggle(
@@ -441,16 +437,6 @@
                 
                   
                 }, 300);
-                
-                
-                /*for(key in this.currentData.properties)
-                {
-                  if(this.currentData.properties.hasOwnProperty(key)) {
-                    console.log("something is happenning = " + key);
-                    $('input[name='+key+']').val(this.currentData[key]);
-                  }
-                }
-                   */             
               }
               
               // Listener for the Edit Button
