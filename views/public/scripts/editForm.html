@@ -140,7 +140,7 @@
             <input type="text" name="geom">
          </label>
          <br><br>
-         <input id="restopointbutton" type="button" value="Submit">
+         <input id="restopointbutton" type="button" value="Save">
       </form>
       <form id="restoPolyForm" action="/restoPolyFormSubmit" style="display: none;">
          <label for="restoPolyForm">Restoration Polygon Collection</label><br>
@@ -374,7 +374,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="restopolybutton" type="button" value="Submit">
+         <br><br><input id="restopolybutton" type="button" value="Save">
       </form>
       <form id="restoLineForm" style="display: none;">
          <label for="restoLineForm">Restoration Line Collection</label><br>
@@ -602,7 +602,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="restolinebutton" type="button" value="Submit">
+         <br><br><input id="restolinebutton" type="button" value="Save">
       </form>
       <form id="barrierForm" style="display: none;">
          <label for="barrierForm">Barrier Collection</label><br>
@@ -765,7 +765,7 @@
          </label>
          <label for="geom">geom: <br><input type="text" name="geom"></label>
          <br><br>
-         <input id="barrierbutton" type="button" value="Submit">
+         <input id="barrierbutton" type="button" value="Save">
       </form>
       <form id="distPointForm" style="display: none;">
          <label for="distPointForm">Disturbance Point Collection</label><br>
@@ -1001,7 +1001,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distpointbutton" type="button" value="Submit">
+         <br><br><input id="distpointbutton" type="button" value="Save">
       </form>
       <form id="distPolyForm" style="display: none;">
          <label for="distPolyForm">Disturbance Polygon Collection</label><br>
@@ -1302,7 +1302,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distpolybutton" type="button" value="Submit">
+         <br><br><input id="distpolybutton" type="button" value="Save">
       </form>
       <form id="distLineForm" style="display: none;">
          <label for="distLineForm">Disturbance Line Collection</label><br>
@@ -1608,7 +1608,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distlinebutton" type="button" value="Submit">
+         <br><br><input id="distlinebutton" type="button" value="Save">
       </form>
    </div>
 </div>
@@ -1619,14 +1619,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/restoPointFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1635,14 +1638,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/restoPolyFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1651,14 +1657,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/restoLineFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1667,14 +1676,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/barrierFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1683,14 +1695,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/distPointFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1699,14 +1714,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/distPolyFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1715,14 +1733,17 @@
       console.log(submission)
           $.ajax({
             type: "POST",
+            datatype: "json",
             url: "/distLineFormEdit",
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              console.log(data)
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              alert("some error");
+              console.log("some error");
            }
           })
    }
@@ -1743,7 +1764,7 @@
          count++;
       }, {});
       console.log("resto point update form button click");
-      console.log(obj);
+      
       editRestPoint(obj);
    });
    $("#restopolybutton").on("click", function(event) {
@@ -1763,7 +1784,7 @@
          count++;
       }, {});
       console.log("resto poly update form button click");
-      console.log(obj);
+      
       editRestPoly(obj);
    });
    $("#restolinebutton").on("click", function(event) {
@@ -1782,7 +1803,7 @@
          count++;
       }, {});
       console.log("resto line update form button click");
-      console.log(obj);
+      
       editRestLine(obj);
    });
    $("#barrierbutton").on("click", function(event) {
@@ -1802,7 +1823,7 @@
          count++;
       }, {});
       console.log("barrier update form button click");
-      console.log(obj);
+      
       editBarrier(obj);
    });
    $("#distpointbutton").on("click", function(event) {
@@ -1822,7 +1843,7 @@
          count++;
       }, {});
       console.log("dist point update form button click");
-      console.log(obj);
+      
       editDistPoint(obj);
    });
    $("#distpolybutton").on("click", function(event) {
@@ -1841,7 +1862,7 @@
          count++;
       }, {});
       console.log("dist poly update form button click");
-      console.log(obj);
+      
       editDistPoly(obj);
    });
    $("#distlinebutton").on("click", function(event) {
@@ -1861,7 +1882,7 @@
          count++;
       }, {});
       console.log("dist line update form button click");
-      console.log(obj);
+      
       editDistLine(obj);
    });
    

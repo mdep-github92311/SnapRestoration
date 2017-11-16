@@ -384,7 +384,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoration point updated');
           console.log(restoPointUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -404,7 +408,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoration polygon updated');
           console.log(restoPolyUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -422,7 +430,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoration line updated');
           console.log(restoLineUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -442,7 +454,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('barrier updated');
           console.log(barrierUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -460,7 +476,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('dist point updated');
           console.log(distPointUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -478,7 +498,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('dist polygon updated');
           console.log(distPolyUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -497,7 +521,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('dist line updated');
           console.log(distLineUpdate);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
