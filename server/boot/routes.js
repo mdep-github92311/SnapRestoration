@@ -550,11 +550,11 @@ module.exports = function (app) {
       var restoPointArray = [];
 
       var restoPointProp = [];
-        for (var i in restoPointIndexedDB.properties) {
-          restoPointProp.push(restoPointIndexedDB.properties[i]);
-        }
-        restoPointProp.push(restoPointIndexedDB.geometry);
-        restoPointArray.push(restoPointProp)
+      for (var i in restoPointIndexedDB.properties) {
+        restoPointProp.push(restoPointIndexedDB.properties[i]);
+      }
+      restoPointProp.push(restoPointIndexedDB.geometry);
+      restoPointArray.push(restoPointProp)
 
 
       db.none(`INSERT INTO resto_point (gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments,
@@ -576,13 +576,12 @@ module.exports = function (app) {
       const restoPolyIndexedDB = req.body;
       var restoPolyArray = [];
 
-      for (var o in restoPolyIndexedDB) {
-        var restoPolyProp = [];
-        for (var i in restoPolyIndexedDB[o].properties) {
-          restoPolyProp.push(restoPolyIndexedDB[o].properties[i]);
-        }
-        restoPolyArray.push(restoPolyProp)
+      var restoPolyProp = [];
+      for (var i in restoPolyIndexedDB.properties) {
+       restoPolyProp.push(restoPolyIndexedDB.properties[i]);
       }
+      restoPolyProp.push(restoPolyIndexedDB.geometry);
+      restoPolyArray.push(restoPolyProp)
 
       db.none(`INSERT INTO resto_polygon (gid, agency, region, ecosystem, resto_code, resto_acti, te_action,
       non_list_a, comments, primary_ob, secondary_, project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo,
