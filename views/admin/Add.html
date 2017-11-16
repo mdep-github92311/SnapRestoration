@@ -441,7 +441,45 @@
                     );
                 
                   
-                }, 300);
+                }, 400);
+              }
+              
+              function confirmData(){
+                var link = "/";
+                if (this.currentData.dataType === 'restoPoints')
+                  link = "/restoPointConfirm";
+                else if (this.currentData.dataType === 'restoPolys')
+                  link = "/restoPolyConfirm";
+                else if (this.currentData.dataType === 'restoLines')
+                  link = "/restoLineConfirm";
+                else if (this.currentData.dataType === 'barriers')
+                  link = "/barrierConfirm";
+                else if (this.currentData.dataType === 'distPoints')
+                  link = "/distPointConfirm";
+                else if (this.currentData.dataType === 'distPolys')
+                  link = "/distPolyConfirm";
+                else if (this.currentData.dataType === 'distLines')
+                  link = "/distLineConfirm";
+                  
+                console.log("submitting to " + link);
+                console.log(this.currentData);
+                var submission = this.currentData;
+                delete submission.dataType;
+                $.ajax({
+                  type: "POST",
+                  datatype: "json",
+                  url: link,
+                  contentType: 'application/json',
+                  data: JSON.stringify(submission),
+                  success: function (data) {
+                    window.location.reload(true); 
+                    console.log("success!!");
+                    console.log(data);
+                  },
+                  error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("some error");
+                 }
+                })
               }
               
               // Listener for the Edit Button
@@ -451,6 +489,15 @@
                 div.innerHTML = "";
                 div.style.display ="";
                 editData();
+                document.getElementById("buttons").style.display = "none"; 
+              }); 
+              
+              document.getElementById("confirmButton").addEventListener('click',function () {
+                document.getElementById("tableMap").style.display = "none";  
+                var div = document.getElementById("editInfo");
+                div.innerHTML = "";
+                div.style.display ="";
+                confirmData();
                 document.getElementById("buttons").style.display = "none"; 
               }); 
               

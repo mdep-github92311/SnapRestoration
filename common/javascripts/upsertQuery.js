@@ -211,3 +211,33 @@ exports.restoPolySub =
         shape_leng = excluded.shape_leng, 
         shape_area = excluded.shape_area, 
         geom = excluded.geom;`;
+
+exports.restoLine =
+    `ON CONFLICT (gid) DO UPDATE
+      SET
+        agency = excluded.agency, 
+        region = excluded.region, 
+        ecosystem = excluded.ecosystem, 
+        gps_date = excluded.gps_date, 
+        resto_code = excluded.resto_code, 
+        resto_act = excluded.resto_act, 
+        te_act = excluded.te_act, 
+        nonlists_a = excluded.nonlists_a, 
+        comments = excluded.comments, 
+        primary_ob = excluded.primary_ob, 
+        secondary_ = excluded.secondary_, 
+        project_na = excluded.project_na, 
+        treatment_ = excluded.treatment_, 
+        signed = excluded.signed, 
+        mulch = excluded.mulch, 
+        deep_till = excluded.deep_till, 
+        barrier_in = excluded.barrier_in, 
+        miles_rest = excluded.miles_rest, 
+        km_resto = excluded.km_resto, 
+        gps_photo = excluded.gps_photo, 
+        photo_azim = excluded.photo_azim, 
+        monitoring = excluded.monitoring, 
+        previously = excluded.previously, 
+        qa_qc = excluded.qa_qc, 
+        shape_leng = excluded.shape_leng, 
+        geom = excluded.geom;`;

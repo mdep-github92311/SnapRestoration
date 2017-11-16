@@ -140,7 +140,7 @@
             <input type="text" name="geom">
          </label>
          <br><br>
-         <input id="restopointbutton" type="button" value="Save">
+         <input id="restoPointEditButton" type="button" value="Save">
       </form>
       <form id="restoPolyForm" action="/restoPolyFormSubmit" style="display: none;">
          <label for="restoPolyForm">Restoration Polygon Collection</label><br>
@@ -374,7 +374,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="restopolybutton" type="button" value="Save">
+         <br><br><input id="restoPolyEditButton" type="button" value="Save">
       </form>
       <form id="restoLineForm" style="display: none;">
          <label for="restoLineForm">Restoration Line Collection</label><br>
@@ -602,7 +602,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="restolinebutton" type="button" value="Save">
+         <br><br><input id="restoLineEditButton" type="button" value="Save">
       </form>
       <form id="barrierForm" style="display: none;">
          <label for="barrierForm">Barrier Collection</label><br>
@@ -765,7 +765,7 @@
          </label>
          <label for="geom">geom: <br><input type="text" name="geom"></label>
          <br><br>
-         <input id="barrierbutton" type="button" value="Save">
+         <input id="barrierEditButton" type="button" value="Save">
       </form>
       <form id="distPointForm" style="display: none;">
          <label for="distPointForm">Disturbance Point Collection</label><br>
@@ -1001,7 +1001,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distpointbutton" type="button" value="Save">
+         <br><br><input id="distPointEditButton" type="button" value="Save">
       </form>
       <form id="distPolyForm" style="display: none;">
          <label for="distPolyForm">Disturbance Polygon Collection</label><br>
@@ -1302,7 +1302,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distpolybutton" type="button" value="Save">
+         <br><br><input id="distPolyEditButton" type="button" value="Save">
       </form>
       <form id="distLineForm" style="display: none;">
          <label for="distLineForm">Disturbance Line Collection</label><br>
@@ -1608,7 +1608,7 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distlinebutton" type="button" value="Save">
+         <br><br><input id="distLineEditButton" type="button" value="Save">
       </form>
    </div>
 </div>
@@ -1747,7 +1747,7 @@
            }
           })
    }
-   $("#restopointbutton").on("click", function(event) {
+   $("#restoPointEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#restoPointForm').serializeArray().reduce(function(i, item) {
@@ -1767,7 +1767,7 @@
       
       editRestPoint(obj);
    });
-   $("#restopolybutton").on("click", function(event) {
+   $("#restoPolyEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#restoPolyForm').serializeArray().reduce(function(i, item) {
@@ -1787,7 +1787,7 @@
       
       editRestPoly(obj);
    });
-   $("#restolinebutton").on("click", function(event) {
+   $("#restoLineEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#restoLineForm').serializeArray().reduce(function(i, item) {
@@ -1806,7 +1806,7 @@
       
       editRestLine(obj);
    });
-   $("#barrierbutton").on("click", function(event) {
+   $("#barrierEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#barrierForm').serializeArray().reduce(function(i, item) {
@@ -1826,7 +1826,7 @@
       
       editBarrier(obj);
    });
-   $("#distpointbutton").on("click", function(event) {
+   $("#distPointEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#distPointForm').serializeArray().reduce(function(i, item) {
@@ -1846,7 +1846,7 @@
       
       editDistPoint(obj);
    });
-   $("#distpolybutton").on("click", function(event) {
+   $("#distPolyEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#distPolyForm').serializeArray().reduce(function(i, item) {
@@ -1865,7 +1865,7 @@
       
       editDistPoly(obj);
    });
-   $("#distlinebutton").on("click", function(event) {
+   $("#distLineEditButton").on("click", function(event) {
       var count = 0;
       var obj = [];
       $('#distLineForm').serializeArray().reduce(function(i, item) {
@@ -1886,150 +1886,4 @@
       editDistLine(obj);
    });
    
-   /*
-   $("form").on("submit", function (event) {
-    const $this = $(this); // this is the current form that is selected
-    event.preventDefault();
-
-    //https://stackoverflow.com/questions/9685177/get-the-id-of-a-form
-    //this is grabbing the current form ID on submission
-    const thisForm = $this.closest("form").attr("id");
-    const form = $this.serializeArray();
-
-    const barrierObj = {},
-      barrierArray = [],
-      distLineObj = {},
-      distLineArray = [],
-      distPointObj = {},
-      distPointArray = [],
-      distPolyObj = {},
-      distPolyArray = [],
-      restoLineObj = {},
-      restoLineArray = [],
-      restoPointObj = {},
-      restoPointArray = [],
-      restoPolyObj = {},
-      restoPolyArray = [];
-
-    //idea came from here
-    //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
-    $('#featureType').prop('selectedIndex', 0);
-    $('#featureStyle').prop('selectedIndex', 0);
-    // idea came from here
-    //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
-    $this.trigger('reset');
-    // idea come from here
-    // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
-    $this.hide();
-
-
-    $(form).each(function (i, field) {
-      const fieldValue = field.value;
-      const fieldName = field.name;
-    });
-
-    if (Object.keys(barrierObj).length > 0) {
-      thisLayer["properties"] = barrierObj;
-      thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      barrierArray.push(thisLayer);
-
-      db.barrierSub.bulkPut(barrierArray)
-        .then(function (data) {
-          console.log(`Barrier form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        })
-    } else if (Object.keys(distLineObj).length > 0) {
-      thisLayer["properties"] = distLineObj;
-      thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      distLineArray.push(thisLayer);
-
-      db.distLineSub.bulkPut(distLineArray)
-        .then(function (data) {
-          console.log(`Disturbance Line form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(distPointObj).length > 0) {
-
-      thisLayer["properties"] = distPointObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      distPointArray.push(thisLayer);
-      db.distPointSub.bulkPut(distPointArray)
-        .then(function (data) {
-          console.log(`Disturbance Point form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(distPolyObj).length > 0) {
-      thisLayer["properties"] = distPolyObj;
-      thisLayer['geometry']['type'] = 'MultiPolygon';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      distPolyArray.push(thisLayer);
-
-      db.distPolySub.bulkPut(distPolyArray)
-        .then(function (data) {
-          console.log(`Disturbance Polygon form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(restoLineObj).length > 0) {
-      thisLayer["properties"] = restoLineObj;
-      thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      restoLineArray.push(thisLayer);
-
-      db.restoLineSub.bulkPut(restoLineArray)
-        .then(function (data) {
-          console.log(`Restoration Line form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(restoPointObj).length > 0) {
-      //console.log(thisLayer);
-      
-      editRestPoint(restoPointObj)
-      /*db.restoPointSub.bulkPut(restoPointArray)
-        .then(function (data) {
-          console.log(`Restoration Point edit form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(restoPolyObj).length > 0) {
-      thisLayer["properties"] = restoPolyObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      restoPolyArray.push(thisLayer);
-
-      db.restoPolySub.bulkPut(restoPolyArray)
-        .then(function (data) {
-          console.log(`Restoration Polygon form submitted: ${data}`)
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    }
-  });
-  */
 </script>
