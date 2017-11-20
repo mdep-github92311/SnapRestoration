@@ -1,3 +1,4 @@
+/*
 // Set up your database query to display GeoJSON
 exports.barrier_query =
     `SELECT 
@@ -411,7 +412,7 @@ exports.resto_poly_centroid_sub_query =
       mulch, monitoring, previously, orig_fid) As l)) As properties
     FROM rest_poly_centroid_sub As lg) As f) As fc`;
     
-/*
+*/
 
 // Set up your database query to display GeoJSON
 exports.barrier_query =
@@ -858,4 +859,3 @@ exports.resto_poly_centroid_sub_query =
       mulch, monitoring, previously, orig_fid) As l)) As properties
     FROM rest_poly_centroid_sub As lg) As f) As fc`;
     
-  */
