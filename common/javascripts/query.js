@@ -234,7 +234,7 @@ exports.nv_counties_query =
       no_farms87, avg_size87, crop_acr87, avg_sale87) As l)) As properties
     FROM nv_counties As lg) As f) As fc`;
 
-exports.roads_query =
+/*exports.roads_query =
     `SELECT 
       row_to_json(fc)
     FROM (SELECT 
@@ -248,10 +248,10 @@ exports.roads_query =
     FROM (SELECT 
       gid, route_type) 
       As l)) As properties
-    FROM roads As lg) As f) As fc`;
+    FROM roads As lg) As f) As fc`;*/
     
-  /*
-  exports.roads_query =
+
+exports.roads_query =
     `SELECT 
       row_to_json(fc)
     FROM (SELECT 
@@ -269,7 +269,7 @@ exports.roads_query =
       date_, miles, condition, use_level, created_us, created_da, last_edite, last_edi_1, objectid_1, road_statu) 
       As l)) As properties
     FROM roads As lg) As f) As fc`;
-    */
+    
 
 exports.snap_extent_query =
     `SELECT 
