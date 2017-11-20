@@ -246,12 +246,30 @@ exports.roads_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
+      gid, route_type) 
+      As l)) As properties
+    FROM roads As lg) As f) As fc`;
+    
+  /*
+  exports.roads_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
       gid, route_type, dominantsu, route_widt, name, comment, sourcethm, status, rd_number, rs2477_id, rd_status, 
       indicator_, length_mi, no, gtlf_id, admin_st, gtlf_plan_, famslink, gtlf_own, gtlf_nu, gtlf_nm, gtlf_nu2, gtlf_nm2, 
       gtlf_surfa, gtlf_carto, noshow_rsn, use_restri, fun_class, spec_dsgtn, esmtrow, use_class, coord_src_, coord_src2, 
       date_, miles, condition, use_level, created_us, created_da, last_edite, last_edi_1, objectid_1, road_statu) 
       As l)) As properties
     FROM roads As lg) As f) As fc`;
+    */
 
 exports.snap_extent_query =
     `SELECT 
@@ -280,6 +298,22 @@ exports.soil_vulnerability_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
+      gid, objectid) As l)) As properties
+    FROM soil_vulnerability As lg) As f) As fc`;
+    
+/*
+exports.soil_vulnerability_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
       gid, objectid, fid_nevada, fid_neva_1, restoratio, perimeter, fmatn, l_name, geologicfm, statemap, county, bioagemax, 
       bioagemin, modpoly, notes, refs, reviewed, shape_leng, vulfmatn, vulgeologi, fid_nvcoun, fid_nvco_1, area_1, 
       perimete_1, county_nam, area__sq_m, comment, acres, fid_swland, area_12, perimete_2, ca_landow_, ca_landow1, 
@@ -288,6 +322,7 @@ exports.soil_vulnerability_query =
       perimete_3, county_n_1, area__sq_1, comment_1, acres_1, fid_swla_1, area_12_14, perimete_4, ca_lando_1, ca_lando_2, 
       region_1, owner_1, source_1, macode_1, status_1, matype_1, owner_na_1, new_owne_1, name_1, state_1) As l)) As properties
     FROM soil_vulnerability As lg) As f) As fc`;
+*/
     
 exports.barrier_sub_query =
     `SELECT 
