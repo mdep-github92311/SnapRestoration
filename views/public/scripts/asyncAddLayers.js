@@ -287,7 +287,7 @@ async function getLayers() {
 
       await $.getJSON('http://' + ipAddress + '/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 30;
+        count += 5;
       }),
 
       $.getJSON('http://' + ipAddress + '/api/Roads/roadsGeoJSON', function (data) {
