@@ -7,7 +7,7 @@ exports.barrier_query =
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
-      St_asgeojson(geom) ::json AS geometry,
+      ST_AsGeoJSON(geom) ::json AS geometry,
       Row_to_json((SELECT
         l
     FROM (SELECT
@@ -297,7 +297,7 @@ exports.barrier_sub_query =
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
-      St_asgeojson(geom) ::json AS geometry,
+      ST_AsGeoJSON(geom) ::json AS geometry,
       Row_to_json((SELECT
         l
     FROM (SELECT

@@ -2073,7 +2073,7 @@ $(document).ready(function () {
         });
     } else if (Object.keys(restoPolyObj).length > 0) {
       thisLayer["properties"] = restoPolyObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
+      thisLayer['geometry']['type'] = 'MultiPolygon';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
       thisLayer["properties"]["geom"] = thisLayer['geometry'];
 
