@@ -102,7 +102,7 @@ module.exports = function (app) {
         }
         restoPolyArray.push(restoPolyProp)
       }
-
+      console.log(req.body[0].geometry.coordinates);
       db.none(`INSERT INTO resto_polygon_sub (gid, agency, region, ecosystem, resto_code, resto_acti, te_action,
       non_list_a, comments, primary_ob, secondary_, project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo,
       photo_azim, signed, deep_till, barrier_in, mulch, monitoring, previously, shape_star, shape_stle, shape_leng,
@@ -589,7 +589,7 @@ module.exports = function (app) {
       non_list_a, comments, primary_ob, secondary_, project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo,
       photo_azim, signed, deep_till, barrier_in, mulch, monitoring, previously, shape_leng, shape_area, geom) 
       VALUES $1` + restoPolyUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, restoPolyArray))
+      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($29))`, restoPolyArray))
         .then(function () {
           console.log('restoPoly forms submitted');
           console.log(restoPolyIndexedDB);
@@ -617,7 +617,7 @@ module.exports = function (app) {
       nonlists_a, comments, primary_ob, secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in,
       miles_rest, km_resto, gps_photo, photo_azim, monitoring, previously, qa_qc, shape_leng, geom) VALUES $1`
         + restoLineUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, restoLineArray))
+        $20, $21, $22, $23, $24, $25, $27, ST_Force2D(ST_GeomFromGeoJSON($28))`, restoLineArray))
         .then(function () {
           console.log('restoLine forms submitted');
           console.log(restoLineIndexedDB);
