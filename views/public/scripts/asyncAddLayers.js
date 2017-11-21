@@ -251,7 +251,7 @@ async function getLayers() {
     progress.Update(count);
   }, 100);
   
-  var ipAddress = "216.117.167.186";
+  var ipAddress = "216.117.167.186:443";
   var ipAddress1 = "snap-restoration-brstillwell.c9users.io";
   try {
     $.when(

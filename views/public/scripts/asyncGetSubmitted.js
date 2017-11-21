@@ -1,7 +1,7 @@
 async function getSubmissions() {
   var barriers, distPoints, distPolys, distLines, restoLines, restoPoints, restoPolys;
   barriers = distPoints = distPolys = distLines = restoLines = restoPoints = restoPolys = [];
-  var ipAddress = "216.117.167.186";
+  var ipAddress = "216.117.167.186:443";
   var ipAddress1 = "snap-restoration-brstillwell.c9users.io";
   var overallCount = 0;
 try {
