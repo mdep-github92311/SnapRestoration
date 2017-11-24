@@ -589,7 +589,7 @@ module.exports = function (app) {
       non_list_a, comments, primary_ob, secondary_, project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo,
       photo_azim, signed, deep_till, barrier_in, mulch, monitoring, previously, shape_leng, shape_area, geom) 
       VALUES $1` + restoPolyUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($29))`, restoPolyArray))
+      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $27, $28, ST_Force2D(ST_GeomFromGeoJSON($29))`, restoPolyArray))
         .then(function () {
           console.log('restoPoly forms submitted');
           console.log(restoPolyIndexedDB);
@@ -643,8 +643,8 @@ module.exports = function (app) {
 
       db.none(`INSERT INTO barrier (gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
-           shape_stle, shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-           $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, ST_Force2D(ST_GeomFromGeoJSON($21))`, barrierArray))
+           shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+           $11, $12, $13, $14, $15, $16, $17, $18, $20, ST_Force2D(ST_GeomFromGeoJSON($21))`, barrierArray))
         .then(function () {
           console.log('barrier form submitted');
           console.log(barrierIndexedDB);
@@ -701,7 +701,7 @@ module.exports = function (app) {
       primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
       photo_azim, qa_qc, old_distco, shape_star, shape_stle, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
         Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, ST_Force2D(ST_GeomFromGeoJSON($36))`,
+        $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $34, $35, ST_Force2D(ST_GeomFromGeoJSON($36))`,
           distPolyArrary))
         .then(function () {
           console.log('distPoly forms submitted');
@@ -729,9 +729,9 @@ module.exports = function (app) {
       db.none(`INSERT INTO dist_line (gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq,
       use_recent, site_stabi, dist_crust, undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments,
      primary_ob, secondary_, miles_dist, km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne,
-     photo_azim, qa_qc, old_dist_c, shape_stle, shape_leng, geom) VALUES $1` + distLineUpsert, Inserts(`$1, $2, $3, $4,
+     photo_azim, qa_qc, old_dist_c, shape_leng, geom) VALUES $1` + distLineUpsert, Inserts(`$1, $2, $3, $4,
      $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, 21, $22, $23, $24, $25, $26, $27, $28,
-     $29, $30, $31, $32, $33, $34, ST_Force2D(ST_GeomFromGeoJSON($35))`,
+     $29, $30, $31, $32, $34, ST_Force2D(ST_GeomFromGeoJSON($35))`,
         distLineArrary))
         .then(function () {
           console.log('distLine forms submitted');
