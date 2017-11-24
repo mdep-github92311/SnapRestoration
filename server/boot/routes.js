@@ -62,7 +62,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoPoint forms submitted');
           console.log(restoPointIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -111,7 +115,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoPoly forms submitted');
           console.log(restoPolyIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -163,7 +171,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoLine forms submitted');
           console.log(restoLineIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -202,7 +214,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('barrier form submitted');
           console.log(barrierIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -230,7 +246,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('distPoint form submitted');
           console.log(distPointIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -291,7 +311,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('distPoly forms submitted');
           console.log(distPolyIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -339,7 +363,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('distLine forms submitted');
           console.log(distLineIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -545,7 +573,7 @@ module.exports = function (app) {
     .post('/restoPointConfirm', (req, res) => {
       
       console.log(req.body);
-      const restoPointUpsert = upsert.restoPointSub;
+      const restoPointUpsert = upsert.restoPoint;
 
       const restoPointIndexedDB = req.body;
       var restoPointArray = [];
@@ -565,14 +593,18 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoPoint forms submitted');
           console.log(restoPointIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
         })
     })
     .post('/restoPolyConfirm', (req, res) => {
-      const restoPolyUpsert = upsert.restoPolySub;
+      const restoPolyUpsert = upsert.restoPoly;
 
       const restoPolyIndexedDB = req.body;
       console.log(restoPolyIndexedDB);
@@ -593,7 +625,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoPoly forms submitted');
           console.log(restoPolyIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
@@ -621,14 +657,18 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoLine forms submitted');
           console.log(restoLineIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
         })
     })
     .post('/barrierConfirm', (req, res) => {
-      const barrierUpsert = upsert.barrierSub;
+      const barrierUpsert = upsert.barrier;
 
       const barrierIndexedDB = req.body;
       var barrierArray = [];
@@ -647,14 +687,18 @@ module.exports = function (app) {
         .then(function () {
           console.log('barrier form submitted');
           console.log(barrierIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
         })
     })
     .post('/distPointConfirm', (req, res) => {
-      const distPointUpSert = upsert.distPointSub;
+      const distPointUpSert = upsert.distPoint;
 
       const distPointIndexedDB = req.body;
       var distPointArray = [];
@@ -674,14 +718,18 @@ module.exports = function (app) {
         .then(function () {
           console.log('distPoint form submitted');
           console.log(distPointIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
         })
     })
     .post('/distPolyConfirm', (req, res) => {
-      const distPolyUpSert = upsert.distPolySub;
+      const distPolyUpSert = upsert.distPoly;
 
       const distPolyIndexedDB = req.body;
       var distPolyArrary = [];
@@ -703,14 +751,18 @@ module.exports = function (app) {
         .then(function () {
           console.log('distPoly forms submitted');
           console.log(distPolyIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
         })
     })
     .post('/distLineConfirm', (req, res) => {
-      const distLineUpsert = upsert.distLineSub;
+      const distLineUpsert = upsert.distLine;
 
       const distLineIndexedDB = req.body;
       var distLineArrary = [];
@@ -732,7 +784,11 @@ module.exports = function (app) {
         .then(function () {
           console.log('distLine forms submitted');
           console.log(distLineIndexedDB);
-          res.status(200)
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
         })
         .catch(function (err) {
           throw err;
