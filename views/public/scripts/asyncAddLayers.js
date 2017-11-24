@@ -252,7 +252,7 @@ async function getLayers() {
   }, 100);
   
   var ipAddress = "216.117.167.186:443";
-  var ipAddress1 = "snap-restoration-brstillwell.c9users.io";
+  //var ipAddress = "snap-restoration-brstillwell.c9users.io";
   try {
     $.when(
       await $.getJSON('http://' + ipAddress + '/api/Barriers/barrierGeoJSON', function (data) {

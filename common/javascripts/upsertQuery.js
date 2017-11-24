@@ -211,6 +211,134 @@ exports.restoPolySub =
         shape_leng = excluded.shape_leng, 
         shape_area = excluded.shape_area, 
         geom = excluded.geom;`;
+        
+        
+exports.barrier =
+    `ON CONFLICT (gid) DO UPDATE
+      SET 
+        agency = excluded.agency,
+        regions = excluded.regions,
+        ecosystem = excluded.ecosystem,
+        gps_date = excluded.gps_date,
+        barr_code = excluded.barr_code,
+        barr_actio = excluded.barr_actio,
+        barr_type = excluded.barr_type,
+        comments = excluded.comments,
+        primary_ob = excluded.primary_ob,
+        secondary_ = excluded.secondary_,
+        project_na = excluded.project_na,
+        barr_miles = excluded.barr_miles,
+        barr_km = excluded.barr_km,
+        previously = excluded.previously,
+        gps_photo = excluded.gps_photo,
+        photo_azim = excluded.photo_azim,
+        qa_qc = excluded.qa_qc,
+        shape_leng = excluded.shape_leng,
+        geom = excluded.geom;`;
+
+exports.distLine =
+    `ON CONFLICT (gid) DO UPDATE
+      SET 
+        agency = excluded.agency,
+        region = excluded.region,
+        ecosystem = excluded.ecosystem,
+        gps_date = excluded.gps_date,
+        dist_code = excluded.dist_code,
+        dist_use = excluded.dist_use,
+        use_freq = excluded.use_freq,
+        use_recent = excluded.use_recent,
+        site_stabi = excluded.site_stabi,
+        dist_crust = excluded.dist_crust,
+        undist_cru = excluded.undist_cru,
+        depth = excluded.depth,
+        width = excluded.width,
+        type = excluded.type,
+        plant_dama = excluded.plant_dama,
+        accessibil = excluded.accessibil,
+        visibility = excluded.visibility,
+        comments = excluded.comments,
+        primary_ob = excluded.primary_ob,
+        secondary_ = excluded.secondary_,
+        miles_dist = excluded.miles_dist,
+        km_dist = excluded.km_dist,
+        treated = excluded.treated,
+        dist_sever = excluded.dist_sever,
+        cultural = excluded.cultural,
+        t_e_specie = excluded.t_e_specie,
+        gps_photo = excluded.gps_photo,
+        soil_vulne = excluded.soil_vulne,
+        photo_azim = excluded.photo_azim,
+        qa_qc = excluded.qa_qc,
+        old_dist_c = excluded.old_dist_c,
+        shape_leng = excluded.shape_leng,
+        geom = excluded.geom;`;
+
+exports.distPoint =
+    `ON CONFLICT (gid) DO UPDATE
+      SET 
+        agency = excluded.agency,
+        region = excluded.region,
+        ecosystem = excluded.ecosystem,
+        gps_date = excluded.gps_date,
+        dist_code = excluded.dist_code,
+        use_freq = excluded.use_freq,
+        use_recent = excluded.use_recent,
+        dist_pt_ty = excluded.dist_pt_ty,
+        accessibil = excluded.accessibil,
+        visibility = excluded.visibility,
+        comments = excluded.comments,
+        primary_ob = excluded.primary_ob,
+        secondary_ = excluded.secondary_,
+        previously = excluded.previously,
+        project_na = excluded.project_na,
+        estimate_s = excluded.estimate_s,
+        treated = excluded.treated,
+        cultural = excluded.cultural,
+        t_e_specie = excluded.t_e_specie,
+        gps_photo = excluded.gps_photo,
+        soil_vulne = excluded.soil_vulne,
+        dist_use = excluded.dist_use,
+        photo_azim = excluded.photo_azim,
+        qa_qc = excluded.qa_qc,
+        old_distco = excluded.old_distco,
+        geom = excluded.geom;`;
+
+exports.distPoly =
+    `ON CONFLICT (gid) DO UPDATE
+      SET
+        agency = excluded.agency,
+        regions = excluded.regions,
+        ecosystem = excluded.ecosystem,
+        gps_date = excluded.gps_date,
+        dist_code = excluded.dist_code,
+        dist_use = excluded.dist_use,
+        use_freq = excluded.use_freq,
+        use_recent = excluded.use_recent,
+        site_stabi = excluded.site_stabi,
+        dist_crust = excluded.dist_crust,
+        undist_cru = excluded.undist_cru,
+        depth = excluded.depth,
+        dist_poly_ = excluded.dist_poly_,
+        plant_dama = excluded.plant_dama,
+        assessibil = excluded.assessibil,
+        visibility = excluded.visibility,
+        comments = excluded.comments,
+        primary_ob = excluded.primary_ob,
+        secondary_ = excluded.secondary_,
+        acres_rest = excluded.acres_rest,
+        kmsq_resto = excluded.kmsq_resto,
+        treated = excluded.treated,
+        dist_sever = excluded.dist_sever,
+        cultural = excluded.cultural,
+        t_e_specie = excluded.t_e_specie,
+        gps_photo = excluded.gps_photo,
+        site_vulne = excluded.site_vulne,
+        photo_azim = excluded.photo_azim,
+        qa_qc = excluded.qa_qc,
+        old_distco = excluded.old_distco,
+        shape_leng = excluded.shape_leng,
+        shape_area = excluded.shape_area,
+        geom = excluded.geom;`;
 
 exports.restoLine =
     `ON CONFLICT (gid) DO UPDATE
@@ -241,3 +369,54 @@ exports.restoLine =
         qa_qc = excluded.qa_qc, 
         shape_leng = excluded.shape_leng, 
         geom = excluded.geom;`;
+
+exports.restoPoint =
+    `ON CONFLICT (gid) DO UPDATE
+      SET
+        agency = excluded.agency, 
+        region = excluded.region, 
+        ecosystem = excluded.ecosystem, 
+        gps_date = excluded.gps_date, 
+        resto_code = excluded.resto_code, 
+        resto_acti = excluded.resto_acti, 
+        comments = excluded.comments, 
+        primary_ob = excluded.primary_ob, 
+        secondary_ = excluded.secondary_, 
+        project_na = excluded.project_na, 
+        sqft_resto = excluded.sqft_resto, 
+        gps_photo = excluded.gps_photo, 
+        photo_azim = excluded.photo_azim, 
+        previously = excluded.previously, 
+        qa_qc = excluded.qa_qc, 
+        geom = excluded.geom;`;
+
+exports.restoPoly =
+    `ON CONFLICT (gid) DO UPDATE
+      SET
+        agency = excluded.agency, 
+        region = excluded.region, 
+        ecosystem = excluded.ecosystem, 
+        resto_code = excluded.resto_code, 
+        resto_acti = excluded.resto_acti, 
+        te_action = excluded.te_action, 
+        non_list_a = excluded.non_list_a, 
+        comments = excluded.comments, 
+        primary_ob = excluded.primary_ob, 
+        secondary_ = excluded.secondary_, 
+        project_na = excluded.project_na, 
+        treatment_ = excluded.treatment_, 
+        acres_rest = excluded.acres_rest, 
+        kmsq_resto = excluded.kmsq_resto, 
+        gps_date = excluded.gps_date, 
+        gps_photo = excluded.gps_photo, 
+        photo_azim = excluded.photo_azim, 
+        signed = excluded.signed, 
+        deep_till = excluded.deep_till, 
+        barrier_in = excluded.barrier_in, 
+        mulch = excluded.mulch, 
+        monitoring = excluded.monitoring, 
+        previously = excluded.previously, 
+        shape_leng = excluded.shape_leng, 
+        shape_area = excluded.shape_area, 
+        geom = excluded.geom;`;
+
