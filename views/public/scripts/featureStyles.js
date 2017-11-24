@@ -1,4 +1,23 @@
-
+// switch value with agency name
+function myAgency(agen) {
+    switch (agen) {
+        case 0:
+            return 'BLM';
+            break;
+        case 1:
+            return 'NPS';
+            break;
+        case 2:
+            return 'FS';
+            break;
+        case 3:
+            return 'FWS';
+            break;
+        default:
+            return 'null';
+            break;
+    }
+}
 // creating a style function for points in the map based on the agency number
 function myStylePoints(feature) {
     switch (feature.properties.agency) {
@@ -179,22 +198,7 @@ function onEachBarrier(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -216,22 +220,7 @@ function onEachDistLine(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -258,22 +247,7 @@ function onEachDistPoint(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -298,22 +272,7 @@ function onEachDistPoly(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -358,23 +317,7 @@ function onEachDistPolyCent(feature, layer) {
     for (var prop in feature.properties) {
         //console.log(prop + ' : ' + feature.properties[prop]);
         if(prop == 'agency'){
-            //console.log(prop + ' : ' + feature.properties[prop]);
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
         }
         else
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -398,22 +341,7 @@ function onEachRestoPoly(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -458,22 +386,7 @@ function onEachRestoPoint(feature, layer) {
     for (var prop in feature.properties) {
         if(prop == 'agency'){
             //console.log(prop + ' : ' + feature.properties[prop]);
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
         }
         else
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -496,22 +409,7 @@ function onEachRestoPolyCent(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -533,22 +431,7 @@ function onEachRestoLine(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -575,22 +458,7 @@ function onEachBLMRegion(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -612,22 +480,7 @@ function onEachFSRegion(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -649,22 +502,7 @@ function onEachMDEPBound(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -686,22 +524,7 @@ function onEachMDIBound(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -723,22 +546,7 @@ function onEachNVCounty(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
@@ -760,22 +568,7 @@ function onEachSoilVuln(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if(prop == 'agency'){
-                switch (feature.properties[prop]) {
-                    case 0:
-                        popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                        break;
-                    case 1:
-                        popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                        break;
-                    case 2:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                        break;
-                    case 3:
-                        popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                        break;
-                    default:
-                        break;
-                }
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
             }
             else
                 popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
