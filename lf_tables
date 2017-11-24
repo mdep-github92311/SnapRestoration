@@ -1227,7 +1227,7 @@ CREATE TABLE resto_polygon_sub (
     shape_stle numeric,
     shape_leng numeric,
     shape_area numeric,
-    geom geometry(MultiPolygon,4326)
+    geom geometry(Polygon,4326)
 );
 
 

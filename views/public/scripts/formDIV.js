@@ -1897,7 +1897,7 @@ $(document).ready(function () {
     // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
     $this.hide();
 
-
+   
     $(form).each(function (i, field) {
       const fieldValue = field.value;
       const fieldName = field.name;
@@ -1982,7 +1982,7 @@ $(document).ready(function () {
 
     if (Object.keys(barrierObj).length > 0) {
       thisLayer["properties"] = barrierObj;
-      thisLayer['geometry']['type'] = 'MultiLineString';
+      //thisLayer['geometry']['type'] = 'MultiLineString';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
       thisLayer["properties"]["geom"] = thisLayer['geometry'];
 
@@ -1997,7 +1997,7 @@ $(document).ready(function () {
         })
     } else if (Object.keys(distLineObj).length > 0) {
       thisLayer["properties"] = distLineObj;
-      thisLayer['geometry']['type'] = 'MultiLineString';
+      //thisLayer['geometry']['type'] = 'MultiLineString';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
       thisLayer["properties"]["geom"] = thisLayer['geometry'];
 
@@ -2027,7 +2027,7 @@ $(document).ready(function () {
         });
     } else if (Object.keys(distPolyObj).length > 0) {
       thisLayer["properties"] = distPolyObj;
-      thisLayer['geometry']['type'] = 'MultiPolygon';
+      //thisLayer['geometry']['type'] = 'MultiPolygon';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
       thisLayer["properties"]["geom"] = thisLayer['geometry'];
 
@@ -2042,7 +2042,7 @@ $(document).ready(function () {
         });
     } else if (Object.keys(restoLineObj).length > 0) {
       thisLayer["properties"] = restoLineObj;
-      thisLayer['geometry']['type'] = 'MultiLineString';
+      //thisLayer['geometry']['type'] = 'MultiLineString';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
       thisLayer["properties"]["geom"] = thisLayer['geometry'];
 
@@ -2073,8 +2073,9 @@ $(document).ready(function () {
         });
     } else if (Object.keys(restoPolyObj).length > 0) {
       thisLayer["properties"] = restoPolyObj;
-      thisLayer['geometry']['type'] = 'MultiPolygon';
+      //thisLayer['geometry']['type'] = 'Polygon';
       thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      //thisLayer['geometry']['coordinates'][0] = thisLayer['geometry']['coordinates'];
       thisLayer["properties"]["geom"] = thisLayer['geometry'];
 
       restoPolyArray.push(thisLayer);
