@@ -744,7 +744,7 @@ module.exports = function (app) {
       db.none(`INSERT INTO dist_polygon (gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
       use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
       primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
-      photo_azim, qa_qc, old_distco, shape_star, shape_stle, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
+      photo_azim, qa_qc, old_distco, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
         Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $34, $35, ST_Force2D(ST_GeomFromGeoJSON($36))`,
           distPolyArrary))
