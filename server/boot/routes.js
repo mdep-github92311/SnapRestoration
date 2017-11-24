@@ -606,11 +606,11 @@ module.exports = function (app) {
       var restoLineArray = [];
 
       var restoLineProp = [];
-        for (var i in restoLineIndexedDB.properties) {
-          restoLineProp.push(restoLineIndexedDB.properties[i]);
-        }
-        restoLineProp.push(restoLineIndexedDB.geometry);
-        restoLineArray.push(restoLineProp);
+      for (var i in restoLineIndexedDB.properties) {
+        restoLineProp.push(restoLineIndexedDB.properties[i]);
+      }
+      restoLineProp.push(restoLineIndexedDB.geometry);
+      restoLineArray.push(restoLineProp);
       
 
       db.none(`INSERT INTO resto_line (gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act,
@@ -633,13 +633,12 @@ module.exports = function (app) {
       const barrierIndexedDB = req.body;
       var barrierArray = [];
 
-      for (var o in barrierIndexedDB) {
-        var barrierProperties = [];
-        for (var i in barrierIndexedDB[o].properties) {
-          barrierProperties.push(barrierIndexedDB[o].properties[i]);
-        }
-        barrierArray.push(barrierProperties)
+      var barrierProperties = [];
+      for (var i in barrierIndexedDB.properties) {
+        barrierProperties.push(barrierIndexedDB.properties[i]);
       }
+      barrierProperties.push(barrierIndexedDB.geometry);
+      barrierArray.push(barrierProperties)
 
       db.none(`INSERT INTO barrier (gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
@@ -660,13 +659,12 @@ module.exports = function (app) {
       const distPointIndexedDB = req.body;
       var distPointArray = [];
 
-      for (var o in distPointIndexedDB) {
-        var distPointProp = [];
-        for (var i in distPointIndexedDB[o].properties) {
-          distPointProp.push(distPointIndexedDB[o].properties[i]);
-        }
-        distPointArray.push(distPointProp)
+      var distPointProp = [];
+      for (var i in distPointIndexedDB.properties) {
+        distPointProp.push(distPointIndexedDB.properties[i]);
       }
+        distPointProp.push(distPointIndexedDB.geometry);
+      distPointArray.push(distPointProp)
 
       db.none(`INSERT INTO dist_point (gid, agency, region, ecosystem, gps_date, dist_code, use_freq, use_recent,
       dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
@@ -688,13 +686,12 @@ module.exports = function (app) {
       const distPolyIndexedDB = req.body;
       var distPolyArrary = [];
 
-      for (var o in distPolyIndexedDB) {
-        var distPolyProp = [];
-        for (var i in distPolyIndexedDB[o].properties) {
-          distPolyProp.push(distPolyIndexedDB[o].properties[i]);
-        }
-        distPolyArrary.push(distPolyProp)
+      var distPolyProp = [];
+      for (var i in distPolyIndexedDB.properties) {
+        distPolyProp.push(distPolyIndexedDB.properties[i]);
       }
+        distPolyProp.push(distPolyIndexedDB.geometry);
+      distPolyArrary.push(distPolyProp)
 
       db.none(`INSERT INTO dist_polygon (gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
       use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
@@ -718,13 +715,12 @@ module.exports = function (app) {
       const distLineIndexedDB = req.body;
       var distLineArrary = [];
 
-      for (var o in distLineIndexedDB) {
-        var distLineProp = [];
-        for (var i in distLineIndexedDB[o].properties) {
-          distLineProp.push(distLineIndexedDB[o].properties[i]);
-        }
-        distLineArrary.push(distLineProp)
+      var distLineProp = [];
+      for (var i in distLineIndexedDB.properties) {
+        distLineProp.push(distLineIndexedDB.properties[i]);
       }
+        distLineProp.push(distLineIndexedDB.geometry);
+      distLineArrary.push(distLineProp)
 
       db.none(`INSERT INTO dist_line (gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq,
       use_recent, site_stabi, dist_crust, undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments,
