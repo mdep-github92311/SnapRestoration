@@ -428,7 +428,7 @@ exports.barrier_query =
         l
     FROM (SELECT
       gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
-      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc) AS l) ) AS properties
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg) AS f) AS fc;`;
 
 exports.dist_line_query =
@@ -718,7 +718,7 @@ exports.barrier_sub_query =
         l
     FROM (SELECT
       gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
-      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc) AS l) ) AS properties
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_stle, shape_leng) AS l) ) AS properties
     FROM barrier_sub AS lg) AS f) AS fc;`;
 
 exports.dist_line_sub_query =
