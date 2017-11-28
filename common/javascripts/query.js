@@ -305,8 +305,8 @@ exports.dist_point_sub_query =
         l 
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
-      visibility, comments, primary_ob, secondary_ previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco) As l)) As properties
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
     FROM dist_point_sub As lg) As f) As fc`;
 
 exports.dist_poly_sub_query =
@@ -462,8 +462,8 @@ exports.dist_point_query =
         l 
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
-      visibility, comments, primary_ob, secondary_ previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco) As l)) As properties
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
     FROM dist_point As lg) As f) As fc`;
 
 exports.dist_poly_query =
@@ -752,8 +752,8 @@ exports.dist_point_sub_query =
         l 
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
-      visibility, comments, primary_ob, secondary_ previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco) As l)) As properties
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
     FROM dist_point_sub As lg) As f) As fc`;
 
 exports.dist_poly_sub_query =

@@ -37,6 +37,18 @@ module.exports = function (app) {
       return data.map(d => '(' + pgp.as.format(template, d) + ')').join();
     };
   }
+  
+  function DeleteSub(gid, table) {
+    db.none(`DELETE FROM ` + table + ` WHERE gid = $1`, gid )
+        .then(function () {
+          console.log('submission removed');
+          return true
+        })
+        .catch(function (err) {
+          throw err;
+          return false
+        });
+  }
 
   app.use(bodyParser.json())
     .post('/restoPointFormSubmit', (req, res) => {
@@ -498,9 +510,9 @@ module.exports = function (app) {
       const distPointUpdate = req.body;
 
       db.none(`UPDATE dist_point_sub
-      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, use_freq = $7, use_recent = $8,
-        dist_pt_ty = $9, accessibil = $10, visibility = $11, comments = $12, primary_ob = $13, secondary_ = $14, previously = $15, project_na = $16, estimate_s = $17, treated = $18,
-        cultural = $19, t_e_specie = $20, gps_photo = $21, soil_vulne = $22, dist_use = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8, use_recent = $9,
+        dist_pt_ty = $10, accessibil = $11, visibility = $12, comments = $13, primary_ob = $14, secondary_ = $15, previously = $16, project_na = $17, estimate_s = $18, treated = $19,
+        cultural = $20, t_e_specie = $21, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
       WHERE gid = $1 `,  distPointUpdate)
         .then(function () {
           console.log('dist point updated');
@@ -593,11 +605,21 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoPoint forms submitted');
           console.log(restoPointIndexedDB);
-          var response = {
+          if (DeleteSub(restoPointProp, "resto_point_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
         })
         .catch(function (err) {
           throw err;
@@ -625,11 +647,21 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoPoly forms submitted');
           console.log(restoPolyIndexedDB);
-          var response = {
+          if (DeleteSub(restoPolyProp, "resto_polygon_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
         })
         .catch(function (err) {
           throw err;
@@ -657,11 +689,21 @@ module.exports = function (app) {
         .then(function () {
           console.log('restoLine forms submitted');
           console.log(restoLineIndexedDB);
-          var response = {
+          if (DeleteSub(restoLineProp, "resto_line_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
         })
         .catch(function (err) {
           throw err;
@@ -687,11 +729,21 @@ module.exports = function (app) {
         .then(function () {
           console.log('barrier form submitted');
           console.log(barrierIndexedDB);
-          var response = {
+          if (DeleteSub(barrierProperties, "barrier_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
         })
         .catch(function (err) {
           throw err;
@@ -706,23 +758,34 @@ module.exports = function (app) {
       var distPointProp = [];
       for (var i in distPointIndexedDB.properties) {
         distPointProp.push(distPointIndexedDB.properties[i]);
+        console.log(i + " - " + distPointIndexedDB.properties[i]);
       }
-        distPointProp.push(distPointIndexedDB.geometry);
-      distPointArray.push(distPointProp)
-
-      db.none(`INSERT INTO dist_point (gid, agency, region, ecosystem, gps_date, dist_code, use_freq, use_recent,
+      distPointProp.push(distPointIndexedDB.geometry);
+      distPointArray.push(distPointProp);
+      console.log(distPointProp);
+      db.none(`INSERT INTO dist_point (gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent,
       dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
-      cultural, t_e_specie, gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
+      cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
         distPointUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, 21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
         .then(function () {
           console.log('distPoint form submitted');
           console.log(distPointIndexedDB);
-          var response = {
+          if (DeleteSub(distPointProp, "dist_point_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
         })
         .catch(function (err) {
           throw err;
@@ -751,11 +814,21 @@ module.exports = function (app) {
         .then(function () {
           console.log('distPoly forms submitted');
           console.log(distPolyIndexedDB);
-          var response = {
+          if (DeleteSub(distPolyProp, "dist_polygon_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
         })
         .catch(function (err) {
           throw err;
@@ -784,11 +857,22 @@ module.exports = function (app) {
         .then(function () {
           console.log('distLine forms submitted');
           console.log(distLineIndexedDB);
-          var response = {
+          if (DeleteSub(distLineProp, "dist_line_sub")) {
+            var response = {
               status  : 200,
-              success : 'Updated Successfully'
+              success : 'Submission Successfully Inserted'
+            };
+            res.end(JSON.stringify(response));
           }
-          res.end(JSON.stringify(response));
+          else {
+            console.log("Submission was not deleted from table");
+            var response = {
+              status  : 200,
+              success : 'Submission was not deleted from table'
+            };
+            res.end(JSON.stringify(response));
+          }
+          
         })
         .catch(function (err) {
           throw err;
