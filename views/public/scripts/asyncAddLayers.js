@@ -296,7 +296,7 @@ async function getLayers() {
       })
       .fail(function(jqXHR, textStatus, error) {
         console.log(JSON.stringify(jqXHR));
-      }),*/
+      }),
 
       $.getJSON('http://' + ipAddress + '/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Soil Vulnerability');
@@ -304,7 +304,7 @@ async function getLayers() {
       })
       .fail(function(jqXHR, textStatus, error) {
         console.log(error)
-      }),
+      }),*/
 
       await $.getJSON('http://' + ipAddress + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Polygon');
