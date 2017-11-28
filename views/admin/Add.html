@@ -9,7 +9,7 @@
         <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         
-        <script src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript'></script>
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
         <script src="../public/scripts/asyncGetSubmitted.js"> </script>
         <script src="../public/scripts/featureStyles.js"> </script>
         <style>
@@ -87,6 +87,7 @@
         <script>
           mapMarkers = [];
           var currentData = [];
+          var invalidated = false;
           function getAgency(agency){
             switch (agency) {
                 case 0:
@@ -108,6 +109,7 @@
           }
           function populateModal(data, type, draw) {
             var style;
+            var bounds = null;
             this.currentData = data;
             document.getElementById("editInfo").innerHTML = "";
             document.getElementById("tableMap").style.display = "";  
@@ -131,31 +133,73 @@
                     radius:500
                 }).addTo(map);
                 this.mapMarkers.push(marker);
+                console.log(marker);
                 
                 if (data.geometry != null)
                   if (data.geometry.coordinates.length >1)
-                    map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
+                    //map.panTo(marker._layers[marker._leaflet_id-1].getLatLng())
+                    //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
+                    bounds = marker.getBounds();
                 break;
               case 2:
                 var marker = L.geoJson(data, {
                   style: myStyleLines,
                 }).addTo(map);
                 this.mapMarkers.push(marker);
+                
+                console.log(marker);
+                //console.log(marker._layers[marker._leaflet_id-1].getLatLngs());
+                //var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
+                //var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+                //map.panTo(middleLatLong);
+                bounds = marker._layers[marker._leaflet_id-1].getBounds();
                 break;
               case 3:
                 var marker = L.geoJson(data, {
                   style: myStyleDistPoly
                 }).addTo(map);
                 this.mapMarkers.push(marker);
+                
+                
+                /*var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
+                var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
+                leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
+                topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
+                latLang[0].forEach(function(outerElem) {
+                    outerElem.forEach(function(elem) {
+                        if (elem.lat > topMostCoord)
+                            topMostCoord = elem.lat;
+                        if (elem.lng > leftMostCoord)
+                            leftMostCoord = elem.lng;
+                        if (elem.lat < bottomMostCoord)
+                            bottomMostCoord = elem.lat;
+                        if (elem.lng < rightMostCoord)
+                            rightMostCoord = elem.lng;
+                    });
+                });
+                var centerCoord = {
+                    lng:(leftMostCoord + rightMostCoord)/2,
+                    lat:(topMostCoord + bottomMostCoord)/2
+                };
+                map.panTo(centerCoord);*/
+                bounds = marker._layers[marker._leaflet_id-1].getBounds();
+                
                 break;
               default:
                 // code
             }
+            // this will invalidate the size of the map to make it fit in the modal
             $('#myModal').on('shown.bs.modal', function(){
-            setTimeout(function() {
-              map.invalidateSize();
-            }, 5);
-           });
+              setTimeout(function() {
+                map.invalidateSize();
+                if (!invalidated) {
+                  map.fitBounds(bounds, {
+                    maxZoom: 11
+                  });
+                  invalidated = true;
+                }
+              }, 5);
+            });
             $("#myModalLabel").html("<h1>"+type +"</h1>");
             $("#pInfo").html("");
               
@@ -166,6 +210,11 @@
               else
                   $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + data.properties[prop]);
             }
+            
+            // makes map look at the point
+            map.fitBounds(bounds, {
+              maxZoom: 11
+            });
           }
           getSubmissions().then(function(defs){
               //promise = (defs);
