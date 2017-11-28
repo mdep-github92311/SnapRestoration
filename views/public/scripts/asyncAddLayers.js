@@ -290,13 +290,13 @@ async function getLayers() {
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/Roads/roadsGeoJSON', function (data) {
+      /*$.getJSON('http://' + ipAddress + '/api/Roads/roadsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Roads');
         count += 15;
       })
       .fail(function(jqXHR, textStatus, error) {
         console.log(JSON.stringify(jqXHR));
-      }),
+      }),*/
 
       $.getJSON('http://' + ipAddress + '/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Soil Vulnerability');
