@@ -34,6 +34,9 @@ html
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
     // Latest compiled and minified JavaScript
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    
+    meta(name='viewport', content='initial-scale=1, maximum-scale=1')
+
 
     style(type='text/css').
       html, body {
@@ -50,6 +53,7 @@ html
         color: black;
         background-color: white;
         padding: 5px;
+        font-size: 0.7em;
       }
 
       #map {
@@ -159,7 +163,7 @@ html
         script(src='/public/scripts/asyncAddLayers.js')
         script.
           var map = L.map('map').setView([36.211303, -115.114929], 8);
-
+          map.removeControl(map.zoomControl);
           // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
           // createPane was used in this thread to control the order of the layers
           
@@ -290,14 +294,16 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               br
               p.legend
-                img(src='/public/css/images/greenSquare.png', width='10%', height='40%') 
-                |  NPS 
-                img(src='/public/css/images/redSquare.png', width='10%', height='40%')  
-                |  BLM 
-                img(src='/public/css/images/orangeSquare.png', width='10%', height='40%') 
-                |  FWS 
-                img(src='/public/css/images/purpleSquare.png', width='10%', height='40%') 
-                |  FS 
+                span.legend-item
+                  img(src='/public/css/images/greenSquare.png', width='8%', height='35%') 
+                  |  NPS 
+                  img(src='/public/css/images/redSquare.png', width='8%', height='35%')  
+                  |  BLM 
+                span.legend-item
+                  img(src='/public/css/images/orangeSquare.png', width='8%', height='35%') 
+                  |  FWS 
+                  img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
+                  |  FS 
               #layerTools2
 
           #drawTools.sidebar-pane

@@ -1,24 +1,6 @@
-$(document).ready(function () {
-  const formTest2 =
-    `<div class="form">
-   <div class="featureSelection">
-      <select id="featureType">
-         <option value="test">Select Feature Type...</option>
-         <option value="point">Point</option>
-         <option value="line">Line</option>
-         <option value="poly">Polygon</option>
-      </select>
-      <br>
-      <select id="featureStyle">
-         <option value="test">Select Feature Style...</option>
-         <option value="barrier">Barrier</option>
-         <option value="resto">Restoration</option>
-         <option value="disturb">Disturbance</option>
-      </select>
-      <br><br>
-   </div>
+<div class="form">
    <div class="collectionForm">
-      <form id="restoPointForm" method="POST" style="display: none;">
+      <form id="restoPointForm" style="display: none;">
          <label for="restoPointForm">Restoration Point Collection</label>
          <br>
          <label for="gid">gid: <br>
@@ -27,7 +9,7 @@ $(document).ready(function () {
          </label>
          <label for="agency">
             agency: <br>
-            <select id="agency" name="agency">
+            <select id="agencyRPoint" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
@@ -38,7 +20,7 @@ $(document).ready(function () {
          </label>
          <label for="region">
             region: <br>
-            <select id="region" name="region">
+            <select id="regionRPoint" name="region">
                <option value="select"></option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
@@ -79,7 +61,7 @@ $(document).ready(function () {
          </label>
          <label for="ecosystem">
             ecosystem: <br>
-            <select id="ecosystem" name="ecosystem">
+            <select id="ecosystemRPoint" name="ecosystem">
                <option value="select"></option>
                <option value="Alpine">Alpine</option>
                <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
@@ -103,7 +85,7 @@ $(document).ready(function () {
          </label>
          <label for="resto_acti">
             resto_acti: <br>
-            <select id="resto_acti" name="resto_acti">
+            <select id="resto_actiRPoint" name="resto_acti">
                <option value="select"></option>
                <option value="Fire Ring Removal">Fire Ring Removal</option>
                <option value="Graffiti Removal">Graffiti Removal</option>
@@ -131,7 +113,7 @@ $(document).ready(function () {
          </label>
          <label for="gps_photo">
             gps_photo: <br>
-            <select id="gps_photo" name="gps_photo">
+            <select id="gps_photoRPoint" name="gps_photo">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -143,7 +125,7 @@ $(document).ready(function () {
          </label>
          <label for="previously">
             previously: <br>
-            <select id="previously" name="previously">
+            <select id="previouslyRPoint" name="previously">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -158,28 +140,28 @@ $(document).ready(function () {
             <input type="text" name="geom">
          </label>
          <br><br>
-         <input type="submit" value="Submit">
+         <input id="restoPointEditButton" type="button" value="Save">
       </form>
-      <form id="restoPolyForm" action="/restoPolyFormSubmit" method="POST" style="display: none;">
+      <form id="restoPolyForm" action="/restoPolyFormSubmit" style="display: none;">
          <label for="restoPolyForm">Restoration Polygon Collection</label><br>
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
          </label>
          <label for="agency">
             agency: <br>
-            <select id="agency" name="agency">
+            <select id="agencyRPoly" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
                <option value="3">FWS</option>
-               <option selected="selected" value="select"></option>
+               <option selected="selected" value="select"> </option>
             </select>
             <br>
          </label>
          <label for="region">
             region: <br>
-            <select id="region" name="region">
-               <option value="select"></option>
+            <select id="regionRPoly" name="region">
+               <option value="select"> </option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
                <option value="Black Mt Area">Black Mt Area</option>
@@ -219,7 +201,7 @@ $(document).ready(function () {
          </label>
          <label for="ecosystem">
             ecosystem: <br>
-            <select id="ecosystem" name="ecosystem">
+            <select id="ecosystemRPoly" name="ecosystem">
                <option value="select"></option>
                <option value="Alpine">Alpine</option>
                <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
@@ -240,7 +222,7 @@ $(document).ready(function () {
          </label>
          <label for="resto_acti">
             resto_acti: <br>
-            <select id="resto_acti" name="resto_acti">
+            <select id="resto_actiRPoly" name="resto_acti">
                <option value="select"></option>
                <option value="Garbage Removal">Garbage Removal</option>
                <option value="Habitat Enhancement">Habitat Enhancement</option>
@@ -258,7 +240,7 @@ $(document).ready(function () {
          </label>
          <label for="te_action">
             te_action: <br>
-            <select id="te_action" name="te_action">
+            <select id="te_actionRPoly" name="te_action">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -267,7 +249,7 @@ $(document).ready(function () {
          </label>
          <label for="non_list_a">
             non_list_a: <br>
-            <select id="non_list_a" name="non_list_a">
+            <select id="non_list_aRPoly" name="non_list_a">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -288,7 +270,7 @@ $(document).ready(function () {
          </label>
          <label for="treatment_">
             treatment_: <br>
-            <select id="treatment_" name="treatment_">
+            <select id="treatment_RPoly" name="treatment_">
                <option value="select"></option>
                <option value="Active">Active</option>
                <option value="Passive">Passive</option>
@@ -306,7 +288,7 @@ $(document).ready(function () {
          </label>
          <label for="gps_photo">
             gps_photo: <br>
-            <select id="gps_photo" name="gps_photo">
+            <select id="gps_photoRPoly" name="gps_photo">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -318,7 +300,7 @@ $(document).ready(function () {
          </label>
          <label for="signed">
             signed: <br>
-            <select id="signed" name="signed">
+            <select id="signedRPoly" name="signed">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -328,7 +310,7 @@ $(document).ready(function () {
          </label>
          <label for="deep_till">
             deep_till: <br>
-            <select id="deep_till" name="deep_till">
+            <select id="deep_tillRPoly" name="deep_till">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -338,7 +320,7 @@ $(document).ready(function () {
          </label>
          <label for="barrier_in">
             barrier_in: <br>
-            <select id="barrier_in" name="barrier_in">
+            <select id="barrier_inRPoly" name="barrier_in">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -348,7 +330,7 @@ $(document).ready(function () {
          </label>
          <label for="mulch">
             mulch: <br>
-            <select id="mulch" name="mulch">
+            <select id="mulchRPoly" name="mulch">
                <option value="select"></option>
                <option value="None">None</option>
                <option value="Verticle">Verticle</option>
@@ -360,7 +342,7 @@ $(document).ready(function () {
          </label>
          <label for="monitoring">
             monitoring: <br>
-            <select id="monitoring" name="monitoring">
+            <select id="monitoringRPoly" name="monitoring">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -369,7 +351,7 @@ $(document).ready(function () {
          </label>
          <label for="previously">
             previously: <br>
-            <select id="previously" name="previously">
+            <select id="previouslyRPoly" name="previously">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -392,16 +374,16 @@ $(document).ready(function () {
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input type="submit" value="Submit">
+         <br><br><input id="restoPolyEditButton" type="button" value="Save">
       </form>
-      <form id="restoLineForm" method="POST" style="display: none;">
+      <form id="restoLineForm" style="display: none;">
          <label for="restoLineForm">Restoration Line Collection</label><br>
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
          </label>
          <label for="agency">
             agency: <br>
-            <select id="agency" name="agency">
+            <select id="agencyRLine" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
@@ -412,7 +394,7 @@ $(document).ready(function () {
          </label>
          <label for="region">
             region: <br>
-            <select id="region" name="region">
+            <select id="regionRLine" name="region">
                <option value="select"></option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
@@ -453,7 +435,7 @@ $(document).ready(function () {
          </label>
          <label for="ecosystem">
             ecosystem: <br>
-            <select id="ecosystem" name="ecosystem">
+            <select id="ecosystemRLine" name="ecosystem">
                <option value="select"></option>
                <option value="Alpine">Alpine</option>
                <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
@@ -477,7 +459,7 @@ $(document).ready(function () {
          </label>
          <label for="resto_act">
             resto_act: <br>
-            <select id="resto_act" name="resto_act">
+            <select id="resto_actRLine" name="resto_act">
                <option value="select"></option>
                <option value="Road Decommissioning">Road Decommissioning*</option>
                <option value="Trail Decommissioning">Trail Decommissioning</option>
@@ -490,7 +472,7 @@ $(document).ready(function () {
          </label>
          <label for="te_act">
             te_act: <br>
-            <select id="te_act" name="te_act">
+            <select id="te_actRLine" name="te_act">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -500,7 +482,7 @@ $(document).ready(function () {
          </label>
          <label for="nonlists_a">
             nonlists_a: <br>
-            <select id="nonlists_a" name="nonlists_a">
+            <select id="nonlists_aRLine" name="nonlists_a">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -522,7 +504,7 @@ $(document).ready(function () {
          </label>
          <label for="treatment_">
             treatment_: <br>
-            <select id="treatment_" name="treatment_">
+            <select id="treatment_RLine" name="treatment_">
                <option value="select"></option>
                <option value="Active">Active</option>
                <option value="Passive">Passive</option>
@@ -531,7 +513,7 @@ $(document).ready(function () {
          </label>
          <label for="signed">
             signed: <br>
-            <select id="signed" name="signed">
+            <select id="signedRLine" name="signed">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -541,7 +523,7 @@ $(document).ready(function () {
          </label>
          <label for="mulch">
             mulch: <br>
-            <select id="mulch" name="mulch">
+            <select id="mulchRLine" name="mulch">
                <option value="select"></option>
                <option value="None">None</option>
                <option value="Verticle">Verticle</option>
@@ -553,7 +535,7 @@ $(document).ready(function () {
          </label>
          <label for="deep_till">
             deep_till: <br>
-            <select id="deep_till" name="deep_till">
+            <select id="deep_tillRLine" name="deep_till">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -563,7 +545,7 @@ $(document).ready(function () {
          </label>
          <label for="barrier_in">
             barrier_in: <br>
-            <select id="barrier_in" name="barrier_in">
+            <select id="barrier_inRLine" name="barrier_in">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -579,7 +561,7 @@ $(document).ready(function () {
          </label>
          <label for="gps_photo">
             gps_photo: <br>
-            <select id="gps_photo" name="gps_photo">
+            <select id="gps_photoRLine" name="gps_photo">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -591,7 +573,7 @@ $(document).ready(function () {
          </label>
          <label for="monitoring">
             monitoring: <br>
-            <select id="monitoring" name="monitoring">
+            <select id="monitoringRLine" name="monitoring">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -600,7 +582,7 @@ $(document).ready(function () {
          </label>
          <label for="previously">
             previously: <br>
-            <select id="previously" name="previously">
+            <select id="previouslyRLine" name="previously">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -620,9 +602,9 @@ $(document).ready(function () {
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input type="submit" value="Submit">
+         <br><br><input id="restoLineEditButton" type="button" value="Save">
       </form>
-      <form id="barrierForm" method="POST" style="display: none;">
+      <form id="barrierForm" style="display: none;">
          <label for="barrierForm">Barrier Collection</label><br>
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
@@ -640,7 +622,7 @@ $(document).ready(function () {
          </label>
          <label for="regions">
             regions: <br>
-            <select id="regionsBarr" name="regions">
+            <select id="regionsBarr" name="region">
                <option value="select"></option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
@@ -783,16 +765,16 @@ $(document).ready(function () {
          </label>
          <label for="geom">geom: <br><input type="text" name="geom"></label>
          <br><br>
-         <input type="submit" value="Submit">
+         <input id="barrierEditButton" type="button" value="Save">
       </form>
-      <form id="distPointForm" method="POST" style="display: none;">
+      <form id="distPointForm" style="display: none;">
          <label for="distPointForm">Disturbance Point Collection</label><br>
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
          </label>
          <label for="agency">
             agency: <br>
-            <select id="agency" name="agency">
+            <select id="agencyDPoint" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
@@ -803,7 +785,7 @@ $(document).ready(function () {
          </label>
          <label for="region">
             region: <br>
-            <select id="region" name="region">
+            <select id="regionDPoint" name="region">
                <option selected="selected" value="select"></option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
@@ -844,7 +826,7 @@ $(document).ready(function () {
          </label>
          <label for="ecosystem">
             ecosystem: <br>
-            <select id="ecosystem" name="ecosystem">
+            <select id="ecosystemDPoint" name="ecosystem">
                <option selected="selected" value="select"></option>
                <option value="Alpine">Alpine</option>
                <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
@@ -867,7 +849,7 @@ $(document).ready(function () {
             <input type="text" name="dist_code"><br></label>
          <label for="use_freq">
             use_freq: <br>
-            <select id="use_freq" name="use_freq">
+            <select id="use_freqDPoint" name="use_freq">
                <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -876,7 +858,7 @@ $(document).ready(function () {
          </label>
          <label for="use_recent">
             use_recent: <br>
-            <select id="use_recent" name="use_recent">
+            <select id="use_recentDPoint" name="use_recent">
                <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -885,7 +867,7 @@ $(document).ready(function () {
          </label>
          <label for="dist_pt_ty">
             dist_pt_ty: <br>
-            <select id="dist_pt_ty" name="dist_pt_ty">
+            <select id="dist_pt_tyDPoint" name="dist_pt_ty">
                <option selected="selected" value="select"></option>
                <option value="Dumpsite">Dumpsite</option>
                <option value="Fire Ring">Fire Ring</option>
@@ -903,7 +885,7 @@ $(document).ready(function () {
          </label>
          <label for="accessibil">
             accessibil: <br>
-            <select id="accessibil" name="accessibil">
+            <select id="accessibilDPoint" name="accessibil">
                <option selected="selected" value="select"></option>
                <option value="High">High</option>
                <option value="Medium">Medium</option>
@@ -913,7 +895,7 @@ $(document).ready(function () {
          </label>
          <label for="visibility">
             visibility: <br>
-            <select id="visibility" name="visibility">
+            <select id="visibilityDPoint" name="visibility">
                <option selected="selected" value="select"></option>
                <option value="High">High</option>
                <option value="Medium">Medium</option>
@@ -932,7 +914,7 @@ $(document).ready(function () {
          </label>
          <label for="previously">
             previously: <br>
-            <select id="previously" name="previously">
+            <select id="previouslyDPoint" name="previously">
                <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -947,7 +929,7 @@ $(document).ready(function () {
          </label>
          <label for="treated">
             treated: <br>
-            <select id="treated" name="treated">
+            <select id="treatedDPoint" name="treated">
                <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No*</option>
@@ -956,7 +938,7 @@ $(document).ready(function () {
          </label>
          <label for="cultural">
             cultural: <br>
-            <select id="cultural" name="cultural">
+            <select id="culturalDPoint" name="cultural">
               <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -965,7 +947,7 @@ $(document).ready(function () {
          </label>
          <label for="t_e_specie">
             t_e_specie: <br>
-            <select id="t_e_specie" name="t_e_specie">
+            <select id="t_e_specieDPoint" name="t_e_specie">
                <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -974,7 +956,7 @@ $(document).ready(function () {
          </label>
          <label for="gps_photo">
             gps_photo: <br>
-            <select id="gps_photo" name="gps_photo">
+            <select id="gps_photoDPoint" name="gps_photo">
                <option selected="selected" value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -983,7 +965,7 @@ $(document).ready(function () {
          </label>
          <label for="soil_vulne">
             soil_vulne: <br>
-            <select id="soil_vulne" name="soil_vulne">
+            <select id="soil_vulneDPoint" name="soil_vulne">
               <option selected="selected" value="select"></option>
                <option value="Low">Low</option>
                <option value="Low/ Medium">Low/ Medium</option>
@@ -996,7 +978,7 @@ $(document).ready(function () {
          </label>
          <label for="dist_use">
             dist_use: <br>
-            <select id="dist_use" name="dist_use">
+            <select id="dist_useDPoint" name="dist_use">
                <option selected="selected" value="select"></option>
                <option value="Social">Social</option>
                <option value="Mine">Mine</option>
@@ -1019,16 +1001,16 @@ $(document).ready(function () {
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input type="submit" value="Submit">
+         <br><br><input id="distPointEditButton" type="button" value="Save">
       </form>
-      <form id="distPolyForm" method="POST" style="display: none;">
+      <form id="distPolyForm" style="display: none;">
          <label for="distPolyForm">Disturbance Polygon Collection</label><br>
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
          </label>
          <label for="agency">
             agency: <br>
-            <select id="agency" name="agency">
+            <select id="agencyDPoly" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
@@ -1037,9 +1019,9 @@ $(document).ready(function () {
             </select>
             <br>
          </label>
-         <label for="regions">
+         <label for="region">
             regions: <br>
-            <select id="regions" name="regions">
+            <select id="regionDPoly" name="region">
                <option value="select"></option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
@@ -1080,7 +1062,7 @@ $(document).ready(function () {
          </label>
          <label for="ecosystem">
             ecosystem: <br>
-            <select id="ecosystem" name="ecosystem">
+            <select id="ecosystemDPoly" name="ecosystem">
                <option value="select"></option>
                <option value="Alpine">Alpine</option>
                <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
@@ -1104,7 +1086,7 @@ $(document).ready(function () {
          </label>
          <label for="dist_use">
             dist_use: <br>
-            <select id="dist_use" name="dist_use">
+            <select id="dist_useDPoly" name="dist_use">
                <option value="select"></option>
                <option value="Social">Social</option>
                <option value="Mine">Mine</option>
@@ -1117,7 +1099,7 @@ $(document).ready(function () {
          </label>
          <label for="use_freq">
             use_freq: <br>
-            <select id="use_freq" name="use_freq">
+            <select id="use_freqDPoly" name="use_freq">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1126,7 +1108,7 @@ $(document).ready(function () {
          </label>
          <label for="use_recent">
             use_recent: <br>
-            <select id="use_recent" name="use_recent">
+            <select id="use_recentDPoly" name="use_recent">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1135,7 +1117,7 @@ $(document).ready(function () {
          </label>
          <label for="site_stabi">
             site_stabi: <br>
-            <select id="site_stabi" name="site_stabi">
+            <select id="site_stabiDPoly" name="site_stabi">
                <option value="select"></option>
                <option value="Unstable">Unstable</option>
                <option value="Poor">Poor</option>
@@ -1147,7 +1129,7 @@ $(document).ready(function () {
          </label>
          <label for="dist_crust">
             dist_crust: <br>
-            <select id="dist_crust" name="dist_crust">
+            <select id="dist_crustDPoly" name="dist_crust">
                <option value="select"></option>
                <option value="0 - No Crust">0 - No Crust</option>
                <option value="1 - Alkali">1 - Alkali</option>
@@ -1160,7 +1142,7 @@ $(document).ready(function () {
          </label>
          <label for="undist_cru">
             undist_cru: <br>
-            <select id="undist_cru" name="undist_cru">
+            <select id="undist_cruDPoly" name="undist_cru">
                <option value="select"></option>
                <option value="0 - No Crust">0 - No Crust</option>
                <option value="1 - Alkali">1 - Alkali</option>
@@ -1173,7 +1155,7 @@ $(document).ready(function () {
          </label>
          <label for="depth">
             depth: <br>
-            <select id="depth" name="depth">
+            <select id="depthDPoly" name="depth">
                <option value="select"></option>
                <option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option>
                <option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option>
@@ -1197,7 +1179,7 @@ $(document).ready(function () {
          </label>
          <label for="plant_dama">
             plant_dama: <br>
-            <select id="plant_dama" name="plant_dama">
+            <select id="plant_damaDPoly" name="plant_dama">
                <option value="select"></option>
                <option value="0 - Intact">0 - Intact</option>
                <option value="1 - Most symmetrical">1 - Most symmetrical</option>
@@ -1211,7 +1193,7 @@ $(document).ready(function () {
          </label>
          <label for="assessibil">
             assessibil: <br>
-            <select id="assessibil" name="assessibil">
+            <select id="assessibilDPoly" name="assessibil">
                <option value="select"></option>
                <option value="High">High</option>
                <option value="Medium">Medium</option>
@@ -1221,7 +1203,7 @@ $(document).ready(function () {
          </label>
         <label for="visibility">
             visibility: <br>
-            <select id="visibility" name="visibility">
+            <select id="visibilityDPoly" name="visibility">
                <option value="select"></option>
                <option value="High">High</option>
                <option value="Medium">Medium</option>
@@ -1246,7 +1228,7 @@ $(document).ready(function () {
          </label>
          <label for="treated">
             treated: <br>
-            <select id="treated" name="treated">
+            <select id="treatedDPoly" name="treated">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No*</option>
@@ -1258,7 +1240,7 @@ $(document).ready(function () {
          </label>
          <label for="cultural">
             cultural: <br>
-            <select id="cultural" name="cultural">
+            <select id="culturalDPoly" name="cultural">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1267,7 +1249,7 @@ $(document).ready(function () {
          </label>
          <label for="t_e_specie">
             t_e_specie: <br>
-            <select id="t_e_specie" name="t_e_specie">
+            <select id="t_e_specieDPoly" name="t_e_specie">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1276,7 +1258,7 @@ $(document).ready(function () {
          </label>
          <label for="gps_photo">
             gps_photo: <br>
-            <select id="gps_photo" name="gps_photo">
+            <select id="gps_photoDPoly" name="gps_photo">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1285,7 +1267,7 @@ $(document).ready(function () {
          </label>
          <label for="site_vulne">
             site_vulne: <br>
-            <select id="site_vulne" name="site_vulne">
+            <select id="site_vulneDPoly" name="site_vulne">
                <option value="select"></option>
                <option value="Low">Low</option>
                <option value="Low/ Medium">Low/ Medium</option>
@@ -1320,16 +1302,16 @@ $(document).ready(function () {
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input type="submit" value="Submit">
+         <br><br><input id="distPolyEditButton" type="button" value="Save">
       </form>
-      <form id="distLineForm" method="POST" style="display: none;">
+      <form id="distLineForm" style="display: none;">
          <label for="distLineForm">Disturbance Line Collection</label><br>
          <label for="gid">gid: <br>
             <input type="text" name="gid"><br>
          </label>
          <label for="agency">
             agency: <br>
-            <select id="agency" name="agency">
+            <select id="agencyDLine" name="agency">
                <option value="0">BLM</option>
                <option value="1">NPS</option>
                <option value="2">FS</option>
@@ -1340,7 +1322,7 @@ $(document).ready(function () {
          </label>
          <label for="region">
             region: <br>
-            <select id="region" name="region">
+            <select id="regionDLine" name="region">
                <option value="select"></option>
                <option value="Amargosa Desert E">Amargosa Desert E</option>
                <option value="Amargosa Desert W">Amargosa Desert W</option>
@@ -1381,7 +1363,7 @@ $(document).ready(function () {
          </label>
          <label for="ecosystem">
             ecosystem: <br>
-            <select id="ecosystem" name="ecosystem">
+            <select id="ecosystemDLine" name="ecosystem">
                <option value="select"></option>
                <option value="Alpine">Alpine</option>
                <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
@@ -1405,7 +1387,7 @@ $(document).ready(function () {
          </label>
          <label for="dist_use">
             dist_use: <br>
-            <select id="dist_use" name="dist_use">
+            <select id="dist_useDLine" name="dist_use">
                <option value="select"></option>
                <option value="Social">Social</option>
                <option value="Mine">Mine</option>
@@ -1418,7 +1400,7 @@ $(document).ready(function () {
          </label>
          <label for="use_freq">
             use_freq: <br>
-            <select id="use_freq" name="use_freq">
+            <select id="use_freqDLine" name="use_freq">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1427,7 +1409,7 @@ $(document).ready(function () {
          </label>
          <label for="use_recent">
             use_recent: <br>
-            <select id="use_recent" name="use_recent">
+            <select id="use_recentDLine" name="use_recent">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1436,7 +1418,7 @@ $(document).ready(function () {
          </label>
          <label for="site_stabi">
             site_stabi: <br>
-            <select id="site_stabi" name="site_stabi">
+            <select id="site_stabiDLine" name="site_stabi">
                <option value="select"></option>
                <option value="Unstable">Unstable</option>
                <option value="Poor">Poor</option>
@@ -1448,7 +1430,7 @@ $(document).ready(function () {
          </label>
          <label for="dist_crust">
             dist_crust: <br>
-            <select id="dist_crust" name="dist_crust">
+            <select id="dist_crustDLine" name="dist_crust">
                <option value="select"></option>
                <option value="0 - No Crust">0 - No Crust</option>
                <option value="1 - Alkali">1 - Alkali</option>
@@ -1461,7 +1443,7 @@ $(document).ready(function () {
          </label>
          <label for="undist_cru">
             undist_cru: <br>
-            <select id="undist_cru" name="undist_cru">
+            <select id="undist_cruDLine" name="undist_cru">
                <option value="select"></option>
                <option value="0 - No Crust">0 - No Crust</option>
                <option value="1 - Alkali">1 - Alkali</option>
@@ -1474,7 +1456,7 @@ $(document).ready(function () {
          </label>
          <label for="depth">
             depth: <br>
-            <select id="depth" name="depth">
+            <select id="depthDLine" name="depth">
                <option value="select"></option>
                <option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option>
                <option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option>
@@ -1485,7 +1467,7 @@ $(document).ready(function () {
          </label>
          <label for="width">
             width: <br>
-            <select id="width" name="width">
+            <select id="widthDLine" name="width">
                <option value="select"></option>
                <option value="1 - 2 ft - Dirt Bike">1 - 2 ft - Dirt Bike</option>
                <option value="2 - 4 ft - ATV">2 - 4 ft - ATV</option>
@@ -1497,7 +1479,7 @@ $(document).ready(function () {
          </label>
          <label for="type">
             type: <br>
-            <select id="type" name="type">
+            <select id="typeDLine" name="type">
                <option value="select"></option>
                <option value="One-track">One-track</option>
                <option value="Two-track">Two-track</option>
@@ -1509,7 +1491,7 @@ $(document).ready(function () {
          </label>
          <label for="plant_dama">
             plant_dama: <br>
-            <select id="plant_dama" name="plant_dama">
+            <select id="plant_damaDLine" name="plant_dama">
                <option value="select"></option>
                <option value="0 - Intact">0 - Intact</option>
                <option value="1 - Most symmetrical">1 - Most symmetrical</option>
@@ -1523,7 +1505,7 @@ $(document).ready(function () {
          </label>
          <label for="accessibil">
             accessibil: <br>
-            <select id="accessibil" name="accessibil">
+            <select id="accessibilDLine" name="accessibil">
                <option value="select"></option>
                <option value="High">High</option>
                <option value="Medium">Medium</option>
@@ -1533,7 +1515,7 @@ $(document).ready(function () {
          </label>
          <label for="visibility">
             visibility: <br>
-            <select id="visibility" name="visibility">
+            <select id="visibilityDLine" name="visibility">
                <option value="select"></option>
                <option value="High">High</option>
                <option value="Medium">Medium</option>
@@ -1558,7 +1540,7 @@ $(document).ready(function () {
          </label>
          <label for="treated">
             treated: <br>
-            <select id="treated" name="treated">
+            <select id="treatedDLine" name="treated">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1570,7 +1552,7 @@ $(document).ready(function () {
          </label>
          <label for="cultural">
             cultural: <br>
-            <select id="cultural" name="cultural">
+            <select id="culturalDLine" name="cultural">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1579,7 +1561,7 @@ $(document).ready(function () {
          </label>
          <label for="t_e_specie">
             t_e_specie: <br>
-            <select id="t_e_specie" name="t_e_specie">
+            <select id="t_e_specieDLine" name="t_e_specie">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1588,7 +1570,7 @@ $(document).ready(function () {
          </label>
          <label for="gps_photo">
             gps_photo: <br>
-            <select id="gps_photo" name="gps_photo">
+            <select id="gps_photoDLine" name="gps_photo">
                <option value="select"></option>
                <option value="Yes">Yes</option>
                <option value="No">No</option>
@@ -1597,7 +1579,7 @@ $(document).ready(function () {
          </label>
          <label for="soil_vulne">
             soil_vulne: <br>
-            <select id="soil_vulne" name="soil_vulne">
+            <select id="soil_vulneDLine" name="soil_vulne">
                <option value="select"></option>
                <option value="Low">Low</option>
                <option value="Low/ Medium">Low/ Medium</option>
@@ -1626,467 +1608,282 @@ $(document).ready(function () {
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input type="submit" value="Submit">
+         <br><br><input id="distLineEditButton" type="button" value="Save">
       </form>
    </div>
-</div>`;
+</div>
 
-  const sync = `<button id="sync" class="btn">Synchronize</button>`;
+<script>
 
-  $(formTest2).appendTo('#sidebar2');
-  $(sync).appendTo('#sidebar2');
-
-  //https://stackoverflow.com/questions/18602331/why-is-this-jquery-click-function-not-working
-  // link above helped with the on click event which then leads to grabbing the data from IndexedDB
-
-
-  $('#featureType, #featureStyle').change(function () {
-
-    const featureTypeSel = $('#featureType').val();
-    const featureStyleSel = $('#featureStyle').val();
-
-    $('#restoPointForm').toggle(
-      featureStyleSel === 'resto' && featureTypeSel === 'point'
-    );
-    $('#restoPolyForm').toggle(
-      featureStyleSel === 'resto' && featureTypeSel === 'poly'
-    );
-    $('#restoLineForm').toggle(
-      featureStyleSel === 'resto' && featureTypeSel === 'line'
-    );
-    $('#barrierForm').toggle(
-      featureTypeSel === 'test' && featureStyleSel === 'barrier'
-    );
-    $('#distPointForm').toggle(
-      featureStyleSel === 'disturb' && featureTypeSel === 'point'
-    );
-    $('#distPolyForm').toggle(
-      featureStyleSel === 'disturb' && featureTypeSel === 'poly'
-    );
-    $('#distLineForm').toggle(
-      featureStyleSel === 'disturb' && featureTypeSel === 'line'
-    );
-  });
-
-  // $('form').submit(function (event) {
-  //   // what this code is doing is stopping the browser from refreshing when a form is submitted
-  //   event.preventDefault();
-  //   var $this = $(this); // this is the current form that is selected
-  //   // this is posting to the desired action ex "/restoLineFormSubmit" on the server side
-  //   $.post($this.attr('action'), $this.serialize(), function (data) {
-  //     // once posted is will switch the top two selections to default and reset the form that was submitted and
-  //     // hide that form
-  //
-  //     // idea came from here
-  //     //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
-  //     $('#featureType').prop('selectedIndex', 0);
-  //     $('#featureStyle').prop('selectedIndex', 0);
-  //     // idea came from here
-  //     //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
-  //     $this.trigger('reset');
-  //     // idea come from here
-  //     // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
-  //     $this.hide();
-  //     alert(data.message);
-  //     console.log(data);
-  //   })
-  // })
-
-  const db = new Dexie('SubmissionForms');
-
-  db.version(1).stores({
-    barrierSub: `properties.gid, type, geometry`,
-    distLineSub: `properties.gid, type, geometry`,
-    distPointSub: `properties.gid, type, geometry`,
-    distPolySub: `properties.gid, type, geometry`,
-    restoLineSub: `properties.gid, type, geometry`,
-    restoPointSub: `properties.gid, type, geometry`,
-    restoPolySub: `properties.gid, type, geometry`
-  });
-  db.open().then(function (db) {
-    console.log('Opened Submission Forms DB');
-  }).catch(function (err) {
-    console.log(err)
-  });
-
-  $(document).on('click', "#sync", function () {
-    console.log('Synchronizing...');
-    db.barrierSub.count(function (count) {
-      if (count > 0) {
-        db.barrierSub.toArray(function (test) {
+   function editRestPoint(submission) {
+      console.log(submission)
           $.ajax({
             type: "POST",
-            url: '/barrierFormSubmit',
+            datatype: "json",
+            url: "/restoPointFormEdit",
             contentType: 'application/json',
-            data: JSON.stringify(test),
-            dataType: "json",
+            data: JSON.stringify(submission),
             success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
               console.log(data);
-            }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
           })
-        })
-          .then(function () {
-            console.log('submitted barrier indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    });
-    db.distLineSub.count(function (count) {
-      if (count > 0) {
-        db.distLineSub.toArray(function (data) {
-          $.ajax({
-            type: "POST",
-            url: "/distLineFormSubmit",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (data) {
-              console.log(data)
-            }
-          })
-        })
-          .then(function () {
-            console.log('submitted distLine indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    });
-    db.distPointSub.count(function (count) {
-      if (count > 0) {
-        db.distPointSub.toArray(function (data) {
-          $.ajax({
-            type: "POST",
-            url: "/distPointFormSubmit",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (data) {
-              console.log(data)
-            }
-          })
-        })
-          .then(function () {
-            console.log('submitted distPoint indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    });
-    db.distPolySub.count(function (count) {
-      if (count > 0) {
-        db.distPolySub.toArray(function (data) {
-          $.ajax({
-            type: "POST",
-            url: "/distPolyFormSubmit",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (data) {
-              console.log(data)
-            }
-          })
-        })
-          .then(function () {
-            console.log('submitted distPoly indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    });
-    db.restoLineSub.count(function (count) {
-      if (count > 0) {
-        db.restoLineSub.toArray(function (data) {
-          $.ajax({
-            type: "POST",
-            url: "/restoLineFormSubmit",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (data) {
-              console.log(data)
-            }
-          })
-        })
-          .then(function () {
-            console.log('submitted restoLine indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    });
-    db.restoPointSub.count(function (count) {
-      if (count > 0) {
-        db.restoPointSub.toArray(function (data) {
-          $.ajax({
-            type: "POST",
-            url: "/restoPointFormSubmit",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (data) {
-              console.log(data)
-            }
-          })
-        })
-          .then(function () {
-            console.log('submitted restoPoint indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    });
-    db.restoPolySub.count(function (count) {
-      if (count > 0) {
-        db.restoPolySub.toArray(function (data) {
-          $.ajax({
-            type: "POST",
-            url: "/restoPolyFormSubmit",
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (data) {
-              console.log(data)
-            }
-          })
-        })
-          .then(function () {
-            console.log('submitted restoPoly indexedDB')
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-      }
-    })
-  });
-
-
-  $("form").on("submit", function (event) {
-    const $this = $(this); // this is the current form that is selected
-    event.preventDefault();
-
-    //https://stackoverflow.com/questions/9685177/get-the-id-of-a-form
-    //this is grabbing the current form ID on submission
-    const thisForm = $this.closest("form").attr("id");
-    const form = $this.serializeArray();
-
-    const barrierObj = {},
-      barrierArray = [],
-      distLineObj = {},
-      distLineArray = [],
-      distPointObj = {},
-      distPointArray = [],
-      distPolyObj = {},
-      distPolyArray = [],
-      restoLineObj = {},
-      restoLineArray = [],
-      restoPointObj = {},
-      restoPointArray = [],
-      restoPolyObj = {},
-      restoPolyArray = [];
-
-    //idea came from here
-    //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
-    $('#featureType').prop('selectedIndex', 0);
-    $('#featureStyle').prop('selectedIndex', 0);
-    // idea came from here
-    //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
-    $this.trigger('reset');
-    // idea come from here
-    // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
-    $this.hide();
-
+   }
    
-    $(form).each(function (i, field) {
-      const fieldValue = field.value;
-      const fieldName = field.name;
-
-      if (thisForm === "barrierForm") {
-        //https://www.youtube.com/watch?v=Sb8xyCa2p7A this post and the ones below came
-        //came from this youtube video
-        if (fieldValue === '' || fieldValue === 'select') {
-          barrierObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
-          barrierObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'barr_miles' || fieldName === 'bar_km' || fieldName === 'shape_stle' ||
-          fieldName === 'shape_leng') {
-          barrierObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          barrierObj[fieldName] = fieldValue;
-        }
-      } else if (thisForm === 'distLineForm') {
-        if (fieldValue === '' || fieldValue === 'select') {
-          distLineObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'dist_sever' || fieldName === 'photo_azim') {
-          distLineObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'miles_dist' || fieldName === 'km_dist' || fieldName === 'shape_stle' || fieldName === 'shape_leng') {
-          distLineObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          distLineObj[fieldName] = fieldValue;
-        }
-      } else if (thisForm === 'distPointForm') {
-        if (fieldValue === '' || fieldValue === 'select') {
-          distPointObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
-          distPointObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'estimate_s') {
-          distPointObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          distPointObj[fieldName] = fieldValue;
-        }
-      } else if (thisForm === 'distPolyForm') {
-        if (fieldValue === '' || fieldValue === 'select') {
-          distPolyObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'dist_sever' || fieldName === 'photo_azim') {
-          distPolyObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'acres_rest' || fieldName === 'kmsq_resto' || fieldName === 'shape_star' || fieldName === 'shape_stle'
-          || fieldName === 'shape_leng' || fieldName === 'shape_area') {
-          distPolyObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          distPolyObj[fieldName] = fieldValue;
-        }
-      } else if (thisForm === 'restoLineForm') {
-        if (fieldValue === '' || fieldValue === 'select') {
-          restoLineObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
-          restoLineObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'miles_rest' || fieldName === 'km_resto' || fieldName === 'shape_stle' || fieldName === 'shape_leng') {
-          restoLineObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          restoLineObj[fieldName] = fieldValue;
-        }
-      } else if (thisForm === 'restoPointForm') {
-        if (fieldValue === '' || fieldValue === 'select') {
-          restoPointObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
-          restoPointObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'miles_rest' || fieldName === 'km_resto' || fieldName === 'shape_stle' || fieldName === 'shape_leng') {
-          restoPointObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          restoPointObj[fieldName] = fieldValue;
-        }
-      } else if (thisForm === 'restoPolyForm') {
-        if (fieldValue === '' || fieldValue === 'select') {
-          restoPolyObj[fieldName] = null;
-        } else if (fieldName === 'gid' || fieldName === 'agency' || fieldName === 'photo_azim') {
-          restoPolyObj[fieldName] = parseInt(fieldValue);
-        } else if (fieldName === 'acres_rest' || fieldName === 'kmsq_resto' || fieldName === 'shape_star' || fieldName === 'shape_stle'
-          || fieldName === 'shape_leng' || fieldName === 'shape_area') {
-          restoPolyObj[fieldName] = parseFloat(fieldValue);
-        } else {
-          restoPolyObj[fieldName] = fieldValue;
-        }
-      }
-    });
-
-    if (Object.keys(barrierObj).length > 0) {
-      thisLayer["properties"] = barrierObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      barrierArray.push(thisLayer);
-
-      db.barrierSub.bulkPut(barrierArray)
-        .then(function (data) {
-          console.log(`Barrier form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        })
-    } else if (Object.keys(distLineObj).length > 0) {
-      thisLayer["properties"] = distLineObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      distLineArray.push(thisLayer);
-
-      db.distLineSub.bulkPut(distLineArray)
-        .then(function (data) {
-          console.log(`Disturbance Line form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(distPointObj).length > 0) {
-
-      thisLayer["properties"] = distPointObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      distPointArray.push(thisLayer);
-      db.distPointSub.bulkPut(distPointArray)
-        .then(function (data) {
-          console.log(`Disturbance Point form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(distPolyObj).length > 0) {
-      thisLayer["properties"] = distPolyObj;
-      //thisLayer['geometry']['type'] = 'MultiPolygon';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      distPolyArray.push(thisLayer);
-
-      db.distPolySub.bulkPut(distPolyArray)
-        .then(function (data) {
-          console.log(`Disturbance Polygon form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(restoLineObj).length > 0) {
-      thisLayer["properties"] = restoLineObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      restoLineArray.push(thisLayer);
-
-      db.restoLineSub.bulkPut(restoLineArray)
-        .then(function (data) {
-          console.log(`Restoration Line form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(restoPointObj).length > 0) {
-      console.log(thisLayer);
-      thisLayer["properties"] = restoPointObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      restoPointArray.push(thisLayer);
-
-      db.restoPointSub.bulkPut(restoPointArray)
-        .then(function (data) {
-          console.log(`Restoration Point form submitted: ${data}`);
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    } else if (Object.keys(restoPolyObj).length > 0) {
-      thisLayer["properties"] = restoPolyObj;
-      //thisLayer['geometry']['type'] = 'Polygon';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      //thisLayer['geometry']['coordinates'][0] = thisLayer['geometry']['coordinates'];
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
-
-      restoPolyArray.push(thisLayer);
-
-      db.restoPolySub.bulkPut(restoPolyArray)
-        .then(function (data) {
-          console.log(`Restoration Polygon form submitted: ${data}`)
-        })
-        .catch(Dexie.BulkError, function (err) {
-          console.warn(err);
-        });
-    }
-  });
-});
+   function editRestPoly(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: "/restoPolyFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
+          })
+   }
+   
+   function editRestLine(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: "/restoLineFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
+          })
+   }
+   
+   function editBarrier(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: "/barrierFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
+          })
+   }
+   
+   function editDistPoint(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: "/distPointFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
+          })
+   }
+   
+   function editDistPoly(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: "/distPolyFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
+          })
+   }
+   
+   function editDistLine(submission) {
+      console.log(submission)
+          $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: "/distLineFormEdit",
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+           }
+          })
+   }
+   $("#restoPointEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#restoPointForm').serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("resto point update form button click");
+      
+      editRestPoint(obj);
+   });
+   $("#restoPolyEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#restoPolyForm').serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'acres_rest' || item.name === 'kmsq_resto' || item.name === 'shape_stle' || item.name === 'shape_star') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("resto poly update form button click");
+      
+      editRestPoly(obj);
+   });
+   $("#restoLineEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#restoLineForm').serializeArray().reduce(function(i, item) {
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("resto line update form button click");
+      
+      editRestLine(obj);
+   });
+   $("#barrierEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#barrierForm').serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'barr_miles' || item.name === 'bar_km' || item.name === 'shape_stle' || item.name === 'shape_leng') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("barrier update form button click");
+      
+      editBarrier(obj);
+   });
+   $("#distPointEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#distPointForm').serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'estimate_s') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("dist point update form button click");
+      
+      editDistPoint(obj);
+   });
+   $("#distPolyEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#distPolyForm').serializeArray().reduce(function(i, item) {
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'dist_sever' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'acres_rest' || item.name === 'kmsq_resto' || item.name === 'shape_star' || item.name === 'shape_stle') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("dist poly update form button click");
+      
+      editDistPoly(obj);
+   });
+   $("#distLineEditButton").on("click", function(event) {
+      var count = 0;
+      var obj = [];
+      $('#distLineForm').serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'dist_sever' || item.name === 'photo_azim') {
+            obj[count] = parseInt(item.value);
+         } else if (item.name === 'miles_dist' || item.name === 'km_dist' || item.name === 'shape_stle' || item.name === 'shape_leng') {
+            obj[count] = parseFloat(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log("dist line update form button click");
+      
+      editDistLine(obj);
+   });
+   
+</script>

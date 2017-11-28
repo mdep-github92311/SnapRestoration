@@ -1,4 +1,23 @@
-
+// switch value with agency name
+function myAgency(agen) {
+    switch (agen) {
+        case 0:
+            return 'BLM';
+            break;
+        case 1:
+            return 'NPS';
+            break;
+        case 2:
+            return 'FS';
+            break;
+        case 3:
+            return 'FWS';
+            break;
+        default:
+            return 'null';
+            break;
+    }
+}
 // creating a style function for points in the map based on the agency number
 function myStylePoints(feature) {
     switch (feature.properties.agency) {
@@ -26,7 +45,7 @@ function myStylePoints(feature) {
         case 2:
             return {
                 radius: 8,
-                FillColor: "#984ea3",
+                fillColor: "#984ea3",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -36,7 +55,17 @@ function myStylePoints(feature) {
         case 3:
             return {
                 radius: 8,
-                FillColor: "#ff7f00",
+                fillColor: "#ff7f00",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+        default:
+            return {
+                radius: 8,
+                fillColor: "#ffffff",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -80,9 +109,9 @@ function myStyleLines(feature) {
     }
 }
 
-//creating a style function for Dist polygons in the map based on the agencey number
+//creating a style function for Dist polygons in the map based on the agency number
 function myStyleDistPoly(feature) {
-    switch (feature.properties.agencey) {
+    switch (feature.properties.agency) {
         case 0:
             return {
                 color: "#e41a1c"
@@ -164,31 +193,17 @@ function roadColor(feature) {
 }
 
 function onEachBarrier(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -200,33 +215,24 @@ function onEachBarrier(feature, layer) {
 }
 
 function onEachDistLine(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        
+        // gets the point in the middle of the line to pan the camera to
+        var latLang = this.getLatLngs();
+        var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+        map.panTo(middleLatLong);
+        
         $(`#sidebar1`).empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -236,33 +242,20 @@ function onEachDistLine(feature, layer) {
 }
 
 function onEachDistPoint(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
+        console.log("Dist Point - " + this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -273,33 +266,43 @@ function onEachDistPoint(feature, layer) {
 }
 
 function onEachDistPoly(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+        console.log(feature);
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        
+        //gets the center of the poly to pan the camera
+        var latLang = this.getLatLngs();
+        var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
+        leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
+        topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
+        latLang[0].forEach(function(outerElem) {
+            outerElem.forEach(function(elem) {
+                if (elem.lat > topMostCoord)
+                    topMostCoord = elem.lat;
+                if (elem.lng > leftMostCoord)
+                    leftMostCoord = elem.lng;
+                if (elem.lat < bottomMostCoord)
+                    bottomMostCoord = elem.lat;
+                if (elem.lng < rightMostCoord)
+                    rightMostCoord = elem.lng;
+            });
+        });
+        var centerCoord = {
+            lng:(leftMostCoord + rightMostCoord)/2,
+            lat:(topMostCoord + bottomMostCoord)/2
+        };
+        map.panTo(centerCoord);
+        
         $(`#sidebar1`).empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -313,29 +316,14 @@ function onEachDistPolyCent(feature, layer) {
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
         //console.log(prop + ' : ' + feature.properties[prop]);
-        if(prop == 'agency' || prop == 'agencey'){
-            //console.log(prop + ' : ' + feature.properties[prop]);
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
+        if(prop == 'agency'){
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
         }
         else
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -347,32 +335,42 @@ function onEachDistPolyCent(feature, layer) {
 }
 
 function onEachRestoPoly(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+        console.log(feature);
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
+        
+        //gets the center of the poly to pan the camera
+        var latLang = this.getLatLngs();
+        var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
+        leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
+        topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
+        latLang[0].forEach(function(outerElem) {
+            outerElem.forEach(function(elem) {
+                if (elem.lat > topMostCoord)
+                    topMostCoord = elem.lat;
+                if (elem.lng > leftMostCoord)
+                    leftMostCoord = elem.lng;
+                if (elem.lat < bottomMostCoord)
+                    bottomMostCoord = elem.lat;
+                if (elem.lng < rightMostCoord)
+                    rightMostCoord = elem.lng;
+            });
+        });
+        var centerCoord = {
+            lng:(leftMostCoord + rightMostCoord)/2,
+            lat:(topMostCoord + bottomMostCoord)/2
+        };
+        map.panTo(centerCoord);
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
@@ -386,29 +384,15 @@ function onEachRestoPoint(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
+        if(prop == 'agency'){
             //console.log(prop + ' : ' + feature.properties[prop]);
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
+            popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
         }
         else
             popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -420,31 +404,17 @@ function onEachRestoPoint(feature, layer) {
 }
 
 function onEachRestoPolyCent(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+        var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -456,33 +426,24 @@ function onEachRestoPolyCent(feature, layer) {
 }
 
 function onEachRestoLine(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        
+        // gets the point in the middle of the line to pan the camera to
+        var latLang = this.getLatLngs();
+        var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+        map.panTo(middleLatLong);
+        
         $(`#sidebar1`).empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -492,31 +453,17 @@ function onEachRestoLine(feature, layer) {
 }
 
 function onEachBLMRegion(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -528,31 +475,17 @@ function onEachBLMRegion(feature, layer) {
 }
 
 function onEachFSRegion(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -564,31 +497,17 @@ function onEachFSRegion(feature, layer) {
 }
 
 function onEachMDEPBound(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -600,31 +519,17 @@ function onEachMDEPBound(feature, layer) {
 }
 
 function onEachMDIBound(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -636,31 +541,17 @@ function onEachMDIBound(feature, layer) {
 }
 
 function onEachNVCounty(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
@@ -672,31 +563,17 @@ function onEachNVCounty(feature, layer) {
 }
 
 function onEachSoilVuln(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if(prop == 'agency' || prop == 'agencey'){
-            switch (feature.properties[prop]) {
-                case 0:
-                    popUpContent.push(`<B>${prop}</B>` + ' : BLM');
-                    break;
-                case 1:
-                    popUpContent.push(`<B>${prop}</B>` + ' : NPS');
-                    break;
-                case 2:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FS');
-                    break;
-                case 3:
-                    popUpContent.push(`<B>${prop}</B>` + ' : FWS');
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+            var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if(prop == 'agency'){
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
+            }
+            else
+                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();

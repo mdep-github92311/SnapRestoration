@@ -24,14 +24,14 @@
         "nullable": "NO"
       }
     },
-    "agencey": {
+    "agency": {
       "type": "Number",
       "required": false,
       "length": null,
       "precision": 10,
       "scale": 0,
       "postgresql": {
-        "columnName": "agencey",
+        "columnName": "agency",
         "dataType": "numeric",
         "dataLength": null,
         "dataPrecision": 10,
