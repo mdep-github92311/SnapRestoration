@@ -1,4 +1,4 @@
-async function getSubmissions() {
+async function getData() {
   var barriers, distPoints, distPolys, distLines, restoLines, restoPoints, restoPolys;
   barriers = distPoints = distPolys = distLines = restoLines = restoPoints = restoPolys = [];
   var ipAddress = "216.117.167.186:443";
@@ -7,26 +7,26 @@ async function getSubmissions() {
 try {
     $.when(
       
-      await $.getJSON('http://' + ipAddress + '/api/BarrierSubs/barrierSubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/Barriers/barrierGeoJSON', function (data) {
         barriers = data[0].row_to_json;
         if (barriers.features != null)
           overallCount += barriers.features.length;
       }),
         
-      await $.getJSON('http://' + ipAddress + '/api/DistPointSubs/distPointSubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/DistPoints/distPointGeoJSON', function (data) {
         distPoints = data[0].row_to_json;
         if (distPoints.features != null)
           overallCount += distPoints.features.length;
       }),
     
-      await $.getJSON('http://' + ipAddress + '/api/DistLineSubs/distLineSubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/DistLines/distLineGeoJSON', function (data) {
         distLines = data[0].row_to_json;
         if (distLines.features != null)
           overallCount += distLines.features.length;
         
       }),
     
-      await $.getJSON('http://' + ipAddress + '/api/DistPolygonSubs/distPolySubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/DistPolygons/distPolyGeoJSON', function (data) {
         distPolys = data[0].row_to_json;
         if (distPolys.features != null)
           overallCount += distPolys.features.length;
@@ -36,27 +36,27 @@ try {
         // some code
       }),*/
     
-      await $.getJSON('http://' + ipAddress + '/api/RestoPointSubs/restoPointSubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/RestoPoints/restoPointGeoJSON', function (data) {
         //console.log(data);
         restoPoints = data[0].row_to_json;
         if (restoPoints.features != null)
           overallCount += restoPoints.features.length;
       }),
     
-      await $.getJSON('http://' + ipAddress + '/api/RestoLineSubs/restoLineSubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/RestoLines/restoLineGeoJSON', function (data) {
         restoLines = data[0].row_to_json;
         if (restoLines.features != null)
           overallCount += restoLines.features.length;
       }),
     
-      await $.getJSON('http://' + ipAddress + '/api/RestoPolygonSubs/restoPolySubGeoJSON', function (data) {
+      await $.getJSON('http://' + ipAddress + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
         restoPolys = data[0].row_to_json;
         if (restoPolys.features != null)
           overallCount += restoPolys.features.length;
       })
     );
 
-    var subs = {
+    var data = {
         barriers, 
         distPoints, 
         distPolys, 
@@ -67,7 +67,7 @@ try {
         overallCount
     };            
       
-    return subs;
+    return data;
     
     /*console.log(
       barriers, 

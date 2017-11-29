@@ -24,6 +24,11 @@
           height: 380px;
           width: 280px;
         }
+        #side_tab {
+          font-size: 2em;
+          padding: 4px;
+          border: 1pt solid black;
+        }
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
@@ -49,7 +54,7 @@
               <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                   <li><a href="/">Home</a></li>
-                  <li class="active"><a href="admin.php">Admin</a></li>
+                  <li class="active"><a href="#">Admin</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
@@ -89,7 +94,13 @@
             </div>
           </nav>
         </div>
-        
+        <div style="float:left;" id="side_tab">
+            <ul class="nav nav-pills nav-stacked">
+              <li role="presentation" class="active"><a href="#">Submissions</a></li>
+              <li role="presentation"><a href="Edit.html">Edit Records</a></li>
+              <li role="presentation"><a href="Delete.html">Delete Records</a></li>
+            </ul>
+        </div>
         <div id = "Items">
           <div id="reviewItems"></div>
           <table id="tableID" class="center">

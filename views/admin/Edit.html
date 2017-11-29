@@ -2,8 +2,515 @@
 <html>
     <head>
         <title> </title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+        <script src="../public/scripts/asyncGetData.js"> </script>
+        <script src="../public/scripts/featureStyles.js"> </script>
+        <style>
+        html, body {
+            width: 100%;
+        }
+        #Items {
+          text-align: center !important;
+          margin: 0 auto;
+        }
+        #mapID { 
+          height: 380px;
+          width: 280px;
+        }
+        #side_tab {
+          font-size: 2em;
+          padding: 4px;
+          border: 1pt solid black;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
     </head>
     <body>
+        <div id="header">
+          <nav role="navigation" class="navbar navbar-default navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="pull-left"><img src="/public/css/images/logos/blm.png" width="45px" height="45px" float="left"/><img src="/public/css/images/logos/fs.png" width="38px" height="45px" float="left"/><img src="/public/css/images/logos/fws.png" width="45px" height="45px" float="left"/><img src="/public/css/images/logos/nps.png" width="45px" height="45px" float="left"/></a>
+              </div>
+              <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/">Home</a></li>
+                  <li class="active"><a href="#">Admin</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Already have an account?</p>
+                  </li>
+                  <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><b>Login</b><span class="caret"></span></a>
+                    <ul id="login-dp" class="dropdown-menu">
+                      <li>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <form id="login-nav" role="form" method="post" action="login" accept-charset="UTF-8" class="form">
+                              <div class="form-group">
+                                <label for="exampleInputEmail2" class="sr-only">Email address</label>
+                                <input id="exampleInputEmail2" type="email" placeholder="Email address" required="" class="form-control"/>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword2" class="sr-only">Password</label>
+                                <input id="exampleInputPassword2" type="password" placeholder="Password" required="" class="form-control"/>
+                                <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+                              </div>
+                              <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                              </div>
+                              <div class="checkbox">
+                                <label>
+                                  <input type="checkbox"/> keep me logged-in
+                                </label>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div style="float:left;" id="side_tab">
+            <ul class="nav nav-pills nav-stacked">
+              <li role="presentation"><a href="Add.html">Submissions</a></li>
+              <li role="presentation" class="active"><a href="#">Edit Records</a></li>
+              <li role="presentation"><a href="Delete.html">Delete Records</a></li>
+            </ul>
+        </div>
+        <div id = "Items">
+          <div id="reviewItems"></div>
+          <table id="tableID" class="center">
+            <div id="tableItems"></div>
+          </table>
+        </div>
+        <script>
+          mapMarkers = [];
+          var currentData = [];
+          var invalidated = false;
+          function getAgency(agency){
+            switch (agency) {
+                case 0:
+                  return "BLM";
+                  break;
+                case 1:
+                  return "NPS";
+                  break;
+                case 2:
+                  return "FS";
+                  break;
+                case 3: 
+                  return "FWS";
+                  break;
+                default:
+                  return "null";
+                  break;
+            }
+          }
+          function populateModal(data, type, draw) {
+            var style;
+            var bounds = null;
+            this.currentData = data;
+            document.getElementById("editInfo").innerHTML = "";
+            document.getElementById("tableMap").style.display = "";  
+            document.getElementById("buttons").style.display = ""; 
+            if (this.mapMarkers != null)
+              for(var i = 0; i < this.mapMarkers.length; i++){
+                  this.map.removeLayer(this.mapMarkers[i]);
+              }
+            console.log(data);
+            switch (draw) {
+              case 1:
+                style = myStylePoints(data);
+                console.log(style);
+                var marker = L.circle([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
+                    radius: 8,
+                    fillColor: style.fillColor,
+                    color: style.color,
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8,
+                    radius:500
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                console.log(marker);
+                
+                if (data.geometry != null)
+                  if (data.geometry.coordinates.length >1)
+                    //map.panTo(marker._layers[marker._leaflet_id-1].getLatLng())
+                    //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
+                    bounds = marker.getBounds();
+                break;
+              case 2:
+                var marker = L.geoJson(data, {
+                  style: myStyleLines,
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                
+                console.log(marker);
+                //console.log(marker._layers[marker._leaflet_id-1].getLatLngs());
+                //var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
+                //var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+                //map.panTo(middleLatLong);
+                bounds = marker._layers[marker._leaflet_id-1].getBounds();
+                break;
+              case 3:
+                var marker = L.geoJson(data, {
+                  style: myStyleDistPoly
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                bounds = marker._layers[marker._leaflet_id-1].getBounds();
+                
+                break;
+              default:
+                // code
+            }
+            // this will invalidate the size of the map to make it fit in the modal
+            $('#myModal').on('shown.bs.modal', function(){
+              setTimeout(function() {
+                map.invalidateSize();
+                if (!invalidated) {
+                  map.fitBounds(bounds, {
+                    maxZoom: 11
+                  });
+                  invalidated = true;
+                }
+              }, 5);
+            });
+            $("#myModalLabel").html("<h1>"+type +"</h1>");
+            $("#pInfo").html("");
+              
+            for (var prop in data.properties) {
+              if(prop == 'agency'){
+                $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + getAgency(data.properties[prop]));
+              }
+              else
+                  $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + data.properties[prop]);
+            }
+            
+            // makes map look at the point
+            map.fitBounds(bounds, {
+              maxZoom: 11
+            });
+          }
+          getData().then(function(defs){
+              //promise = (defs);
+              console.log(defs);
+              var count = document.getElementById('reviewItems');
+              var item = document.getElementById('tableItems');
+              count.innerHTML = "There are " + defs.overallCount + " overall markers";
+              $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
+              var count = 0;
+              
+              
+              if (defs.barriers.features != null)
+                defs.barriers.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "barriers";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td colspan='2'> Barriers"
+                            + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#barr" + count;
+                  
+                  $(barrID).click(function(){
+                      var elem = document.getElementById("tableMap");
+                      elem.style.display = ""; 
+                      populateModal(features, "Barrier", 2);
+                  });
+                    
+                    
+                });
+              count = 0;
+              
+              if (defs.distLines.features != null)
+                defs.distLines.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "distLines";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Lines"
+                            + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#dLine" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Disturbance Line", 2);
+                  });
+                      
+                });
+              count = 0;
+              
+              if (defs.distPoints.features != null)
+                defs.distPoints.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "distPoints";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Points"
+                            + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#dPoint" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Disturbance Point",1);
+                  });
+                      
+                });
+              count = 0;
+              
+              if (defs.distPolys.features != null)
+                defs.distPolys.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "distPolys";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Polygon"
+                            + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#dPoly" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Disturbance Polygon",3);
+                  });
+                      
+                });
+              count = 0;
+              
+              if (defs.restoLines.features != null)
+                defs.restoLines.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "restoLines";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Lines"
+                            + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#rLine" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Restoration Line",2);
+                  });
+                      
+                });
+              count = 0;
+              
+              if (defs.restoPoints.features != null)
+                defs.restoPoints.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "restoPoints";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Point"
+                            + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#rPoint" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Restoration Point",1);
+                  });
+                      
+                });
+              count = 0;
+              
+              if (defs.restoPolys.features != null)
+                defs.restoPolys.features.forEach(function(features) {
+                  count++;
+                  features.dataType = "restoPolys";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Polygon"
+                            + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#rPoly" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Restoration Polygon",3);
+                  });
+                      
+                });
+            //Inserts table back into div
+            var items = document.getElementById("tableItems");
+            document.getElementById("tableID").appendChild(items);
+            document.getElementById("tableID").style.textAlign = "center"; 
+          });
+          /*setTimeout(function(){ 
+            console.log(promise); 
+            var elem = document.getElementById('para');
+          }, 3000);*/
+          
+        </script>
+        
+        
+        <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"> </h4>
+                      </div>
+                      <div class="modal-body">
+                        
+                        <table id='tableMap'>
+                          <td><div id="pInfo"></div></td>
+                        
+                          <td><div id="mapID"></div></td>
+                        </table>
+                        <div id='editInfo'></div>
+                        <div id='buttons'>
+                          <button id="editButton">Edit</button>
+                        </div>
+                      </div>
+            
+                    </div>
+                  </div>
+                </div>
+                
+        <script>
+              var map = L.map('mapID').setView([36.211303, -115.114929], 10);
+    
+              // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+              // createPane was used in this thread to control the order of the layers
+              
+              //map.createPane('Points').style.zIndex = 390;
+              //map.createPane('Lines').style.zIndex = 380;
+              //map.createPane('Polygons').style.zIndex = 370;
+              
+    
+              L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                attribution: '',
+                maxZoom: 18,
+                id: 'rogerdodger617.2p4pk9co',
+                accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+              }).addTo(map);
+              
+              function editData(){
+                //console.log(this.currentData);
+                $("#editInfo").load("../public/scripts/editForm.html");
+                
+                // Waits for form to be loaded before populating Data
+                setTimeout(function(){ 
+                  $.each(this.currentData.properties, function(name, val){
+                    var $el = $('[name="'+name+'"]'),
+                        type = $el.attr('type');
+                    
+                    //console.log("something is happenning = " + name + " -- " + val);
+                    //console.log(type);
+                    switch(type){
+                        case 'checkbox':
+                            $el.attr('checked', 'checked');
+                            break;
+                        case 'radio':
+                            $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+                            break;
+                        default:
+                            if (val != null && val != '')
+                              $el.val(val);
+                    }
+                  }); 
+                  console.log(this.currentData.dataType)
+                    
+                    $('#restoPointForm').toggle(
+                      this.currentData.dataType === 'restoPoints'
+                    );
+                    $('#restoPolyForm').toggle(
+                      this.currentData.dataType === 'restoPolys'
+                    );
+                    $('#restoLineForm').toggle(
+                      this.currentData.dataType === 'restoLines'
+                    );
+                    $('#barrierForm').toggle(
+                      this.currentData.dataType === 'barriers'
+                    );
+                    $('#distPointForm').toggle(
+                      this.currentData.dataType === 'distPoints'
+                    );
+                    $('#distPolyForm').toggle(
+                      this.currentData.dataType === 'distPolys'
+                    );
+                    $('#distLineForm').toggle(
+                      this.currentData.dataType === 'distLines'
+                    );
+                
+                  
+                }, 400);
+              }
+              
+              
+              // Listener for the Edit Button
+              document.getElementById("editButton").addEventListener('click',function () {
+                document.getElementById("tableMap").style.display = "none";  
+                var div = document.getElementById("editInfo");
+                div.innerHTML = "";
+                div.style.display ="";
+                editData();
+                document.getElementById("buttons").style.display = "none"; 
+              }); 
+              
+              
+              
+            </script>
+        
 
+    </body>
     </body>
 </html>
