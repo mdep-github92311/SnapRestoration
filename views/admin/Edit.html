@@ -443,8 +443,8 @@
                 accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
               }).addTo(map);
               
-              function editData(){
-                //console.log(this.currentData);
+              function editForm(){
+                console.log("edit data function");
                 $("#editInfo").load("../public/scripts/editForm.html");
                 
                 // Waits for form to be loaded before populating Data
@@ -467,7 +467,7 @@
                               $el.val(val);
                     }
                   }); 
-                  console.log(this.currentData.dataType)
+                  console.log("data check -- " + this.currentData.dataType);
                     
                     $('#restoPointForm').toggle(
                       this.currentData.dataType === 'restoPoints'
@@ -490,7 +490,8 @@
                     $('#distLineForm').toggle(
                       this.currentData.dataType === 'distLines'
                     );
-                
+                  //this sets the type of edit so the correct record is editted
+                  type = 'reg';
                   
                 }, 400);
               }
@@ -502,8 +503,9 @@
                 var div = document.getElementById("editInfo");
                 div.innerHTML = "";
                 div.style.display ="";
-                editData();
+                editForm();
                 document.getElementById("buttons").style.display = "none"; 
+                console.log("edit button click");
               }); 
               
               

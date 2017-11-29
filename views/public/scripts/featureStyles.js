@@ -206,6 +206,7 @@ function onEachBarrier(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
+        map.panTo(this.getCenter());
         $(`#sidebar1`).empty();
         $("<B><U>Barrier</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -228,10 +229,10 @@ function onEachDistLine(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         
+        
         // gets the point in the middle of the line to pan the camera to
-        var latLang = this.getLatLngs();
-        var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
-        map.panTo(middleLatLong);
+        
+        map.panTo(this.getCenter());
         
         $(`#sidebar1`).empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
@@ -280,28 +281,9 @@ function onEachDistPoly(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         
+        
         //gets the center of the poly to pan the camera
-        var latLang = this.getLatLngs();
-        var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
-        leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
-        topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
-        latLang[0].forEach(function(outerElem) {
-            outerElem.forEach(function(elem) {
-                if (elem.lat > topMostCoord)
-                    topMostCoord = elem.lat;
-                if (elem.lng > leftMostCoord)
-                    leftMostCoord = elem.lng;
-                if (elem.lat < bottomMostCoord)
-                    bottomMostCoord = elem.lat;
-                if (elem.lng < rightMostCoord)
-                    rightMostCoord = elem.lng;
-            });
-        });
-        var centerCoord = {
-            lng:(leftMostCoord + rightMostCoord)/2,
-            lat:(topMostCoord + bottomMostCoord)/2
-        };
-        map.panTo(centerCoord);
+        map.panTo(this.getCenter());
         
         $(`#sidebar1`).empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
@@ -336,7 +318,7 @@ function onEachDistPolyCent(feature, layer) {
 
 function onEachRestoPoly(feature, layer) {
     $(layer).on('click', function () {
-        console.log(feature);
+        //console.log(feature);
             var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -350,27 +332,7 @@ function onEachRestoPoly(feature, layer) {
         sidebar.open('formTools');
         
         //gets the center of the poly to pan the camera
-        var latLang = this.getLatLngs();
-        var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
-        leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
-        topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
-        latLang[0].forEach(function(outerElem) {
-            outerElem.forEach(function(elem) {
-                if (elem.lat > topMostCoord)
-                    topMostCoord = elem.lat;
-                if (elem.lng > leftMostCoord)
-                    leftMostCoord = elem.lng;
-                if (elem.lat < bottomMostCoord)
-                    bottomMostCoord = elem.lat;
-                if (elem.lng < rightMostCoord)
-                    rightMostCoord = elem.lng;
-            });
-        });
-        var centerCoord = {
-            lng:(leftMostCoord + rightMostCoord)/2,
-            lat:(topMostCoord + bottomMostCoord)/2
-        };
-        map.panTo(centerCoord);
+        map.panTo(this.getCenter());
         //map.panTo(this.getLatLng());
         $(`#sidebar1`).empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
@@ -439,10 +401,10 @@ function onEachRestoLine(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         
+        
         // gets the point in the middle of the line to pan the camera to
-        var latLang = this.getLatLngs();
-        var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
-        map.panTo(middleLatLong);
+        
+        map.panTo(this.getCenter());
         
         $(`#sidebar1`).empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
