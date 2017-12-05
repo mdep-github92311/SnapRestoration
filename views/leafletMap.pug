@@ -107,6 +107,73 @@ html
         padding: 0;
       }
       
+      .container {
+          position: relative;
+          width: 50px;
+          padding-left: 0px;
+          margin: 0 auto 40px auto;
+      
+          -webkit-perspective: 800px;
+             -moz-perspective: 800px;
+              -ms-perspective: 800px;
+               -o-perspective: 800px;
+                  perspective: 800px;
+      }
+      .container .card {
+          //position: absolute;
+          //width: 100%;
+          height: 100%;
+      
+          -webkit-transition: -webkit-transform 1s;
+             -moz-transition:    -moz-transform 1s;
+              -ms-transition:     -ms-transform 1s;
+               -o-transition:      -o-transform 1s;
+                  transition:         transform 1s;
+      
+          -webkit-transform-style: preserve-3d;
+             -moz-transform-style: preserve-3d;
+              -ms-transform-style: preserve-3d;
+               -o-transform-style: preserve-3d;
+                  transform-style: preserve-3d;
+      }
+      .container .card .face {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          font-family: Arial, sans-serif;
+          //font-size: 140px;
+          font-weight: bold;
+          //line-height: 260px;
+          color: #fff;
+          text-align: center;
+      
+          -webkit-backface-visibility: hidden;
+             -moz-backface-visibility: hidden;
+              -ms-backface-visibility: hidden;
+               -o-backface-visibility: hidden;
+                  backface-visibility: hidden;
+      }
+      .container .card.flipped,
+      .container .card .face2 {
+          -webkit-transform: rotateY(180deg);
+             -moz-transform: rotateY(180deg);
+              -ms-transform: rotateY(180deg);
+               -o-transform: rotateY(180deg);
+                  transform: rotateY(180deg);
+      }
+      //.container .card .face .content1 {background-color: #7ad;}
+      //.container .card .face .content2 {background-color: #7da;}
+      //.container .card .face .content3 {background-color: #d7a;}
+      //.container .card .face .content4 {background-color: #fad997;}
+      
+      .store {
+          display: none;
+      }
+      .buttons {
+          text-align: center;
+      }
+
+      
     body
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
@@ -119,10 +186,56 @@ html
                 span.icon-bar
                 span.icon-bar
               a.pull-left
-                img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
-                img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
-                img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
-                img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
+                .container
+                  .card
+                    .face.face1
+                    .face.face2
+                  ul.store
+                    li
+                      .content.content1
+                        img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
+                    li
+                      .content.content2 
+                        img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
+                    li
+                      .content.content3 
+                        img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
+                    li
+                      .content.content4   
+                        img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
+                script.
+                  var topLogo = 1;
+                  var currLogo = 1;
+                  var facingUp = true;
+                  function flipLogo(n) {
+                    if (topLogo === n) return;
+                    // Replace the contents of the current back-face with the contents
+                    // of the element that should rotate into view.
+                    var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
+                    var nextContent = $('.store' + n).html();
+                    var nextContent = $('.store li:nth-child(' + n + ')').html();
+                    curBackFace.html(nextContent);
+                    // Rotate the content
+                    $('.card').toggleClass('flipped');
+                    topLogo = n;
+                    facingUp = !facingUp;
+                  }
+                  
+                  setInterval(function() {
+                    flipLogo(currLogo);
+                    if(currLogo > 3)
+                      currLogo = 1;
+                    else
+                      currLogo++;
+                    
+                  }, 5000);
+                  
+                  $(document).ready(function(){
+                    // Add the appropriate content to the initial "front side"
+                    var frontFace = $('.face1');
+                    var frontContent = $('.store li:first-child').html();
+                    frontFace.html(frontContent);
+                  });
             // Collect the nav links, forms, and other content for toggling
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               ul.nav.navbar-nav
@@ -279,7 +392,7 @@ html
               a(href='#formTools', role='tab')
                 span.glyphicon.glyphicon-info-sign(aria-hidden='true')
 
-          ul(role='tablist')
+          //ul(role='tablist')
             // bottom aligned tabs
             li
               a(href='#settings', role='tab')
@@ -322,7 +435,7 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #sidebar1
                 
-          #settings.sidebar-pane
+          //#settings.sidebar-pane
             h1.sidebar-header
               | Settings
               .sidebar-close
