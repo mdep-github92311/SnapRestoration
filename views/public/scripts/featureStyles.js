@@ -1,3 +1,5 @@
+'use strict';
+
 // switch value with agency name
 function myAgency(agen) {
     switch (agen) {
@@ -166,131 +168,120 @@ function pointToLayer(feature, latlng) {
 }
 
 function blmRegion(feature) {
-    return {color: "#e41a1c"}
+    return { color: "#e41a1c" };
 }
 
 function fsRegion(feature) {
-    return {color: "#4daf4a"}
+    return { color: "#4daf4a" };
 }
 
 function mdep_i(feature) {
-    return {color: "#377eb8"}
+    return { color: "#377eb8" };
 }
 
 function nv_county(feature) {
-    return {color: "#ffff33"}
+    return { color: "#ffff33" };
 }
 
 function soil_vuln(feature) {
-    return {color: "#a65628"}
+    return { color: "#a65628" };
 }
 
 function roadColor(feature) {
-    return {color: "#000000",
-                weight: 3,
-                opacity: 1
-    }
+    return { color: "#000000",
+        weight: 3,
+        opacity: 1
+    };
 }
 
 function onEachBarrier(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
         map.panTo(this.getCenter());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Barrier</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachDistLine(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        
-        
+
         // gets the point in the middle of the line to pan the camera to
-        
+
         map.panTo(this.getCenter());
-        
-        $(`#sidebar1`).empty();
+
+        $('#sidebar1').empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachDistPoint(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
         console.log("Dist Point - " + this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-        
-    })
+    });
 }
 
 function onEachDistPoly(feature, layer) {
     $(layer).on('click', function () {
         console.log(feature);
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        
-        
+
         //gets the center of the poly to pan the camera
         map.panTo(this.getCenter());
-        
-        $(`#sidebar1`).empty();
+
+        $('#sidebar1').empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachDistPolyCent(feature, layer) {
@@ -298,71 +289,65 @@ function onEachDistPolyCent(feature, layer) {
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
         //console.log(prop + ' : ' + feature.properties[prop]);
-        if(prop == 'agency'){
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+        if (prop == 'agency') {
+            popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+        } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Dist Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachRestoPoly(feature, layer) {
     $(layer).on('click', function () {
         //console.log(feature);
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        
+
         //gets the center of the poly to pan the camera
         map.panTo(this.getCenter());
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachRestoPoint(feature, layer) {
     var popUpContent = [];
     // iterating through the "properties" so it can be displayed in the pop-ups
     for (var prop in feature.properties) {
-        if(prop == 'agency'){
+        if (prop == 'agency') {
             //console.log(prop + ' : ' + feature.properties[prop]);
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-        }
-        else
-            popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+        } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
     }
     $(layer).on('click', function () {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Resto Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachRestoPolyCent(feature, layer) {
@@ -370,178 +355,161 @@ function onEachRestoPolyCent(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Resto Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachRestoLine(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        
-        
+
         // gets the point in the middle of the line to pan the camera to
-        
+
         map.panTo(this.getCenter());
-        
-        $(`#sidebar1`).empty();
+
+        $('#sidebar1').empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachBLMRegion(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>BLM Region</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachFSRegion(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>FS Region</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachMDEPBound(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>MDEP Bound</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachMDIBound(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>MDI Bound</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachNVCounty(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>NV Counties</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }
 
 function onEachSoilVuln(feature, layer) {
     $(layer).on('click', function () {
-            var popUpContent = [];
+        var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if(prop == 'agency'){
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + myAgency(feature.properties[prop]));
-            }
-            else
-                popUpContent.push(`<B>${prop}</B>` + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        $(`#sidebar1`).empty();
+        $('#sidebar1').empty();
         $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
             $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
         }
-    })
+    });
 }

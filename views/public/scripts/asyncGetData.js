@@ -1,8 +1,11 @@
+"use strict";
+import "babel-polyfill";
+
 async function getData() {
   var barriers, distPoints, distPolys, distLines, restoLines, restoPoints, restoPolys;
   barriers = distPoints = distPolys = distLines = restoLines = restoPoints = restoPolys = [];
   var ipAddress = "216.117.167.186:443";
-  //ipAddress = "snap-restoration-brstillwell.c9users.io";
+  ipAddress = "snap-restoration-brstillwell.c9users.io";
   var overallCount = 0;
 try {
     $.when(

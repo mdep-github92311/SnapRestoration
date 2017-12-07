@@ -273,8 +273,9 @@ html
       #overlay
       #map
 
-        script(src='/public/scripts/asyncAddLayers.js')
+        script(src='/public/scripts/asyncAddLayersV2.js')
         script.
+          //import "babel-polyfill";
           var map = L.map('map').setView([36.211303, -115.114929], 8);
           map.removeControl(map.zoomControl);
           // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
@@ -299,15 +300,43 @@ html
             id: 'rogerdodger617.2p4pk9co',
             accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
           }).addTo(map);
+          
+          function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+            _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.prev = 0;
+                      _context.next = 3;
+                      return getLayers();
+            
+                    case 3:
+                      _context.next = 8;
+                      break;
+            
+                    case 5:
+                      _context.prev = 5;
+                      _context.t0 = _context["catch"](0);
+            
+                      console.error(_context.t0);
+            
+                    case 8:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this, [[0, 5]]);
+            }))();
 
-          (async function () {
-            try {
-              await getLayers();
-            }
-            catch (err) {
-              console.error(err)
-            }
-          }());
+          //(async function () {
+            //try {
+             // await getLayers();
+            //}
+            //catch (err) {
+             // console.error(err)
+            //}
+          //}());
         
           var controlOptions = {
             container_width: "350px",
@@ -391,6 +420,9 @@ html
             li
               a(href='#formTools', role='tab')
                 span.glyphicon.glyphicon-info-sign(aria-hidden='true')
+            li
+              a(href='#savedSubs', role='tab')
+                span.glyphicon.glyphicon-list-alt(aria-hidden='true')
 
           //ul(role='tablist')
             // bottom aligned tabs
@@ -426,7 +458,7 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #drawTools2
               #sidebar2
-                script(src='/public/scripts/formDIV.js')
+                //script(src='/public/scripts/formDIV.js')
 
           #formTools.sidebar-pane
             h1.sidebar-header
@@ -434,6 +466,13 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #sidebar1
+              
+          #savedSubs.sidebar-pane
+            h1.sidebar-header
+              | Saved Submissions
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+              #saved
                 
           //#settings.sidebar-pane
             h1.sidebar-header
@@ -468,4 +507,5 @@ html
           newParent.appendChild(el);
         }
         setParent(htmlObject, a);
+        
       
