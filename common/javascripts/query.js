@@ -428,7 +428,7 @@ exports.barrier_query =
         l
     FROM (SELECT
       gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
-      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc) AS l) ) AS properties
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg) AS f) AS fc;`;
 
 exports.dist_line_query =
@@ -445,7 +445,7 @@ exports.dist_line_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
       undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
-      km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) 
+      km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_leng) As l)) 
       As properties
     FROM dist_line As lg) As f) As fc`;
 
@@ -480,7 +480,8 @@ exports.dist_poly_query =
     FROM (SELECT 
       gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
       undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco) 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon As lg) As f) As fc`;
 
@@ -549,7 +550,7 @@ exports.resto_poly_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
        project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
-       mulch, monitoring, previously) As l)) As properties
+       mulch, monitoring, previously, shape_leng, shape_area) As l)) As properties
     FROM resto_polygon As lg) As f) As fc`;
 
 exports.resto_poly_centroid_query =
@@ -718,7 +719,7 @@ exports.barrier_sub_query =
         l
     FROM (SELECT
       gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
-      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc) AS l) ) AS properties
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_stle, shape_leng) AS l) ) AS properties
     FROM barrier_sub AS lg) AS f) AS fc;`;
 
 exports.dist_line_sub_query =

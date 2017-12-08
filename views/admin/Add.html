@@ -10,21 +10,37 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         
         <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
-        <script src="../public/scripts/asyncGetSubmitted.js"> </script>
+        <script src="../public/scripts/asyncGetSubmittedV2.js"> </script>
         <script src="../public/scripts/featureStyles.js"> </script>
         <style>
+        html, body {
+            width: 100%;
+        }
+        #Items {
+          text-align: center !important;
+          margin: 0 auto;
+        }
         #mapID { 
           height: 380px;
           width: 280px;
         }
+        #side_tab {
+          font-size: 2em;
+          padding: 4px;
+          border: 1pt solid black;
+        }
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
-            text-align:center;
+            text-align: center;
         }
         th, td {
             padding: 5px;
             text-align: left;
+        }
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
         }
         </style>
     </head>
@@ -38,7 +54,7 @@
               <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                   <li><a href="/">Home</a></li>
-                  <li class="active"><a href="admin.php">Admin</a></li>
+                  <li class="active"><a href="#">Admin</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
@@ -78,12 +94,19 @@
             </div>
           </nav>
         </div>
-        
-        <div id="reviewItems"></div>
-        <table>
-          <div id="tableItems"></div>
-        </table>
-        
+        <div style="float:left;" id="side_tab">
+            <ul class="nav nav-pills nav-stacked">
+              <li role="presentation" class="active"><a href="#">Submissions</a></li>
+              <li role="presentation"><a href="Edit.html">Edit Records</a></li>
+              <li role="presentation"><a href="Delete.html">Delete Records</a></li>
+            </ul>
+        </div>
+        <div id = "Items">
+          <div id="reviewItems"></div>
+          <table id="tableID" class="center">
+            <div id="tableItems"></div>
+          </table>
+        </div>
         <script>
           mapMarkers = [];
           var currentData = [];
@@ -159,29 +182,6 @@
                   style: myStyleDistPoly
                 }).addTo(map);
                 this.mapMarkers.push(marker);
-                
-                
-                /*var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
-                var leftMostCoord, rightMostCoord, topMostCoord, bottomMostCoord;
-                leftMostCoord = rightMostCoord = latLang[0][0][0].lng;
-                topMostCoord = bottomMostCoord = latLang[0][0][0].lat;
-                latLang[0].forEach(function(outerElem) {
-                    outerElem.forEach(function(elem) {
-                        if (elem.lat > topMostCoord)
-                            topMostCoord = elem.lat;
-                        if (elem.lng > leftMostCoord)
-                            leftMostCoord = elem.lng;
-                        if (elem.lat < bottomMostCoord)
-                            bottomMostCoord = elem.lat;
-                        if (elem.lng < rightMostCoord)
-                            rightMostCoord = elem.lng;
-                    });
-                });
-                var centerCoord = {
-                    lng:(leftMostCoord + rightMostCoord)/2,
-                    lat:(topMostCoord + bottomMostCoord)/2
-                };
-                map.panTo(centerCoord);*/
                 bounds = marker._layers[marker._leaflet_id-1].getBounds();
                 
                 break;
@@ -216,178 +216,112 @@
               maxZoom: 11
             });
           }
-          getSubmissions().then(function(defs){
-              //promise = (defs);
-              console.log(defs);
-              var count = document.getElementById('reviewItems');
-              var item = document.getElementById('tableItems');
-              count.innerHTML = "There are " + defs.overallCount + " submissions to add";
-              $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
-              var count = 0;
-              
-              
-              if (defs.barriers.features != null)
-                defs.barriers.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "barriers";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td colspan='2'> Barriers"
-                            + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#barr" + count;
-                    
-                  $(barrID).click(function(){
-                      var elem = document.getElementById("tableMap");
-                      elem.style.display = ""; 
-                      populateModal(features, "Barrier", 2);
-                  });
-                    
-                    
-                });
-              count = 0;
-              
-              if (defs.distLines.features != null)
-                defs.distLines.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "distLines";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Disturbance"
-                            + "</td><td> Lines"
-                            + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#dLine" + count;
-                    
-                  $(barrID).click(function(){
-                      populateModal(features, "Disturbance Line", 2);
-                  });
-                      
-                });
-              count = 0;
-              
-              if (defs.distPoints.features != null)
-                defs.distPoints.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "distPoints";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Disturbance"
-                            + "</td><td> Points"
-                            + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#dPoint" + count;
-                    
-                  $(barrID).click(function(){
-                      populateModal(features, "Disturbance Point",1);
-                  });
-                      
-                });
-              count = 0;
-              
-              if (defs.distPolys.features != null)
-                defs.distPolys.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "distPolys";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Disturbance"
-                            + "</td><td> Polygon"
-                            + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#dPoly" + count;
-                    
-                  $(barrID).click(function(){
-                      populateModal(features, "Disturbance Polygon",3);
-                  });
-                      
-                });
-              count = 0;
-              
-              if (defs.restoLines.features != null)
-                defs.restoLines.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "restoLines";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Restoration"
-                            + "</td><td> Lines"
-                            + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#rLine" + count;
-                    
-                  $(barrID).click(function(){
-                      populateModal(features, "Restoration Line",2);
-                  });
-                      
-                });
-              count = 0;
-              
-              if (defs.restoPoints.features != null)
-                defs.restoPoints.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "restoPoints";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Restoration"
-                            + "</td><td> Point"
-                            + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#rPoint" + count;
-                    
-                  $(barrID).click(function(){
-                      populateModal(features, "Restoration Point",1);
-                  });
-                      
-                });
-              count = 0;
-              
-              if (defs.restoPolys.features != null)
-                defs.restoPolys.features.forEach(function(features) {
-                  count++;
-                  features.dataType = "restoPolys";
-                  var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Restoration"
-                            + "</td><td> Polygon"
-                            + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
-                  var barrID = "#rPoly" + count;
-                    
-                  $(barrID).click(function(){
-                      populateModal(features, "Restoration Polygon",3);
-                  });
-                      
-                });
-          });
+          
+getSubmissions().then(function (defs) {
+  //promise = (defs);
+  console.log(defs);
+  var count = document.getElementById('reviewItems');
+  var item = document.getElementById('tableItems');
+  count.innerHTML = "There are " + defs.overallCount + " submissions to add";
+  $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
+  var count = 0;
+
+  if (defs.barriers.features != null) defs.barriers.features.forEach(function (features) {
+    count++;
+    features.dataType = "barriers";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td colspan='2'> Barriers" + "</td><td><a id='barr" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#barr" + count;
+
+    $(barrID).click(function () {
+      var elem = document.getElementById("tableMap");
+      elem.style.display = "";
+      populateModal(features, "Barrier", 2);
+    });
+  });
+  count = 0;
+
+  if (defs.distLines.features != null) defs.distLines.features.forEach(function (features) {
+    count++;
+    features.dataType = "distLines";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Lines" + "</td><td><a id='dLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#dLine" + count;
+
+    $(barrID).click(function () {
+      populateModal(features, "Disturbance Line", 2);
+    });
+  });
+  count = 0;
+
+  if (defs.distPoints.features != null) defs.distPoints.features.forEach(function (features) {
+    count++;
+    features.dataType = "distPoints";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Points" + "</td><td><a id='dPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#dPoint" + count;
+
+    $(barrID).click(function () {
+      populateModal(features, "Disturbance Point", 1);
+    });
+  });
+  count = 0;
+
+  if (defs.distPolys.features != null) defs.distPolys.features.forEach(function (features) {
+    count++;
+    features.dataType = "distPolys";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Polygon" + "</td><td><a id='dPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#dPoly" + count;
+
+    $(barrID).click(function () {
+      populateModal(features, "Disturbance Polygon", 3);
+    });
+  });
+  count = 0;
+
+  if (defs.restoLines.features != null) defs.restoLines.features.forEach(function (features) {
+    count++;
+    features.dataType = "restoLines";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Lines" + "</td><td><a id='rLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#rLine" + count;
+
+    $(barrID).click(function () {
+      populateModal(features, "Restoration Line", 2);
+    });
+  });
+  count = 0;
+
+  if (defs.restoPoints.features != null) defs.restoPoints.features.forEach(function (features) {
+    count++;
+    features.dataType = "restoPoints";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Point" + "</td><td><a id='rPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#rPoint" + count;
+
+    $(barrID).click(function () {
+      populateModal(features, "Restoration Point", 1);
+    });
+  });
+  count = 0;
+
+  if (defs.restoPolys.features != null) defs.restoPolys.features.forEach(function (features) {
+    count++;
+    features.dataType = "restoPolys";
+    var agen = getAgency(features.properties.agency);
+    $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Polygon" + "</td><td><a id='rPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+    var barrID = "#rPoly" + count;
+
+    $(barrID).click(function () {
+      populateModal(features, "Restoration Polygon", 3);
+    });
+  });
+  //Inserts table back into div
+  var items = document.getElementById("tableItems");
+  document.getElementById("tableID").appendChild(items);
+  document.getElementById("tableID").style.textAlign = "center";
+});
           /*setTimeout(function(){ 
             console.log(promise); 
             var elem = document.getElementById('para');
@@ -440,7 +374,7 @@
                 accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
               }).addTo(map);
               
-              function editData(){
+              function editForm(){
                 //console.log(this.currentData);
                 $("#editInfo").load("../public/scripts/editForm.html");
                 
@@ -464,7 +398,8 @@
                               $el.val(val);
                     }
                   }); 
-                  console.log(this.currentData.dataType)
+                  console.log("the data --");
+                  console.log(this.currentData.dataType);
                     
                     $('#restoPointForm').toggle(
                       this.currentData.dataType === 'restoPoints'
@@ -487,7 +422,8 @@
                     $('#distLineForm').toggle(
                       this.currentData.dataType === 'distLines'
                     );
-                
+                  //this sets the type of edit so the correct record is editted
+                  type = 'sub';
                   
                 }, 400);
               }
@@ -536,7 +472,7 @@
                 var div = document.getElementById("editInfo");
                 div.innerHTML = "";
                 div.style.display ="";
-                editData();
+                editForm();
                 document.getElementById("buttons").style.display = "none"; 
               }); 
               

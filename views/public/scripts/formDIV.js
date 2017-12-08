@@ -1708,6 +1708,16 @@ $(document).ready(function () {
   }).catch(function (err) {
     console.log(err)
   });
+  
+  var counts = 0;
+    db.barrierSub.count(function (count) { counts += count});
+    db.restoLineSub.count(function (count) { counts += count});
+    db.restoPointSub.count(function (count) { counts += count});
+    db.restoPolySub.count(function (count) { counts += count});
+    db.distLineSub.count(function (count) { counts += count});
+    db.distPointSub.count(function (count) { counts += count});
+    db.distPolySub.count(function (count) { counts += count});
+    document.getElementById('saved').innerHTML = "your subs = " + counts;
 
   $(document).on('click', "#sync", function () {
     console.log('Synchronizing...');

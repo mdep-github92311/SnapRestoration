@@ -1614,13 +1614,16 @@
 </div>
 
 <script>
-
-   function editRestPoint(submission) {
-      console.log(submission)
-          $.ajax({
+   //set type for either submission records or regular records
+   var type = null;
+   
+   function editData(submission, route) {
+      if (submission != null) {
+         console.log(submission);
+         $.ajax({
             type: "POST",
             datatype: "json",
-            url: "/restoPointFormEdit",
+            url: route,
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
@@ -1630,132 +1633,24 @@
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
               console.log("some error");
-           }
-          })
+            }
+         })
+      }
    }
    
-   function editRestPoly(submission) {
-      console.log(submission)
-          $.ajax({
-            type: "POST",
-            datatype: "json",
-            url: "/restoPolyFormEdit",
-            contentType: 'application/json',
-            data: JSON.stringify(submission),
-            success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-           }
-          })
-   }
-   
-   function editRestLine(submission) {
-      console.log(submission)
-          $.ajax({
-            type: "POST",
-            datatype: "json",
-            url: "/restoLineFormEdit",
-            contentType: 'application/json',
-            data: JSON.stringify(submission),
-            success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-           }
-          })
-   }
-   
-   function editBarrier(submission) {
-      console.log(submission)
-          $.ajax({
-            type: "POST",
-            datatype: "json",
-            url: "/barrierFormEdit",
-            contentType: 'application/json',
-            data: JSON.stringify(submission),
-            success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-           }
-          })
-   }
-   
-   function editDistPoint(submission) {
-      console.log(submission)
-          $.ajax({
-            type: "POST",
-            datatype: "json",
-            url: "/distPointFormEdit",
-            contentType: 'application/json',
-            data: JSON.stringify(submission),
-            success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-           }
-          })
-   }
-   
-   function editDistPoly(submission) {
-      console.log(submission)
-          $.ajax({
-            type: "POST",
-            datatype: "json",
-            url: "/distPolyFormEdit",
-            contentType: 'application/json',
-            data: JSON.stringify(submission),
-            success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-           }
-          })
-   }
-   
-   function editDistLine(submission) {
-      console.log(submission)
-          $.ajax({
-            type: "POST",
-            datatype: "json",
-            url: "/distLineFormEdit",
-            contentType: 'application/json',
-            data: JSON.stringify(submission),
-            success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-           }
-          })
-   }
-   $("#restoPointEditButton").on("click", function(event) {
+   function collectData(form, route) {
       var count = 0;
       var obj = [];
-      $('#restoPointForm').serializeArray().reduce(function(i, item) {
+      $(form).serializeArray().reduce(function(i, item) {
          
          if (item.value === '' || item.value === 'select') {
             obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'dist_sever' || item.name === 'photo_azim') {
             obj[count] = parseInt(item.value);
+         } else if (item.name === 'acres_rest' || item.name === 'kmsq_resto' || item.name === 'shape_star' || item.name === 'estimate_s') {
+            obj[count] = parseFloat(item.value);
+         } else if (item.name === 'barr_miles' || item.name === 'bar_km' || item.name === 'miles_dist' || item.name === 'km_dist') {
+            obj[count] = parseFloat(item.value);
          } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
             obj[count] = parseFloat(item.value);
          } else {
@@ -1763,127 +1658,66 @@
          }
          count++;
       }, {});
-      console.log("resto point update form button click");
+      console.log(form);
       
-      editRestPoint(obj);
+      editData(obj,route);
+   }
+
+   $("#restoPointEditButton").on("click", function(event) {
+      if (type == 'sub')
+         collectData('#restoPointForm','/restoPointSubFormEdit');
+      else if (type == 'reg')
+         collectData('#restoPointForm','/restoPointFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    $("#restoPolyEditButton").on("click", function(event) {
-      var count = 0;
-      var obj = [];
-      $('#restoPolyForm').serializeArray().reduce(function(i, item) {
-         
-         if (item.value === '' || item.value === 'select') {
-            obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
-            obj[count] = parseInt(item.value);
-         } else if (item.name === 'acres_rest' || item.name === 'kmsq_resto' || item.name === 'shape_stle' || item.name === 'shape_star') {
-            obj[count] = parseFloat(item.value);
-         } else {
-            obj[count] = item.value;
-         }
-         count++;
-      }, {});
-      console.log("resto poly update form button click");
-      
-      editRestPoly(obj);
+      if (type == 'sub')
+         collectData('#restoPolyForm','/restoPolySubFormEdit');
+      else if (type == 'reg')
+         collectData('#restoPolyForm','/restoPolyFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    $("#restoLineEditButton").on("click", function(event) {
-      var count = 0;
-      var obj = [];
-      $('#restoLineForm').serializeArray().reduce(function(i, item) {
-         if (item.value === '' || item.value === 'select') {
-            obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
-            obj[count] = parseInt(item.value);
-         } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
-            obj[count] = parseFloat(item.value);
-         } else {
-            obj[count] = item.value;
-         }
-         count++;
-      }, {});
-      console.log("resto line update form button click");
-      
-      editRestLine(obj);
+      if (type == 'sub')
+         collectData('#restoLineForm','/restoLineSubFormEdit');
+      else if (type == 'reg')
+         collectData('#restoLineForm','/restoLineFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    $("#barrierEditButton").on("click", function(event) {
-      var count = 0;
-      var obj = [];
-      $('#barrierForm').serializeArray().reduce(function(i, item) {
-         
-         if (item.value === '' || item.value === 'select') {
-            obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
-            obj[count] = parseInt(item.value);
-         } else if (item.name === 'barr_miles' || item.name === 'bar_km' || item.name === 'shape_stle' || item.name === 'shape_leng') {
-            obj[count] = parseFloat(item.value);
-         } else {
-            obj[count] = item.value;
-         }
-         count++;
-      }, {});
-      console.log("barrier update form button click");
-      
-      editBarrier(obj);
+      if (type == 'sub')
+         collectData('#barrierForm','/barrierSubFormEdit');
+      else if (type == 'reg')
+         collectData('#barrierForm','/barrierFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    $("#distPointEditButton").on("click", function(event) {
-      var count = 0;
-      var obj = [];
-      $('#distPointForm').serializeArray().reduce(function(i, item) {
-         
-         if (item.value === '' || item.value === 'select') {
-            obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'photo_azim') {
-            obj[count] = parseInt(item.value);
-         } else if (item.name === 'estimate_s') {
-            obj[count] = parseFloat(item.value);
-         } else {
-            obj[count] = item.value;
-         }
-         count++;
-      }, {});
-      console.log("dist point update form button click");
-      
-      editDistPoint(obj);
+      if (type == 'sub')
+         collectData('#distPointForm','/distPointSubFormEdit');
+      else if (type == 'reg')
+         collectData('#distPointForm','/distPointFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    $("#distPolyEditButton").on("click", function(event) {
-      var count = 0;
-      var obj = [];
-      $('#distPolyForm').serializeArray().reduce(function(i, item) {
-         if (item.value === '' || item.value === 'select') {
-            obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'dist_sever' || item.name === 'photo_azim') {
-            obj[count] = parseInt(item.value);
-         } else if (item.name === 'acres_rest' || item.name === 'kmsq_resto' || item.name === 'shape_star' || item.name === 'shape_stle') {
-            obj[count] = parseFloat(item.value);
-         } else {
-            obj[count] = item.value;
-         }
-         count++;
-      }, {});
-      console.log("dist poly update form button click");
-      
-      editDistPoly(obj);
+      if (type == 'sub')
+         collectData('#distPolyForm','/distPolySubFormEdit');
+      else if (type == 'reg')
+         collectData('#distPolyForm','/distPolyFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    $("#distLineEditButton").on("click", function(event) {
-      var count = 0;
-      var obj = [];
-      $('#distLineForm').serializeArray().reduce(function(i, item) {
-         
-         if (item.value === '' || item.value === 'select') {
-            obj[count] = null;
-         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'dist_sever' || item.name === 'photo_azim') {
-            obj[count] = parseInt(item.value);
-         } else if (item.name === 'miles_dist' || item.name === 'km_dist' || item.name === 'shape_stle' || item.name === 'shape_leng') {
-            obj[count] = parseFloat(item.value);
-         } else {
-            obj[count] = item.value;
-         }
-         count++;
-      }, {});
-      console.log("dist line update form button click");
-      
-      editDistLine(obj);
+      if (type == 'sub')
+         collectData('#distLineForm','/distLineSubFormEdit');
+      else if (type == 'reg')
+         collectData('#distLineForm','/distLineFormEdit');
+      else
+         console.log("error setting value of type variable");
    });
    
 </script>

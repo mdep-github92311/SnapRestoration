@@ -414,7 +414,7 @@ module.exports = function (app) {
     
     
     
-    .post('/restoPointFormEdit', (req, res) => {
+    .post('/restoPointSubFormEdit', (req, res) => {
       //const restoPointUpsert = upsert.restoPointSub;
       const restoPointUpdate = req.body;
 
@@ -437,7 +437,7 @@ module.exports = function (app) {
         
     })
     
-    .post('/restoPolyFormEdit', (req, res) => {
+    .post('/restoPolySubFormEdit', (req, res) => {
       const restoPolyUpdate = req.body;
 
       db.none(`UPDATE resto_polygon_sub
@@ -460,7 +460,7 @@ module.exports = function (app) {
         })
     })
     
-    .post('/restoLineFormEdit', (req, res) => {
+    .post('/restoLineSubFormEdit', (req, res) => {
       const restoLineUpdate = req.body;
 
       db.none(`UPDATE resto_line_sub
@@ -484,7 +484,7 @@ module.exports = function (app) {
     
     
     
-    .post('/barrierFormEdit', (req, res) => {
+    .post('/barrierSubFormEdit', (req, res) => {
       const barrierUpdate = req.body;
 
       db.none(`UPDATE barrier_sub
@@ -506,13 +506,13 @@ module.exports = function (app) {
         })
     })
     
-    .post('/distPointFormEdit', (req, res) => {
+    .post('/distPointSubFormEdit', (req, res) => {
       const distPointUpdate = req.body;
 
       db.none(`UPDATE dist_point_sub
-      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8, use_recent = $9,
-        dist_pt_ty = $10, accessibil = $11, visibility = $12, comments = $13, primary_ob = $14, secondary_ = $15, previously = $16, project_na = $17, estimate_s = $18, treated = $19,
-        cultural = $20, t_e_specie = $21, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $21, dist_use = $6, use_freq = $7, use_recent = $8,
+        dist_pt_ty = $9, accessibil = $10, visibility = $11, comments = $12, primary_ob = $13, secondary_ = $14, previously = $15, project_na = $16, estimate_s = $17, treated = $18, 
+        cultural = $19, t_e_specie = $20, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
       WHERE gid = $1 `,  distPointUpdate)
         .then(function () {
           console.log('dist point updated');
@@ -527,7 +527,7 @@ module.exports = function (app) {
           throw err;
         })
     })
-    .post('/distPolyFormEdit', (req, res) => {
+    .post('/distPolySubFormEdit', (req, res) => {
       const distPolyUpdate = req.body;
 
       db.none(`UPDATE dist_polygon_sub
@@ -550,7 +550,7 @@ module.exports = function (app) {
         })
     })
     
-    .post('/distLineFormEdit', (req, res) => {
+    .post('/distLineSubFormEdit', (req, res) => {
       const distLineUpdate = req.body;
 
       db.none(`UPDATE dist_line_sub
@@ -573,6 +573,163 @@ module.exports = function (app) {
         })
     })
     
+    .post('/restoPointFormEdit', (req, res) => {
+      //const restoPointUpsert = upsert.restoPointSub;
+      const restoPointUpdate = req.body;
+
+      db.none(`UPDATE resto_point
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_acti = $7, comments = $8,
+        primary_ob = $9, secondary_ = $10, project_na = $11, sqft_resto = $12, gps_photo = $13, photo_azim = $14, previously = $15, qa_qc = $16
+      WHERE gid = $1 `,  restoPointUpdate)
+        .then(function () {
+          console.log('restoration point updated');
+          console.log(restoPointUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+        
+    })
+    
+    .post('/restoPolyFormEdit', (req, res) => {
+      const restoPolyUpdate = req.body;
+
+      db.none(`UPDATE resto_polygon
+      SET agency = $2, region = $3, ecosystem = $4, resto_code = $5, resto_acti = $6, te_action = $7,
+      non_list_a = $8, comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, treatment_ = $13, acres_rest = $14, kmsq_resto = $15, gps_date = $16, gps_photo = $17,
+      photo_azim = $18, signed = $19, deep_till = $20, barrier_in = $21, mulch = $22, monitoring = $23, previously = $24, shape_leng = $27, shape_area = $28
+      WHERE gid = $1 `,  restoPolyUpdate)
+        .then(function () {
+          console.log('restoration polygon updated');
+          console.log(restoPolyUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    .post('/restoLineFormEdit', (req, res) => {
+      const restoLineUpdate = req.body;
+
+      db.none(`UPDATE resto_line
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_act = $7, te_act = $8,
+      nonlists_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
+      miles_rest = $19, km_resto = $20, gps_photo = $21, photo_azim = $22, monitoring = $23, previously = $24, qa_qc = $25, shape_leng = $27
+      WHERE gid = $1 `,  restoLineUpdate)
+        .then(function () {
+          console.log('restoration line updated');
+          console.log(restoLineUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    
+    
+    .post('/barrierFormEdit', (req, res) => {
+      const barrierUpdate = req.body;
+
+      db.none(`UPDATE barrier
+      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
+           comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, 
+           qa_qc = $18, shape_leng = $20
+      WHERE gid = $1 `,  barrierUpdate)
+        .then(function () {
+          console.log('barrier updated');
+          console.log(barrierUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    .post('/distPointFormEdit', (req, res) => {
+      const distPointUpdate = req.body;
+
+      db.none(`UPDATE dist_point
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $21, dist_use = $6, use_freq = $7, use_recent = $8,
+        dist_pt_ty = $9, accessibil = $10, visibility = $11, comments = $12, primary_ob = $13, secondary_ = $14, previously = $15, project_na = $16, estimate_s = $17, 
+        treated = $18, cultural = $19, t_e_specie = $20, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+      WHERE gid = $1 `,  distPointUpdate)
+        .then(function () {
+          console.log('dist point updated');
+          console.log(distPointUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    .post('/distPolyFormEdit', (req, res) => {
+      const distPolyUpdate = req.body;
+
+      db.none(`UPDATE dist_polygon
+      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
+        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, assessibil = $16, visibility = $17, comments = $18,
+        primary_ob = $19, secondary_ = $20, acres_rest = $21, kmsq_resto = $22, treated = $23, dist_sever = $24, cultural = $25, t_e_specie = $26, gps_photo = $27, site_vulne = $28,
+        photo_azim = $29, qa_qc = $30, old_distco = $31, shape_leng = $34, shape_area = $35
+      WHERE gid = $1 `,  distPolyUpdate)
+        .then(function () {
+          console.log('dist polygon updated');
+          console.log(distPolyUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    .post('/distLineFormEdit', (req, res) => {
+      const distLineUpdate = req.body;
+
+      db.none(`UPDATE dist_line
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
+        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, width = $14, type = $15, plant_dama = $16, accessibil = $17, visibility = $18, comments = $19,
+        primary_ob = $20, secondary_ = $21, miles_dist = $22, km_dist = $23, treated = $24, dist_sever = $25, cultural = $26, t_e_specie = $27, gps_photo = $28, soil_vulne = $29,
+        photo_azim = $30, qa_qc = $31, old_dist_c = $32, shape_leng = $34
+      WHERE gid = $1 `,  distLineUpdate)
+        .then(function () {
+          console.log('dist line updated');
+          console.log(distLineUpdate);
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
     
     
     
@@ -719,9 +876,12 @@ module.exports = function (app) {
       for (var i in barrierIndexedDB.properties) {
         barrierProperties.push(barrierIndexedDB.properties[i]);
       }
+      // the next line is included because the table has an SRID in the datatype. This could be removed is the table is changed. 
+      barrierIndexedDB.geometry["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      
       barrierProperties.push(barrierIndexedDB.geometry);
       barrierArray.push(barrierProperties)
-
+      console.log(barrierArray);
       db.none(`INSERT INTO barrier (gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
            shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
