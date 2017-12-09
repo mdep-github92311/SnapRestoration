@@ -2084,5 +2084,8 @@ $(document).ready(function () {
           console.warn(err);
         });
     }
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step3').style.display = 'none';
   });
 });
