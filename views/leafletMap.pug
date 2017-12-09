@@ -177,6 +177,19 @@ html
         width: 100%;
         color: black;
       }
+      
+      #editShapeB {
+        display:none;
+      }
+      #delShapeB {
+        display:none;
+      }
+      #step2 {
+        display:none;
+      }
+      #step3 {
+        display:none;
+      }
 
       
     body
@@ -413,6 +426,11 @@ html
             editableLayers.addLayer(layer);
             thisLayer = layer.toGeoJSON();
             console.log(thisLayer);
+            //toggleButtons();
+            
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            
           });
         
       #sidebar.sidebar.collapsed
@@ -465,24 +483,34 @@ html
               | Draw Tools
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-              #drawTools2
-              button#customB1.drawControl2
-                | Line
-              br
-              button#customB2.drawControl2
-                | Polygon
-              br
-              button#customB3.drawControl2
-                | Marker
-              br
-              button#customB4.drawControl2
-                | Edit
-              br
-              button#customB5.drawControl2
-                | Delete
-              br
-              #sidebar2
-                //script(src='/public/scripts/formDIV.js')
+              #step1
+                h1 Select shape to draw:
+                button#drawLineB.drawControl2
+                  | Line
+                br
+                button#drawPolygonB.drawControl2
+                  | Polygon
+                br
+                button#drawMarkerB.drawControl2
+                  | Marker
+                br
+                button#editShapeB.drawControl2
+                  | Edit
+                br
+                button#delShapeB.drawControl2
+                  | Delete
+                br
+              #step2
+                h1 Select a feature type:
+                button#restButton.drawControl2
+                  | Restoration
+                br
+                button#distButton.drawControl2
+                  | Disturbance
+                br
+              #step3
+                #sidebar2
+                  script(src='/public/scripts/formDIV.js')
 
           #formTools.sidebar-pane
             h1.sidebar-header
@@ -497,6 +525,7 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #saved
+              button#sync.btn Synchronize
                 
           //#settings.sidebar-pane
             h1.sidebar-header
@@ -505,29 +534,50 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
                 
       script. 
-        document.getElementById("customB1").addEventListener("click", function(){
+        var lineButton = document.getElementById("drawLineB");
+        var polygonButton = document.getElementById("drawPolygonB");
+        var markerButton = document.getElementById("drawMarkerB");
+        var editButton = document.getElementById("editShapeB");
+        var deleteButton = document.getElementById("delShapeB");
+        var restButton = document.getElementById("restButton");
+        var distButton = document.getElementById("distButton");
+        lineButton.addEventListener("click", function(){
             new L.Draw.Polyline(map, drawControl.options.polyline).enable();
-            console.log(drawControl.options);
+            
             
         });
-        document.getElementById("customB2").addEventListener("click", function(){
+        polygonButton.addEventListener("click", function(){
             new L.Draw.Polygon(map, drawControl.options.polygon).enable()
         });
-        document.getElementById("customB3").addEventListener("click", function(){
+        markerButton.addEventListener("click", function(){
             new L.Draw.Marker(map, drawControl.options.marker).enable()
         });
-        console.log(drawControl.options);
-        console.log(L);
-        document.getElementById("customB4").addEventListener("click", function(){
+        editButton.addEventListener("click", function(){
             new L.EditToolbar.Edit(map, {
                 featureGroup: drawControl.options.edit.featureGroup,
                 selectedPathOptions: drawControl.options.edit.selectedPathOptions
             }).enable()
         });
-        document.getElementById("customB5").addEventListener("click", function(){
+        deleteButton.addEventListener("click", function(){
             new L.EditToolbar.Delete(map, {
                 featureGroup: drawControl.options.edit.featureGroup
             }).enable()
+        });
+        restButton.addEventListener("click", function(){
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'block';
+          $('#restoPointForm').toggle(thisLayer.geometry.type === 'Point');
+          $('#restoPolyForm').toggle(thisLayer.geometry.type === 'Polygon');
+          $('#restoLineForm').toggle(thisLayer.geometry.type === 'LineString');
+          //$('#barrierForm').toggle(thisLayer.geometry.type === 'LineString');
+          
+        });
+        distButton.addEventListener("click", function(){
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'block';
+          $('#distPointForm').toggle(thisLayer.geometry.type === 'Point');
+          $('#distPolyForm').toggle(thisLayer.geometry.type === 'Polygon');
+          $('#distLineForm').toggle(thisLayer.geometry.type === 'LineString');
         });
         var sidebar = L.control.sidebar('sidebar').addTo(map);
         
@@ -543,17 +593,5 @@ html
         }
         setParent(htmlObject, a);
         
-        
-        // Moves the drawing controls into the sidebar
-        var htmlObject = drawControl.getContainer();
-        // Get the desired parent node.
-        var a = document.getElementById('drawTools2');
-        
-        // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
-        function setParent(el, newParent)
-        {
-          newParent.appendChild(el);
-        }
-        setParent(htmlObject, a);
         
       

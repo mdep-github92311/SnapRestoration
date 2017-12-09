@@ -2,20 +2,6 @@ $(document).ready(function () {
   const formTest2 =
     `<div class="form">
    <div class="featureSelection">
-      <select id="featureType">
-         <option value="test">Select Feature Type...</option>
-         <option value="point">Point</option>
-         <option value="line">Line</option>
-         <option value="poly">Polygon</option>
-      </select>
-      <br>
-      <select id="featureStyle">
-         <option value="test">Select Feature Style...</option>
-         <option value="barrier">Barrier</option>
-         <option value="resto">Restoration</option>
-         <option value="disturb">Disturbance</option>
-      </select>
-      <br><br>
    </div>
    <div class="collectionForm">
       <form id="restoPointForm" method="POST" style="display: none;">
@@ -1631,16 +1617,16 @@ $(document).ready(function () {
    </div>
 </div>`;
 
-  const sync = `<button id="sync" class="btn">Synchronize</button>`;
+  //const sync = `<button id="sync" class="btn">Synchronize</button>`;
 
   $(formTest2).appendTo('#sidebar2');
-  $(sync).appendTo('#sidebar2');
+  //$(sync).appendTo('#sidebar2');
 
   //https://stackoverflow.com/questions/18602331/why-is-this-jquery-click-function-not-working
   // link above helped with the on click event which then leads to grabbing the data from IndexedDB
 
 
-  $('#featureType, #featureStyle').change(function () {
+  /*$('#featureType, #featureStyle').change(function () {
 
     const featureTypeSel = $('#featureType').val();
     const featureStyleSel = $('#featureStyle').val();
@@ -1666,7 +1652,7 @@ $(document).ready(function () {
     $('#distLineForm').toggle(
       featureStyleSel === 'disturb' && featureTypeSel === 'line'
     );
-  });
+  });*/
 
   // $('form').submit(function (event) {
   //   // what this code is doing is stopping the browser from refreshing when a form is submitted
