@@ -172,6 +172,11 @@ html
       .buttons {
           text-align: center;
       }
+      
+      .drawControl2 {
+        width: 100%;
+        color: black;
+      }
 
       
     body
@@ -389,12 +394,16 @@ html
             edit: {
               featureGroup: editableLayers, //REQUIRED!!
               edit: true,
-              remove: true
+              remove: true,
+              selectedPathOptions: { // this property should be one level up
+                color: '#000',
+                fillColor: '#000'
+              }
             }
           };
 
           var drawControl = new L.Control.Draw(options);
-          map.addControl(drawControl);
+          //map.addControl(drawControl);
 
           var thisLayer
           
@@ -457,8 +466,23 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
               #drawTools2
+              button#customB1.drawControl2
+                | Line
+              br
+              button#customB2.drawControl2
+                | Polygon
+              br
+              button#customB3.drawControl2
+                | Marker
+              br
+              button#customB4.drawControl2
+                | Edit
+              br
+              button#customB5.drawControl2
+                | Delete
+              br
               #sidebar2
-                script(src='/public/scripts/formDIV.js')
+                //script(src='/public/scripts/formDIV.js')
 
           #formTools.sidebar-pane
             h1.sidebar-header
@@ -481,6 +505,30 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
                 
       script. 
+        document.getElementById("customB1").addEventListener("click", function(){
+            new L.Draw.Polyline(map, drawControl.options.polyline).enable();
+            console.log(drawControl.options);
+            
+        });
+        document.getElementById("customB2").addEventListener("click", function(){
+            new L.Draw.Polygon(map, drawControl.options.polygon).enable()
+        });
+        document.getElementById("customB3").addEventListener("click", function(){
+            new L.Draw.Marker(map, drawControl.options.marker).enable()
+        });
+        console.log(drawControl.options);
+        console.log(L);
+        document.getElementById("customB4").addEventListener("click", function(){
+            new L.EditToolbar.Edit(map, {
+                featureGroup: drawControl.options.edit.featureGroup,
+                selectedPathOptions: drawControl.options.edit.selectedPathOptions
+            }).enable()
+        });
+        document.getElementById("customB5").addEventListener("click", function(){
+            new L.EditToolbar.Delete(map, {
+                featureGroup: drawControl.options.edit.featureGroup
+            }).enable()
+        });
         var sidebar = L.control.sidebar('sidebar').addTo(map);
         
         // Moves the layer controls into the sidebar
