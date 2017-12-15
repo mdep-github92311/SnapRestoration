@@ -1,0 +1,438 @@
+doctype html
+html
+  head
+    title
+    script(src='../public/scripts/polyfill.min.js')
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js', integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css', integrity='sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==', crossorigin='')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    script(src='https://unpkg.com/leaflet@1.2.0/dist/leaflet.js', integrity='sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==', crossorigin='')
+    script(src='../public/scripts/asyncGetSubmittedV2.js')
+    script(src='../public/scripts/featureStyles.js')
+    style.
+      html, body {
+      width: 100%;
+      }
+      #Items {
+      text-align: center !important;
+      margin: 0 auto;
+      }
+      #mapID {
+      height: 380px;
+      width: 280px;
+      }
+      #side_tab {
+      font-size: 2em;
+      padding: 4px;
+      border: 1pt solid black;
+      }
+      table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      text-align: center;
+      }
+      th, td {
+      padding: 5px;
+      text-align: left;
+      }
+      table.center {
+      margin-left: auto;
+      margin-right: auto;
+      }
+  body
+    #header
+      nav.navbar.navbar-default.navbar-inverse(role='navigation')
+        .container-fluid
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.pull-left(href='#')
+              img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left')
+              img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
+              img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
+              img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
+          #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li
+                a(href='/') Home
+              li.active
+                a(href='#') Admin
+            ul.nav.navbar-nav.navbar-right
+              li
+                p.navbar-text Already have an account?
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  b Login
+                  span.caret
+                ul#login-dp.dropdown-menu
+                  li
+                    .row
+                      .col-md-12
+                        form#login-nav.form(role='form', method='post', action='login', accept-charset='UTF-8')
+                          .form-group
+                            label.sr-only(for='exampleInputEmail2') Email address
+                            input#exampleInputEmail2.form-control(type='email', placeholder='Email address', required='')
+                          .form-group
+                            label.sr-only(for='exampleInputPassword2') Password
+                            input#exampleInputPassword2.form-control(type='password', placeholder='Password', required='')
+                            .help-block.text-right
+                              a(href='') Forget the password ?
+                          .form-group
+                            button.btn.btn-primary.btn-block(type='submit') Sign in
+                          .checkbox
+                            label
+                              input(type='checkbox')
+                              |  keep me logged-in
+    #side_tab(style='float:left;')
+      ul.nav.nav-pills.nav-stacked
+        li.active(role='presentation')
+          a(href='#') Submissions
+        li(role='presentation')
+          a(href='Edit.html') Edit Records
+        li(role='presentation')
+          a(href='Delete.html') Delete Records
+    #Items
+      #reviewItems
+      table#tableID.center
+        #tableItems
+    h1
+      | Note: trying to make this compatible on IE broke it. Possible solution: import polyfill, and run function on submits
+    script.
+        
+      mapMarkers = [];
+      var currentData = [];
+      var invalidated = false;
+      function getAgency(agency){
+      switch (agency) {
+      case 0:
+      return "BLM";
+      break;
+      case 1:
+      return "NPS";
+      break;
+      case 2:
+      return "FS";
+      break;
+      case 3:
+      return "FWS";
+      break;
+      default:
+      return "null";
+      break;
+      }
+      }
+      function populateModal(data, type, draw) {
+      var style;
+      var bounds = null;
+      this.currentData = data;
+      document.getElementById("editInfo").innerHTML = "";
+      document.getElementById("tableMap").style.display = "";
+      document.getElementById("buttons").style.display = "";
+      if (this.mapMarkers != null)
+      for(var i = 0; i < this.mapMarkers.length; i++){
+      this.map.removeLayer(this.mapMarkers[i]);
+      }
+      console.log(data);
+      switch (draw) {
+      case 1:
+      style = myStylePoints(data);
+      console.log(style);
+      var marker = L.circle([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
+      radius: 8,
+      fillColor: style.fillColor,
+      color: style.color,
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8,
+      radius:500
+      }).addTo(map);
+      this.mapMarkers.push(marker);
+      console.log(marker);
+      if (data.geometry != null)
+      if (data.geometry.coordinates.length >1)
+      //map.panTo(marker._layers[marker._leaflet_id-1].getLatLng())
+      //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
+      bounds = marker.getBounds();
+      break;
+      case 2:
+      var marker = L.geoJson(data, {
+      style: myStyleLines,
+      }).addTo(map);
+      this.mapMarkers.push(marker);
+      console.log(marker);
+      //console.log(marker._layers[marker._leaflet_id-1].getLatLngs());
+      //var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
+      //var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+      //map.panTo(middleLatLong);
+      bounds = marker._layers[marker._leaflet_id-1].getBounds();
+      break;
+      case 3:
+      var marker = L.geoJson(data, {
+      style: myStyleDistPoly
+      }).addTo(map);
+      this.mapMarkers.push(marker);
+      bounds = marker._layers[marker._leaflet_id-1].getBounds();
+      break;
+      default:
+      // code
+      }
+      // this will invalidate the size of the map to make it fit in the modal
+      $('#myModal').on('shown.bs.modal', function(){
+      setTimeout(function() {
+      map.invalidateSize();
+      if (!invalidated) {
+      map.fitBounds(bounds, {
+      maxZoom: 11
+      });
+      invalidated = true;
+      }
+      }, 5);
+      });
+      $("#myModalLabel").html("<h1>"+type +"</h1>");
+      $("#pInfo").html("");
+      for (var prop in data.properties) {
+      if(prop == 'agency'){
+      $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + getAgency(data.properties[prop]));
+      }
+      else
+      $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + data.properties[prop]);
+      }
+      // makes map look at the point
+      map.fitBounds(bounds, {
+      maxZoom: 11
+      });
+      }
+      getSubmissions().then(function (defs) {
+      //promise = (defs);
+      console.log(defs);
+      var count = document.getElementById('reviewItems');
+      var item = document.getElementById('tableItems');
+      count.innerHTML = "There are " + defs.overallCount + " submissions to add";
+      //$("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
+      var count = 0;
+      if (defs.barriers.features != null) defs.barriers.features.forEach(function (features) {
+      count++;
+      features.dataType = "barriers";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td colspan='2'> Barriers" + "</td><td><a id='barr" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#barr" + count;
+      $(barrID).click(function () {
+      var elem = document.getElementById("tableMap");
+      elem.style.display = "";
+      populateModal(features, "Barrier", 2);
+      });
+      });
+      count = 0;
+      if (defs.distLines.features != null) defs.distLines.features.forEach(function (features) {
+      count++;
+      features.dataType = "distLines";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Lines" + "</td><td><a id='dLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#dLine" + count;
+      $(barrID).click(function () {
+      populateModal(features, "Disturbance Line", 2);
+      });
+      });
+      count = 0;
+      if (defs.distPoints.features != null) defs.distPoints.features.forEach(function (features) {
+      count++;
+      features.dataType = "distPoints";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Points" + "</td><td><a id='dPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#dPoint" + count;
+      $(barrID).click(function () {
+      populateModal(features, "Disturbance Point", 1);
+      });
+      });
+      count = 0;
+      if (defs.distPolys.features != null) defs.distPolys.features.forEach(function (features) {
+      count++;
+      features.dataType = "distPolys";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Polygon" + "</td><td><a id='dPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#dPoly" + count;
+      $(barrID).click(function () {
+      populateModal(features, "Disturbance Polygon", 3);
+      });
+      });
+      count = 0;
+      if (defs.restoLines.features != null) defs.restoLines.features.forEach(function (features) {
+      count++;
+      features.dataType = "restoLines";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Lines" + "</td><td><a id='rLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#rLine" + count;
+      $(barrID).click(function () {
+      populateModal(features, "Restoration Line", 2);
+      });
+      });
+      count = 0;
+      if (defs.restoPoints.features != null) defs.restoPoints.features.forEach(function (features) {
+      count++;
+      features.dataType = "restoPoints";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Point" + "</td><td><a id='rPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#rPoint" + count;
+      $(barrID).click(function () {
+      populateModal(features, "Restoration Point", 1);
+      });
+      });
+      count = 0;
+      if (defs.restoPolys.features != null) defs.restoPolys.features.forEach(function (features) {
+      count++;
+      features.dataType = "restoPolys";
+      var agen = getAgency(features.properties.agency);
+      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Polygon" + "</td><td><a id='rPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      var barrID = "#rPoly" + count;
+      $(barrID).click(function () {
+      populateModal(features, "Restoration Polygon", 3);
+      });
+      });
+      //Inserts table back into div
+      var items = document.getElementById("tableItems");
+      document.getElementById("tableID").appendChild(items);
+      document.getElementById("tableID").style.textAlign = "center";
+      });
+      /*setTimeout(function(){
+      console.log(promise);
+      var elem = document.getElementById('para');
+      }, 3000);*/
+    // Modal
+    #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', data-keyboard='false', data-backdrop='static')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4#myModalLabel.modal-title  
+          .modal-body
+            table#tableMap
+              td
+                #pInfo
+              td
+                #mapID
+            #editInfo
+            #buttons
+              button#editButton Edit
+              button#confirmButton Confirm Submission
+    script.
+      var map = L.map('mapID').setView([36.211303, -115.114929], 10);
+      // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+      // createPane was used in this thread to control the order of the layers
+      //map.createPane('Points').style.zIndex = 390;
+      //map.createPane('Lines').style.zIndex = 380;
+      //map.createPane('Polygons').style.zIndex = 370;
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: '',
+      maxZoom: 18,
+      id: 'rogerdodger617.2p4pk9co',
+      accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+      }).addTo(map);
+      function editForm(){
+      //console.log(this.currentData);
+      $("#editInfo").load("../public/scripts/editForm.html");
+      // Waits for form to be loaded before populating Data
+      setTimeout(function(){
+      $.each(this.currentData.properties, function(name, val){
+      var $el = $('[name="'+name+'"]'),
+      type = $el.attr('type');
+      //console.log("something is happenning = " + name + " -- " + val);
+      //console.log(type);
+      switch(type){
+      case 'checkbox':
+      $el.attr('checked', 'checked');
+      break;
+      case 'radio':
+      $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+      break;
+      default:
+      if (val != null && val != '')
+      $el.val(val);
+      }
+      });
+      console.log("the data --");
+      console.log(this.currentData.dataType);
+      $('#restoPointForm').toggle(
+      this.currentData.dataType === 'restoPoints'
+      );
+      $('#restoPolyForm').toggle(
+      this.currentData.dataType === 'restoPolys'
+      );
+      $('#restoLineForm').toggle(
+      this.currentData.dataType === 'restoLines'
+      );
+      $('#barrierForm').toggle(
+      this.currentData.dataType === 'barriers'
+      );
+      $('#distPointForm').toggle(
+      this.currentData.dataType === 'distPoints'
+      );
+      $('#distPolyForm').toggle(
+      this.currentData.dataType === 'distPolys'
+      );
+      $('#distLineForm').toggle(
+      this.currentData.dataType === 'distLines'
+      );
+      //this sets the type of edit so the correct record is editted
+      type = 'sub';
+      }, 400);
+      }
+      function confirmData(){
+      var link = "/";
+      if (this.currentData.dataType === 'restoPoints')
+      link = "/restoPointConfirm";
+      else if (this.currentData.dataType === 'restoPolys')
+      link = "/restoPolyConfirm";
+      else if (this.currentData.dataType === 'restoLines')
+      link = "/restoLineConfirm";
+      else if (this.currentData.dataType === 'barriers')
+      link = "/barrierConfirm";
+      else if (this.currentData.dataType === 'distPoints')
+      link = "/distPointConfirm";
+      else if (this.currentData.dataType === 'distPolys')
+      link = "/distPolyConfirm";
+      else if (this.currentData.dataType === 'distLines')
+      link = "/distLineConfirm";
+      console.log("submitting to " + link);
+      console.log(this.currentData);
+      var submission = this.currentData;
+      delete submission.dataType;
+      $.ajax({
+      type: "POST",
+      datatype: "json",
+      url: link,
+      contentType: 'application/json',
+      data: JSON.stringify(submission),
+      success: function (data) {
+      window.location.reload(true);
+      console.log("success!!");
+      console.log(data);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+      console.log("some error");
+      }
+      })
+      }
+      // Listener for the Edit Button
+      document.getElementById("editButton").addEventListener('click',function () {
+      document.getElementById("tableMap").style.display = "none";
+      var div = document.getElementById("editInfo");
+      div.innerHTML = "";
+      div.style.display ="";
+      editForm();
+      document.getElementById("buttons").style.display = "none";
+      });
+      document.getElementById("confirmButton").addEventListener('click',function () {
+      document.getElementById("tableMap").style.display = "none";
+      var div = document.getElementById("editInfo");
+      div.innerHTML = "";
+      div.style.display ="";
+      confirmData();
+      document.getElementById("buttons").style.display = "none";
+      });

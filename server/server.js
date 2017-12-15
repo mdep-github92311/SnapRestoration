@@ -5,11 +5,6 @@ var boot = require('loopback-boot');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
-require("babel-core/register");
-require("babel-polyfill");
-//require('localforage');
-//require('leaflet.offline');
-
 var app = module.exports = loopback();
 
 

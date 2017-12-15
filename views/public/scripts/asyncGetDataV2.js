@@ -1,6 +1,4 @@
 "use strict";
-require("babel-core/register");
-require("babel-polyfill");
 var getUrl = window.location;
 var baseUrl = getUrl.origin;
 var getData = function () {
