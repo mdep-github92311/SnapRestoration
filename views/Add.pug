@@ -214,13 +214,13 @@ html
       var count = document.getElementById('reviewItems');
       var item = document.getElementById('tableItems');
       count.innerHTML = "There are " + defs.overallCount + " submissions to add";
-      //$("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
+      $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
       var count = 0;
       if (defs.barriers.features != null) defs.barriers.features.forEach(function (features) {
       count++;
       features.dataType = "barriers";
       var agen = getAgency(features.properties.agency);
-      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td colspan='2'> Barriers" + "</td><td><a id='barr" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td colspan='2'> Barriers" + "</td><td><a id='barr" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#barr" + count;
       $(barrID).click(function () {
       var elem = document.getElementById("tableMap");
@@ -233,7 +233,7 @@ html
       count++;
       features.dataType = "distLines";
       var agen = getAgency(features.properties.agency);
-      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Lines" + "</td><td><a id='dLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Lines" + "</td><td><a id='dLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#dLine" + count;
       $(barrID).click(function () {
       populateModal(features, "Disturbance Line", 2);
@@ -244,7 +244,7 @@ html
       count++;
       features.dataType = "distPoints";
       var agen = getAgency(features.properties.agency);
-      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Points" + "</td><td><a id='dPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Points" + "</td><td><a id='dPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#dPoint" + count;
       $(barrID).click(function () {
       populateModal(features, "Disturbance Point", 1);
@@ -255,7 +255,7 @@ html
       count++;
       features.dataType = "distPolys";
       var agen = getAgency(features.properties.agency);
-      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Polygon" + "</td><td><a id='dPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Polygon" + "</td><td><a id='dPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#dPoly" + count;
       $(barrID).click(function () {
       populateModal(features, "Disturbance Polygon", 3);
@@ -266,7 +266,7 @@ html
       count++;
       features.dataType = "restoLines";
       var agen = getAgency(features.properties.agency);
-      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Lines" + "</td><td><a id='rLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Lines" + "</td><td><a id='rLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#rLine" + count;
       $(barrID).click(function () {
       populateModal(features, "Restoration Line", 2);
@@ -276,7 +276,7 @@ html
       if (defs.restoPoints.features != null) defs.restoPoints.features.forEach(function (features) {
       count++;
       features.dataType = "restoPoints";
-      var agen = getAgency(features.properties.agency);
+      r agen = getAgency(features.properties.agency);
       //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Point" + "</td><td><a id='rPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#rPoint" + count;
       $(barrID).click(function () {
@@ -288,7 +288,7 @@ html
       count++;
       features.dataType = "restoPolys";
       var agen = getAgency(features.properties.agency);
-      //$("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Polygon" + "</td><td><a id='rPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
+      $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Polygon" + "</td><td><a id='rPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
       var barrID = "#rPoly" + count;
       $(barrID).click(function () {
       populateModal(features, "Restoration Polygon", 3);

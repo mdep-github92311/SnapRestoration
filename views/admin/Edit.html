@@ -206,10 +206,10 @@
               
             for (var prop in data.properties) {
               if(prop == 'agency'){
-                $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + getAgency(data.properties[prop]));
+                $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + getAgency(data.properties[prop]));
               }
               else
-                  $("#pInfo").append(`<br /><B>${prop}</B>` + ' : ' + data.properties[prop]);
+                  $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + data.properties[prop]);
             }
             
             // makes map look at the point
