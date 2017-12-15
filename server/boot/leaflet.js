@@ -5,7 +5,7 @@
 module.exports = function (app) {
   // Install a "/ping" route that returns "pong"
   app.get('/', function (req, res) {
-    res.render('Add.pug');
+    res.render('leafletMap.pug');
   });
 };
 
