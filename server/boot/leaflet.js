@@ -7,8 +7,5 @@ module.exports = function (app) {
   app.get('/', function (req, res) {
     res.render('leafletMap.pug');
   });
-  app.get('/admin', function (req, res) {
-    res.render('admin.html');
-  });
 };
 

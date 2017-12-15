@@ -1,6 +1,7 @@
 "use strict";
 var getUrl = window.location;
 var baseUrl = getUrl.origin;
+        
 var getSubmissions = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var barriers, distPoints, distPolys, distLines, restoLines, restoPoints, restoPolys, overallCount, subs;
