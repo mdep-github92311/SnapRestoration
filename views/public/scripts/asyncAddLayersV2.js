@@ -1,4 +1,3 @@
-'use strict';
 
 var getUrl = window.location;
 var baseUrl = getUrl.origin;

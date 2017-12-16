@@ -1,4 +1,3 @@
-'use strict';
 
 // switch value with agency name
 function myAgency(agen) {

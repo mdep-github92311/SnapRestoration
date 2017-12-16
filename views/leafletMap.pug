@@ -22,7 +22,8 @@ html
     //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
     
     //script(src='https://unpkg.com/leaflet-sidebar')
-    script(src='https://unpkg.com/leaflet-sidebar-v2')
+    
+    script(src='https://unpkg.com/leaflet-sidebar-v2@2.0.0')
     
     script(src='/public/scripts/featureStyles.js')
     script(src='/public/scripts/styledLayerControl.js')
@@ -295,7 +296,7 @@ html
       #overlay
       #map
 
-        script(src='/public/scripts/asyncAddLayersV2.js')
+        script(src='/public/scripts/asyncAddLayers.js')
         script.
           //import "babel-polyfill";
           var map = L.map('map').setView([36.211303, -115.114929], 8);

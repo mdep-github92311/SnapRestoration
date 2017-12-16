@@ -1,6 +1,3 @@
-"use strict";
-import "babel-polyfill";
-
 async function createLayer(data, layerName) {
   try {
     switch (layerName) {
@@ -247,53 +244,54 @@ async function getLayers() {
   const interval = setInterval(function(){
     if (count >= 100) {
       clearInterval(interval);
-      delete progress;
+      //delete progress;
       $.LoadingOverlay("hide");
       return;
     }
     progress.Update(count);
   }, 100);
-  
+  var getUrl = window.location;
+  var baseUrl = getUrl.origin;
   var ipAddress = "216.117.167.186:443";
   ipAddress = "snap-restoration-brstillwell.c9users.io";
   try {
     $.when(
-      await $.getJSON('http://' + ipAddress + '/api/Barriers/barrierGeoJSON', function (data) {
+      await $.getJSON(baseUrl +  '/api/Barriers/barrierGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Barrier');
         count += 5;
       }),
 
-      await $.getJSON('http://' + ipAddress + '/api/DistPoints/distPointGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/DistPoints/distPointGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Points');
         count += 5;
       }),
 
-      await $.getJSON('http://' + ipAddress + '/api/DistLines/distLineGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Lines');
         count += 5;
       }),
 
-      await $.getJSON('http://' + ipAddress + '/api/DistPolygons/distPolyGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Polygon');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
         count += 5;
       }),
 
-      await $.getJSON('http://' + ipAddress + '/api/RestoPoints/restoPointGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/RestoPoints/restoPointGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Points');
         count += 5;
       }),
 
-      await $.getJSON('http://' + ipAddress + '/api/RestoLines/restoLineGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
         count += 30;
       }),
 
-      /*$.getJSON('http://' + ipAddress + '/api/Roads/roadsGeoJSON', function (data) {
+      /*$.getJSON(baseUrl + '/api/Roads/roadsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Roads');
         count += 15;
       })
@@ -301,7 +299,7 @@ async function getLayers() {
         console.log(JSON.stringify(jqXHR));
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Soil Vulnerability');
         count += 10;
       })
@@ -309,42 +307,42 @@ async function getLayers() {
         console.log(error)
       }),*/
 
-      await $.getJSON('http://' + ipAddress + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Polygon');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Poly Cent');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/SnapExtents/snapExtentGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/SnapExtents/snapExtentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Snap Extent');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/BlmRegions/blmRegionsGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/BlmRegions/blmRegionsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'BLM');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/FsRegions/fsRegionsGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/FsRegions/fsRegionsGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'FS Regions');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'MDEP Boundary');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/MdiBoundaries/mdiBoundGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/MdiBoundaries/mdiBoundGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'MDI Boundary');
         count += 5;
       }),
 
-      $.getJSON('http://' + ipAddress + '/api/NvCounties/nvCountiesGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/NvCounties/nvCountiesGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Nevada Counties');
         count += 5;
       })
