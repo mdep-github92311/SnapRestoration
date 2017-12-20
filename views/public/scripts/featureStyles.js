@@ -24,7 +24,7 @@ function myStylePoints(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                radius: 8,
+                radius: 300,
                 fillColor: "#e41a1c",
                 color: "#000",
                 weight: 1,
@@ -34,7 +34,7 @@ function myStylePoints(feature) {
             break;
         case 1:
             return {
-                radius: 8,
+                radius: 300,
                 fillColor: "#4daf4a",
                 color: "#000",
                 weight: 1,
@@ -45,7 +45,7 @@ function myStylePoints(feature) {
 
         case 2:
             return {
-                radius: 8,
+                radius: 300,
                 fillColor: "#984ea3",
                 color: "#000",
                 weight: 1,
@@ -55,7 +55,7 @@ function myStylePoints(feature) {
             break;
         case 3:
             return {
-                radius: 8,
+                radius: 300,
                 fillColor: "#ff7f00",
                 color: "#000",
                 weight: 1,
@@ -65,7 +65,7 @@ function myStylePoints(feature) {
             break;
         default:
             return {
-                radius: 8,
+                radius: 300,
                 fillColor: "#ffffff",
                 color: "#000",
                 weight: 1,
@@ -163,7 +163,7 @@ function myStyleRestoPoly(feature) {
 }
 // creating a function that will chang the default point makers to circle markers
 function pointToLayer(feature, latlng) {
-    return new L.CircleMarker(latlng, null);
+    return new L.Circle(latlng, 300);
 }
 
 function blmRegion(feature) {
