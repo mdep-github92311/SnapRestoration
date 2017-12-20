@@ -557,16 +557,33 @@ html
         var restButton = document.getElementById("restButton");
         var distButton = document.getElementById("distButton");
         var barrButton = document.getElementById("barrButton");
+        var drawLine = new L.Draw.Polyline(map, drawControl.options.polyline);
+        var drawPoly = new L.Draw.Polygon(map, drawControl.options.polygon);
+        var drawMark = new L.Draw.Marker(map, drawControl.options.marker);
+        
         lineButton.addEventListener("click", function(){
-            new L.Draw.Polyline(map, drawControl.options.polyline).enable();
-            
-            
+            lineButton.style.borderStyle = "inset";
+            polygonButton.style.borderStyle = "";
+            markerButton.style.borderStyle = "";
+            drawLine.enable();
+            drawPoly.disable();
+            drawMark.disable();
         });
         polygonButton.addEventListener("click", function(){
-            new L.Draw.Polygon(map, drawControl.options.polygon).enable()
+            lineButton.style.borderStyle = "";
+            polygonButton.style.borderStyle = "inset";
+            markerButton.style.borderStyle = "";
+            drawLine.disable();
+            drawPoly.enable();
+            drawMark.disable();
         });
         markerButton.addEventListener("click", function(){
-            new L.Draw.Marker(map, drawControl.options.marker).enable()
+            lineButton.style.borderStyle = "";
+            polygonButton.style.borderStyle = "";
+            markerButton.style.borderStyle = "inset";
+            drawLine.disable();
+            drawPoly.disable();
+            drawMark.enable();
         });
         editButton.addEventListener("click", function(){
             new L.EditToolbar.Edit(map, {
