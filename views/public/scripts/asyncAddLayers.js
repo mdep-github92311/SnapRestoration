@@ -291,7 +291,7 @@ async function getLayers() {
         count += 30;
       }),
 
-      /*$.getJSON(baseUrl + '/api/Roads/roadsGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
         createLayer(data[0].row_to_json, 'Roads');
         count += 15;
       })
@@ -299,13 +299,13 @@ async function getLayers() {
         console.log(JSON.stringify(jqXHR));
       }),
 
-      $.getJSON(baseUrl + '/api/SoilVulnerabilities/soilVulnGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
         createLayer(data[0].row_to_json, 'Soil Vulnerability');
         count += 10;
       })
       .fail(function(jqXHR, textStatus, error) {
         console.log(error)
-      }),*/
+      }),
 
       await $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Polygon');

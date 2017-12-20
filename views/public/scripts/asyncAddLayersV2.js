@@ -1,6 +1,5 @@
+'use strict';
 
-var getUrl = window.location;
-var baseUrl = getUrl.origin;
 var createLayer = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, layerName) {
     var barrier, distLines, distPoints, distPoly, distPolyCent, restoPoly, restoLine, restoPoint, restoPolyCent, blmRegions, fsRegions, nvCounties, mdiBound, mdepBound, roads, snapExtent, soilVuln;
@@ -340,7 +339,7 @@ var createLayer = function () {
 
 var getLayers = function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-    var progress, count, interval;
+    var progress, count, interval, getUrl, baseUrl, ipAddress;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -371,120 +370,136 @@ var getLayers = function () {
               }
               progress.Update(count);
             }, 100);
-            
-            _context2.prev = 6;
+            getUrl = window.location;
+            baseUrl = getUrl.origin;
+            ipAddress = "216.117.167.186:443";
+
+            ipAddress = "snap-restoration-brstillwell.c9users.io";
+            _context2.prev = 8;
             _context2.t0 = $;
-            _context2.next = 10;
+            _context2.next = 12;
             return $.getJSON(baseUrl + '/api/Barriers/barrierGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Barrier');
               count += 5;
             });
 
-          case 10:
+          case 12:
             _context2.t1 = _context2.sent;
-            _context2.next = 13;
+            _context2.next = 15;
             return $.getJSON(baseUrl + '/api/DistPoints/distPointGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Points');
               count += 5;
             });
 
-          case 13:
+          case 15:
             _context2.t2 = _context2.sent;
-            _context2.next = 16;
+            _context2.next = 18;
             return $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Lines');
               count += 5;
             });
 
-          case 16:
+          case 18:
             _context2.t3 = _context2.sent;
-            _context2.next = 19;
+            _context2.next = 21;
             return $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Polygon');
               count += 5;
             });
 
-          case 19:
+          case 21:
             _context2.t4 = _context2.sent;
             _context2.t5 = $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
               count += 5;
             });
-            _context2.next = 23;
+            _context2.next = 25;
             return $.getJSON(baseUrl + '/api/RestoPoints/restoPointGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Points');
               count += 5;
             });
 
-          case 23:
+          case 25:
             _context2.t6 = _context2.sent;
-            _context2.next = 26;
+            _context2.next = 28;
             return $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Lines');
-              count += 30;
+              count += 5;
             });
 
-          case 26:
+          case 28:
             _context2.t7 = _context2.sent;
-            _context2.next = 29;
+            _context2.t8 = $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
+              createLayer(data, 'Roads');
+              count += 15;
+            }).fail(function (jqXHR, textStatus, error) {
+              console.log(JSON.stringify(jqXHR));
+            });
+            _context2.t9 = $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
+              createLayer(data, 'Soil Vulnerability');
+              count += 10;
+            }).fail(function (jqXHR, textStatus, error) {
+              console.log(error);
+            });
+            _context2.next = 33;
             return $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Polygon');
               count += 5;
             });
 
-          case 29:
-            _context2.t8 = _context2.sent;
-            _context2.t9 = $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
+          case 33:
+            _context2.t10 = _context2.sent;
+            _context2.t11 = $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Poly Cent');
               count += 5;
             });
-            _context2.t10 = $.getJSON(baseUrl + '/api/SnapExtents/snapExtentGeoJSON', function (data) {
+            _context2.t12 = $.getJSON(baseUrl + '/api/SnapExtents/snapExtentGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Snap Extent');
               count += 5;
             });
-            _context2.t11 = $.getJSON(baseUrl + '/api/BlmRegions/blmRegionsGeoJSON', function (data) {
+            _context2.t13 = $.getJSON(baseUrl + '/api/BlmRegions/blmRegionsGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'BLM');
               count += 5;
             });
-            _context2.t12 = $.getJSON(baseUrl + '/api/FsRegions/fsRegionsGeoJSON', function (data) {
+            _context2.t14 = $.getJSON(baseUrl + '/api/FsRegions/fsRegionsGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'FS Regions');
               count += 5;
             });
-            _context2.t13 = $.getJSON(baseUrl + '/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
+            _context2.t15 = $.getJSON(baseUrl + '/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'MDEP Boundary');
               count += 5;
             });
-            _context2.t14 = $.getJSON(baseUrl + '/api/MdiBoundaries/mdiBoundGeoJSON', function (data) {
+            _context2.t16 = $.getJSON(baseUrl + '/api/MdiBoundaries/mdiBoundGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'MDI Boundary');
               count += 5;
             });
-            _context2.t15 = $.getJSON(baseUrl + '/api/NvCounties/nvCountiesGeoJSON', function (data) {
+            _context2.t17 = $.getJSON(baseUrl + '/api/NvCounties/nvCountiesGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Nevada Counties');
               count += 5;
             });
 
-            _context2.t16 = function () {
+            _context2.t18 = function () {
               //$.LoadingOverlay("hide");
               console.log(count);
             };
 
-            _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15).then(_context2.t16);
+            _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17).then(_context2.t18);
 
-            _context2.next = 44;
+            _context2.next = 48;
             break;
 
-          case 41:
-            _context2.prev = 41;
-            _context2.t17 = _context2['catch'](6);
+          case 45:
+            _context2.prev = 45;
+            _context2.t19 = _context2['catch'](8);
 
-            console.error(_context2.t17);
+            console.error(_context2.t19);
 
-          case 44:
+          case 48:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[6, 41]]);
+    }, _callee2, this, [[8, 45]]);
   }));
 
   return function getLayers() {
