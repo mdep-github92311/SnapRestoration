@@ -556,59 +556,6 @@ html
           
                 
       script. 
-        function editForm(){
-          //console.log(this.currentData);
-          $("#editInfo").load("../public/scripts/editForm.html");
-          
-          // Waits for form to be loaded before populating Data
-          setTimeout(function(){ 
-            $.each(this.currentData.properties, function(name, val){
-              var $el = $('[name="'+name+'"]'),
-                  type = $el.attr('type');
-              
-              //console.log("something is happenning = " + name + " -- " + val);
-              //console.log(type);
-              switch(type){
-                  case 'checkbox':
-                      $el.attr('checked', 'checked');
-                      break;
-                  case 'radio':
-                      $el.filter('[value="'+val+'"]').attr('checked', 'checked');
-                      break;
-                  default:
-                      if (val != null && val != '')
-                        $el.val(val);
-              }
-            }); 
-            console.log("the data --");
-            console.log(this.currentData.dataType);
-              
-              $('#restoPointForm').toggle(
-                this.currentData.dataType === 'restoPoints'
-              );
-              $('#restoPolyForm').toggle(
-                this.currentData.dataType === 'restoPolys'
-              );
-              $('#restoLineForm').toggle(
-                this.currentData.dataType === 'restoLines'
-              );
-              $('#barrierForm').toggle(
-                this.currentData.dataType === 'barriers'
-              );
-              $('#distPointForm').toggle(
-                this.currentData.dataType === 'distPoints'
-              );
-              $('#distPolyForm').toggle(
-                this.currentData.dataType === 'distPolys'
-              );
-              $('#distLineForm').toggle(
-                this.currentData.dataType === 'distLines'
-              );
-            //this sets the type of edit so the correct record is editted
-            type = 'sub';
-            
-          }, 400);
-        }
         
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
