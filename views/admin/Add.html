@@ -378,9 +378,6 @@
                   $.each(this.currentData.properties, function(name, val){
                     var $el = $('[name="'+name+'"]'),
                         type = $el.attr('type');
-                    
-                    //console.log("something is happenning = " + name + " -- " + val);
-                    //console.log(type);
                     switch(type){
                         case 'checkbox':
                             $el.attr('checked', 'checked');
@@ -393,8 +390,6 @@
                               $el.val(val);
                     }
                   }); 
-                  console.log("the data --");
-                  console.log(this.currentData.dataType);
                     
                     $('#restoPointForm').toggle(
                       this.currentData.dataType === 'restoPoints'

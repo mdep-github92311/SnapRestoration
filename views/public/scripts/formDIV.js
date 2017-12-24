@@ -7,7 +7,7 @@ $(document).ready(function () {
   $(formTest2).appendTo('#sidebar2');
   
   function collectData(form) {
-    var obj = [];
+    const obj = {};
     $(form).serializeArray().reduce(function(i, item) {
        if (item.value === '' || item.value === 'select') {
           obj[item.name.replace('_Edit','')] = null;
@@ -73,14 +73,13 @@ $(document).ready(function () {
         );
         
         $("#restoPointEditButton").on("click", function(event) {
-          var formData = collectData('#restoPointFormEdit');
+          const formData = collectData('#restoPointFormEdit');
           db.restoPointSub.toArray(function (records) {
             records[index].properties = formData;
-            console.log(records[index])
+            // could possibly be that the names are not getting saved the same!!
             db.restoPointSub.clear();
             db.restoPointSub.bulkPut(records)
             .then(function (data) {
-              console.log(data);
               console.log('Form updated: ' + data);
             })
             .catch(Dexie.BulkError, function (err) {
@@ -91,57 +90,117 @@ $(document).ready(function () {
           $("#savedContent").css("display", "block");
           loadSubs();
         });
-        /*
+        
         $("#restoPolyEditButton").on("click", function(event) {
-            if (type == 'sub')
-               collectData('#restoPolyForm','/restoPolySubFormEdit');
-            else if (type == 'reg')
-               collectData('#restoPolyForm','/restoPolyFormEdit');
-            else
-               console.log("error setting value of type variable");
+          const formData = collectData('#restoPolyFormEdit');
+          db.restoPolySub.toArray(function (records) {
+            records[index].properties = formData;
+            // could possibly be that the names are not getting saved the same!!
+            db.restoPolySub.clear();
+            db.restoPolySub.bulkPut(records)
+            .then(function (data) {
+              console.log('Form updated: ' + data);
+            })
+            .catch(Dexie.BulkError, function (err) {
+              console.warn(err);
+            });
+          });
+          $("#editSaved").css("display", "none");
+          $("#savedContent").css("display", "block");
+          loadSubs();
         });
         $("#restoLineEditButton").on("click", function(event) {
-            if (type == 'sub')
-               collectData('#restoLineForm','/restoLineSubFormEdit');
-            else if (type == 'reg')
-               collectData('#restoLineForm','/restoLineFormEdit');
-            else
-               console.log("error setting value of type variable");
+          const formData = collectData('#restoLineFormEdit');
+          db.restoLineSub.toArray(function (records) {
+            records[index].properties = formData;
+            // could possibly be that the names are not getting saved the same!!
+            db.restoLineSub.clear();
+            db.restoLineSub.bulkPut(records)
+            .then(function (data) {
+              console.log('Form updated: ' + data);
+            })
+            .catch(Dexie.BulkError, function (err) {
+              console.warn(err);
+            });
+          });
+          $("#editSaved").css("display", "none");
+          $("#savedContent").css("display", "block");
+          loadSubs();
         });
         $("#barrierEditButton").on("click", function(event) {
-            if (type == 'sub')
-               collectData('#barrierForm','/barrierSubFormEdit');
-            else if (type == 'reg')
-               collectData('#barrierForm','/barrierFormEdit');
-            else
-               console.log("error setting value of type variable");
+          const formData = collectData('#barrierFormEdit');
+          db.barrierSub.toArray(function (records) {
+            records[index].properties = formData;
+            // could possibly be that the names are not getting saved the same!!
+            db.barrierSub.clear();
+            db.barrierSub.bulkPut(records)
+            .then(function (data) {
+              console.log('Form updated: ' + data);
+            })
+            .catch(Dexie.BulkError, function (err) {
+              console.warn(err);
+            });
+          });
+          $("#editSaved").css("display", "none");
+          $("#savedContent").css("display", "block");
+          loadSubs();
         });
         $("#distPointEditButton").on("click", function(event) {
-            if (type == 'sub')
-               collectData('#distPointForm','/distPointSubFormEdit');
-            else if (type == 'reg')
-               collectData('#distPointForm','/distPointFormEdit');
-            else
-               console.log("error setting value of type variable");
+          const formData = collectData('#distPointFormEdit');
+          db.distPointSub.toArray(function (records) {
+            records[index].properties = formData;
+            // could possibly be that the names are not getting saved the same!!
+            db.distPointSub.clear();
+            db.distPointSub.bulkPut(records)
+            .then(function (data) {
+              console.log('Form updated: ' + data);
+            })
+            .catch(Dexie.BulkError, function (err) {
+              console.warn(err);
+            });
+          });
+          $("#editSaved").css("display", "none");
+          $("#savedContent").css("display", "block");
+          loadSubs();
         });
         $("#distPolyEditButton").on("click", function(event) {
-            if (type == 'sub')
-               collectData('#distPolyForm','/distPolySubFormEdit');
-            else if (type == 'reg')
-               collectData('#distPolyForm','/distPolyFormEdit');
-            else
-               console.log("error setting value of type variable");
+          const formData = collectData('#distPolyFormEdit');
+          db.distPolySub.toArray(function (records) {
+            records[index].properties = formData;
+            // could possibly be that the names are not getting saved the same!!
+            db.distPolySub.clear();
+            db.distPolySub.bulkPut(records)
+            .then(function (data) {
+              console.log('Form updated: ' + data);
+            })
+            .catch(Dexie.BulkError, function (err) {
+              console.warn(err);
+            });
+          });
+          $("#editSaved").css("display", "none");
+          $("#savedContent").css("display", "block");
+          loadSubs();
         });
         $("#distLineEditButton").on("click", function(event) {
-            if (type == 'sub')
-               collectData('#distLineForm','/distLineSubFormEdit');
-            else if (type == 'reg')
-               collectData('#distLineForm','/distLineFormEdit');
-            else
-               console.log("error setting value of type variable");
+          const formData = collectData('#distLineFormEdit');
+          db.distLineSub.toArray(function (records) {
+            records[index].properties = formData;
+            // could possibly be that the names are not getting saved the same!!
+            db.distLineSub.clear();
+            db.distLineSub.bulkPut(records)
+            .then(function (data) {
+              console.log('Form updated: ' + data);
+            })
+            .catch(Dexie.BulkError, function (err) {
+              console.warn(err);
+            });
+          });
+          $("#editSaved").css("display", "none");
+          $("#savedContent").css("display", "block");
+          loadSubs();
         });
                 //this sets the type of edit so the correct record is editted
-              */
+              
     }, 400);
   }
   //$(sync).appendTo('#sidebar2');
