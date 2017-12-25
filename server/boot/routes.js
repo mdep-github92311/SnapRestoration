@@ -65,6 +65,9 @@ module.exports = function (app) {
         }
         restoPointArray.push(restoPointProp)
       }
+      console.log("/////////////////////////////")
+      console.log(restoPointArray);
+      console.log("//////////////////////////////")
 
 
       db.none(`INSERT INTO resto_point_sub (gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments,
