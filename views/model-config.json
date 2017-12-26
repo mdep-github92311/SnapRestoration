@@ -3,6 +3,9 @@
     "sources": [
       "../../common/models",
       "./models"
+    ],
+    "mixins": [
+      "loopback-cache/mixins"
     ]
   },
   "RemoteBarrier": {
