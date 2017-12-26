@@ -453,16 +453,16 @@ var getLayers = function () {
               createLayer(data[0].row_to_json, 'Restoration Poly Cent');
               count += 5;
             });
-            _context2.t12 = $.getJSON(baseUrl + '/api/SnapExtents/snapExtentGeoJSON', function (data) {
-              createLayer(data[0].row_to_json, 'Snap Extent');
+            _context2.t12 = $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
+              createLayer(data, 'Snap Extent');
               count += 5;
             });
-            _context2.t13 = $.getJSON(baseUrl + '/api/BlmRegions/blmRegionsGeoJSON', function (data) {
-              createLayer(data[0].row_to_json, 'BLM');
+            _context2.t13 = $.getJSON(baseUrl + '/public/geoJSON/blmRegions.json', function (data) {
+              createLayer(data, 'BLM');
               count += 5;
             });
-            _context2.t14 = $.getJSON(baseUrl + '/api/FsRegions/fsRegionsGeoJSON', function (data) {
-              createLayer(data[0].row_to_json, 'FS Regions');
+            _context2.t14 = $.getJSON(baseUrl + '/public/geoJSON/fsRegions.json', function (data) {
+              createLayer(data, 'FS Regions');
               count += 5;
             });
             _context2.t15 = $.getJSON(baseUrl + '/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
@@ -473,8 +473,8 @@ var getLayers = function () {
               createLayer(data[0].row_to_json, 'MDI Boundary');
               count += 5;
             });
-            _context2.t17 = $.getJSON(baseUrl + '/api/NvCounties/nvCountiesGeoJSON', function (data) {
-              createLayer(data[0].row_to_json, 'Nevada Counties');
+            _context2.t17 = $.getJSON(baseUrl + '/public/geoJSON/nvCounties.json', function (data) {
+              createLayer(data, 'Nevada Counties');
               count += 5;
             });
 
