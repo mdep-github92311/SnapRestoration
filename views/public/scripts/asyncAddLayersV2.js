@@ -465,12 +465,12 @@ var getLayers = function () {
               createLayer(data, 'FS Regions');
               count += 5;
             });
-            _context2.t15 = $.getJSON(baseUrl + '/api/MdepBoundaries/mdepBoundGeoJSON', function (data) {
-              createLayer(data[0].row_to_json, 'MDEP Boundary');
+            _context2.t15 = $.getJSON(baseUrl + '/public/geoJSON/mdepBoundry.json', function (data) {
+              createLayer(data, 'MDEP Boundary');
               count += 5;
             });
-            _context2.t16 = $.getJSON(baseUrl + '/api/MdiBoundaries/mdiBoundGeoJSON', function (data) {
-              createLayer(data[0].row_to_json, 'MDI Boundary');
+            _context2.t16 = $.getJSON(baseUrl + '/public/geoJSON/mdiBoundry.json', function (data) {
+              createLayer(data, 'MDI Boundary');
               count += 5;
             });
             _context2.t17 = $.getJSON(baseUrl + '/public/geoJSON/nvCounties.json', function (data) {
