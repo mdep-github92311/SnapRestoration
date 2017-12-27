@@ -284,7 +284,7 @@ $(document).ready(function () {
   });
   db.open().then(function (db) {
     console.log('Opened Submission Forms DB');
-    console.log(db);
+    //console.log(db);
   }).catch(function (err) {
     console.log(err)
   });
