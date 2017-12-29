@@ -6,7 +6,7 @@ var compression = require('compression');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
 var app = module.exports = loopback();
-
+var session = require('client-sessions');
 
 var path = require('path');
 app.set('views', path.join(__dirname, '../views'));
@@ -26,21 +26,14 @@ function shouldCompress (req, res) {
   // fallback to standard filter function
   return compression.filter(req, res)
 }
-var gulp = require('gulp'),
-     pug = require('gulp-pug'),
-     rename = require('gulp-rename');
 
-var jade = require('gulp-jade-php');
+app.use(session({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
-gulp.task('templates', function() {
-  gulp.src('./views/*.jade')
-    .pipe(jade({
-        locals: {
-          title: 'OMG THIS IS THE TITLE'
-        }
-     }))
-     .pipe(gulp.dest('./dist'));
-});
 app.start = function() {
   // start the web server
   return app.listen(function() {
