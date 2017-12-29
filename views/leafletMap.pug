@@ -4,7 +4,6 @@
 doctype html
 html
   head
-    | <?php session_start(); echo 'hello';  ?>
     title= 'SNAP Restoration Map'
     link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css')
     link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
@@ -286,6 +285,23 @@ html
 
         script(src='/public/scripts/asyncAddLayersV2.js')
         script.
+        
+          function checkLogin() {
+            $.ajax({
+                type: "GET",
+                url: "/loginStatus",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          checkLogin();
           //import "babel-polyfill";
           var map = L.map('map').setView([36.211303, -115.114929], 8);
           map.removeControl(map.zoomControl);

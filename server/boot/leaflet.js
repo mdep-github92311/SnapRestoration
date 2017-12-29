@@ -24,8 +24,7 @@ module.exports = function (app) {
     res.end(JSON.stringify(response));
   });
 
-  app.post('/loginAuth', function (req, res) {
-    console.log("made it to login route");
+  app.post('/login', function (req, res) {
     var post = req.body;
     if (post.user === 'admin' && post.password === 'password') {
       req.session.user_id = 1;
@@ -34,7 +33,15 @@ module.exports = function (app) {
       res.send('Bad user/pass');
     }
   });
-
+  
+  app.get('/loginStatus', checkAuth, function (req, res) {
+    var response = {
+        status  : 200,
+        success : 'Logged in successfully'
+    }
+    res.end(JSON.stringify(response));
+  });
+  
   app.get('/logout', function (req, res) {
     delete req.session.user_id;
     res.redirect('/login');
