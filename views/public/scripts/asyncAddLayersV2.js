@@ -1,23 +1,5 @@
 'use strict';
-const db = new Dexie('CachedData');
 
-  db.version(1).stores({
-    blmRegion: 'properties.gid, type, geometry',
-    fsRegion: 'properties.gid, type, geometry',
-    mdepBound: 'properties.gid, type, geometry',
-    mdiBound: 'properties.gid, type, geometry',
-    nvCounties: 'properties.gid, type, geometry',
-    roads: 'properties.gid, type, geometry',
-    soilVuln: 'properties.gid, type, geometry',
-    snapExtent: 'properties.gid, type, geometry'
-  });
-  db.open().then(function (db) {
-    console.log('Opened CachedData DB');
-    //console.log(db);
-  }).catch(function (err) {
-    console.log(err)
-  });
-  
 var createLayer = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, layerName) {
     var barrier, distLines, distPoints, distPoly, distPolyCent, restoPoly, restoLine, restoPoint, restoPolyCent, blmRegions, fsRegions, nvCounties, mdiBound, mdepBound, roads, snapExtent, soilVuln;
@@ -280,7 +262,7 @@ var createLayer = function () {
 
           case 90:
             _context.next = 92;
-            return L.geoJson(data, {
+            return L.shapefile(data, {
               pane: 'Lines',
               style: roadColor
             }).addTo(map);
@@ -442,35 +424,42 @@ var getLayers = function () {
             _context2.next = 28;
             return $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Lines');
-              count += 5;
+              count += 35;
             });
+
           case 28:
             _context2.t7 = _context2.sent;
-            _context2.t8 = db.roads.count(function (records) {
+            _context2.t8 = createLayer('/public/geoJSON/roads.zip', 'Roads');
+            _context2.t9 =
+            /*
+            db.roads.count(function (records) { 
               if (records > 0) {
-                db.roads.toArray(function (data) {
-                  createLayer(data, 'Roads');
-                });
+                db.roads.toArray(function(data) { createLayer(data, 'Roads')});
                 console.log("cached data loaded");
                 count += 15;
-              } else {
+              }
+              else {
                 $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
                   createLayer(data, 'Roads');
                   console.log(data);
-                  db.roads.bulkAdd(data.features).then(function (lastKey) {
-                    console.log("Done caching roads");
+                  db.roads.bulkAdd(data.features).then(function(lastKey) {
+                      console.log("Done caching roads");
                   }).catch(Dexie.BulkError, function (e) {
-                    // Explicitely catching the bulkAdd() operation makes those successful
-                    // additions commit despite that there were errors.
-                    console.error("Some roads did not succeed. However, " + 100000 - e.failures.length + " roads was added successfully");
+                      // Explicitely catching the bulkAdd() operation makes those successful
+                      // additions commit despite that there were errors.
+                      console.error ("Some roads did not succeed. However, " +
+                         100000-e.failures.length + " roads was added successfully");
                   });
                   count += 15;
-                }).fail(function (jqXHR, textStatus, error) {
+                })
+                .fail(function(jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
-                });
+                })                      
               }
-            });
-            _context2.t9 = db.soilVuln.count(function (records) {
+            }),
+            */
+
+            db.soilVuln.count(function (records) {
               if (records > 0) {
                 db.soilVuln.toArray(function (data) {
                   createLayer(data, 'Soil Vulnerability');
@@ -499,6 +488,7 @@ var getLayers = function () {
               createLayer(data[0].row_to_json, 'Restoration Polygon');
               count += 5;
             });
+
           case 33:
             _context2.t10 = _context2.sent;
             _context2.t11 = $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
@@ -668,6 +658,25 @@ var getLayers = function () {
 }();
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var db = new Dexie('CachedData');
+
+db.version(1).stores({
+  blmRegion: 'properties.gid, type, geometry',
+  fsRegion: 'properties.gid, type, geometry',
+  mdepBound: 'properties.gid, type, geometry',
+  mdiBound: 'properties.gid, type, geometry',
+  nvCounties: 'properties.gid, type, geometry',
+  roads: 'properties.gid, type, geometry',
+  soilVuln: 'properties.gid, type, geometry',
+  snapExtent: 'properties.gid, type, geometry'
+});
+db.open().then(function (db) {
+  console.log('Opened CachedData DB');
+  //console.log(db);
+}).catch(function (err) {
+  console.log(err);
+});
 
 ;
 

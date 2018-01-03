@@ -199,7 +199,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Roads':
-        const roads = await L.geoJson(data, {
+        const roads = await L.shapefile(data, {
           pane: 'Lines',
           style: roadColor
         }).addTo(map);
@@ -307,8 +307,10 @@ async function getLayers() {
 
       await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 20;
+        count += 35;
       }),
+      createLayer('/public/geoJSON/roads.zip', 'Roads'),
+      /*
       db.roads.count(function (records) { 
         if (records > 0) {
           db.roads.toArray(function(data) { createLayer(data, 'Roads')});
@@ -334,6 +336,7 @@ async function getLayers() {
           })                      
         }
       }),
+      */
       
       db.soilVuln.count(function (records) { 
         if (records > 0) {

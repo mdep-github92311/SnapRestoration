@@ -29,6 +29,7 @@
     "loopback-component-explorer": "^4.0.0",
     "loopback-connector-postgresql": "^2.8.0",
     "serve-favicon": "^2.0.1",
+    "shpjs": "^3.4.2",
     "strong-error-handler": "^2.0.0"
   },
   "devDependencies": {

@@ -19,6 +19,8 @@ html
     script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
+    script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
+    script(src='/public/scripts/leaflet.shapefile.js')
     script(src='/public/scripts/formDIV.js')
     //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
     
@@ -107,6 +109,10 @@ html
         color: black;
         font-size: 14px;
         padding: 0;
+      }
+      
+      #logoutTab {
+        display: none;
       }
       
       .container {
@@ -276,9 +282,12 @@ html
                 li
                   a(href='/admin/Add.html') Admin
               ul.nav.navbar-nav.navbar-right
-                li
+                li#loginTab
                   a(href='login.html')
                     b Login
+                li#logoutTab
+                  a(href='javascript:logout();')
+                    b Logout
                                 
       #overlay
       #map
@@ -294,6 +303,26 @@ html
                 contentType: "application/json; charset=utf-8",
                 success: function (data) { 
                   console.log(data);
+                  document.getElementById('logoutTab').style.display = "block";
+                  document.getElementById('loginTab').style.display = "none";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          function logout() {
+            console.log("logout initiated")
+            $.ajax({
+                type: "GET",
+                url: "/logout",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  document.getElementById('logoutTab').style.display = "none";
+                  document.getElementById('loginTab').style.display = "block";
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.warn(XMLHttpRequest.responseText);
@@ -382,7 +411,8 @@ html
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
-
+          L.control.scale({position: 'bottomright'}).addTo(map);
+          
           var options = {
             position: 'bottomright',
             draw: {
@@ -448,6 +478,7 @@ html
               
             
           });
+          //new L.shapefile('public/geoJSON/roads.zip').addTo(map);
         
       #sidebar.sidebar.collapsed
         // Nav tabs

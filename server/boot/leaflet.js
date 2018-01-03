@@ -43,8 +43,21 @@ module.exports = function (app) {
   });
   
   app.get('/logout', function (req, res) {
-    delete req.session.user_id;
-    res.redirect('/login');
+    if (req.session.user_id != null) {
+      delete req.session.user_id;
+      var response = {
+          status  : 200,
+          success : 'logged out successfully'
+      }
+      res.end(JSON.stringify(response));
+    }
+    else {
+      var response = {
+          status  : 201,
+          error : 'No session ID'
+      }
+      res.end(JSON.stringify(response));
+    }
   });     
 };
 
