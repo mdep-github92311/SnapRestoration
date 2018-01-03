@@ -4,7 +4,7 @@
 doctype html
 html
   head
-    title= title
+    title= 'SNAP Restoration Map'
     link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css')
     link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
@@ -19,10 +19,14 @@ html
     script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
+    script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
+    script(src='/public/scripts/leaflet.shapefile.js')
+    script(src='/public/scripts/formDIV.js')
     //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
     
     //script(src='https://unpkg.com/leaflet-sidebar')
-    script(src='https://unpkg.com/leaflet-sidebar-v2')
+    
+    script(src='https://unpkg.com/leaflet-sidebar-v2@2.0.0')
     
     script(src='/public/scripts/featureStyles.js')
     script(src='/public/scripts/styledLayerControl.js')
@@ -105,6 +109,10 @@ html
         color: black;
         font-size: 14px;
         padding: 0;
+      }
+      
+      #logoutTab {
+        display: none;
       }
       
       .container {
@@ -194,9 +202,17 @@ html
         color: black;
         font-size: 1em;
       }
-
+      #saved, #savedCount {
+        color: black;
+      }
       
+      table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
     body
+    
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
           .container-fluid
@@ -266,37 +282,55 @@ html
                 li
                   a(href='/admin/Add.html') Admin
               ul.nav.navbar-nav.navbar-right
-                li
-                  p.navbar-text Already have an account?
-                li.dropdown
-                  a.dropdown-toggle(href='#', data-toggle='dropdown')
+                li#loginTab
+                  a(href='login.html')
                     b Login
-                    span.caret
-                  ul#login-dp.dropdown-menu
-                    li
-                      .row
-                        .col-md-12
-                          form#login-nav.form(role='form', method='post', action='login', accept-charset='UTF-8')
-                            .form-group
-                              label.sr-only(for='exampleInputEmail2') Email address
-                              input#exampleInputEmail2.form-control(type='email', placeholder='Email address', required='')
-                            .form-group
-                              label.sr-only(for='exampleInputPassword2') Password
-                              input#exampleInputPassword2.form-control(type='password', placeholder='Password', required='')
-                              .help-block.text-right
-                                a(href='') Forget the password ?
-                            .form-group
-                              button.btn.btn-primary.btn-block(type='submit') Sign in
-                            .checkbox
-                              label
-                                input(type='checkbox')
-                                |  keep me logged-in
+                li#logoutTab
+                  a(href='javascript:logout();')
+                    b Logout
                                 
       #overlay
       #map
 
         script(src='/public/scripts/asyncAddLayersV2.js')
         script.
+        
+          function checkLogin() {
+            $.ajax({
+                type: "GET",
+                url: "/loginStatus",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  document.getElementById('logoutTab').style.display = "block";
+                  document.getElementById('loginTab').style.display = "none";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          function logout() {
+            console.log("logout initiated")
+            $.ajax({
+                type: "GET",
+                url: "/logout",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  document.getElementById('logoutTab').style.display = "none";
+                  document.getElementById('loginTab').style.display = "block";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          checkLogin();
           //import "babel-polyfill";
           var map = L.map('map').setView([36.211303, -115.114929], 8);
           map.removeControl(map.zoomControl);
@@ -377,7 +411,8 @@ html
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
-
+          L.control.scale({position: 'bottomright'}).addTo(map);
+          
           var options = {
             position: 'bottomright',
             draw: {
@@ -443,6 +478,7 @@ html
               
             
           });
+          //new L.shapefile('public/geoJSON/roads.zip').addTo(map);
         
       #sidebar.sidebar.collapsed
         // Nav tabs
@@ -475,79 +511,78 @@ html
               | Layers
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-              br
-              p.legend
-                span.legend-item
-                  img(src='/public/css/images/greenSquare.png', width='8%', height='35%') 
-                  |  NPS 
-                  img(src='/public/css/images/redSquare.png', width='8%', height='35%')  
-                  |  BLM 
-                span.legend-item
-                  img(src='/public/css/images/orangeSquare.png', width='8%', height='35%') 
-                  |  FWS 
-                  img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
-                  |  FS 
-              #layerTools2
+            p.legend
+              span.legend-item
+                img(src='/public/css/images/greenSquare.png', width='8%', height='35%') 
+                |  NPS 
+                img(src='/public/css/images/redSquare.png', width='8%', height='35%')  
+                |  BLM 
+              span.legend-item
+                img(src='/public/css/images/orangeSquare.png', width='8%', height='35%') 
+                |  FWS 
+                img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
+                |  FS 
+            #layerTools2
 
           #drawTools.sidebar-pane
             h1.sidebar-header
               | Draw Tools
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-              #step1
-                h1 Select shape to draw:
-                button#drawLineB.drawControl2
-                  | Line
-                br
-                button#drawPolygonB.drawControl2
-                  | Polygon
-                br
-                button#drawMarkerB.drawControl2
-                  | Marker
-                br
-                button#editShapeB.drawControl2
-                  | Edit
-                br
-                button#delShapeB.drawControl2
-                  | Delete
-                br
-              #step2
-                h1 Select a feature type:
-                button#restButton.drawControl2
-                  | Restoration
-                br
-                button#distButton.drawControl2
-                  | Disturbance
-                br
-                button#barrButton.drawControl2
-                  | Barrier
-                br
-              #step3
-                #sidebar2
-                  script(src='/public/scripts/formDIV.js')
+            #step1
+              h1 Select shape to draw:
+              button#drawLineB.drawControl2
+                | Line
+              br
+              button#drawPolygonB.drawControl2
+                | Polygon
+              br
+              button#drawMarkerB.drawControl2
+                | Marker
+              br
+              button#editShapeB.drawControl2
+                | Edit
+              br
+              button#delShapeB.drawControl2
+                | Delete
+              br
+            #step2
+              h1 Select a feature type:
+              button#restButton.drawControl2
+                | Restoration
+              br
+              button#distButton.drawControl2
+                | Disturbance
+              br
+              button#barrButton.drawControl2
+                | Barrier
+              br
+            #step3
+              #sidebar2
+                
 
           #formTools.sidebar-pane
             h1.sidebar-header
               | Marker Info
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-              #sidebar1
+            #sidebar1
               
           #savedSubs.sidebar-pane
             h1.sidebar-header
               | Saved Submissions
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
-              #saved
-              button#sync.btn Synchronize
-                
-          //#settings.sidebar-pane
-            h1.sidebar-header
-              | Settings
-              .sidebar-close
-                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #editSaved
+            #savedContent
+              #savedCount
+              table#tableSubs
+                #saved
+              button#sync.btn Submit All Forms
+          
                 
       script. 
+        
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
@@ -556,16 +591,33 @@ html
         var restButton = document.getElementById("restButton");
         var distButton = document.getElementById("distButton");
         var barrButton = document.getElementById("barrButton");
+        var drawLine = new L.Draw.Polyline(map, drawControl.options.polyline);
+        var drawPoly = new L.Draw.Polygon(map, drawControl.options.polygon);
+        var drawMark = new L.Draw.Marker(map, drawControl.options.marker);
+        
         lineButton.addEventListener("click", function(){
-            new L.Draw.Polyline(map, drawControl.options.polyline).enable();
-            
-            
+            lineButton.style.borderStyle = "inset";
+            polygonButton.style.borderStyle = "";
+            markerButton.style.borderStyle = "";
+            drawLine.enable();
+            drawPoly.disable();
+            drawMark.disable();
         });
         polygonButton.addEventListener("click", function(){
-            new L.Draw.Polygon(map, drawControl.options.polygon).enable()
+            lineButton.style.borderStyle = "";
+            polygonButton.style.borderStyle = "inset";
+            markerButton.style.borderStyle = "";
+            drawLine.disable();
+            drawPoly.enable();
+            drawMark.disable();
         });
         markerButton.addEventListener("click", function(){
-            new L.Draw.Marker(map, drawControl.options.marker).enable()
+            lineButton.style.borderStyle = "";
+            polygonButton.style.borderStyle = "";
+            markerButton.style.borderStyle = "inset";
+            drawLine.disable();
+            drawPoly.disable();
+            drawMark.enable();
         });
         editButton.addEventListener("click", function(){
             new L.EditToolbar.Edit(map, {
@@ -579,6 +631,9 @@ html
             }).enable()
         });
         restButton.addEventListener("click", function(){
+          lineButton.style.borderStyle = "";
+          polygonButton.style.borderStyle = "";
+          markerButton.style.borderStyle = "";
           document.getElementById('step2').style.display = 'none';
           document.getElementById('step3').style.display = 'block';
           $('#restoPointForm').toggle(thisLayer.geometry.type === 'Point');
@@ -586,6 +641,9 @@ html
           $('#restoLineForm').toggle(thisLayer.geometry.type === 'LineString');
         });
         distButton.addEventListener("click", function(){
+          lineButton.style.borderStyle = "";
+          polygonButton.style.borderStyle = "";
+          markerButton.style.borderStyle = "";
           document.getElementById('step2').style.display = 'none';
           document.getElementById('step3').style.display = 'block';
           $('#distPointForm').toggle(thisLayer.geometry.type === 'Point');
@@ -593,6 +651,9 @@ html
           $('#distLineForm').toggle(thisLayer.geometry.type === 'LineString');
         });
         barrButton.addEventListener("click", function(){
+          lineButton.style.borderStyle = "";
+          polygonButton.style.borderStyle = "";
+          markerButton.style.borderStyle = "";
           document.getElementById('step2').style.display = 'none';
           document.getElementById('step3').style.display = 'block';
           $('#barrierForm').toggle(thisLayer.geometry.type === 'LineString');

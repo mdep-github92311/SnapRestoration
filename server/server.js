@@ -6,8 +6,8 @@ var compression = require('compression');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
 var app = module.exports = loopback();
-
-
+var session = require('client-sessions');
+require('shpjs');
 var path = require('path');
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
@@ -26,6 +26,13 @@ function shouldCompress (req, res) {
   // fallback to standard filter function
   return compression.filter(req, res)
 }
+
+app.use(session({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
 app.start = function() {
   // start the web server

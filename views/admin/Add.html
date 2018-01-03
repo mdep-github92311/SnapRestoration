@@ -161,8 +161,6 @@
                 
                 if (data.geometry != null)
                   if (data.geometry.coordinates.length >1)
-                    //map.panTo(marker._layers[marker._leaflet_id-1].getLatLng())
-                    //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
                     bounds = marker.getBounds();
                 break;
               case 2:
@@ -172,10 +170,6 @@
                 this.mapMarkers.push(marker);
                 
                 console.log(marker);
-                //console.log(marker._layers[marker._leaflet_id-1].getLatLngs());
-                //var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
-                //var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
-                //map.panTo(middleLatLong);
                 bounds = marker._layers[marker._leaflet_id-1].getBounds();
                 break;
               case 3:
@@ -384,9 +378,6 @@
                   $.each(this.currentData.properties, function(name, val){
                     var $el = $('[name="'+name+'"]'),
                         type = $el.attr('type');
-                    
-                    //console.log("something is happenning = " + name + " -- " + val);
-                    //console.log(type);
                     switch(type){
                         case 'checkbox':
                             $el.attr('checked', 'checked');
@@ -399,8 +390,6 @@
                               $el.val(val);
                     }
                   }); 
-                  console.log("the data --");
-                  console.log(this.currentData.dataType);
                     
                     $('#restoPointForm').toggle(
                       this.currentData.dataType === 'restoPoints'

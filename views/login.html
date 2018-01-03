@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <style>
+            html, body {
+                background-color: black;
+            }
+            .container {
+                background-color: white;
+                padding: 10px;
+                float: center;
+                max-width: 330px;
+                margin-top: 100px;
+                border-radius: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+          <form class="form-signin" action="#" onsubmit="login();return false">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <label for="inputUsername" class="sr-only">Email address</label>
+            <input type="text" id="username" class="form-control" placeholder="Email address" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password" required>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="remember-me"> Remember me
+              </label>
+            </div>
+            <button id="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+          </form>
+
+    </div> <!-- /container -->
+    </body>
+    <script>
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var info = {};
+            info['user'] = username;
+            info['password'] = password;
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(info),
+                success: function (data) { 
+                  console.log(data);
+                  window.location.href = '/';
+                  
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+        }
+    </script>
+</html>

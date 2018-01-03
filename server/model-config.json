@@ -26,7 +26,8 @@
       "loopback/common/mixins",
       "loopback/server/mixins",
       "../common/mixins",
-      "./mixins"
+      "./mixins",
+      "loopback-cache/mixins"
     ]
   },
   "User": {
