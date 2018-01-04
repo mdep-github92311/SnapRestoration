@@ -442,7 +442,7 @@ var getLayers = function () {
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
                   createLayer(data, 'Roads');
-                  console.log(data);
+                  //console.log(data);
                   db.roads.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching roads");
                   }).catch(Dexie.BulkError, function (e) {
@@ -466,7 +466,7 @@ var getLayers = function () {
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
                   createLayer(data, 'Soil Vulnerability');
-                  console.log(data);
+                  //console.log(data);
                   db.soilVuln.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching soilVuln");
                   }).catch(Dexie.BulkError, function (e) {
@@ -633,7 +633,7 @@ var getLayers = function () {
 
             _context2.t18 = function () {
               //$.LoadingOverlay("hide");
-              console.log(count);
+              //console.log(count);
             };
 
             _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17).then(_context2.t18);
