@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<script src='../public/admin/checklogin.js'></script>
 <html>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src='../admin/checkLogin.js'></script>
     <head>
         <title></title>
         <script src='../public/scripts/polyfill.min.js'></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
@@ -80,44 +80,6 @@
           </table>
         </div>
         <script>
-          function checkLogin() {
-            $.ajax({
-                type: "GET",
-                url: "/loginStatus",
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) { 
-                  console.log(data);
-                  document.getElementById('logoutTab').style.display = "block";
-                  document.getElementById('loginTab').style.display = "none";
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.warn(XMLHttpRequest.responseText);
-                    window.location.href = '/admin/RestrictedAccess.html';
-                }
-            })
-          }
-          
-          function logout() {
-            console.log("logout initiated")
-            $.ajax({
-                type: "GET",
-                url: "/logout",
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                  window.location.href = '/';
-                  console.log(data);
-                  document.getElementById('logoutTab').style.display = "none";
-                  document.getElementById('loginTab').style.display = "block";
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.warn(XMLHttpRequest.responseText);
-                }
-            })
-          }
-          
-          checkLogin();
           mapMarkers = [];
           var currentData = [];
           var invalidated = false;
