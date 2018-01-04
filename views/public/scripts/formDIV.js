@@ -733,12 +733,12 @@ $(document).ready(function () {
     });
 
     if (Object.keys(barrierObj).length > 0) {
-      thisLayer["properties"] = barrierObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      thisLayerJSON["properties"] = barrierObj;
+      //thisLayerJSON['geometry']['type'] = 'MultiLineString';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      barrierArray.push(thisLayer);
+      barrierArray.push(thisLayerJSON);
 
       db.barrierSub.bulkPut(barrierArray)
         .then(function (data) {
@@ -748,12 +748,12 @@ $(document).ready(function () {
           console.warn(err);
         })
     } else if (Object.keys(distLineObj).length > 0) {
-      thisLayer["properties"] = distLineObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      thisLayerJSON["properties"] = distLineObj;
+      //thisLayerJSON['geometry']['type'] = 'MultiLineString';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      distLineArray.push(thisLayer);
+      distLineArray.push(thisLayerJSON);
 
       db.distLineSub.bulkPut(distLineArray)
         .then(function (data) {
@@ -764,12 +764,12 @@ $(document).ready(function () {
         });
     } else if (Object.keys(distPointObj).length > 0) {
 
-      thisLayer["properties"] = distPointObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      thisLayerJSON["properties"] = distPointObj;
+      //thisLayerJSON['geometry']['type'] = 'MultiLineString';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      distPointArray.push(thisLayer);
+      distPointArray.push(thisLayerJSON);
       db.distPointSub.bulkPut(distPointArray)
         .then(function (data) {
           console.log('Disturbance Point form submitted: ' + data);
@@ -778,12 +778,12 @@ $(document).ready(function () {
           console.warn(err);
         });
     } else if (Object.keys(distPolyObj).length > 0) {
-      thisLayer["properties"] = distPolyObj;
-      //thisLayer['geometry']['type'] = 'MultiPolygon';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      thisLayerJSON["properties"] = distPolyObj;
+      //thisLayerJSON['geometry']['type'] = 'MultiPolygon';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      distPolyArray.push(thisLayer);
+      distPolyArray.push(thisLayerJSON);
 
       db.distPolySub.bulkPut(distPolyArray)
         .then(function (data) {
@@ -793,12 +793,12 @@ $(document).ready(function () {
           console.warn(err);
         });
     } else if (Object.keys(restoLineObj).length > 0) {
-      thisLayer["properties"] = restoLineObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      thisLayerJSON["properties"] = restoLineObj;
+      //thisLayerJSON['geometry']['type'] = 'MultiLineString';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      restoLineArray.push(thisLayer);
+      restoLineArray.push(thisLayerJSON);
 
       db.restoLineSub.bulkPut(restoLineArray)
         .then(function (data) {
@@ -808,13 +808,13 @@ $(document).ready(function () {
           console.warn(err);
         });
     } else if (Object.keys(restoPointObj).length > 0) {
-      console.log(thisLayer);
-      thisLayer["properties"] = restoPointObj;
-      //thisLayer['geometry']['type'] = 'MultiLineString';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      console.log(thisLayerJSON);
+      thisLayerJSON["properties"] = restoPointObj;
+      //thisLayerJSON['geometry']['type'] = 'MultiLineString';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      restoPointArray.push(thisLayer);
+      restoPointArray.push(thisLayerJSON);
       console.log(restoPointArray);
       db.restoPointSub.bulkPut(restoPointArray)
         .then(function (data) {
@@ -824,13 +824,13 @@ $(document).ready(function () {
           console.warn(err);
         });
     } else if (Object.keys(restoPolyObj).length > 0) {
-      thisLayer["properties"] = restoPolyObj;
-      //thisLayer['geometry']['type'] = 'Polygon';
-      thisLayer['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
-      //thisLayer['geometry']['coordinates'][0] = thisLayer['geometry']['coordinates'];
-      thisLayer["properties"]["geom"] = thisLayer['geometry'];
+      thisLayerJSON["properties"] = restoPolyObj;
+      //thisLayerJSON['geometry']['type'] = 'Polygon';
+      thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
+      //thisLayerJSON['geometry']['coordinates'][0] = thisLayerJSON['geometry']['coordinates'];
+      thisLayerJSON["properties"]["geom"] = thisLayerJSON['geometry'];
 
-      restoPolyArray.push(thisLayer);
+      restoPolyArray.push(thisLayerJSON);
 
       db.restoPolySub.bulkPut(restoPolyArray)
         .then(function (data) {

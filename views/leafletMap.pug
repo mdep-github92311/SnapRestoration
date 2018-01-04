@@ -497,21 +497,22 @@ html
           var drawControl = new L.Control.Draw(options);
           //map.addControl(drawControl);
           L.control.zoom({position: 'topright'}).addTo(map);
+          var thisLayerJSON
           var thisLayer
-          
 
           map.on(L.Draw.Event.CREATED, function (event) {
             var layer = event.layer;
+            thisLayer = layer;
             editableLayers.addLayer(layer);
-            thisLayer = layer.toGeoJSON();
-            console.log(thisLayer);
+            thisLayerJSON = layer.toGeoJSON();
+            console.log(thisLayerJSON);
             //toggleButtons();
             
             turnOffTools();
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
             if (barrButton != null) {
-              if (thisLayer.geometry.type == "LineString")
+              if (thisLayerJSON.geometry.type == "LineString")
                 barrButton.style.display = 'block';
               else
                 barrButton.style.display = 'none';
@@ -582,8 +583,6 @@ html
                 | Marker
               br
             #step1Drawing
-              button#backStep1
-                | Back
               button#editShapeB.drawControl2
                 | Edit
               br
@@ -597,6 +596,8 @@ html
                 | Complete
               br
             #step2
+              button#backStep1
+                | Back
               h1 Select a feature type:
               button#restButton.drawControl2
                 | Restoration
@@ -608,6 +609,8 @@ html
                 | Barrier
               br
             #step3
+              button#backStep2
+                | Back
               #sidebar2
                 
 
@@ -643,6 +646,7 @@ html
         var barrButton = document.getElementById("barrButton");
         var undoDrawButton = document.getElementById("undoDraw");
         var finDrawButton = document.getElementById("finishDraw");
+        var currForm = null;
         
         var undoButton = document.getElementById("undoB");
         var compButton = document.getElementById("compB");
@@ -673,6 +677,19 @@ html
               myElements[i].style.display = "none";
           }
         }
+        document.getElementById("backStep1").addEventListener("click", function(){
+          allOff();
+          document.getElementById('step1').style.display = 'block';
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'none';
+          map.removeLayer(thisLayer);
+        });
+        document.getElementById("backStep2").addEventListener("click", function(){
+          document.getElementById('step1').style.display = 'none';
+          document.getElementById('step2').style.display = 'block';
+          document.getElementById('step3').style.display = 'none';
+          currForm.toggle();
+        });
         lineButton.addEventListener("click", function(){
             allOff();
             lineButton.style.borderStyle = "inset";
@@ -714,32 +731,49 @@ html
             }).enable()
         });
         restButton.addEventListener("click", function(){
-          lineButton.style.borderStyle = "";
-          polygonButton.style.borderStyle = "";
-          markerButton.style.borderStyle = "";
+          allOff();
           document.getElementById('step2').style.display = 'none';
           document.getElementById('step3').style.display = 'block';
-          $('#restoPointForm').toggle(thisLayer.geometry.type === 'Point');
-          $('#restoPolyForm').toggle(thisLayer.geometry.type === 'Polygon');
-          $('#restoLineForm').toggle(thisLayer.geometry.type === 'LineString');
+          switch(thisLayerJSON.geometry.type){
+            case 'Point':
+              currForm = $('#restoPointForm');
+              break;
+            case 'Polygon':
+              currForm = $('#restoPolyForm');
+              break;
+            case 'LineString':
+              currForm = $('#restoLineForm');
+              break;
+          }
+          $('#restoPointForm').toggle(thisLayerJSON.geometry.type === 'Point');
+          $('#restoPolyForm').toggle(thisLayerJSON.geometry.type === 'Polygon');
+          $('#restoLineForm').toggle(thisLayerJSON.geometry.type === 'LineString');
         });
         distButton.addEventListener("click", function(){
-          lineButton.style.borderStyle = "";
-          polygonButton.style.borderStyle = "";
-          markerButton.style.borderStyle = "";
+          allOff();
           document.getElementById('step2').style.display = 'none';
           document.getElementById('step3').style.display = 'block';
-          $('#distPointForm').toggle(thisLayer.geometry.type === 'Point');
-          $('#distPolyForm').toggle(thisLayer.geometry.type === 'Polygon');
-          $('#distLineForm').toggle(thisLayer.geometry.type === 'LineString');
+          switch(thisLayerJSON.geometry.type){
+            case 'Point':
+              currForm = $('#distPointForm');
+              break;
+            case 'Polygon':
+              currForm = $('#distPolyForm');
+              break;
+            case 'LineString':
+              currForm = $('#distLineForm');
+              break;
+          }
+          $('#distPointForm').toggle(thisLayerJSON.geometry.type === 'Point');
+          $('#distPolyForm').toggle(thisLayerJSON.geometry.type === 'Polygon');
+          $('#distLineForm').toggle(thisLayerJSON.geometry.type === 'LineString');
         });
         barrButton.addEventListener("click", function(){
-          lineButton.style.borderStyle = "";
-          polygonButton.style.borderStyle = "";
-          markerButton.style.borderStyle = "";
+          allOff();
           document.getElementById('step2').style.display = 'none';
           document.getElementById('step3').style.display = 'block';
-          $('#barrierForm').toggle(thisLayer.geometry.type === 'LineString');
+          currForm = $('#barrierForm');
+          $('#barrierForm').toggle(thisLayerJSON.geometry.type === 'LineString');
         });
         var sidebar = L.control.sidebar('sidebar').addTo(map);
         
