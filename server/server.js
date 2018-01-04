@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var $ = require('jquery');
 var app = module.exports = loopback();
 var session = require('client-sessions');
-require('shpjs');
 var path = require('path');
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');

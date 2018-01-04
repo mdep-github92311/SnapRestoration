@@ -12,7 +12,7 @@ $(document).ready(function () {
   var day = ("0" + now.getDate()).slice(-2);
   var month = ("0" + (now.getMonth() + 1)).slice(-2);
   var today = now.getFullYear()+"-"+(month)+"-"+(day);
-  for (var ii = 0; ii < x.length; ii++) {
+  for (var ii = 0; ii < dateEl.length; ii++) {
     dateEl[ii].value = today;
   }
   
@@ -83,9 +83,9 @@ $(document).ready(function () {
         $('#distLineFormEdit').toggle(
           dataType === 'distLines'
         );
-        /*$("#restoPointEditDrawButton").on("click", function(event) {
-          
-        });*/
+        $("#restoPointEditDrawButton").on("click", function(event) {
+          //do something
+        });
         $("#restoPointEditButton").on("click", function(event) {
           const formData = collectData('#restoPointFormEdit');
           db.restoPointSub.toArray(function (records) {
