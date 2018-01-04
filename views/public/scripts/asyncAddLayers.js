@@ -307,15 +307,17 @@ async function getLayers() {
 
       await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 20;
+        count += 5;
       }),
       //createLayer('/public/geoJSON/roads.zip', 'Roads'),
       
       db.roads.count(function (records) { 
         if (records > 0) {
-          db.roads.toArray(function(data) { createLayer(data, 'Roads')});
+          db.roads.toArray(function(data) { 
+            createLayer(data, 'Roads')
+            count += 15;
+          });
           console.log("cached data loaded");
-          count += 15;
         }
         else {
           $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
@@ -340,9 +342,12 @@ async function getLayers() {
       
       db.soilVuln.count(function (records) { 
         if (records > 0) {
-          db.soilVuln.toArray(function(data) { createLayer(data, 'Soil Vulnerability')});
+          db.soilVuln.toArray(function(data) { 
+            createLayer(data, 'Soil Vulnerability');
+            count += 10;
+          });
           console.log("cached data loaded");
-          count += 10;
+          
         }
         else {
           $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
@@ -376,7 +381,10 @@ async function getLayers() {
       
       db.snapExtent.count(function (records) { 
         if (records > 0) {
-          db.snapExtent.toArray(function(data) { createLayer(data, 'Snap Extent')});
+          db.snapExtent.toArray(function(data) { 
+            createLayer(data, 'Snap Extent');
+            count += 5;
+          });
           console.log("cached snapExtent loaded");
         }
         else {
@@ -390,17 +398,20 @@ async function getLayers() {
                 console.error ("Some snapExtent did not succeed. However, " +
                    100000-e.failures.length + " snapExtent was added successfully");
             });
+            count += 5;
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
-        count += 5;
       }),
       
       db.blmRegion.count(function (records) { 
         if (records > 0) {
-          db.blmRegion.toArray(function(data) { createLayer(data, 'BLM')});
+          db.blmRegion.toArray(function(data) { 
+            createLayer(data, 'BLM');
+            count += 5;
+          });
           console.log("cached blmRegion loaded");
         }
         else {
@@ -414,17 +425,20 @@ async function getLayers() {
                 console.error ("Some blmRegion did not succeed. However, " +
                    100000-e.failures.length + " blmRegion was added successfully");
             });
+            count += 5;
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
-        count += 5;
       }),
       
       db.fsRegion.count(function (records) { 
         if (records > 0) {
-          db.fsRegion.toArray(function(data) { createLayer(data, 'FS Regions')});
+          db.fsRegion.toArray(function(data) { 
+            createLayer(data, 'FS Regions');
+            count += 5;
+          });
           console.log("cached fsRegion loaded");
         }
         else {
@@ -438,17 +452,20 @@ async function getLayers() {
                 console.error ("Some FS Regions did not succeed. However, " +
                    100000-e.failures.length + " FS Regions was added successfully");
             });
+            count += 5;
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
-        count += 5;
       }),
       
       db.mdepBound.count(function (records) { 
         if (records > 0) {
-          db.mdepBound.toArray(function(data) { createLayer(data, 'MDEP Boundary')});
+          db.mdepBound.toArray(function(data) { 
+            createLayer(data, 'MDEP Boundary');
+            count += 5;
+          });
           console.log("cached mdepBound loaded");
         }
         else {
@@ -462,17 +479,20 @@ async function getLayers() {
                 console.error ("Some MDEP Boundary did not succeed. However, " +
                    100000-e.failures.length + " MDEP Boundary was added successfully");
             });
+            count += 5;
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
-        count += 5;
       }),
       
       db.mdiBound.count(function (records) { 
         if (records > 0) {
-          db.mdiBound.toArray(function(data) { createLayer(data, 'MDI Boundary')});
+          db.mdiBound.toArray(function(data) { 
+            createLayer(data, 'MDI Boundary');
+            count += 5;
+          });
           console.log("cached MDI Boundary loaded");
         }
         else {
@@ -486,17 +506,20 @@ async function getLayers() {
                 console.error ("Some MDI Boundary did not succeed. However, " +
                    100000-e.failures.length + " MDI Boundary was added successfully");
             });
+            count += 5;
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
-        count += 5;
       }),
       
       db.nvCounties.count(function (records) { 
         if (records > 0) {
-          db.nvCounties.toArray(function(data) { createLayer(data, 'Nevada Counties')});
+          db.nvCounties.toArray(function(data) { 
+            createLayer(data, 'Nevada Counties');
+            count += 5;
+          });
           console.log("cached Nevada Counties loaded");
         }
         else {
@@ -510,12 +533,12 @@ async function getLayers() {
                 console.error ("Some Nevada Counties did not succeed. However, " +
                    100000-e.failures.length + " Nevada Counties was added successfully");
             });
+            count += 5;
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
-        count += 5;
       })
     ).then(function () {
       //$.LoadingOverlay("hide");
