@@ -307,10 +307,10 @@ async function getLayers() {
 
       await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 35;
+        count += 20;
       }),
-      createLayer('/public/geoJSON/roads.zip', 'Roads'),
-      /*
+      //createLayer('/public/geoJSON/roads.zip', 'Roads'),
+      
       db.roads.count(function (records) { 
         if (records > 0) {
           db.roads.toArray(function(data) { createLayer(data, 'Roads')});
@@ -336,7 +336,7 @@ async function getLayers() {
           })                      
         }
       }),
-      */
+      
       
       db.soilVuln.count(function (records) { 
         if (records > 0) {

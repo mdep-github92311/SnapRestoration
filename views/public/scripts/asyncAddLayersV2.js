@@ -429,9 +429,8 @@ var getLayers = function () {
 
           case 28:
             _context2.t7 = _context2.sent;
-            _context2.t8 = createLayer('/public/geoJSON/roads.zip', 'Roads');
-            _context2.t9 =
-            /*
+            _context2.t8 = //createLayer('/public/geoJSON/roads.zip', 'Roads');
+            
             db.roads.count(function (records) { 
               if (records > 0) {
                 db.roads.toArray(function(data) { createLayer(data, 'Roads')});
@@ -456,9 +455,9 @@ var getLayers = function () {
                   console.log(JSON.stringify(jqXHR));
                 })                      
               }
-            }),
-            */
-
+            });
+            
+            _context2.t9 =
             db.soilVuln.count(function (records) {
               if (records > 0) {
                 db.soilVuln.toArray(function (data) {

@@ -9,6 +9,7 @@ html
     link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
     link(rel='stylesheet', href='/public/css/sidebarV2.css')
+    link(rel='stylesheet', href='/public/css/leaflet-topCenter.css')
     script(src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous")
@@ -22,6 +23,7 @@ html
     script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
     script(src='/public/scripts/leaflet.shapefile.js')
     script(src='/public/scripts/formDIV.js')
+    script(src='/public/scripts/leaflet-topCenter.js')
     //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
     
     //script(src='https://unpkg.com/leaflet-sidebar')
@@ -192,6 +194,9 @@ html
       #delShapeB {
         display:none;
       }
+      #step1Drawing {
+        display:none;
+      }
       #step2 {
         display:none;
       }
@@ -210,7 +215,11 @@ html
             border: 1px solid black;
             border-collapse: collapse;
             text-align: center;
-        }
+      }
+      
+      .drawingController {
+        display: none;
+      }
     body
     
       #header
@@ -453,10 +462,41 @@ html
               }
             }
           };
-
+          
+          L.Control.DrawingController = L.Control.extend({
+              constructor() {
+                var button = null;
+              },
+              onAdd: function(map) {
+                  button = L.DomUtil.create('button', 'drawingController');
+                  button.innerHTML = 'Insert Value';
+                  button.style.width = '100px';
+                  button.style.zIndex = 2000;
+                  return button;
+              },
+              onRemove: function(map) {
+                  // Nothing to do here
+              },
+              setVal: function(val, id) {
+                button.innerHTML = val;
+                button.id = id;
+              },
+              getButton: function() {
+                return button;
+              }
+          });
+          
+          L.control.drawingController = function(opts) {
+              return new L.Control.DrawingController(opts);
+          }
+          var undoButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          undoButton1.setVal('Undo Last', 'undoDraw');
+          var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          compButton1.setVal('Finish Drawing', 'finishDraw');
+          
           var drawControl = new L.Control.Draw(options);
           //map.addControl(drawControl);
-
+          L.control.zoom({position: 'topright'}).addTo(map);
           var thisLayer
           
 
@@ -467,6 +507,7 @@ html
             console.log(thisLayer);
             //toggleButtons();
             
+            turnOffTools();
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
             if (barrButton != null) {
@@ -540,11 +581,20 @@ html
               button#drawMarkerB.drawControl2
                 | Marker
               br
+            #step1Drawing
+              button#backStep1
+                | Back
               button#editShapeB.drawControl2
                 | Edit
               br
               button#delShapeB.drawControl2
                 | Delete
+              br
+              button#undoB.drawControl2
+                | Undo
+              br
+              button#compB.drawControl2
+                | Complete
               br
             #step2
               h1 Select a feature type:
@@ -591,33 +641,66 @@ html
         var restButton = document.getElementById("restButton");
         var distButton = document.getElementById("distButton");
         var barrButton = document.getElementById("barrButton");
+        var undoDrawButton = document.getElementById("undoDraw");
+        var finDrawButton = document.getElementById("finishDraw");
+        
+        var undoButton = document.getElementById("undoB");
+        var compButton = document.getElementById("compB");
+        
         var drawLine = new L.Draw.Polyline(map, drawControl.options.polyline);
         var drawPoly = new L.Draw.Polygon(map, drawControl.options.polygon);
         var drawMark = new L.Draw.Marker(map, drawControl.options.marker);
         
-        lineButton.addEventListener("click", function(){
-            lineButton.style.borderStyle = "inset";
+        var currShape = null;
+        function allOff() {
+            lineButton.style.borderStyle = "";
             polygonButton.style.borderStyle = "";
             markerButton.style.borderStyle = "";
-            drawLine.enable();
+            drawLine.disable();
             drawPoly.disable();
             drawMark.disable();
+        }
+        
+        function turnOnTools() {
+          var myElements = document.querySelectorAll(".drawingController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "block";
+          }
+        }
+        function turnOffTools() {
+          var myElements = document.querySelectorAll(".drawingController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "none";
+          }
+        }
+        lineButton.addEventListener("click", function(){
+            allOff();
+            lineButton.style.borderStyle = "inset";
+            drawLine.enable();
+            currShape = drawLine;
+            turnOnTools();
         });
         polygonButton.addEventListener("click", function(){
-            lineButton.style.borderStyle = "";
+            allOff();
             polygonButton.style.borderStyle = "inset";
-            markerButton.style.borderStyle = "";
-            drawLine.disable();
             drawPoly.enable();
-            drawMark.disable();
+            currShape = drawPoly;
+            turnOnTools();
         });
         markerButton.addEventListener("click", function(){
-            lineButton.style.borderStyle = "";
-            polygonButton.style.borderStyle = "";
+            allOff();
             markerButton.style.borderStyle = "inset";
-            drawLine.disable();
-            drawPoly.disable();
             drawMark.enable();
+            currShape = drawMark;
+            turnOnTools();
+        });
+        undoDrawButton.addEventListener("click", function(){ 
+          currShape.deleteLastVertex();
+          currShape.deleteLastVertex();
+        });
+        finDrawButton.addEventListener("click", function(){ 
+          currShape.deleteLastVertex();
+          currShape.completeShape();
         });
         editButton.addEventListener("click", function(){
             new L.EditToolbar.Edit(map, {
