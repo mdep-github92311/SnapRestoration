@@ -209,7 +209,7 @@ function onEachRestoPointEdit(feature, layer) {
     var currPos = layer.getLatLng();
     $("#restoPointEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLng();
-        console.log(layer)
+        console.log(layer.toGeoJSON())
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -219,8 +219,8 @@ function onEachRestoPointEdit(feature, layer) {
         turnOffEditTools();
     });
     $("#saveDraw").on("click", function() {
-        currPos = layer.getLatLng();
         layer.editing.disable();
+        currPos = layer.getLatLng();
         turnOffEditTools();
     });
         
