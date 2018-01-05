@@ -104,38 +104,15 @@ $(document).ready(function () {
         $('#distLineFormEdit').toggle(
           dataType === 'distLines'
         );
-        $("#restoPointEditButton").on("click", function(event) {
-          const formData = collectData('#restoPointFormEdit');
-          db.restoPointSub.toArray(function (records) {
-            const id = records[index].properties.gid;
-            const newRecord = records[index];
-            newRecord.properties = formData;
-            newRecord.properties.geom = records[index].properties.geom
-            db.restoPointSub.delete(id);
-            db.restoPointSub.add(newRecord);
-            /*db.restoPointSub.clear();
-            db.restoPointSub.bulkPut(records)
-            .then(function (data) {
-              console.log('Form updated: ' + data);
-            })
-            .catch(Dexie.BulkError, function (err) {
-              console.warn(err);
-            });*/
-          });
-          $("#editSaved").css("display", "none");
-          $("#savedContent").css("display", "block");
-          loadSubs();
-        });
         
-        $("#restoPolyEditButton").on("click", function(event) {
-          const formData = collectData('#restoPolyFormEdit');
-          db.restoPolySub.toArray(function (records) {
+        function saveEditedForm(db, formData) {
+          db.toArray(function (records) {
             const id = records[index].properties.gid;
             const newRecord = records[index];
             newRecord.properties = formData;
             newRecord.properties.geom = records[index].properties.geom
-            db.restoPolySub.delete(id);
-            db.restoPolySub.add(newRecord)
+            db.delete(id);
+            db.add(newRecord)
             .then(function (data) {
               console.log('Form updated: ' + data);
             })
@@ -146,109 +123,29 @@ $(document).ready(function () {
           $("#editSaved").css("display", "none");
           $("#savedContent").css("display", "block");
           loadSubs();
+        }
+        
+        $("#restoPointEditButton").on("click", function(event) {
+          saveEditedForm(db.restoPointSub, collectData('#restoPointFormEdit'));
+        });
+        $("#restoPolyEditButton").on("click", function(event) {
+          saveEditedForm(db.restoPolySub, collectData('#restoPolyFormEdit'));
         });
         $("#restoLineEditButton").on("click", function(event) {
-          const formData = collectData('#restoLineFormEdit');
-          db.restoLineSub.toArray(function (records) {
-            const id = records[index].properties.gid;
-            const newRecord = records[index];
-            newRecord.properties = formData;
-            newRecord.properties.geom = records[index].properties.geom
-            db.restoLineSub.delete(id);
-            db.restoLineSub.add(newRecord)
-            .then(function (data) {
-              console.log('Form updated: ' + data);
-            })
-            .catch(Dexie.BulkError, function (err) {
-              console.warn(err);
-            });
-          });
-          $("#editSaved").css("display", "none");
-          $("#savedContent").css("display", "block");
-          loadSubs();
+          saveEditedForm(db.restoLineSub, collectData('#restoLineFormEdit'));
         });
         $("#barrierEditButton").on("click", function(event) {
-          const formData = collectData('#barrierFormEdit');
-          db.barrierSub.toArray(function (records) {
-            const id = records[index].properties.gid;
-            const newRecord = records[index];
-            newRecord.properties = formData;
-            newRecord.properties.geom = records[index].properties.geom
-            db.barrierSub.delete(id);
-            db.barrierSub.add(newRecord)
-            .then(function (data) {
-              console.log('Form updated: ' + data);
-            })
-            .catch(Dexie.BulkError, function (err) {
-              console.warn(err);
-            });
-          });
-          $("#editSaved").css("display", "none");
-          $("#savedContent").css("display", "block");
-          loadSubs();
+          saveEditedForm(db.barrierSub, collectData('#barrierFormEdit'));
         });
         $("#distPointEditButton").on("click", function(event) {
-          const formData = collectData('#distPointFormEdit');
-          db.distPointSub.toArray(function (records) {
-            const id = records[index].properties.gid;
-            const newRecord = records[index];
-            newRecord.properties = formData;
-            newRecord.properties.geom = records[index].properties.geom
-            db.distPointSub.delete(id);
-            db.distPointSub.add(newRecord)
-            .then(function (data) {
-              console.log('Form updated: ' + data);
-            })
-            .catch(Dexie.BulkError, function (err) {
-              console.warn(err);
-            });
-          });
-          $("#editSaved").css("display", "none");
-          $("#savedContent").css("display", "block");
-          loadSubs();
+          saveEditedForm(db.distPointSub, collectData('#distPointFormEdit'));
         });
         $("#distPolyEditButton").on("click", function(event) {
-          const formData = collectData('#distPolyFormEdit');
-          db.distPolySub.toArray(function (records) {
-            const id = records[index].properties.gid;
-            const newRecord = records[index];
-            newRecord.properties = formData;
-            newRecord.properties.geom = records[index].properties.geom
-            db.distPolySub.delete(id);
-            db.distPolySub.add(newRecord)
-            .then(function (data) {
-              console.log('Form updated: ' + data);
-            })
-            .catch(Dexie.BulkError, function (err) {
-              console.warn(err);
-            });
-          });
-          $("#editSaved").css("display", "none");
-          $("#savedContent").css("display", "block");
-          loadSubs();
+          saveEditedForm(db.distPolySub, collectData('#distPolyFormEdit'));
         });
         $("#distLineEditButton").on("click", function(event) {
-          const formData = collectData('#distLineFormEdit');
-          db.distLineSub.toArray(function (records) {
-            const id = records[index].properties.gid;
-            const newRecord = records[index];
-            newRecord.properties = formData;
-            newRecord.properties.geom = records[index].properties.geom
-            db.distLineSub.delete(id);
-            db.distLineSub.add(newRecord)
-            .then(function (data) {
-              console.log('Form updated: ' + data);
-            })
-            .catch(Dexie.BulkError, function (err) {
-              console.warn(err);
-            });
-          });
-          $("#editSaved").css("display", "none");
-          $("#savedContent").css("display", "block");
-          loadSubs();
+          saveEditedForm(db.distLineSub, collectData('#distLineFormEdit'));
         });
-                //this sets the type of edit so the correct record is editted
-              
     }, 400);
   }
   //$(sync).appendTo('#sidebar2');
