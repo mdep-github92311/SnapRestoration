@@ -59,9 +59,30 @@ $(document).ready(function () {
                 $el.val(val);
             }
         }); 
-        //console.log("the data --");
-        //console.log(data);
-                      
+        switch (dataType) {
+          case 'restoPoints':
+            createLayerEdit(data, 'Restoration Points')
+            break;
+          case 'restoPolys':
+            createLayerEdit(data, 'Restoration Polygon')
+            break;
+          case 'restoLines':
+            createLayerEdit(data, 'Restoration Lines')
+            break;
+          case 'barriers':
+            createLayerEdit(data, 'Barrier')
+            break;
+          case 'distPoints':
+            createLayerEdit(data, 'Disturbance Points')
+            break;
+          case 'distPolys':
+            createLayerEdit(data, 'Disturbance Polygon')
+            break;
+          case 'distLines':
+            createLayerEdit(data, 'Disturbance Lines')
+            break;
+          
+        }
         $('#restoPointFormEdit').toggle(
           dataType === 'restoPoints'
         );
@@ -83,9 +104,6 @@ $(document).ready(function () {
         $('#distLineFormEdit').toggle(
           dataType === 'distLines'
         );
-        $("#restoPointEditDrawButton").on("click", function(event) {
-          //do something
-        });
         $("#restoPointEditButton").on("click", function(event) {
           const formData = collectData('#restoPointFormEdit');
           db.restoPointSub.toArray(function (records) {

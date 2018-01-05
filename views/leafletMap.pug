@@ -31,6 +31,7 @@ html
     script(src='https://unpkg.com/leaflet-sidebar-v2@2.0.0')
     
     script(src='/public/scripts/featureStyles.js')
+    script(src='/public/scripts/featureStylesEdit.js')
     script(src='/public/scripts/styledLayerControl.js')
     //link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")
     
@@ -218,6 +219,9 @@ html
       }
       
       .drawingController {
+        display: none;
+      }
+      .drawingEditController {
         display: none;
       }
     body
@@ -483,6 +487,9 @@ html
               },
               getButton: function() {
                 return button;
+              },
+              setClass: function(newClass) {
+                button.className = newClass + ' leaflet-control';
               }
           });
           
@@ -493,6 +500,12 @@ html
           undoButton1.setVal('Undo Last', 'undoDraw');
           var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           compButton1.setVal('Finish Drawing', 'finishDraw');
+          var cancelButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          cancelButton1.setVal('Cancel Edit', 'cancelDraw');
+          cancelButton1.setClass('drawingEditController');
+          var saveButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          saveButton1.setVal('Save Edit', 'saveDraw');
+          saveButton1.setClass('drawingEditController');
           
           var drawControl = new L.Control.Draw(options);
           //map.addControl(drawControl);
@@ -673,6 +686,18 @@ html
         }
         function turnOffTools() {
           var myElements = document.querySelectorAll(".drawingController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "none";
+          }
+        }
+        function turnOnEditTools() {
+          var myElements = document.querySelectorAll(".drawingEditController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "block";
+          }
+        }
+        function turnOffEditTools() {
+          var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
