@@ -172,11 +172,11 @@ function setToolEvents(layer) {
 
 function onEachBarrierEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#barrierEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -189,11 +189,11 @@ function onEachBarrierEdit(feature, layer) {
 
 function onEachDistLineEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#distLineEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -224,11 +224,11 @@ function onEachDistPointEdit(feature, layer) {
 
 function onEachDistPolyEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#distPolyEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -242,11 +242,11 @@ function onEachDistPolyEdit(feature, layer) {
 
 function onEachDistPolyCentEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#distPolyCentEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -259,11 +259,11 @@ function onEachDistPolyCentEdit(feature, layer) {
 
 function onEachRestoPolyEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#restoPolyEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -295,11 +295,11 @@ function onEachRestoPointEdit(feature, layer) {
 
 function onEachRestoPolyCentEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#restoPolyCentEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -312,11 +312,11 @@ function onEachRestoPolyCentEdit(feature, layer) {
 
 function onEachRestoLineEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    currPos = layer.getLatLng();
+    currPos = layer.getLatLngs();
     setToolEvents(layer);
     $("#restoLineEditDrawButton").on("click", function(event) {
         newShapeGeom = layer.toGeoJSON().geometry;
-        currPos = layer.getLatLng();
+        currPos = layer.getLatLngs();
         layer.editing.enable();
         turnOnEditTools();
     });
