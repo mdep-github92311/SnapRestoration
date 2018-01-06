@@ -1,5 +1,6 @@
 "use strict";
-
+var newShapeGeom = null;
+var currPos = null;
 // creating a style function for points in the map based on the agency number
 function myStylePointsEdit(feature) {
     switch (feature.properties.agency) {
@@ -146,8 +147,39 @@ function myStyleRestoPolyEdit(feature) {
 function pointToLayerEdit(feature, latlng) {
     return new L.Circle(latlng, 300);
 }
+
+
+function setToolEvents(layer) {
+    $("#cancelDraw").on("click", function() {
+        layer.editing.disable();
+        if (layer.toGeoJSON().geometry.type == 'Point')
+            layer.setLatLng(currPos);
+        else
+            layer.setLatLngs(currPos);
+        turnOffEditTools();
+    });
+    $("#saveDraw").on("click", function() {
+        layer.editing.disable();
+        if (layer.toGeoJSON().geometry.type == 'Point')
+            currPos = layer.getLatLng();
+        else
+            currPos = layer.getLatLngs();
+        newShapeGeom = layer.toGeoJSON().geometry;
+        //setPos(db.restoPointSub, layer.toGeoJSON().geometry, layer.toGeoJSON().properties.gid);
+        turnOffEditTools();
+    });
+}
+
 function onEachBarrierEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#barrierEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -157,6 +189,14 @@ function onEachBarrierEdit(feature, layer) {
 
 function onEachDistLineEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#distLineEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -167,6 +207,14 @@ function onEachDistLineEdit(feature, layer) {
 
 function onEachDistPointEdit(feature, layer) {
     map.flyTo(layer.getLatLng(),11, { maxZoom: 11 });
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#distPointEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -176,6 +224,14 @@ function onEachDistPointEdit(feature, layer) {
 
 function onEachDistPolyEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#distPolyEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -186,6 +242,14 @@ function onEachDistPolyEdit(feature, layer) {
 
 function onEachDistPolyCentEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#distPolyCentEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -195,7 +259,14 @@ function onEachDistPolyCentEdit(feature, layer) {
 
 function onEachRestoPolyEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
-    
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#restoPolyEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -206,24 +277,15 @@ function onEachRestoPolyEdit(feature, layer) {
 
 function onEachRestoPointEdit(feature, layer) {
     map.flyTo(layer.getLatLng(),11, { maxZoom: 11 });
-    var currPos = layer.getLatLng();
+    //console.log(layer);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
     $("#restoPointEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
         currPos = layer.getLatLng();
-        console.log(layer.toGeoJSON())
         layer.editing.enable();
         turnOnEditTools();
     });
-    $("#cancelDraw").on("click", function() {
-        layer.editing.disable();
-        layer.setLatLng(currPos);
-        turnOffEditTools();
-    });
-    $("#saveDraw").on("click", function() {
-        layer.editing.disable();
-        currPos = layer.getLatLng();
-        turnOffEditTools();
-    });
-        
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -233,6 +295,14 @@ function onEachRestoPointEdit(feature, layer) {
 
 function onEachRestoPolyCentEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#restoPolyCentEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
@@ -242,6 +312,14 @@ function onEachRestoPolyCentEdit(feature, layer) {
 
 function onEachRestoLineEdit(feature, layer) {
     setTimeout(function(){ map.flyTo(layer.getCenter(),11, { maxZoom: 11 }); }, 100);
+    currPos = layer.getLatLng();
+    setToolEvents(layer);
+    $("#restoLineEditDrawButton").on("click", function(event) {
+        newShapeGeom = layer.toGeoJSON().geometry;
+        currPos = layer.getLatLng();
+        layer.editing.enable();
+        turnOnEditTools();
+    });
     $(layer).on('click', function () {
         // opens the saved subs tab on sidebar when clicked
         sidebar.open('savedSubs');
