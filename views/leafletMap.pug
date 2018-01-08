@@ -501,10 +501,10 @@ html
           var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           compButton1.setVal('Finish Drawing', 'finishDraw');
           var cancelButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          cancelButton1.setVal('Cancel Edit', 'cancelDraw');
+          cancelButton1.setVal('Undo Draw', 'cancelDraw');
           cancelButton1.setClass('drawingEditController');
           var saveButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          saveButton1.setVal('Save Edit', 'saveDraw');
+          saveButton1.setVal('Save Redraw', 'saveDraw');
           saveButton1.setClass('drawingEditController');
           
           var drawControl = new L.Control.Draw(options);
