@@ -424,53 +424,50 @@ var getLayers = function () {
             _context2.next = 28;
             return $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Lines');
-              count += 35;
+              count += 5;
             });
 
           case 28:
             _context2.t7 = _context2.sent;
-            _context2.t8 = createLayer('/public/geoJSON/roads.zip', 'Roads');
-            _context2.t9 =
-            /*
-            db.roads.count(function (records) { 
-              if (records > 0) {
-                db.roads.toArray(function(data) { createLayer(data, 'Roads')});
-                console.log("cached data loaded");
-                count += 15;
-              }
-              else {
-                $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
-                  createLayer(data, 'Roads');
-                  console.log(data);
-                  db.roads.bulkAdd(data.features).then(function(lastKey) {
-                      console.log("Done caching roads");
-                  }).catch(Dexie.BulkError, function (e) {
-                      // Explicitely catching the bulkAdd() operation makes those successful
-                      // additions commit despite that there were errors.
-                      console.error ("Some roads did not succeed. However, " +
-                         100000-e.failures.length + " roads was added successfully");
-                  });
-                  count += 15;
-                })
-                .fail(function(jqXHR, textStatus, error) {
-                  console.log(JSON.stringify(jqXHR));
-                })                      
-              }
-            }),
-            */
+            _context2.t8 =
+            //createLayer('/public/geoJSON/roads.zip', 'Roads'),
 
-            db.soilVuln.count(function (records) {
+            dbCache.roads.count(function (records) {
               if (records > 0) {
-                db.soilVuln.toArray(function (data) {
-                  createLayer(data, 'Soil Vulnerability');
+                dbCache.roads.toArray(function (data) {
+                  createLayer(data, 'Roads');
+                  count += 15;
                 });
                 console.log("cached data loaded");
-                count += 10;
+              } else {
+                $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
+                  createLayer(data, 'Roads');
+                  //console.log(data);
+                  dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
+                    console.log("Done caching roads");
+                  }).catch(Dexie.BulkError, function (e) {
+                    // Explicitely catching the bulkAdd() operation makes those successful
+                    // additions commit despite that there were errors.
+                    console.error("Some roads did not succeed. However, " + 100000 - e.failures.length + " roads was added successfully");
+                  });
+                  count += 15;
+                }).fail(function (jqXHR, textStatus, error) {
+                  console.log(JSON.stringify(jqXHR));
+                });
+              }
+            });
+            _context2.t9 = dbCache.soilVuln.count(function (records) {
+              if (records > 0) {
+                dbCache.soilVuln.toArray(function (data) {
+                  createLayer(data, 'Soil Vulnerability');
+                  count += 10;
+                });
+                console.log("cached data loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
                   createLayer(data, 'Soil Vulnerability');
-                  console.log(data);
-                  db.soilVuln.bulkAdd(data.features).then(function (lastKey) {
+                  //console.log(data);
+                  dbCache.soilVuln.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching soilVuln");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
@@ -495,142 +492,148 @@ var getLayers = function () {
               createLayer(data[0].row_to_json, 'Restoration Poly Cent');
               count += 5;
             });
-            _context2.t12 = db.snapExtent.count(function (records) {
+            _context2.t12 = dbCache.snapExtent.count(function (records) {
               if (records > 0) {
-                db.snapExtent.toArray(function (data) {
+                dbCache.snapExtent.toArray(function (data) {
                   createLayer(data, 'Snap Extent');
+                  count += 5;
                 });
                 console.log("cached snapExtent loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
                   createLayer(data, 'Snap Extent');
-                  db.snapExtent.bulkAdd(data.features).then(function (lastKey) {
+                  dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching snapExtent");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
                     // additions commit despite that there were errors.
                     console.error("Some snapExtent did not succeed. However, " + 100000 - e.failures.length + " snapExtent was added successfully");
                   });
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
-              count += 5;
             });
-            _context2.t13 = db.blmRegion.count(function (records) {
+            _context2.t13 = dbCache.blmRegion.count(function (records) {
               if (records > 0) {
-                db.blmRegion.toArray(function (data) {
+                dbCache.blmRegion.toArray(function (data) {
                   createLayer(data, 'BLM');
+                  count += 5;
                 });
                 console.log("cached blmRegion loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/blmRegions.json', function (data) {
                   createLayer(data, 'BLM');
-                  db.blmRegion.bulkAdd(data.features).then(function (lastKey) {
+                  dbCache.blmRegion.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching BLM");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
                     // additions commit despite that there were errors.
                     console.error("Some blmRegion did not succeed. However, " + 100000 - e.failures.length + " blmRegion was added successfully");
                   });
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
-              count += 5;
             });
-            _context2.t14 = db.fsRegion.count(function (records) {
+            _context2.t14 = dbCache.fsRegion.count(function (records) {
               if (records > 0) {
-                db.fsRegion.toArray(function (data) {
+                dbCache.fsRegion.toArray(function (data) {
                   createLayer(data, 'FS Regions');
+                  count += 5;
                 });
                 console.log("cached fsRegion loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/fsRegions.json', function (data) {
                   createLayer(data, 'FS Regions');
-                  db.fsRegion.bulkAdd(data.features).then(function (lastKey) {
+                  dbCache.fsRegion.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching FS Regions");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
                     // additions commit despite that there were errors.
                     console.error("Some FS Regions did not succeed. However, " + 100000 - e.failures.length + " FS Regions was added successfully");
                   });
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
-              count += 5;
             });
-            _context2.t15 = db.mdepBound.count(function (records) {
+            _context2.t15 = dbCache.mdepBound.count(function (records) {
               if (records > 0) {
-                db.mdepBound.toArray(function (data) {
+                dbCache.mdepBound.toArray(function (data) {
                   createLayer(data, 'MDEP Boundary');
+                  count += 5;
                 });
                 console.log("cached mdepBound loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/mdepBoundry.json', function (data) {
                   createLayer(data, 'MDEP Boundary');
-                  db.mdepBound.bulkAdd(data.features).then(function (lastKey) {
+                  dbCache.mdepBound.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching MDEP Boundary");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
                     // additions commit despite that there were errors.
                     console.error("Some MDEP Boundary did not succeed. However, " + 100000 - e.failures.length + " MDEP Boundary was added successfully");
                   });
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
-              count += 5;
             });
-            _context2.t16 = db.mdiBound.count(function (records) {
+            _context2.t16 = dbCache.mdiBound.count(function (records) {
               if (records > 0) {
-                db.mdiBound.toArray(function (data) {
+                dbCache.mdiBound.toArray(function (data) {
                   createLayer(data, 'MDI Boundary');
+                  count += 5;
                 });
                 console.log("cached MDI Boundary loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/mdiBoundry.json', function (data) {
                   createLayer(data, 'MDI Boundary');
-                  db.mdiBound.bulkAdd(data.features).then(function (lastKey) {
+                  dbCache.mdiBound.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching MDI Boundary");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
                     // additions commit despite that there were errors.
                     console.error("Some MDI Boundary did not succeed. However, " + 100000 - e.failures.length + " MDI Boundary was added successfully");
                   });
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
-              count += 5;
             });
-            _context2.t17 = db.nvCounties.count(function (records) {
+            _context2.t17 = dbCache.nvCounties.count(function (records) {
               if (records > 0) {
-                db.nvCounties.toArray(function (data) {
+                dbCache.nvCounties.toArray(function (data) {
                   createLayer(data, 'Nevada Counties');
+                  count += 5;
                 });
                 console.log("cached Nevada Counties loaded");
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/nvCounties.json', function (data) {
                   createLayer(data, 'Nevada Counties');
-                  db.nvCounties.bulkAdd(data.features).then(function (lastKey) {
+                  dbCache.nvCounties.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching Nevada Counties");
                   }).catch(Dexie.BulkError, function (e) {
                     // Explicitely catching the bulkAdd() operation makes those successful
                     // additions commit despite that there were errors.
                     console.error("Some Nevada Counties did not succeed. However, " + 100000 - e.failures.length + " Nevada Counties was added successfully");
                   });
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
-              count += 5;
             });
 
             _context2.t18 = function () {
               //$.LoadingOverlay("hide");
-              console.log(count);
+              //console.log(count);
             };
 
             _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17).then(_context2.t18);
@@ -659,9 +662,9 @@ var getLayers = function () {
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var db = new Dexie('CachedData');
+var dbCache = new Dexie('CachedData');
 
-db.version(1).stores({
+dbCache.version(1).stores({
   blmRegion: 'properties.gid, type, geometry',
   fsRegion: 'properties.gid, type, geometry',
   mdepBound: 'properties.gid, type, geometry',
@@ -671,9 +674,9 @@ db.version(1).stores({
   soilVuln: 'properties.gid, type, geometry',
   snapExtent: 'properties.gid, type, geometry'
 });
-db.open().then(function (db) {
-  console.log('Opened CachedData DB');
-  //console.log(db);
+dbCache.open().then(function (dbCache) {
+  console.log('Opened CachedData dbCache');
+  //console.log(dbCache);
 }).catch(function (err) {
   console.log(err);
 });

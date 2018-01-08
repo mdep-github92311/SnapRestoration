@@ -284,15 +284,15 @@ function onEachDistPoly(feature, layer) {
 }
 
 function onEachDistPolyCent(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        //console.log(prop + ' : ' + feature.properties[prop]);
-        if (prop == 'agency') {
-            popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-        } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+        var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            //console.log(prop + ' : ' + feature.properties[prop]);
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+        }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
@@ -329,15 +329,15 @@ function onEachRestoPoly(feature, layer) {
 }
 
 function onEachRestoPoint(feature, layer) {
-    var popUpContent = [];
-    // iterating through the "properties" so it can be displayed in the pop-ups
-    for (var prop in feature.properties) {
-        if (prop == 'agency') {
-            //console.log(prop + ' : ' + feature.properties[prop]);
-            popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-        } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
-    }
     $(layer).on('click', function () {
+        var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if (prop == 'agency') {
+                //console.log(prop + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+        }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         map.panTo(this.getLatLng());
@@ -360,7 +360,7 @@ function onEachRestoPolyCent(feature, layer) {
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
+        map.panTo(this.getCenter());
         $('#sidebar1').empty();
         $("<B><U>Resto Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {

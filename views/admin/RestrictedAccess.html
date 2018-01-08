@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Restricted</title>
+    </head>
+    <body>
+        <h1>Authorization Failed!</h1>
+        <h3>Returning to map in: <span id="timer"></span> seconds</h3>
+    </body>
+    <script>
+        var timer = document.getElementById('timer');
+        var count = 5;
+        timer.innerHTML = count;
+        setInterval(function(){
+            count--;
+            timer.innerHTML = count;
+            if (count < 1) {
+                window.location.href = "/";
+            }
+        }, 1000);
+    </script>
+</html>

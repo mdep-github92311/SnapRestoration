@@ -23,6 +23,7 @@
     "geojson": "^0.4.1",
     "helmet": "^1.3.0",
     "kinto": "^9.0.2",
+    "leaflet-control-topcenter": "git+https://github.com/FCOO/leaflet-control-topcenter.git",
     "loopback": "^3.0.0",
     "loopback-boot": "^2.6.5",
     "loopback-cache": "^0.2.0",
