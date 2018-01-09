@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SNAP Restoration</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/public/css/logo.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+		
+		<style>
+			.container2 { 
+				width: 90%;
+				padding-left: 15px;
+				padding-right: 15px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.footer {
+				padding-left: 5%;
+				padding-right: 5%;
+				margin-left: auto;
+				margin-right: auto;
+				display: block;
+				width: 100%;
+				text-align: center;
+				bottom:0px;
+				padding-bottom: 20px;
+				position: fixed;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+  <nav role="navigation" class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display-->
+      <div class="navbar-header">
+        <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="pull-left">
+          <div class="container">
+            <div class="card">
+              <div class="face face1"></div>
+              <div class="face face2"></div>
+            </div>
+            <ul class="store">
+              <li>
+                <div class="content content1"><img src="/public/css/images/logos/blm.png" width="45px" height="45px" float="left"/></div>
+              </li>
+              <li>
+                <div class="content content2"> <img src="/public/css/images/logos/fs.png" width="38px" height="45px" float="left"/></div>
+              </li>
+              <li>
+                <div class="content content3"> <img src="/public/css/images/logos/fws.png" width="45px" height="45px" float="left"/></div>
+              </li>
+              <li>
+                <div class="content content4">  <img src="/public/css/images/logos/nps.png" width="45px" height="45px" float="left"/></div>
+              </li>
+            </ul>
+          </div>
+          <script>
+            var topLogo = 1;
+            var currLogo = 1;
+            var facingUp = true;
+            function flipLogo(n) {
+              if (topLogo === n) return;
+              // Replace the contents of the current back-face with the contents
+              // of the element that should rotate into view.
+              var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
+              var nextContent = $('.store' + n).html();
+              var nextContent = $('.store li:nth-child(' + n + ')').html();
+              curBackFace.html(nextContent);
+              // Rotate the content
+              $('.card').toggleClass('flipped');
+              topLogo = n;
+              facingUp = !facingUp;
+            }
+            setInterval(function() {
+              flipLogo(currLogo);
+              if(currLogo > 3)
+                currLogo = 1;
+              else
+                currLogo++;
+            }, 5000);
+            $(document).ready(function(){
+              // Add the appropriate content to the initial "front side"
+              var frontFace = $('.face1');
+              var frontContent = $('.store li:first-child').html();
+              frontFace.html(frontContent);
+            });
+          </script></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling-->
+      <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="/admin/Add.html">Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li id="loginTab"><a href="login.html"><b>Login</b></a></li>
+          <li id="logoutTab"><a href="javascript:logout();"><b>Logout</b></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+  <div class="container2">
+    <div class="col-md-12 mg-bt-80">
+                        <div class="header-content">
+                            <h2>No FEAR Act</h2>
+                        </div>
+
+      <p>On May 15, 2002, Congress enacted the ``Notification and Federal Employee Antidiscrimination and Retaliation Act of 2002,'' which is now known as the No FEAR Act. One purpose of the Act is to "require that Federal agencies be accountable for violations of antidiscrimination and whistleblower protection laws." [See Public Law 107-174, Summary.] In support of this purpose, Congress found that "agencies cannot be run effectively if those agencies practice or tolerate discrimination." [See Public Law 107-174, Title I, General Provisions, section 101(1).] The Act also requires agencies to provide this notice to Federal employees, former Federal employees and applicants for Federal employment to inform them of the rights and protections available to them under Federal antidiscrimination and whistleblower protection laws.</p>
+      <p>The intent of the Notification and Federal Employee Anti-discrimination and Retaliation Act of 2002, "No FEAR Act" is that federal agencies will pay more attention to their EEO and whistleblower complaint activity and act more expeditiously to resolve complaints at the administrative level when it is appropriate to do so.   Each agency is required to post on its primary web homepage a link to the data required to be posted under the Act and designate the link and that data as "Equal Opportunity Data to be posted by the No FEAR Act."</p>
+      <p>Department of Defense No FEAR Act website:</p>
+      <p><a href="http://prhome.defense.gov/nofear" target="_blank" class="body_text">http://prhome.defense.gov/nofear</a></p>
+      <p>Department of the Interior No FEAR Act website:</p>
+      <p><a href="http://www.doi.gov/pmb/eeo/no-fear-act.cfm" target="_blank" class="body_text">http://www.doi.gov/pmb/eeo/no-fear-act.cfm</a></p>
+    </div>
+  </div>
+
+		<div class="footer">
+<hr>
+				<div class="footer-link">
+				<a href="privacy-security.html" target="_blank">Privacy & Security &nbsp&nbsp&nbsp</a>
+				<a href="foia.html" target="_blank">FOIA &nbsp&nbsp&nbsp</a>
+				<a href="nofear.html" target="_blank">No Fear Act &nbsp&nbsp&nbsp</a>
+				<a href="license.html" target="_blank">License &nbsp&nbsp&nbsp</a>
+				<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508 &nbsp&nbsp&nbsp </a>
+				<a href="https://www.usa.gov/" target="_blank">USA.gov</a>
+				</div>
+		</div>
+	</body>
+</html>

@@ -17,13 +17,26 @@ html
     script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
     script(src="https://unpkg.com/dexie@latest/dist/dexie.js")
     script(src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript')
+    script(src='https://unpkg.com/pbf@3.0.5/dist/pbf.js')
+
     script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js')
+
     script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
     script(src='/public/scripts/leaflet.shapefile.js')
     script(src='/public/scripts/formDIV.js')
     script(src='/public/scripts/leaflet-topCenter.js')
+    
+    
+    script(src='/public/lib/pako/pako_inflate.min.js')
+    script(src='/public/lib/leaflet/leaflet.ajax.js')
+    script(src='/public/lib/leaflet/leaflet.VectorTile.js')
+    script(src='/public/scripts/leaflet.LayerControl.Include.js')
+    script(src='/public/scripts/leaflet.VectorGrid.mod.js')
+    script(src='/public/scripts/leaflet.mbTiles.js')
     //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
     
     //script(src='https://unpkg.com/leaflet-sidebar')
@@ -358,11 +371,10 @@ html
           map.createPane('Misc').style.zIndex = 340;
 
           L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: '<a href="http://mojavedata.gov/sitemap.html">Site Map</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://mojavedata.gov/security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://mojavedata.gov/foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://mojavedata.gov/nofear.html">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://mojavedata.gov/license.html">License</a>&nbsp;&nbsp;&nbsp;' +
+            attribution: '<a href="/attribution/privacy-security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/nofear.html">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/license.html">License</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
             maxZoom: 18,
