@@ -12,7 +12,7 @@ app.set('view engine', 'pug');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(compression({ threshold: 512 }));
+app.use(compression({ threshold: 0 }));
 app.use(loopback.static(__dirname+'../views'));
 
 app.use(session({
