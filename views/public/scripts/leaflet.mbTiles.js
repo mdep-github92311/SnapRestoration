@@ -132,6 +132,7 @@ L.MBTiles = L.Layer.extend({
 
 			var bufArray = new Uint8Array(purePBF);
 			var pbf = new Pbf(bufArray);
+			//console.log(pbf);
 			var vectorTile = new VectorTile(pbf);
 			 // = this._pbfTile2VectorTile(purePBF);
 
@@ -218,10 +219,11 @@ L.MBTiles = L.Layer.extend({
 		// console.log(tileCoordsKey)
 
 		var tile = this.tileCache.readTile(tileCoordsKey, this.options.storage);
-
+		
 		return tile
 		.then(function(pureTile) {
 			if (pureTile.purePBF !== null) {
+				//console.log(pureTile);
 				return pureTile.purePBF//self._pbfTile2VectorTile(pureTile.purePBF);
 			} else {
 				return {layers: []}
@@ -363,6 +365,7 @@ idb.prototype = {
 		}
 		request.onsuccess = function(){
 			f(request.result, storage);
+			//console.log(this);
 		}
 		request.onupgradeneeded = function(e){
 			for (var i in layerStorage) {

@@ -1,5 +1,3 @@
-'use strict';
-
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var compression = require('compression');
@@ -8,23 +6,14 @@ var $ = require('jquery');
 var app = module.exports = loopback();
 var session = require('client-sessions');
 var path = require('path');
+app.engine('pug', require('pug').__express);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
-app.use(compression({filter: shouldCompress}))
-
-function shouldCompress (req, res) {
-  if (req.headers['x-no-compression']) {
-    // don't compress responses with this request header
-    return false
-  }
-
-  // fallback to standard filter function
-  return compression.filter(req, res)
-}
+app.use(compression({ threshold: 512 }));
+app.use(loopback.static(__dirname+'../views'));
 
 app.use(session({
   cookieName: 'session',

@@ -1,0 +1,12 @@
+{
+    "name": "dist_line.mbtiles", 
+    "format": "pbf", 
+    "description": "dist_line.mbtiles", 
+    "json": "{\"vector_layers\": [ { \"id\": \"dist_line\", \"description\": \"\", \"minzoom\": 10, \"maxzoom\": 10, \"fields\": {\"accessibil\": \"String\", \"agency\": \"Number\", \"comments\": \"String\", \"depth\": \"String\", \"dist_code\": \"String\", \"dist_crust\": \"String\", \"dist_sever\": \"Number\", \"dist_use\": \"String\", \"gid\": \"Number\", \"gps_date\": \"String\", \"km_dist\": \"Number\", \"miles_dist\": \"Number\", \"old_dist_c\": \"String\", \"photo_azim\": \"Number\", \"plant_dama\": \"String\", \"primary_ob\": \"String\", \"qa_qc\": \"String\", \"region\": \"String\", \"shape_leng\": \"Number\", \"site_stabi\": \"String\", \"treated\": \"String\", \"type\": \"String\", \"undist_cru\": \"String\", \"use_freq\": \"String\", \"use_recent\": \"String\", \"visibility\": \"String\", \"width\": \"String\"} } ] }", 
+    "bounds": "-116.012969,35.131045,-113.906342,36.577263", 
+    "minzoom": "10", 
+    "version": "2", 
+    "maxzoom": "10", 
+    "type": "overlay", 
+    "center": "-114.785156,36.173228,10"
+}

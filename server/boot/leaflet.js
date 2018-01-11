@@ -1,6 +1,7 @@
 /**
  * Created by msgis-student on 6/9/2017.
  */
+ 
 function checkAuth(req, res, next) {
   if (!req.session.user_id) {
     res.send('You are not authorized to view this page');
@@ -10,7 +11,6 @@ function checkAuth(req, res, next) {
 }
 
 module.exports = function (app) {
-  // Install a "/ping" route that returns "pong"
   app.get('/', function (req, res) {
     res.render('leafletMap.pug');
   });

@@ -5,6 +5,6 @@
   },
   "local": {
     "connector": "memory",
-    "localStorage": "BarrierSub"
+    //"localStorage": "BarrierSub"
   }
 }

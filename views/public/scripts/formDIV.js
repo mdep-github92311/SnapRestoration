@@ -254,23 +254,6 @@ $(document).ready(function () {
   //   })
   // })
 
-  const db = new Dexie('SubmissionForms');
-
-  db.version(1).stores({
-    barrierSub: 'properties.gid, type, geometry',
-    distLineSub: 'properties.gid, type, geometry',
-    distPointSub: 'properties.gid, type, geometry',
-    distPolySub: 'properties.gid, type, geometry',
-    restoLineSub: 'properties.gid, type, geometry',
-    restoPointSub: 'properties.gid, type, geometry',
-    restoPolySub: 'properties.gid, type, geometry'
-  });
-  db.open().then(function (db) {
-    console.log('Opened Submission Forms DB');
-    //console.log(db);
-  }).catch(function (err) {
-    console.log(err)
-  });
   
   var tableContent = $("#saved");
   var counts = 0;

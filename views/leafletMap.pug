@@ -369,7 +369,8 @@ html
           map.createPane('Regions').style.zIndex = 360;
           map.createPane('Bounds_County').style.zIndex = 350;
           map.createPane('Misc').style.zIndex = 340;
-
+          
+          
           L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: '<a href="/attribution/privacy-security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="/attribution/foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;' +
@@ -381,6 +382,57 @@ html
             id: 'rogerdodger617.2p4pk9co',
             accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
           }).addTo(map);
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          var canvasRenderer = L.canvas();
+          function drawRect(context, style) {
+          	context.strokeStyle = style.color;
+          	if (style.dashArray) {
+          		context.setLineDash(style.dashArray.split(','))
+          	}
+          	context.lineWidth = 3;
+          	context.strokeRect(0, 0, 20, 12);
+          }
+          
+          var layerStorage = [
+          	'Soil Vulnerability'
+          ];
+          var soil = L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+          	name: "Soil Vulnerability",
+          	storage: "Soil Vulnerability",
+          	mbtileLayerName: "soil",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			interactive: true,
+          			pane: 'polygons',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#0f0',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#e39e1c',
+          			fillOpacity: 0.4,
+          			// fill: false
+          		}
+          	}
+          }).addTo(map)
+          
+          
+          
+          
+          
           
           function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
             _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -432,7 +484,8 @@ html
 
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
-            
+          
+          control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
