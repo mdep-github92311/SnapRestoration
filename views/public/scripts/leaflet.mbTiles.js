@@ -134,7 +134,7 @@ L.MBTiles = L.Layer.extend({
 			var pbf = new Pbf(bufArray);
 			//console.log(pbf);
 			var vectorTile = new VectorTile(pbf);
-			 // = this._pbfTile2VectorTile(purePBF);
+			  //= this._pbfTile2VectorTile(purePBF);
 
 			var layerName = this.options.mbtileLayerName;
 			if (vectorTile.layers[layerName]) {

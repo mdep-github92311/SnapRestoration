@@ -4,7 +4,7 @@
   },
   "initial": {
     "compression": {
-      "params": { "threshold": 512 },
+      "params": { "threshold": 0 },
       "enabled": true
     },
     "cors": {
