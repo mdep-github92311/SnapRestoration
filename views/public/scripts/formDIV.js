@@ -1,4 +1,6 @@
-const db = new Dexie('SubmissionForms');
+$.getScript('/public/scripts/dexie.min.js', function()
+{
+  const db = new Dexie('SubmissionForms');
 
   db.version(1).stores({
     barrierSub: 'properties.gid, type, geometry',
@@ -811,4 +813,5 @@ $(document).ready(function () {
     document.getElementById('step3').style.display = 'none';
     loadSubs();
   });
+});
 });
