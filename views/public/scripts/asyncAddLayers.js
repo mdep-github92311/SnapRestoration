@@ -199,7 +199,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Roads':
-        const roads = await L.shapefile(data, {
+        const roads = await L.geoJson(data, {
           pane: 'Lines',
           style: roadColor
         }).addTo(map);

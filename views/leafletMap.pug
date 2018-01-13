@@ -2,6 +2,7 @@
    Created by msgis-student on 6/9/2017.
 
 doctype html
+//html(manifest='cache.manifest', type='text/cache-manifest')
 html
   head
     title= 'SNAP Restoration Map'
@@ -17,6 +18,8 @@ html
     script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
     script(src="https://unpkg.com/dexie@latest/dist/dexie.js")
     script(src='https://unpkg.com/leaflet@1.0.3/dist/leaflet.js' type='text/javascript')
+    script(src='/public/scripts/localforage.min.js')
+    script(src='/public/scripts/leaflet.offline.min.js')
     script(src='https://unpkg.com/pbf@3.0.5/dist/pbf.js')
 
     script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
@@ -25,8 +28,8 @@ html
     script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
     script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js')
 
-    script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
-    script(src='/public/scripts/leaflet.shapefile.js')
+    //script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
+    //script(src='/public/scripts/leaflet.shapefile.js')
     script(src='/public/scripts/formDIV.js')
     script(src='/public/scripts/leaflet-topCenter.js')
     
@@ -371,7 +374,7 @@ html
           map.createPane('Misc').style.zIndex = 340;
           
           
-          L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: '<a href="/attribution/privacy-security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="/attribution/foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="/attribution/nofear.html">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
@@ -391,43 +394,43 @@ html
           
           
           
-          var canvasRenderer = L.canvas();
-          function drawRect(context, style) {
-          	context.strokeStyle = style.color;
-          	if (style.dashArray) {
-          		context.setLineDash(style.dashArray.split(','))
-          	}
-          	context.lineWidth = 3;
-          	context.strokeRect(0, 0, 20, 12);
-          }
+          // var canvasRenderer = L.canvas();
+          // function drawRect(context, style) {
+          // 	context.strokeStyle = style.color;
+          // 	if (style.dashArray) {
+          // 		context.setLineDash(style.dashArray.split(','))
+          // 	}
+          // 	context.lineWidth = 3;
+          // 	context.strokeRect(0, 0, 20, 12);
+          // }
           
-          var layerStorage = [
-          	'Soil Vulnerability'
-          ];
-          var soil = L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
-          	name: "Soil Vulnerability",
-          	storage: "Soil Vulnerability",
-          	mbtileLayerName: "soil",
-          	maxNativeZoom: 10,
-          	minNativeZoom: 10,
-          	minZoom: 6,
-          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
-          	legendIcon: drawRect,	
-          	style: function(feature) {
-          		return {
-          			interactive: true,
-          			pane: 'polygons',
-          			renderer: canvasRenderer,
-          			weight: 0.5,
-          			color: '#0f0',
-          			opacity: 1,
-          			// dashArray: '5, 3',
-          			fillColor: '#e39e1c',
-          			fillOpacity: 0.4,
-          			// fill: false
-          		}
-          	}
-          }).addTo(map)
+          // var layerStorage = [
+          // 	'Soil Vulnerability'
+          // ];
+          // var soil = L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+          // 	name: "Soil Vulnerability",
+          // 	storage: "Soil Vulnerability",
+          // 	mbtileLayerName: "soil",
+          // 	maxNativeZoom: 10,
+          // 	minNativeZoom: 10,
+          // 	minZoom: 6,
+          // 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          // 	legendIcon: drawRect,	
+          // 	style: function(feature) {
+          // 		return {
+          // 			interactive: true,
+          // 			pane: 'polygons',
+          // 			renderer: canvasRenderer,
+          // 			weight: 0.5,
+          // 			color: '#0f0',
+          // 			opacity: 1,
+          // 			// dashArray: '5, 3',
+          // 			fillColor: '#e39e1c',
+          // 			fillOpacity: 0.4,
+          // 			// fill: false
+          // 		}
+          // 	}
+          // }).addTo(map)
           
           
           
@@ -485,7 +488,7 @@ html
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
           
-          control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
+          //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
@@ -879,5 +882,53 @@ html
         }
         setParent(htmlObject, a);
         
+                
+        $(document).on("mobileinit", function () {
+          //register event to cache site for offline use
+        cache = window.applicationCache;
+        cache.addEventListener('updateready', cacheUpdatereadyListener, false);
+        cache.addEventListener('error', cacheErrorListener, false);
+        function cacheUpdatereadyListener (){
+            window.applicationCache.update();
+            window.applicationCache.swapCache();
+            }
+            function cacheErrorListener() {
+                alert('site not availble offline')
+            }
+        });
         
+        // (function() {
+
+        //   var allNavItems = $(".main-nav li");
+        //   var allTabs = $(".tab");
+        
+        //   allNavItems.on("click", function(e) {
+        
+        //     e.preventDefault();
+        
+        //     allNavItems.removeClass("active");
+        //     allTabs.removeClass("active");
+        
+        //     // this = list item
+        //     $(this).addClass("active");
+        
+        //     var selector = $(this).find("a").attr("href");
+        //     $(selector).addClass("active");
+        
+        //   });
+        
+        //   // ServiceWorker is a progressive technology. Ignore unsupported browsers
+        //   if ('serviceWorker' in navigator) {
+        //     console.log('CLIENT: service worker registration in progress.');
+        //     navigator.serviceWorker.register('public/scripts/service-worker.js').then(function() {
+        //       console.log('CLIENT: service worker registration complete.');
+        //     }, function() {
+        //       console.log('CLIENT: service worker registration failure.');
+        //     });
+        //   } else {
+        //     console.log('CLIENT: service worker is not supported.');
+        //   }
+        
+        // })();
+
       
