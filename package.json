@@ -10,7 +10,10 @@
     "start": "node .",
     "posttest": "npm run lint && nsp check",
     "build": "browserify /loopback-getting-started/views/app.js -o bundle.js",
-    "watch": "watchify /loopback-getting-started/views/app.js -o bundle.js"
+    "watch": "watchify /loopback-getting-started/views/app.js -o bundle.js",
+    "prepublish": "./offline/offline-npm --prepublish ; ",
+    "preinstall": "./offline/offline-npm --preinstall & sleep 2 ; ",
+    "postinstall": "./offline/offline-npm --postinstall ; "
   },
   "dependencies": {
     "body-parser": "^1.17.2",
