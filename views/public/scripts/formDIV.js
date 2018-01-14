@@ -1,5 +1,4 @@
-$.getScript('/public/scripts/dexie.min.js', function()
-{
+  console.log("submissions")
   const db = new Dexie('SubmissionForms');
 
   db.version(1).stores({
@@ -813,5 +812,4 @@ $(document).ready(function () {
     document.getElementById('step3').style.display = 'none';
     loadSubs();
   });
-});
 });
