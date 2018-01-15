@@ -1,0 +1,12 @@
+{
+    "name": "dist_point.mbtiles", 
+    "format": "pbf", 
+    "description": "dist_point.mbtiles", 
+    "json": "{\"vector_layers\": [ { \"id\": \"dist_point\", \"description\": \"\", \"minzoom\": 10, \"maxzoom\": 10, \"fields\": {\"accessibil\": \"String\", \"agency\": \"Number\", \"comments\": \"String\", \"dist_code\": \"String\", \"dist_pt_ty\": \"String\", \"dist_use\": \"String\", \"estimate_s\": \"Number\", \"gid\": \"Number\", \"gps_date\": \"String\", \"old_distco\": \"String\", \"photo_azim\": \"Number\", \"primary_ob\": \"String\", \"project_na\": \"String\", \"qa_qc\": \"String\", \"region\": \"String\", \"treated\": \"String\", \"use_freq\": \"String\", \"use_recent\": \"String\", \"visibility\": \"String\"} } ] }", 
+    "bounds": "-116.015361,35.152249,-114.056431,36.714221", 
+    "minzoom": "10", 
+    "version": "2", 
+    "maxzoom": "10", 
+    "type": "overlay", 
+    "center": "-114.785156,35.603591,10"
+}

@@ -1,0 +1,12 @@
+{
+    "name": "dist_polygon.mbtiles", 
+    "format": "pbf", 
+    "description": "dist_polygon.mbtiles", 
+    "json": "{\"vector_layers\": [ { \"id\": \"dist_polygon\", \"description\": \"\", \"minzoom\": 10, \"maxzoom\": 10, \"fields\": {\"acres_rest\": \"Number\", \"agencey\": \"Number\", \"assessibil\": \"String\", \"comments\": \"String\", \"depth\": \"String\", \"dist_code\": \"String\", \"dist_crust\": \"String\", \"dist_poly_\": \"String\", \"dist_sever\": \"Number\", \"gid\": \"Number\", \"gps_date\": \"String\", \"kmsq_resto\": \"Number\", \"old_distco\": \"String\", \"photo_azim\": \"Number\", \"plant_dama\": \"String\", \"primary_ob\": \"String\", \"qa_qc\": \"String\", \"regions\": \"String\", \"shape_area\": \"Number\", \"shape_leng\": \"Number\", \"site_stabi\": \"String\", \"treated\": \"String\", \"undist_cru\": \"String\", \"use_freq\": \"String\", \"use_recent\": \"String\", \"visibility\": \"String\"} } ] }", 
+    "bounds": "-116.000528,35.168638,-114.004204,37.180185", 
+    "minzoom": "10", 
+    "version": "2", 
+    "maxzoom": "10", 
+    "type": "overlay", 
+    "center": "-115.839844,36.456507,10"
+}

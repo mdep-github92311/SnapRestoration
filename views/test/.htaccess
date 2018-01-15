@@ -1,0 +1,3 @@
+<Files ~ ".pbf$">
+Header set Content-Encoding gzip
+</Files>

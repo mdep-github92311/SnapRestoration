@@ -1,0 +1,12 @@
+{
+    "name": "soil.mbtiles", 
+    "format": "pbf", 
+    "description": "soil.mbtiles", 
+    "json": "{\"vector_layers\": [ { \"id\": \"soil\", \"description\": \"\", \"minzoom\": 10, \"maxzoom\": 10, \"fields\": {\"acres\": \"Number\", \"acres_1\": \"Number\", \"area_1\": \"Number\", \"area_12\": \"Number\", \"area_12_13\": \"Number\", \"area_12_14\": \"Number\", \"area__sq_1\": \"Number\", \"area__sq_m\": \"Number\", \"areasymbol\": \"String\", \"bioagemax\": \"Number\", \"bioagemin\": \"Number\", \"ca_lando_1\": \"Number\", \"ca_lando_2\": \"Number\", \"ca_landow1\": \"Number\", \"ca_landow_\": \"Number\", \"comment\": \"String\", \"comment_1\": \"String\", \"county\": \"String\", \"county_n_1\": \"String\", \"county_nam\": \"String\", \"fid_neva_1\": \"Number\", \"fid_nevada\": \"Number\", \"fid_nvco_1\": \"Number\", \"fid_nvco_2\": \"Number\", \"fid_nvco_3\": \"Number\", \"fid_nvcoun\": \"Number\", \"fid_surf_1\": \"Number\", \"fid_surfac\": \"Number\", \"fid_swla_1\": \"Number\", \"fid_swland\": \"Number\", \"fmatn\": \"String\", \"geologicfm\": \"String\", \"gid\": \"Number\", \"l_name\": \"String\", \"modpoly\": \"String\", \"mukey\": \"String\", \"mukey_1\": \"String\", \"musym\": \"String\", \"name\": \"String\", \"name_1\": \"String\", \"new_owne_1\": \"String\", \"new_owner\": \"String\", \"notes\": \"String\", \"objectid\": \"Number\", \"owner\": \"Number\", \"owner_1\": \"Number\", \"perimete_1\": \"Number\", \"perimete_2\": \"Number\", \"perimete_3\": \"Number\", \"perimete_4\": \"Number\", \"perimeter\": \"Number\", \"refs\": \"String\", \"restoratio\": \"Number\", \"reviewed\": \"String\", \"shape_area\": \"Number\", \"shape_le_1\": \"Number\", \"shape_le_2\": \"Number\", \"shape_leng\": \"Number\", \"source\": \"Number\", \"source_1\": \"Number\", \"spatialver\": \"Number\", \"state\": \"String\", \"state_1\": \"String\", \"statemap\": \"String\", \"status\": \"Number\", \"status_1\": \"Number\", \"stmergevul\": \"Number\", \"surftext\": \"String\", \"vulfmatn\": \"Number\", \"vulgeologi\": \"Number\"} } ] }", 
+    "bounds": "-115.897315,35.068042,-114.045733,36.851916", 
+    "minzoom": "10", 
+    "version": "2", 
+    "maxzoom": "10", 
+    "type": "overlay", 
+    "center": "-114.785156,35.603591,10"
+}
