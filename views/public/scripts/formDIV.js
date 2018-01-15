@@ -64,7 +64,7 @@ $(document).ready(function () {
     
   }
   function editForm(data, dataType, index){
-    console.log(data);
+    //console.log(data);
     $("#editSaved").css("display", "block");
     $("#editSaved").html(editForm2);
     //console.log(data);
@@ -775,7 +775,6 @@ $(document).ready(function () {
           console.warn(err);
         });
     } else if (Object.keys(restoPointObj).length > 0) {
-      console.log(thisLayerJSON);
       thisLayerJSON["properties"] = restoPointObj;
       //thisLayerJSON['geometry']['type'] = 'MultiLineString';
       thisLayerJSON['geometry']["crs"] = {"type": "name", "properties": {"name": "EPSG:4326"}};
@@ -807,6 +806,8 @@ $(document).ready(function () {
           console.warn(err);
         });
     }
+    sidebar.open('savedSubs');
+    map.removeLayer(thisLayer);
     document.getElementById('step1').style.display = 'block';
     document.getElementById('step2').style.display = 'none';
     document.getElementById('step3').style.display = 'none';

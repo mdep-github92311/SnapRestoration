@@ -1,6 +1,7 @@
 /**
  * Created by msgis-student on 6/9/2017.
  */
+var path = require('path');
  
 function checkAuth(req, res, next) {
   if (!req.session.user_id) {
@@ -13,6 +14,10 @@ function checkAuth(req, res, next) {
 module.exports = function (app) {
   app.get('/', function (req, res) {
     res.render('leafletMap.pug');
+  });
+  
+  app.get('/mobile', function (req, res) {
+    res.render('leafletMapMobile.pug');
   });
   
   app.get('/my_secret_page', checkAuth, function (req, res) {
