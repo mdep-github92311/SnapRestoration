@@ -171,11 +171,11 @@ body {
 }
 
 .leaflet-control-layers-toggle {
-	background-image: url(../img/menu.svg);
+	background-image: url(../images/menu.svg);
 }
 
 .leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(../img/menu.svg);
+	background-image: url(../images/menu.svg);
 	background-size: 26px 26px;
 }    
 
