@@ -128,7 +128,7 @@ var distPolygon = L.mbTiles("data/dist_polygon/{z}/{x}/{y}.pbf", {
 })
 .addTo(map)
 
-var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.png", {
+var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.pbf", {
 	name: "BLM Regions",
 	storage: "BLM Regions",
 	mbtileLayerName: "blmRegions",
@@ -153,7 +153,7 @@ var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.png", {
 	}
 })
 
-var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.png", {
+var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.pbf", {
 	name: "FS Regions",
 	storage: "FS Regions",
 	mbtileLayerName: "fsRegions",
@@ -179,7 +179,7 @@ var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.png", {
 })
 
 
-var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.png", {
+var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.pbf", {
 	name: "NV Counties",
 	storage: "NV Counties",
 	mbtileLayerName: "nvCounties",
@@ -204,7 +204,7 @@ var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.png", {
 	}
 })
 
-var snapExtents = L.mbTiles("data/snapExtents/{z}/{x}/{y}.png", {
+var snapExtents = L.mbTiles("data/snapExtents/{z}/{x}/{y}.pbf", {
 	name: "SNAP Extents",
 	storage: "SNAP Extents",
 	mbtileLayerName: "snapExtents",
