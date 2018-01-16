@@ -379,16 +379,29 @@ html
             '<a href="/attribution/license.html">License</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
             '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
-            maxZoom: 18,
+            maxZoom: 16,
             id: 'rogerdodger617.2p4pk9co',
             accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
           }).addTo(map);
           
+          function confirmOfflineSave(nTilesToSave, continueSaveTiles) {
+            console.log(nTilesToSave)
+            console.log(continueSaveTiles)
+            alert('you sure?')
+          }
           
           L.control.savetiles(baseLayer,{
-            'zoomlevels':[13,16],
-            'position': 'topright'
+            'zoomlevels':[13,15],
+            'position': 'topright',
+            'saveWhatYouSee': false,
+            'confirm': function (nTilesToSave, continueSaveTiles) {
+                  console.log(nTilesToSave);
+                  continueSaveTiles();
+                  if (window.confirm('Save ' + nTilesToSave.lengthToBeSaved + '?')) {
+                      continueSaveTiles();
+                  }
               }
+            }
           ).addTo(map);
           
           
@@ -502,11 +515,25 @@ html
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
           
+          var offlineLayers = null;
+          function onAreaClick(feature, layer) {
+            $(layer).on('click', function () {
+              map.flyToBounds([layer._bounds._northEast,layer._bounds._southWest]); 
+              map.removeLayer(offlineLayers);
+              
+              
+            });
+          }
+          $.getJSON('/public/geoJSON/offlineAreas.json', function (data) {
+            offlineLayers = L.geoJson(data, {
+              onEachFeature: onAreaClick
+            }).addTo(map);
+          });
           //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
-          L.control.scale({position: 'bottomright'}).addTo(map);
+          //L.control.scale({position: 'bottomright'}).addTo(map);
           
           var options = {
             position: 'bottomright',
