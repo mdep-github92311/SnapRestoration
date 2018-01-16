@@ -6,6 +6,7 @@ var app = module.exports = loopback();
 var session = require('client-sessions');
 var path = require('path');
 var expressStaticGzip = require("express-static-gzip");
+var crypto = require("crypto");
 app.engine('pug', require('pug').__express);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
@@ -19,7 +20,7 @@ app.use(loopback.static(__dirname+'../views'));
 
 app.use(session({
   cookieName: 'session',
-  secret: 'random_string_goes_here',
+  secret: crypto.randomBytes(20).toString('hex'),
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
 }));

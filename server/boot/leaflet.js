@@ -2,7 +2,7 @@
  * Created by msgis-student on 6/9/2017.
  */
 var path = require('path');
- 
+var users = 0;
 function checkAuth(req, res, next) {
   if (!req.session.user_id) {
     res.send('You are not authorized to view this page');
@@ -32,7 +32,8 @@ module.exports = function (app) {
   app.post('/login', function (req, res) {
     var post = req.body;
     if (post.user === 'admin' && post.password === 'password') {
-      req.session.user_id = 1;
+      users++;
+      req.session.user_id = users;
       res.redirect('/my_secret_page');
     } else {
       res.send('Bad user/pass');
