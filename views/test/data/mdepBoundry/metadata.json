@@ -4,7 +4,7 @@
     "description": "tiles/mdepBoundry.mbtiles", 
     "json": "{\"vector_layers\": [ { \"id\": \"mdepBoundry\", \"description\": \"\", \"minzoom\": 0, \"maxzoom\": 10, \"fields\": {\"bndpmoj_\": \"Number\", \"bndpmoj_id\": \"Number\", \"gid\": \"Number\", \"inside\": \"Number\", \"perimeter\": \"Number\", \"sde_sde_bo\": \"Number\"} } ],\"tilestats\": {\"layerCount\": 1,\"layers\": [{\"layer\": \"mdepBoundry\",\"count\": 1,\"geometry\": \"Polygon\",\"attributeCount\": 6,\"attributes\": [{\"attribute\": \"bndpmoj_\",\"count\": 1,\"type\": \"number\",\"values\": [2],\"min\": 2,\"max\": 2},{\"attribute\": \"bndpmoj_id\",\"count\": 1,\"type\": \"number\",\"values\": [2],\"min\": 2,\"max\": 2},{\"attribute\": \"gid\",\"count\": 1,\"type\": \"number\",\"values\": [1],\"min\": 1,\"max\": 1},{\"attribute\": \"inside\",\"count\": 1,\"type\": \"number\",\"values\": [1],\"min\": 1,\"max\": 1},{\"attribute\": \"perimeter\",\"count\": 1,\"type\": \"number\",\"values\": [1987241],\"min\": 1987241,\"max\": 1987241},{\"attribute\": \"sde_sde_bo\",\"count\": 1,\"type\": \"number\",\"values\": [0],\"min\": 0,\"max\": 0}]}]}}", 
     "bounds": "-118.911291,33.278568,-112.474859,37.787693", 
-    "minzoom": "0", 
+    "minzoom": "10", 
     "version": "2", 
     "maxzoom": "10", 
     "type": "overlay", 

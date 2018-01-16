@@ -4,7 +4,7 @@
     "description": "tiles/fsRegions.mbtiles", 
     "json": "{\"vector_layers\": [ { \"id\": \"fsRegions\", \"description\": \"\", \"minzoom\": 0, \"maxzoom\": 10, \"fields\": {\"area_acres\": \"Number\", \"code\": \"String\", \"gid\": \"Number\", \"objectid\": \"Number\", \"region\": \"String\"} } ],\"tilestats\": {\"layerCount\": 1,\"layers\": [{\"layer\": \"fsRegions\",\"count\": 14,\"geometry\": \"Polygon\",\"attributeCount\": 5,\"attributes\": [{\"attribute\": \"area_acres\",\"count\": 14,\"type\": \"number\",\"values\": [10864.596,13108.041,19385.548,23873.47,25456.251,3060.793,3514.508,35259.138,39376.274,4580.68,5181.705,55533.88,7389.55,76228.065],\"min\": 3060.793,\"max\": 76228.065},{\"attribute\": \"code\",\"count\": 14,\"type\": \"string\",\"values\": [\"CC\",\"CH\",\"CL\",\"CP\",\"KY\",\"LE\",\"LM\",\"LV\",\"PO\",\"RA\",\"ST\",\"TR\",\"WA\",\"WH\"]},{\"attribute\": \"gid\",\"count\": 14,\"type\": \"number\",\"values\": [1,10,11,12,13,14,2,3,4,5,6,7,8,9],\"min\": 1,\"max\": 14},{\"attribute\": \"objectid\",\"count\": 14,\"type\": \"number\",\"values\": [1,10,11,12,13,14,2,3,4,5,6,7,8,9],\"min\": 1,\"max\": 14},{\"attribute\": \"region\",\"count\": 14,\"type\": \"string\",\"values\": [\"Carpenter Canyon\",\"Charleston Wilderness\",\"Clark Canyon\",\"Cold Creek\",\"Kyle Canyon\",\"LaMadre Wilderness\",\"Lee Canyon\",\"Lovell\",\"Potosi\",\"Rainbow Wilderness\",\"Stirling\",\"Trout Canyon\",\"Wallace Canyon\",\"Wheeler\"]}]}]}}", 
     "bounds": "-116.015004,35.910332,-115.431293,36.508338", 
-    "minzoom": "0", 
+    "minzoom": "10", 
     "version": "2", 
     "maxzoom": "10", 
     "type": "overlay", 

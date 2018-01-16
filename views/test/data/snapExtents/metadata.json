@@ -4,7 +4,7 @@
     "description": "tiles/snapExtents.mbtiles", 
     "json": "{\"vector_layers\": [ { \"id\": \"snapExtents\", \"description\": \"\", \"minzoom\": 0, \"maxzoom\": 10, \"fields\": {\"gid\": \"Number\", \"id\": \"Number\", \"shape_area\": \"Number\", \"shape_leng\": \"Number\"} } ],\"tilestats\": {\"layerCount\": 1,\"layers\": [{\"layer\": \"snapExtents\",\"count\": 1,\"geometry\": \"Polygon\",\"attributeCount\": 4,\"attributes\": [{\"attribute\": \"gid\",\"count\": 1,\"type\": \"number\",\"values\": [1],\"min\": 1,\"max\": 1},{\"attribute\": \"id\",\"count\": 1,\"type\": \"number\",\"values\": [0],\"min\": 0,\"max\": 0},{\"attribute\": \"shape_area\",\"count\": 1,\"type\": \"number\",\"values\": [42805740846.9],\"min\": 42805740846.9,\"max\": 42805740846.9},{\"attribute\": \"shape_leng\",\"count\": 1,\"type\": \"number\",\"values\": [975995.202344],\"min\": 975995.202344,\"max\": 975995.202344}]}]}}", 
     "bounds": "-116.489228,35.005769,-114.045819,37.615416", 
-    "minzoom": "0", 
+    "minzoom": "10", 
     "version": "2", 
     "maxzoom": "10", 
     "type": "overlay", 
