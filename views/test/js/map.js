@@ -25,12 +25,14 @@ var linesPane = map.createPane('lines');
 var mapOpenStreet = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	name: "OpenStreetMap",
 	zIndex: 1,
+	minZoom: 7,
 	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
 var mapGRoad = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
 	name: "Google Roadmap",
 	zIndex: 1,
+	minZoom: 7,
 	maxZoom: 20,
 	subdomains:['mt0','mt1','mt2','mt3']
 });
@@ -128,12 +130,12 @@ var distPolygon = L.mbTiles("data/dist_polygon/{z}/{x}/{y}.pbf", {
 })
 .addTo(map)
 
-var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.png", {
+var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.pbf", {
 	name: "BLM Regions",
 	storage: "BLM Regions",
 	mbtileLayerName: "blmRegions",
 	maxNativeZoom: 10,
-	minNativeZoom: 10,
+	minNativeZoom: 7,
 	minZoom: 6,
 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
 	legendIcon: drawRect,	
@@ -153,12 +155,12 @@ var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.png", {
 	}
 })
 
-var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.png", {
+var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.pbf", {
 	name: "FS Regions",
 	storage: "FS Regions",
 	mbtileLayerName: "fsRegions",
 	maxNativeZoom: 10,
-	minNativeZoom: 10,
+	minNativeZoom: 7,
 	minZoom: 6,
 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
 	legendIcon: drawRect,	
@@ -179,12 +181,12 @@ var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.png", {
 })
 
 
-var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.png", {
+var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.pbf", {
 	name: "NV Counties",
 	storage: "NV Counties",
 	mbtileLayerName: "nvCounties",
 	maxNativeZoom: 10,
-	minNativeZoom: 10,
+	minNativeZoom: 7,
 	minZoom: 6,
 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
 	legendIcon: drawRect,	
@@ -204,12 +206,89 @@ var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.png", {
 	}
 })
 
-var snapExtents = L.mbTiles("data/snapExtents/{z}/{x}/{y}.png", {
+var snapExtents = L.mbTiles("data/snapExtents/{z}/{x}/{y}.pbf", {
 	name: "SNAP Extents",
 	storage: "SNAP Extents",
 	mbtileLayerName: "snapExtents",
 	maxNativeZoom: 10,
-	minNativeZoom: 10,
+	minNativeZoom: 7,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
+var mdepBoundry = L.mbTiles("data/mdepBoundry/{z}/{x}/{y}.pbf", {
+	name: "MDEP Boundry",
+	storage: "MDEP Boundry",
+	mbtileLayerName: "mdepBoundry",
+	maxNativeZoom: 10,
+	minNativeZoom: 7,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
+
+
+var mdiBoundry = L.mbTiles("data/mdiBoundry/{z}/{x}/{y}.pbf", {
+	name: "MDI Boundry",
+	storage: "MDI Boundry",
+	mbtileLayerName: "mdiBoundry",
+	maxNativeZoom: 10,
+	minNativeZoom: 7,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
+var roads = L.mbTiles("data/roads/{z}/{x}/{y}.pbf", {
+	name: "Roads",
+	storage: "Roads",
+	mbtileLayerName: "roads",
+	maxNativeZoom: 10,
+	minNativeZoom: 7,
 	minZoom: 6,
 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
 	legendIcon: drawRect,	
@@ -234,7 +313,7 @@ var soil = L.mbTiles("data/soil/{z}/{x}/{y}.pbf", {
 	storage: "Soil Vulnerability",
 	mbtileLayerName: "soil",
 	maxNativeZoom: 10,
-	minNativeZoom: 10,
+	minNativeZoom: 7,
 	minZoom: 6,
 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
 	legendIcon: drawRect,	
@@ -269,11 +348,14 @@ var layerGroups = [
 		"name": 'Misc',
 		"expanded": false,
 		"layers": [
+			roads,
 			soil,
 			blmRegions,
 			fsRegions,
 			nvCounties,
-			snapExtents
+			snapExtents,
+			mdepBoundry,
+			mdiBoundry
 		]
 	},
 	{
@@ -293,11 +375,14 @@ var layerStorage = [
 	'Disturbance Lines',
 	'Disturbance Points',
 	'Disturbance Polygon',
+	'Roads',
 	'Soil Vulnerability',
 	'BLM Regions',
 	'FS Regions',
 	'NV Counties',
-	'SNAP Extents'
+	'SNAP Extents',
+	'MDEP Boundry',
+	'MDI Boundry'
 ];
 
 //L.control.layers(baseLayers, overlays, {
