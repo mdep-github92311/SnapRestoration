@@ -1,0 +1,12 @@
+{
+    "name": "tiles/mdiBoundry.mbtiles", 
+    "format": "pbf", 
+    "description": "tiles/mdiBoundry.mbtiles", 
+    "json": "{\"vector_layers\": [ { \"id\": \"mdiBoundry\", \"description\": \"\", \"minzoom\": 0, \"maxzoom\": 10, \"fields\": {\"gid\": \"Number\", \"id\": \"Number\", \"shape_area\": \"Number\", \"shape_leng\": \"Number\"} } ],\"tilestats\": {\"layerCount\": 1,\"layers\": [{\"layer\": \"mdiBoundry\",\"count\": 1,\"geometry\": \"Polygon\",\"attributeCount\": 4,\"attributes\": [{\"attribute\": \"gid\",\"count\": 1,\"type\": \"number\",\"values\": [1],\"min\": 1,\"max\": 1},{\"attribute\": \"id\",\"count\": 1,\"type\": \"number\",\"values\": [0],\"min\": 0,\"max\": 0},{\"attribute\": \"shape_area\",\"count\": 1,\"type\": \"number\",\"values\": [55099679851.2],\"min\": 55099679851.2,\"max\": 55099679851.2},{\"attribute\": \"shape_leng\",\"count\": 1,\"type\": \"number\",\"values\": [2008913.29274],\"min\": 2008913.29274,\"max\": 2008913.29274}]}]}}", 
+    "bounds": "-117.930879,33.851895,-113.081949,37.535580", 
+    "minzoom": "0", 
+    "version": "2", 
+    "maxzoom": "10", 
+    "type": "overlay", 
+    "center": "-114.433594,34.452093,10"
+}
