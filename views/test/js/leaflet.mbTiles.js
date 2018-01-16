@@ -270,7 +270,7 @@ L.MBTiles = L.Layer.extend({
 	_pbfTile2VectorTile: function (pbf) {
 		var bufArray = new Uint8Array(pbf);
 		if (bufArray[0] === 31) {
-			return new VectorTile(new Pbf(pako.inflate(bufArray)));
+			return new VectorTile(new Pbf(bufArray));
 		} else {
 			return new VectorTile(new Pbf(bufArray));
 		}

@@ -1,0 +1,947 @@
+//  Created by msgis-student on 6/9/2017.
+
+doctype html
+// html(manifest='cache.manifest', type='text/cache-manifest')
+html
+  head
+    title= 'SNAP Restoration Map'
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+    link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css')
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
+    link(rel='stylesheet', href='/public/css/styledLayerControl.css')
+    link(rel='stylesheet', href='/public/css/sidebarV2.css')
+    link(rel='stylesheet', href='/public/css/leaflet-topCenter.css')
+    script(src='/public/scripts/jquery.min.js')
+    //script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
+    
+    script(src="/public/scripts/polyfill.min.js")
+    script(src="/public/scripts/dexie.min.js")
+    script(src='/public/scripts/leaflet.js' type='text/javascript')
+    script(src='/public/scripts/localforage.min.js')
+    script(src='/public/scripts/leaflet.offline.min.js')
+    script(src='https://unpkg.com/pbf@3.0.5/dist/pbf.js')
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js')
+
+    //script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
+    //script(src='/public/scripts/leaflet.shapefile.js')
+    script(src='/public/scripts/formDIV.js')
+    script(src='/public/scripts/leaflet-topCenter.js')
+    
+    
+    script(src='/public/lib/pako/pako_inflate.min.js')
+    script(src='/public/lib/leaflet/leaflet.ajax.js')
+    script(src='/public/lib/leaflet/leaflet.VectorTile.js')
+    script(src='/public/scripts/leaflet.LayerControl.Include.js')
+    script(src='/public/scripts/leaflet.VectorGrid.mod.js')
+    script(src='/public/scripts/leaflet.mbTiles.js')
+    //script(src="https://jsconsole.com/js/remote.js?f7599f18-06f3-47dc-bb3f-f41097176b9b")
+    
+    //script(src='https://unpkg.com/leaflet-sidebar')
+    
+    script(src='/public/scripts/leaflet.sidebar.min.js')
+    
+    script(src='/public/scripts/featureStyles.js')
+    script(src='/public/scripts/featureStylesEdit.js')
+    script(src='/public/scripts/styledLayerControl.js')
+    //link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")
+    
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    // Optional theme
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+    // Latest compiled and minified JavaScript
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    
+
+
+    style(type='text/css').
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .navbar {
+        margin-bottom: 0;
+      }
+      
+      .legend {
+        color: black;
+        background-color: white;
+        padding: 5px;
+        font-size: 0.7em;
+      }
+
+      #map {
+        float: left;
+        width: 100%;
+        height: 93%;
+      }
+
+      #popUp_FormDIV {
+        float: right;
+        width: 20%;
+        height: 90%;
+        overflow: auto;
+      }
+
+      #popUpDIV {
+        display: block;
+        /* float: left; */
+        width: 100%;
+        height: 50%;
+        overflow: auto;
+        margin: 5%;
+      }
+
+      #formPopDIV {
+        /* float: right; */
+        width: 100%;
+        bottom: 40%;
+        height: 50%;
+        /* position: absolute; */
+        overflow: auto;
+        margin: 5%;
+      }
+      
+      #sidebar1 {
+        color: black;
+        font-size: 14px;
+        padding: 0 !important;
+      }
+      
+      #drawTools2 {
+        display: block;
+        clear:none !important;
+        text-align: center;
+      }
+      
+      #sidebar2 {
+        display: inline-block;
+        color: black;
+        font-size: 14px;
+        padding: 0;
+      }
+      
+      #logoutTab {
+        display: none;
+      }
+      
+      .container {
+          position: relative;
+          width: 50px;
+          padding-left: 0px;
+          margin: 0 auto 40px auto;
+      
+          -webkit-perspective: 800px;
+             -moz-perspective: 800px;
+              -ms-perspective: 800px;
+               -o-perspective: 800px;
+                  perspective: 800px;
+      }
+      .container .card {
+          //position: absolute;
+          //width: 100%;
+          height: 100%;
+      
+          -webkit-transition: -webkit-transform 1s;
+             -moz-transition:    -moz-transform 1s;
+              -ms-transition:     -ms-transform 1s;
+               -o-transition:      -o-transform 1s;
+                  transition:         transform 1s;
+      
+          -webkit-transform-style: preserve-3d;
+             -moz-transform-style: preserve-3d;
+              -ms-transform-style: preserve-3d;
+               -o-transform-style: preserve-3d;
+                  transform-style: preserve-3d;
+      }
+      .container .card .face {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          font-family: Arial, sans-serif;
+          //font-size: 140px;
+          font-weight: bold;
+          //line-height: 260px;
+          color: #fff;
+          text-align: center;
+      
+          -webkit-backface-visibility: hidden;
+             -moz-backface-visibility: hidden;
+              -ms-backface-visibility: hidden;
+               -o-backface-visibility: hidden;
+                  backface-visibility: hidden;
+      }
+      .container .card.flipped,
+      .container .card .face2 {
+          -webkit-transform: rotateY(180deg);
+             -moz-transform: rotateY(180deg);
+              -ms-transform: rotateY(180deg);
+               -o-transform: rotateY(180deg);
+                  transform: rotateY(180deg);
+      }
+      //.container .card .face .content1 {background-color: #7ad;}
+      //.container .card .face .content2 {background-color: #7da;}
+      //.container .card .face .content3 {background-color: #d7a;}
+      //.container .card .face .content4 {background-color: #fad997;}
+      
+      .store {
+          display: none;
+      }
+      .buttons {
+          text-align: center;
+      }
+      
+      .drawControl2 {
+        width: 100%;
+        color: black;
+      }
+      
+      #editShapeB {
+        display:none;
+      }
+      #delShapeB {
+        display:none;
+      }
+      #step1Drawing {
+        display:none;
+      }
+      #step2 {
+        display:none;
+      }
+      #step3 {
+        display:none;
+      }
+      h1 {
+        color: black;
+        font-size: 1em;
+      }
+      #saved, #savedCount {
+        color: black;
+      }
+      
+      table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+      }
+      
+      .drawingController {
+        display: none;
+      }
+      .drawingEditController {
+        display: none;
+      }
+    body
+    
+      #header
+        nav.navbar.navbar-default.navbar-inverse(role='navigation')
+          .container-fluid
+            // Brand and toggle get grouped for better mobile display
+            .navbar-header
+              button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.pull-left
+                .container
+                  .card
+                    .face.face1
+                    .face.face2
+                  ul.store
+                    li
+                      .content.content1
+                        img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
+                    li
+                      .content.content2 
+                        img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
+                    li
+                      .content.content3 
+                        img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
+                    li
+                      .content.content4   
+                        img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
+                script.
+                  var topLogo = 1;
+                  var currLogo = 1;
+                  var facingUp = true;
+                  function flipLogo(n) {
+                    if (topLogo === n) return;
+                    // Replace the contents of the current back-face with the contents
+                    // of the element that should rotate into view.
+                    var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
+                    var nextContent = $('.store' + n).html();
+                    var nextContent = $('.store li:nth-child(' + n + ')').html();
+                    curBackFace.html(nextContent);
+                    // Rotate the content
+                    $('.card').toggleClass('flipped');
+                    topLogo = n;
+                    facingUp = !facingUp;
+                  }
+                  
+                  setInterval(function() {
+                    flipLogo(currLogo);
+                    if(currLogo > 3)
+                      currLogo = 1;
+                    else
+                      currLogo++;
+                    
+                  }, 5000);
+                  
+                  $(document).ready(function(){
+                    // Add the appropriate content to the initial "front side"
+                    var frontFace = $('.face1');
+                    var frontContent = $('.store li:first-child').html();
+                    frontFace.html(frontContent);
+                  });
+            // Collect the nav links, forms, and other content for toggling
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              ul.nav.navbar-nav
+                li.active
+                  a(href='#') Home
+                li
+                  a(href='/admin/Add.html') Admin
+              ul.nav.navbar-nav.navbar-right
+                li#loginTab
+                  a(href='login.html')
+                    b Login
+                li#logoutTab
+                  a(href='javascript:logout();')
+                    b Logout
+                                
+      #overlay
+      #map
+
+        script(src='/public/scripts/asyncAddLayersV2.js')
+        script.
+        
+          function checkLogin() {
+            $.ajax({
+                type: "GET",
+                url: "/loginStatus",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  document.getElementById('logoutTab').style.display = "block";
+                  document.getElementById('loginTab').style.display = "none";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          function logout() {
+            console.log("logout initiated")
+            $.ajax({
+                type: "GET",
+                url: "/logout",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  document.getElementById('logoutTab').style.display = "none";
+                  document.getElementById('loginTab').style.display = "block";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          checkLogin();
+          //import "babel-polyfill";
+          var map = L.map('map').setView([36.211303, -115.114929], 8);
+          map.removeControl(map.zoomControl);
+          // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+          // createPane was used in this thread to control the order of the layers
+          
+          map.createPane('Points').style.zIndex = 390;
+          map.createPane('Lines').style.zIndex = 380;
+          map.createPane('Polygons').style.zIndex = 370;
+          map.createPane('Regions').style.zIndex = 360;
+          map.createPane('Bounds_County').style.zIndex = 350;
+          map.createPane('Misc').style.zIndex = 340;
+          
+          
+          var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: '<a href="/attribution/privacy-security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/nofear.html">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/license.html">License</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            maxZoom: 18,
+            id: 'rogerdodger617.2p4pk9co',
+            accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+          }).addTo(map);
+          
+          
+          L.control.savetiles(baseLayer,{
+            'zoomlevels':[13,16],
+            'position': 'topright'
+              }
+          ).addTo(map);
+          
+          
+          
+          
+          
+          
+          // var canvasRenderer = L.canvas();
+          // function drawRect(context, style) {
+          // 	context.strokeStyle = style.color;
+          // 	if (style.dashArray) {
+          // 		context.setLineDash(style.dashArray.split(','))
+          // 	}
+          // 	context.lineWidth = 3;
+          // 	context.strokeRect(0, 0, 20, 12);
+          // }
+          
+          // var layerStorage = [
+          // 	'Soil Vulnerability'
+          // ];
+          // var soil = L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+          // 	name: "Soil Vulnerability",
+          // 	storage: "Soil Vulnerability",
+          // 	mbtileLayerName: "soil",
+          // 	maxNativeZoom: 10,
+          // 	minNativeZoom: 10,
+          // 	minZoom: 6,
+          // 	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          // 	legendIcon: drawRect,	
+          // 	style: function(feature) {
+          // 		return {
+          // 			interactive: true,
+          // 			pane: 'polygons',
+          // 			renderer: canvasRenderer,
+          // 			weight: 0.5,
+          // 			color: '#0f0',
+          // 			opacity: 1,
+          // 			// dashArray: '5, 3',
+          // 			fillColor: '#e39e1c',
+          // 			fillOpacity: 0.4,
+          // 			// fill: false
+          // 		}
+          // 	}
+          // }).addTo(map)
+          
+          
+          
+          
+          function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+            _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.prev = 0;
+                      _context.next = 3;
+                      if (typeof Dexie == 'function') { 
+                        console.log('dexie is here');
+                        //return getLayers();
+                      }
+                      else {
+                        console.log('dexie not here rn');
+                      }
+                      
+                      // console.log('got here'); 
+                      // $.getScript('/public/scripts/dexie.min.js', function()
+                      // {
+                      //   console.log('got here too');
+                      //   $.getScript('/public/scripts/formDIV.js', function(){});
+                      //   $.getScript('/public/scripts/asyncAddLayersV2.js', function(){return getLayers();});
+                      // });
+                      
+                    case 3:
+                      _context.next = 8;
+                      break;
+            
+                    case 5:
+                      _context.prev = 5;
+                      _context.t0 = _context["catch"](0);
+            
+                      console.error(_context.t0);
+            
+                    case 8:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this, [[0, 5]]);
+            }))();
+
+          //(async function () {
+            //try {
+             // await getLayers();
+            //}
+            //catch (err) {
+             // console.error(err)
+            //}
+          //}());
+        
+          var controlOptions = {
+            container_width: "350px",
+            container_maxHeight: "500px",
+            group_maxHeight: "170px",
+            autoZIndex: false,
+            exclusive: false,
+            collapsed: false
+          };
+
+          var overLay = []
+
+          var control = L.Control.styledLayerControl(null, overLay, controlOptions);
+          map.addControl(control);
+          
+          //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
+          // creates a temp layer so it can store the new features
+          var editableLayers = new L.FeatureGroup();
+          map.addLayer(editableLayers);
+          L.control.scale({position: 'bottomright'}).addTo(map);
+          
+          var options = {
+            position: 'bottomright',
+            draw: {
+              polyline: {
+                allowIntersection: false,
+                drawError: {
+                  color: '#e10100', // Color the shape will turn when intersects
+                  message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                },
+                shapeOptions: {
+                  color: '#e10100',
+                  weight: 3
+                }
+              },
+              polygon: {
+                allowIntersection: false, // Restricts shapes to simple polygons
+                drawError: {
+                  color: '#e10100', // Color the shape will turn when intersects
+                  message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                },
+                shapeOptions: {
+                  color: '#e10100'
+                }
+              },
+              circle: false, // Turns off this drawing tool
+              rectangle: false,
+              marker: {
+                icon: new L.Icon.Default()
+              }
+            },
+            edit: {
+              featureGroup: editableLayers, //REQUIRED!!
+              edit: true,
+              remove: true,
+              selectedPathOptions: { // this property should be one level up
+                color: '#000',
+                fillColor: '#000'
+              }
+            }
+          };
+          
+          L.Control.DrawingController = L.Control.extend({
+              constructor: function constructor() {
+                var button = null;
+              },
+              onAdd: function(map) {
+                  button = L.DomUtil.create('button', 'drawingController');
+                  button.innerHTML = 'Insert Value';
+                  button.style.width = '100px';
+                  button.style.zIndex = 2000;
+                  return button;
+              },
+              onRemove: function(map) {
+                  // Nothing to do here
+              },
+              setVal: function(val, id) {
+                button.innerHTML = val;
+                button.id = id;
+              },
+              getButton: function() {
+                return button;
+              },
+              setClass: function(newClass) {
+                button.className = newClass + ' leaflet-control';
+              }
+          });
+          
+          L.control.drawingController = function(opts) {
+              return new L.Control.DrawingController(opts);
+          }
+          var undoButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          undoButton1.setVal('Undo Last', 'undoDraw');
+          var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          compButton1.setVal('Finish Drawing', 'finishDraw');
+          var cancelButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          cancelButton1.setVal('Undo Draw', 'cancelDraw');
+          cancelButton1.setClass('drawingEditController');
+          var saveButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
+          saveButton1.setVal('Save Redraw', 'saveDraw');
+          saveButton1.setClass('drawingEditController');
+          
+          var drawControl = new L.Control.Draw(options);
+          //map.addControl(drawControl);
+          L.control.zoom({position: 'topright'}).addTo(map);
+          var thisLayerJSON
+          var thisLayer
+
+          map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+            thisLayer = layer;
+            editableLayers.addLayer(layer);
+            thisLayerJSON = layer.toGeoJSON();
+            console.log(thisLayerJSON);
+            //toggleButtons();
+            
+            turnOffTools();
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            if (barrButton != null) {
+              if (thisLayerJSON.geometry.type == "LineString")
+                barrButton.style.display = 'block';
+              else
+                barrButton.style.display = 'none';
+            }
+              
+            
+          });
+          //new L.shapefile('public/geoJSON/roads.zip').addTo(map);
+        
+      #sidebar.sidebar.collapsed
+        // Nav tabs
+        .sidebar-tabs
+          ul(role='tablist')
+            // top aligned tabs
+            li
+              a(href='#layers', role='tab')
+                span.glyphicon.glyphicon-menu-hamburger(aria-hidden='true')
+            li
+              a(href='#drawTools', role='tab')
+                span.glyphicon.glyphicon-pencil(aria-hidden='true')
+            li
+              a(href='#formTools', role='tab')
+                span.glyphicon.glyphicon-info-sign(aria-hidden='true')
+            li
+              a(href='#savedSubs', role='tab')
+                span.glyphicon.glyphicon-list-alt(aria-hidden='true')
+
+          //ul(role='tablist')
+            // bottom aligned tabs
+            li
+              a(href='#settings', role='tab')
+                span.glyphicon.glyphicon-cog(aria-hidden='true')
+
+        // Tab panes
+        .sidebar-content
+          #layers.sidebar-pane
+            h1.sidebar-header
+              | Layers
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            p.legend
+              span.legend-item
+                img(src='/public/css/images/greenSquare.png', width='8%', height='35%') 
+                |  NPS 
+                img(src='/public/css/images/redSquare.png', width='8%', height='35%')  
+                |  BLM 
+              span.legend-item
+                img(src='/public/css/images/orangeSquare.png', width='8%', height='35%') 
+                |  FWS 
+                img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
+                |  FS 
+            #layerTools2
+
+          #drawTools.sidebar-pane
+            h1.sidebar-header
+              | Draw Tools
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #step1
+              h1 Select shape to draw:
+              button#drawLineB.drawControl2
+                | Line
+              br
+              button#drawPolygonB.drawControl2
+                | Polygon
+              br
+              button#drawMarkerB.drawControl2
+                | Marker
+              br
+            #step1Drawing
+              button#editShapeB.drawControl2
+                | Edit
+              br
+              button#delShapeB.drawControl2
+                | Delete
+              br
+              button#undoB.drawControl2
+                | Undo
+              br
+              button#compB.drawControl2
+                | Complete
+              br
+            #step2
+              button#backStep1
+                | Back
+              h1 Select a feature type:
+              button#restButton.drawControl2
+                | Restoration
+              br
+              button#distButton.drawControl2
+                | Disturbance
+              br
+              button#barrButton.drawControl2
+                | Barrier
+              br
+            #step3
+              button#backStep2
+                | Back
+              #sidebar2
+                
+
+          #formTools.sidebar-pane
+            h1.sidebar-header
+              | Marker Info
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #sidebar1
+              
+          #savedSubs.sidebar-pane
+            h1.sidebar-header
+              | Saved Submissions
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #editSaved
+            #savedContent
+              #savedCount
+              table#tableSubs
+                #saved
+              button#sync.btn Submit All Forms
+          
+                
+      script. 
+        
+        var lineButton = document.getElementById("drawLineB");
+        var polygonButton = document.getElementById("drawPolygonB");
+        var markerButton = document.getElementById("drawMarkerB");
+        var editButton = document.getElementById("editShapeB");
+        var deleteButton = document.getElementById("delShapeB");
+        var restButton = document.getElementById("restButton");
+        var distButton = document.getElementById("distButton");
+        var barrButton = document.getElementById("barrButton");
+        var undoDrawButton = document.getElementById("undoDraw");
+        var finDrawButton = document.getElementById("finishDraw");
+        var currForm = null;
+        
+        var undoButton = document.getElementById("undoB");
+        var compButton = document.getElementById("compB");
+        
+        var drawLine = new L.Draw.Polyline(map, drawControl.options.polyline);
+        var drawPoly = new L.Draw.Polygon(map, drawControl.options.polygon);
+        var drawMark = new L.Draw.Marker(map, drawControl.options.marker);
+        
+        var currShape = null;
+        function allOff() {
+            lineButton.style.borderStyle = "";
+            polygonButton.style.borderStyle = "";
+            markerButton.style.borderStyle = "";
+            drawLine.disable();
+            drawPoly.disable();
+            drawMark.disable();
+        }
+        
+        function turnOnTools() {
+          var myElements = document.querySelectorAll(".drawingController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "block";
+          }
+        }
+        function turnOffTools() {
+          var myElements = document.querySelectorAll(".drawingController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "none";
+          }
+        }
+        function turnOnEditTools() {
+          var myElements = document.querySelectorAll(".drawingEditController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "block";
+          }
+        }
+        function turnOffEditTools() {
+          var myElements = document.querySelectorAll(".drawingEditController");
+          for (var i = 0; i < myElements.length; i++) {
+              myElements[i].style.display = "none";
+          }
+        }
+        document.getElementById("backStep1").addEventListener("click", function(){
+          allOff();
+          document.getElementById('step1').style.display = 'block';
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'none';
+          map.removeLayer(thisLayer);
+        });
+        document.getElementById("backStep2").addEventListener("click", function(){
+          document.getElementById('step1').style.display = 'none';
+          document.getElementById('step2').style.display = 'block';
+          document.getElementById('step3').style.display = 'none';
+          currForm.toggle();
+        });
+        lineButton.addEventListener("click", function(){
+            allOff();
+            lineButton.style.borderStyle = "inset";
+            drawLine.enable();
+            currShape = drawLine;
+            turnOnTools();
+        });
+        polygonButton.addEventListener("click", function(){
+            allOff();
+            polygonButton.style.borderStyle = "inset";
+            drawPoly.enable();
+            currShape = drawPoly;
+            turnOnTools();
+        });
+        markerButton.addEventListener("click", function(){
+            allOff();
+            markerButton.style.borderStyle = "inset";
+            drawMark.enable();
+            currShape = drawMark;
+            //turnOnTools();
+        });
+        undoDrawButton.addEventListener("click", function(){ 
+          currShape.deleteLastVertex();
+          currShape.deleteLastVertex();
+        });
+        finDrawButton.addEventListener("click", function(){ 
+          currShape.deleteLastVertex();
+          currShape.completeShape();
+        });
+        editButton.addEventListener("click", function(){
+            new L.EditToolbar.Edit(map, {
+                featureGroup: drawControl.options.edit.featureGroup,
+                selectedPathOptions: drawControl.options.edit.selectedPathOptions
+            }).enable()
+        });
+        deleteButton.addEventListener("click", function(){
+            new L.EditToolbar.Delete(map, {
+                featureGroup: drawControl.options.edit.featureGroup
+            }).enable()
+        });
+        restButton.addEventListener("click", function(){
+          allOff();
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'block';
+          switch(thisLayerJSON.geometry.type){
+            case 'Point':
+              currForm = $('#restoPointForm');
+              break;
+            case 'Polygon':
+              currForm = $('#restoPolyForm');
+              break;
+            case 'LineString':
+              currForm = $('#restoLineForm');
+              break;
+          }
+          $('#restoPointForm').toggle(thisLayerJSON.geometry.type === 'Point');
+          $('#restoPolyForm').toggle(thisLayerJSON.geometry.type === 'Polygon');
+          $('#restoLineForm').toggle(thisLayerJSON.geometry.type === 'LineString');
+        });
+        distButton.addEventListener("click", function(){
+          allOff();
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'block';
+          switch(thisLayerJSON.geometry.type){
+            case 'Point':
+              currForm = $('#distPointForm');
+              break;
+            case 'Polygon':
+              currForm = $('#distPolyForm');
+              break;
+            case 'LineString':
+              currForm = $('#distLineForm');
+              break;
+          }
+          $('#distPointForm').toggle(thisLayerJSON.geometry.type === 'Point');
+          $('#distPolyForm').toggle(thisLayerJSON.geometry.type === 'Polygon');
+          $('#distLineForm').toggle(thisLayerJSON.geometry.type === 'LineString');
+        });
+        barrButton.addEventListener("click", function(){
+          allOff();
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'block';
+          currForm = $('#barrierForm');
+          $('#barrierForm').toggle(thisLayerJSON.geometry.type === 'LineString');
+        });
+        var sidebar = L.control.sidebar({ autopan: true, id: 'sidebar' }).addTo(map);
+        // Moves the layer controls into the sidebar
+        var htmlObject = control.getContainer();
+        // Get the desired parent node.
+        var a = document.getElementById('layerTools2');
+        
+        // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
+        function setParent(el, newParent)
+        {
+          newParent.appendChild(el);
+        }
+        setParent(htmlObject, a);
+        
+                
+        $(document).on("mobileinit", function () {
+          //register event to cache site for offline use
+        cache = window.applicationCache;
+        cache.addEventListener('updateready', cacheUpdatereadyListener, false);
+        cache.addEventListener('error', cacheErrorListener, false);
+        function cacheUpdatereadyListener (){
+            window.applicationCache.update();
+            window.applicationCache.swapCache();
+            }
+            function cacheErrorListener() {
+                alert('site not availble offline')
+            }
+        });
+        
+        // (function() {
+
+        //   var allNavItems = $(".main-nav li");
+        //   var allTabs = $(".tab");
+        
+        //   allNavItems.on("click", function(e) {
+        
+        //     e.preventDefault();
+        
+        //     allNavItems.removeClass("active");
+        //     allTabs.removeClass("active");
+        
+        //     // this = list item
+        //     $(this).addClass("active");
+        
+        //     var selector = $(this).find("a").attr("href");
+        //     $(selector).addClass("active");
+        
+        //   });
+        
+        //   // ServiceWorker is a progressive technology. Ignore unsupported browsers
+        //   if ('serviceWorker' in navigator) {
+        //     console.log('CLIENT: service worker registration in progress.');
+        //     navigator.serviceWorker.register('public/scripts/service-worker.js').then(function() {
+        //       console.log('CLIENT: service worker registration complete.');
+        //     }, function() {
+        //       console.log('CLIENT: service worker registration failure.');
+        //     });
+        //   } else {
+        //     console.log('CLIENT: service worker is not supported.');
+        //   }
+        
+        // })();
+
+      
