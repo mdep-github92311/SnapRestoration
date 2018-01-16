@@ -533,7 +533,7 @@ html
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);
-          //L.control.scale({position: 'bottomright'}).addTo(map);
+          L.control.scale({position: 'bottomright'}).addTo(map);
           
           var options = {
             position: 'bottomright',

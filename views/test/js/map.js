@@ -128,6 +128,107 @@ var distPolygon = L.mbTiles("data/dist_polygon/{z}/{x}/{y}.pbf", {
 })
 .addTo(map)
 
+var blmRegions = L.mbTiles("data/blmRegions/{z}/{x}/{y}.png", {
+	name: "BLM Regions",
+	storage: "BLM Regions",
+	mbtileLayerName: "blmRegions",
+	maxNativeZoom: 10,
+	minNativeZoom: 10,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
+var fsRegions = L.mbTiles("data/fsRegions/{z}/{x}/{y}.png", {
+	name: "FS Regions",
+	storage: "FS Regions",
+	mbtileLayerName: "fsRegions",
+	maxNativeZoom: 10,
+	minNativeZoom: 10,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
+
+var nvCounties = L.mbTiles("data/nvCounties/{z}/{x}/{y}.png", {
+	name: "NV Counties",
+	storage: "NV Counties",
+	mbtileLayerName: "nvCounties",
+	maxNativeZoom: 10,
+	minNativeZoom: 10,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
+var snapExtents = L.mbTiles("data/snapExtents/{z}/{x}/{y}.png", {
+	name: "SNAP Extents",
+	storage: "SNAP Extents",
+	mbtileLayerName: "snapExtents",
+	maxNativeZoom: 10,
+	minNativeZoom: 10,
+	minZoom: 6,
+	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+	legendIcon: drawRect,	
+	style: function(feature) {
+		return {
+			interactive: true,
+			pane: 'polygons',
+			renderer: canvasRenderer,
+			weight: 0.5,
+			color: '#0f0',
+			opacity: 1,
+			// dashArray: '5, 3',
+			fillColor: '#e39e1c',
+			fillOpacity: 0.4,
+			// fill: false
+		}
+	}
+})
+
 var soil = L.mbTiles("data/soil/{z}/{x}/{y}.pbf", {
 	name: "Soil Vulnerability",
 	storage: "Soil Vulnerability",
@@ -168,7 +269,11 @@ var layerGroups = [
 		"name": 'Misc',
 		"expanded": false,
 		"layers": [
-			soil
+			soil,
+			blmRegions,
+			fsRegions,
+			nvCounties,
+			snapExtents
 		]
 	},
 	{
@@ -188,7 +293,11 @@ var layerStorage = [
 	'Disturbance Lines',
 	'Disturbance Points',
 	'Disturbance Polygon',
-	'Soil Vulnerability'
+	'Soil Vulnerability',
+	'BLM Regions',
+	'FS Regions',
+	'NV Counties',
+	'SNAP Extents'
 ];
 
 //L.control.layers(baseLayers, overlays, {
