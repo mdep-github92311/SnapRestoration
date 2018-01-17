@@ -1,7 +1,7 @@
 //  Created by msgis-student on 6/9/2017.
 
 doctype html
-// html(manifest='cache.manifest', type='text/cache-manifest')
+//html(manifest='cache.manifest', type='text/cache-manifest')
 html
   head
     title= 'SNAP Restoration Map'
@@ -238,6 +238,19 @@ html
       .drawingEditController {
         display: none;
       }
+      
+      .savetiles a {
+        float: left !important;
+        width: auto !important;
+        height: 30px;
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+        font-size: 1.2em !important;
+      }
+      .rmtiles {
+        display:none !important;
+        float: right !important;
+      }
     body
     
       #header
@@ -392,23 +405,32 @@ html
           
           L.control.savetiles(baseLayer,{
             'zoomlevels':[13,15],
-            'position': 'topright',
+            'position': 'topcenter',
             'saveWhatYouSee': false,
-            'confirm': function (nTilesToSave, continueSaveTiles) {
-                  console.log(nTilesToSave);
-                  continueSaveTiles();
-                  if (window.confirm('Save ' + nTilesToSave.lengthToBeSaved + '?')) {
-                      continueSaveTiles();
-                  }
-              }
-            }
-          ).addTo(map);
+            'confirm': function(layer, succescallback) {
+                console.log(layer);
+                if (window.confirm("Save " + layer._tilesforSave.length)) {
+                    $('#myModal').modal('show');
+                    succescallback();
+                }
+            },
+            'saveText': 'Save Area'
+            }).addTo(map);
           
           
-          
-          
-          
-          
+          var progress;
+          baseLayer.on('savestart', function(e) {
+              progress = 0;
+              document.getElementById("total").innerHTML = e._tilesforSave.length;
+              document.getElementById('progress').innerHTML = progress;
+          });
+          baseLayer.on('savetileend', function(e) {
+              progress++;
+              document.getElementById('progress').innerHTML = progress;
+          });
+          baseLayer.on('loadend', function(e) {
+              //alert("Saved all tiles");
+          });
           // var canvasRenderer = L.canvas();
           // function drawRect(context, style) {
           // 	context.strokeStyle = style.color;
@@ -687,6 +709,7 @@ html
                 img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
                 |  FS 
             #layerTools2
+          
 
           #drawTools.sidebar-pane
             h1.sidebar-header
@@ -754,10 +777,19 @@ html
               table#tableSubs
                 #saved
               button#sync.btn Submit All Forms
-          
-                
+      #myModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel')
+        .modal-dialog.modal-sm(role='document')
+          .modal-content
+            h1
+              | Saving Tiles
+            p 
+              | Progress: 
+              span#progress
+              | /
+              span#total
+
+
       script. 
-        
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
