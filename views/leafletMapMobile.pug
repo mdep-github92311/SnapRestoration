@@ -1,7 +1,7 @@
 //  Created by msgis-student on 6/9/2017.
 
 doctype html
-// html(manifest='cache.manifest', type='text/cache-manifest')
+//html(manifest='cache.manifest', type='text/cache-manifest')
 html
   head
     title= 'SNAP Restoration Map'
@@ -238,6 +238,23 @@ html
       .drawingEditController {
         display: none;
       }
+      
+      .savetiles a {
+        float: left !important;
+        width: auto !important;
+        height: 30px;
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+        font-size: 1.2em !important;
+      }
+      .rmtiles a {
+        display:none !important;
+        float: right !important;
+        height: 30px;
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+        font-size: 1.2em !important;
+      }
     body
     
       #header
@@ -359,10 +376,35 @@ html
           
           checkLogin();
           //import "babel-polyfill";
-          var map = L.map('map').setView([36.211303, -115.114929], 8);
-          map.removeControl(map.zoomControl);
-          // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
-          // createPane was used in this thread to control the order of the layers
+          var map;
+          if (localStorage.getItem("mapBounds") == null) {
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1}).setView([36.211303, -115.114929], 8);
+            map.removeControl(map.zoomControl);
+            // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+            // createPane was used in this thread to control the order of the layers
+          
+            
+          }
+          else {
+            var bounds = JSON.parse(localStorage.getItem("mapBounds"));
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
+            map.removeControl(map.zoomControl);
+            map.setMaxBounds([bounds._northEast,bounds._southWest]);
+          }
+            var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+              attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+              maxZoom: 17,
+              minZoom: 6,
+              maxNativeZoom: 14,
+              id: 'rogerdodger617.2p4pk9co',
+              accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+            }).addTo(map);
+          
           
           map.createPane('Points').style.zIndex = 390;
           map.createPane('Lines').style.zIndex = 380;
@@ -372,18 +414,6 @@ html
           map.createPane('Misc').style.zIndex = 340;
           
           
-          var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: '<a href="/attribution/privacy-security.html">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="/attribution/foia.html">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="/attribution/nofear.html">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="/attribution/license.html">License</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
-            maxZoom: 16,
-            id: 'rogerdodger617.2p4pk9co',
-            accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
-          }).addTo(map);
-          
           function confirmOfflineSave(nTilesToSave, continueSaveTiles) {
             console.log(nTilesToSave)
             console.log(continueSaveTiles)
@@ -391,24 +421,36 @@ html
           }
           
           L.control.savetiles(baseLayer,{
-            'zoomlevels':[13,15],
-            'position': 'topright',
+            'zoomlevels':[12,14],
+            'position': 'topcenter',
             'saveWhatYouSee': false,
-            'confirm': function (nTilesToSave, continueSaveTiles) {
-                  console.log(nTilesToSave);
-                  continueSaveTiles();
-                  if (window.confirm('Save ' + nTilesToSave.lengthToBeSaved + '?')) {
-                      continueSaveTiles();
-                  }
-              }
-            }
-          ).addTo(map);
+            'confirm': function(layer, succescallback) {
+                console.log(layer);
+                console.log(JSON.parse(localStorage.getItem("mapBounds")));
+                if (window.confirm("Save " + layer._tilesforSave.length)) {
+                    var bounds = map.getBounds();
+                    localStorage.setItem("mapBounds", JSON.stringify(bounds));
+                    $('#myModal').modal('show');
+                    succescallback();
+                }
+            },
+            'saveText': 'Save Area'
+            }).addTo(map);
           
           
-          
-          
-          
-          
+          var progress;
+          baseLayer.on('savestart', function(e) {
+              progress = 0;
+              document.getElementById("total").innerHTML = e._tilesforSave.length;
+              document.getElementById('progress').innerHTML = progress;
+          });
+          baseLayer.on('savetileend', function(e) {
+              progress++;
+              document.getElementById('progress').innerHTML = progress;
+          });
+          baseLayer.on('loadend', function(e) {
+              //alert("Saved all tiles");
+          });
           // var canvasRenderer = L.canvas();
           // function drawRect(context, style) {
           // 	context.strokeStyle = style.color;
@@ -687,6 +729,7 @@ html
                 img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
                 |  FS 
             #layerTools2
+          
 
           #drawTools.sidebar-pane
             h1.sidebar-header
@@ -754,10 +797,21 @@ html
               table#tableSubs
                 #saved
               button#sync.btn Submit All Forms
-          
-                
+      #myModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel')
+        .modal-dialog.modal-sm(role='document')
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+              h4#mySmallModalLabel.modal-title Saving Tiles
+            p 
+              | Progress: 
+              span#progress
+              | /
+              span#total
+
+
       script. 
-        
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
