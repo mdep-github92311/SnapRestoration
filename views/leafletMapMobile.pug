@@ -248,7 +248,6 @@ html
         font-size: 1.2em !important;
       }
       .rmtiles a {
-        display:none !important;
         float: right !important;
         height: 30px;
         padding-right: 10px !important;
@@ -380,14 +379,11 @@ html
           if (localStorage.getItem("mapBounds") == null) {
             map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1}).setView([36.211303, -115.114929], 8);
             map.removeControl(map.zoomControl);
-            // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
-            // createPane was used in this thread to control the order of the layers
-          
-            
           }
           else {
+            console.log(localStorage.getItem("mapBounds"))
             var bounds = JSON.parse(localStorage.getItem("mapBounds"));
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
             map.removeControl(map.zoomControl);
             map.setMaxBounds([bounds._northEast,bounds._southWest]);
           }
@@ -399,7 +395,7 @@ html
               '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
               maxZoom: 17,
-              minZoom: 6,
+              minZoom: 8,
               maxNativeZoom: 14,
               id: 'rogerdodger617.2p4pk9co',
               accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
@@ -420,7 +416,7 @@ html
             alert('you sure?')
           }
           
-          L.control.savetiles(baseLayer,{
+          var saveTileControl = L.control.savetiles(baseLayer,{
             'zoomlevels':[12,14],
             'position': 'topcenter',
             'saveWhatYouSee': false,
@@ -431,12 +427,29 @@ html
                     var bounds = map.getBounds();
                     localStorage.setItem("mapBounds", JSON.stringify(bounds));
                     $('#myModal').modal('show');
+                    saveTileControl.options.toggleButton('none');
+                    map.setMaxBounds([bounds._northEast,bounds._southWest]);
+                    map.setMinZoom(12);
                     succescallback();
                 }
             },
-            'saveText': 'Save Area'
+            'saveText': 'Save Area',
+            'confirmRemoval': function(layer, successCallback) {
+                if (window.confirm("Remove all the tiles?")) {
+                    successCallback();
+                    localStorage.removeItem("mapBounds");
+                    map.setMaxBounds(null);
+                    saveTileControl.options.toggleButton('');
+                    map.setMinZoom(8);
+                }
+            },
+            'rmText': '<button>Delete Tiles</button>',
+            'toggleButton': function toggleButton(val) {
+              document.getElementsByClassName('savetiles')[0].style.display = val;
+            }
             }).addTo(map);
-          
+          if (localStorage.getItem("mapBounds") != null)
+            saveTileControl.options.toggleButton('none')
           
           var progress;
           baseLayer.on('savestart', function(e) {
@@ -704,7 +717,7 @@ html
               a(href='#savedSubs', role='tab')
                 span.glyphicon.glyphicon-list-alt(aria-hidden='true')
 
-          //ul(role='tablist')
+          ul(role='tablist')
             // bottom aligned tabs
             li
               a(href='#settings', role='tab')
@@ -797,6 +810,16 @@ html
               table#tableSubs
                 #saved
               button#sync.btn Submit All Forms
+              
+          #settings.sidebar-pane
+            h1.sidebar-header
+              | Settings
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            h2
+              | Would you like to download a new area?
+              #deleteTiles
+                
       #myModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel')
         .modal-dialog.modal-sm(role='document')
           .modal-content
@@ -812,6 +835,9 @@ html
 
 
       script. 
+        document.getElementById('deleteTiles').appendChild(
+          document.getElementsByClassName('rmtiles')[0]
+        );
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
