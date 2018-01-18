@@ -9,8 +9,8 @@ var crypto = require("crypto");
 app.engine('pug', require('pug').__express);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
-var MapboxClient = require("mapbox")
-var client = new MapboxClient('sk.eyJ1IjoiYnJzdGlsbHdlbGwiLCJhIjoiY2pja2E3cXF5MDltYTMycGlsOXd5Y2t5MiJ9.kAYb7BXmXOkNaERkP-LqJQ');
+// var MapboxClient = require("mapbox")
+// var client = new MapboxClient('sk.eyJ1IjoiYnJzdGlsbHdlbGwiLCJhIjoiY2pja2E3cXF5MDltYTMycGlsOXd5Y2t5MiJ9.kAYb7BXmXOkNaERkP-LqJQ');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
