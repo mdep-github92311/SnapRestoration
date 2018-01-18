@@ -670,6 +670,7 @@ var getLayers = function () {
             
             console.error(_context2.t19);
             console.log('Now Loading Offline layers')
+            count = 100;
             getOfflineLayers();
             
           case 48:

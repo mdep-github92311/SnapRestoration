@@ -558,10 +558,10 @@ html
                       _context.prev = 0;
                       _context.next = 3;
                       if (typeof Dexie == 'function') { 
-                        // if(navigator.onLine)
-                        //   return getLayers();
-                        // else
-                        //   return getOfflineLayers();
+                        if(navigator.onLine)
+                          return getLayers();
+                        else
+                          return getOfflineLayers();
                       }
                       else {
                         console.log('dexie not here rn');

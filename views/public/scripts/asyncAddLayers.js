@@ -572,6 +572,7 @@ async function getLayers() {
   catch (err) {
     console.error(err);
     console.log('Now Loading Offline layers')
+    count = 100;
     getOfflineLayers();
   }
 }
