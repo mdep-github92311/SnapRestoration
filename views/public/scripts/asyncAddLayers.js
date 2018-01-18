@@ -1,3 +1,22 @@
+function hostReachable() {
+
+  // Handle IE and more capable browsers
+  var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
+  var status;
+
+  // Open new request as a HEAD to the root hostname with a random param to bust the cache
+  xhr.open( "HEAD", "//" + window.location.hostname + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
+
+  // Issue request and handle response
+  try {
+    xhr.send();
+    return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
+  } catch (error) {
+    return false;
+  }
+
+}
+
 const dbCache = new Dexie('CachedData');
 
   dbCache.version(1).stores({
@@ -244,6 +263,11 @@ async function createLayer(data, layerName) {
 };
 
 async function getLayers() {
+  if (!hostReachable())
+  {
+    getOfflineLayers()
+    return;
+  }
   const progress = new LoadingOverlayProgress({
     bar     : {
       "background"    : "#e41a1c",
@@ -537,7 +561,7 @@ async function getLayers() {
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
-          })                      
+          });                    
         }
       })
     ).then(function () {
@@ -547,5 +571,126 @@ async function getLayers() {
   }
   catch (err) {
     console.error(err);
+    console.log('Now Loading Offline layers')
+    getOfflineLayers();
   }
-};
+}
+
+
+async function getOfflineLayers() {
+  const progress = new LoadingOverlayProgress({
+    bar     : {
+      "background"    : "#e41a1c",
+      "top"           : "600px",
+      "height"        : "50px"
+    },
+    text    : {
+      "color"         : "black",
+      "font-family"   : "monospace",
+      "top"           : "575px"
+    }
+  });
+  $.LoadingOverlay("show", {
+    custom  : progress.Init()
+  });
+  var count = 0;
+  const interval = setInterval(function(){
+    if (count >= 100) {
+      clearInterval(interval);
+      //delete progress;
+      $.LoadingOverlay("hide");
+      return;
+    }
+    progress.Update(count);
+  }, 100);
+  var getUrl = window.location;
+  var baseUrl = getUrl.origin;
+  try {
+    $.when(
+      dbCache.roads.count(function (records) { 
+        if (records > 0) {
+          dbCache.roads.toArray(function(data) { 
+            createLayer(data, 'Roads');
+          });
+          console.log("cached data loaded");
+        }
+        count += 20;
+      }),
+      dbCache.soilVuln.count(function (records) { 
+        if (records > 0) {
+          dbCache.soilVuln.toArray(function(data) { 
+            createLayer(data, 'Soil Vulnerability');
+          });
+          console.log("cached data loaded");
+        }
+        count += 20;
+      }),
+      
+      dbCache.snapExtent.count(function (records) { 
+        if (records > 0) {
+          dbCache.snapExtent.toArray(function(data) { 
+            createLayer(data, 'Snap Extent');
+          });
+          console.log("cached snapExtent loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.blmRegion.count(function (records) { 
+        if (records > 0) {
+          dbCache.blmRegion.toArray(function(data) { 
+            createLayer(data, 'BLM');
+          });
+          console.log("cached blmRegion loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.fsRegion.count(function (records) { 
+        if (records > 0) {
+          dbCache.fsRegion.toArray(function(data) { 
+            createLayer(data, 'FS Regions');
+          });
+          console.log("cached fsRegion loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.mdepBound.count(function (records) { 
+        if (records > 0) {
+          dbCache.mdepBound.toArray(function(data) { 
+            createLayer(data, 'MDEP Boundary');
+          });
+          console.log("cached mdepBound loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.mdiBound.count(function (records) { 
+        if (records > 0) {
+          dbCache.mdiBound.toArray(function(data) { 
+            createLayer(data, 'MDI Boundary');
+          });
+          console.log("cached MDI Boundary loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.nvCounties.count(function (records) { 
+        if (records > 0) {
+          dbCache.nvCounties.toArray(function(data) { 
+            createLayer(data, 'Nevada Counties');
+          });
+          console.log("cached Nevada Counties loaded");
+        }
+        count += 10;
+      })
+    ).then(function () {
+      //$.LoadingOverlay("hide");
+      console.log(count);
+    });
+  }
+  catch (err) {
+    console.error(err);
+  }
+}

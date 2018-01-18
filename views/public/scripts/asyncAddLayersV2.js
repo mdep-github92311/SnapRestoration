@@ -1,4 +1,22 @@
 'use strict';
+function hostReachable() {
+
+  // Handle IE and more capable browsers
+  var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
+  var status;
+
+  // Open new request as a HEAD to the root hostname with a random param to bust the cache
+  xhr.open( "HEAD", "//" + window.location.hostname + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
+
+  // Issue request and handle response
+  try {
+    xhr.send();
+    return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
+  } catch (error) {
+    return false;
+  }
+
+}
 
 var createLayer = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, layerName) {
@@ -338,6 +356,11 @@ var createLayer = function () {
 }();
 
 var getLayers = function () {
+  if (!hostReachable())
+  {
+    getOfflineLayers()
+    return;
+  }
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
     var progress, count, interval, getUrl, baseUrl, ipAddress;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -644,9 +667,11 @@ var getLayers = function () {
           case 45:
             _context2.prev = 45;
             _context2.t19 = _context2['catch'](8);
-
+            
             console.error(_context2.t19);
-
+            console.log('Now Loading Offline layers')
+            getOfflineLayers();
+            
           case 48:
           case 'end':
             return _context2.stop();
@@ -659,6 +684,130 @@ var getLayers = function () {
     return _ref2.apply(this, arguments);
   };
 }();
+
+
+var getOfflineLayers = function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+    var progress, count, interval, getUrl, baseUrl;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            progress = new LoadingOverlayProgress({
+              bar: {
+                "background": "#e41a1c",
+                "top": "600px",
+                "height": "50px"
+              },
+              text: {
+                "color": "black",
+                "font-family": "monospace",
+                "top": "575px"
+              }
+            });
+
+            $.LoadingOverlay("show", {
+              custom: progress.Init()
+            });
+            count = 0;
+            interval = setInterval(function () {
+              if (count >= 100) {
+                clearInterval(interval);
+                //delete progress;
+                $.LoadingOverlay("hide");
+                return;
+              }
+              progress.Update(count);
+            }, 100);
+            getUrl = window.location;
+            baseUrl = getUrl.origin;
+
+            try {
+              $.when(dbCache.roads.count(function (records) {
+                if (records > 0) {
+                  dbCache.roads.toArray(function (data) {
+                    createLayer(data, 'Roads');
+                  });
+                  console.log("cached data loaded");
+                }
+                count += 20;
+              }), dbCache.soilVuln.count(function (records) {
+                if (records > 0) {
+                  dbCache.soilVuln.toArray(function (data) {
+                    createLayer(data, 'Soil Vulnerability');
+                  });
+                  console.log("cached data loaded");
+                }
+                count += 20;
+              }), dbCache.snapExtent.count(function (records) {
+                if (records > 0) {
+                  dbCache.snapExtent.toArray(function (data) {
+                    createLayer(data, 'Snap Extent');
+                  });
+                  console.log("cached snapExtent loaded");
+                }
+                count += 10;
+              }), dbCache.blmRegion.count(function (records) {
+                if (records > 0) {
+                  dbCache.blmRegion.toArray(function (data) {
+                    createLayer(data, 'BLM');
+                  });
+                  console.log("cached blmRegion loaded");
+                }
+                count += 10;
+              }), dbCache.fsRegion.count(function (records) {
+                if (records > 0) {
+                  dbCache.fsRegion.toArray(function (data) {
+                    createLayer(data, 'FS Regions');
+                  });
+                  console.log("cached fsRegion loaded");
+                }
+                count += 10;
+              }), dbCache.mdepBound.count(function (records) {
+                if (records > 0) {
+                  dbCache.mdepBound.toArray(function (data) {
+                    createLayer(data, 'MDEP Boundary');
+                  });
+                  console.log("cached mdepBound loaded");
+                }
+                count += 10;
+              }), dbCache.mdiBound.count(function (records) {
+                if (records > 0) {
+                  dbCache.mdiBound.toArray(function (data) {
+                    createLayer(data, 'MDI Boundary');
+                  });
+                  console.log("cached MDI Boundary loaded");
+                }
+                count += 10;
+              }), dbCache.nvCounties.count(function (records) {
+                if (records > 0) {
+                  dbCache.nvCounties.toArray(function (data) {
+                    createLayer(data, 'Nevada Counties');
+                  });
+                  console.log("cached Nevada Counties loaded");
+                }
+                count += 10;
+              })).then(function () {
+                //$.LoadingOverlay("hide");
+                console.log(count);
+              });
+            } catch (err) {
+              console.error(err);
+            }
+
+          case 7:
+          case 'end':
+            return _context3.stop();
+        }
+      }
+    }, _callee3, this);
+  }));
+
+  return function getOfflineLayers() {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 

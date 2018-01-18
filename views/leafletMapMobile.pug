@@ -254,6 +254,26 @@ html
         padding-left: 10px !important;
         font-size: 1.2em !important;
       }
+      
+      .tileCount {
+        display: none;
+        text-align: center;
+      }
+      .modalButtons {
+        width: auto;
+        text-align: right;
+      }
+      .savingProgress {
+        display: none;
+        text-align: center;
+      }
+      .savingComplete {
+        display: none;
+        text-align: center;
+      }
+      #storage {
+        text-align: center;
+      }
     body
     
       #header
@@ -337,7 +357,6 @@ html
 
         script(src='/public/scripts/asyncAddLayersV2.js')
         script.
-        
           function checkLogin() {
             $.ajax({
                 type: "GET",
@@ -421,27 +440,46 @@ html
             'position': 'topcenter',
             'saveWhatYouSee': false,
             'confirm': function(layer, succescallback) {
-                console.log(layer);
-                console.log(JSON.parse(localStorage.getItem("mapBounds")));
-                if (window.confirm("Save " + layer._tilesforSave.length)) {
-                    var bounds = map.getBounds();
-                    localStorage.setItem("mapBounds", JSON.stringify(bounds));
-                    $('#myModal').modal('show');
-                    saveTileControl.options.toggleButton('none');
-                    map.setMaxBounds([bounds._northEast,bounds._southWest]);
-                    map.setMinZoom(12);
-                    succescallback();
-                }
+                $('#savingModal').modal('show');
+                document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+                document.getElementsByClassName('savingComplete')[0].style.display = 'none';
+                document.getElementsByClassName('tileCount')[0].innerHTML = "Save " + layer._tilesforSave.length + " tiles for offline"
+                document.getElementsByClassName('tileCount')[0].style.display = 'block';
+                document.getElementsByClassName('tileCount')[1].style.display = 'inline';
+                document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                $('#confirmTileSave').click(function() {
+                  document.getElementsByClassName('savingProgress')[0].style.display = 'block';
+                  document.getElementsByClassName('tileCount')[0].style.display = 'none';
+                  document.getElementsByClassName('tileCount')[1].style.display = 'none';
+                  document.getElementsByClassName('tileCount')[2].style.display = 'none';  
+                  var bounds = map.getBounds();
+                  localStorage.setItem("mapBounds", JSON.stringify(bounds));
+                  saveTileControl.options.toggleButton('none');
+                  map.setMaxBounds([bounds._northEast,bounds._southWest]);
+                  map.setMinZoom(12);
+                  succescallback();
+                });
+                // if (window.confirm("Save " + layer._tilesforSave.length)) {
+                //     var bounds = map.getBounds();
+                //     localStorage.setItem("mapBounds", JSON.stringify(bounds));
+                //     $('#savingModal').modal('show');
+                //     saveTileControl.options.toggleButton('none');
+                //     map.setMaxBounds([bounds._northEast,bounds._southWest]);
+                //     map.setMinZoom(12);
+                //     succescallback();
+                // }
             },
             'saveText': 'Save Area',
             'confirmRemoval': function(layer, successCallback) {
-                if (window.confirm("Remove all the tiles?")) {
-                    successCallback();
-                    localStorage.removeItem("mapBounds");
-                    map.setMaxBounds(null);
-                    saveTileControl.options.toggleButton('');
-                    map.setMinZoom(8);
-                }
+              $('#deletingModal').modal('show');
+              $('#confirmTileDelete').click(function() {
+                  successCallback();
+                  localStorage.removeItem("mapBounds");
+                  map.setMaxBounds(null);
+                  saveTileControl.options.toggleButton('');
+                  map.setMinZoom(8);
+                  $('#deletingModal').modal('hide');
+              });
             },
             'rmText': '<button>Delete Tiles</button>',
             'toggleButton': function toggleButton(val) {
@@ -450,6 +488,7 @@ html
             }).addTo(map);
           if (localStorage.getItem("mapBounds") != null)
             saveTileControl.options.toggleButton('none')
+          
           
           var progress;
           baseLayer.on('savestart', function(e) {
@@ -463,7 +502,13 @@ html
           });
           baseLayer.on('loadend', function(e) {
               //alert("Saved all tiles");
+              document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+              document.getElementsByClassName('savingComplete')[0].style.display = 'block';
+              document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
           });
+          baseLayer.on('storagesize', function(e) {
+              document.getElementById('storage').innerHTML = e.storagesize + " offline tiles will be removed.";
+          })
           // var canvasRenderer = L.canvas();
           // function drawRect(context, style) {
           // 	context.strokeStyle = style.color;
@@ -514,8 +559,10 @@ html
                       _context.prev = 0;
                       _context.next = 3;
                       if (typeof Dexie == 'function') { 
-                        console.log('dexie is here');
-                        //return getLayers();
+                        // if(navigator.onLine)
+                        //   return getLayers();
+                        // else
+                        //   return getOfflineLayers();
                       }
                       else {
                         console.log('dexie not here rn');
@@ -570,20 +617,20 @@ html
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
           
-          var offlineLayers = null;
-          function onAreaClick(feature, layer) {
-            $(layer).on('click', function () {
-              map.flyToBounds([layer._bounds._northEast,layer._bounds._southWest]); 
-              map.removeLayer(offlineLayers);
+          // var offlineLayers = null;
+          // function onAreaClick(feature, layer) {
+          //   $(layer).on('click', function () {
+          //     map.flyToBounds([layer._bounds._northEast,layer._bounds._southWest]); 
+          //     map.removeLayer(offlineLayers);
               
               
-            });
-          }
-          $.getJSON('/public/geoJSON/offlineAreas.json', function (data) {
-            offlineLayers = L.geoJson(data, {
-              onEachFeature: onAreaClick
-            }).addTo(map);
-          });
+          //   });
+          // }
+          // $.getJSON('/public/geoJSON/offlineAreas.json', function (data) {
+          //   offlineLayers = L.geoJson(data, {
+          //     onEachFeature: onAreaClick
+          //   }).addTo(map);
+          // });
           //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
@@ -820,24 +867,51 @@ html
               | Would you like to download a new area?
               #deleteTiles
                 
-      #myModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel')
+      #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
-          .modal-content
+          .modal-content#savingModalContent
             .modal-header
               button.close(type='button', data-dismiss='modal', aria-label='Close')
                 span(aria-hidden='true') ×
-              h4#mySmallModalLabel.modal-title Saving Tiles
-            p 
+              h4#mySmallModalLabel.modal-title Offline Tiles
+            p.tileCount
+            div.modalButtons
+              button#confirmTileSave.tileCount.btn.btn-primary(type='button')
+                | Confirm
+              button#cancelTileSave.tileCount.btn.btn-default(type='button')
+                | Cancel
+            p.savingProgress 
               | Progress: 
               span#progress
               | /
               span#total
+            p.savingComplete
+      #deletingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
+        .modal-dialog.modal-sm(role='document')
+          .modal-content#savingModalContent
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+              h4#mySmallModalLabel.modal-title Remove all saved tiles?
+            p#storage
+            div.modalButtons
+              button#confirmTileDelete.btn.btn-danger(type='button')
+                | Confirm
+              button#cancelTileDelete.btn.btn-default(type='button')
+                | Cancel
 
 
       script. 
+        //$('#savingModal').modal({backdrop: 'static', keyboard: false})  
         document.getElementById('deleteTiles').appendChild(
           document.getElementsByClassName('rmtiles')[0]
         );
+        $('#cancelTileDelete').click(function() {
+          $('#deletingModal').modal('hide');
+        });
+        $('#cancelTileSave').click(function() {
+          $('#savingModal').modal('hide');
+        });
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
