@@ -872,24 +872,32 @@ html
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('none');
         }
         function turnOffTools() {
           var myElements = document.querySelectorAll(".drawingController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('');
         }
         function turnOnEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('none');
         }
         function turnOffEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('');
         }
         document.getElementById("backStep1").addEventListener("click", function(){
           allOff();
