@@ -283,7 +283,7 @@ var mdiBoundry = L.mbTiles("data/mdiBoundry/{z}/{x}/{y}.pbf", {
 	}
 })
 
-var roads = L.mbTiles("data/roads/{z}/{x}/{y}.pbf", {
+var roads = L.mbTiles("data/roadsTemp/{z}/{x}/{y}.pbf", {
 	name: "Roads",
 	storage: "Roads",
 	mbtileLayerName: "roads",
@@ -308,7 +308,7 @@ var roads = L.mbTiles("data/roads/{z}/{x}/{y}.pbf", {
 	}
 })
 
-var soil = L.mbTiles("data/soil/{z}/{x}/{y}.pbf", {
+var soil = L.mbTiles("data/soilTemp2/{z}/{x}/{y}.pbf", {
 	name: "Soil Vulnerability",
 	storage: "Soil Vulnerability",
 	mbtileLayerName: "soil",
