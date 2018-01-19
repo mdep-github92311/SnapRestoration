@@ -163,7 +163,7 @@ function myStyleRestoPoly(feature) {
 }
 // creating a function that will chang the default point makers to circle markers
 function pointToLayer(feature, latlng) {
-    return new L.Circle(latlng, 300);
+    return new L.Circle(latlng, 30);
 }
 
 function blmRegion(feature) {

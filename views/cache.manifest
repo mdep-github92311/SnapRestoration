@@ -43,6 +43,13 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
 https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css
 https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
 /loginStatus
+
+
+SETTINGS:
+prefer-online
+
+NETWORK:
+*
 /api/RestoLines/restoLineGeoJSON
 /api/RestoPoints/restoPointGeoJSON
 /api/RestoPolygons/restoPolyGeoJSON
@@ -59,12 +66,6 @@ https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
 /api/DistPolygonSubs/distPolySubGeoJSON
 /api/DistPolyCentroids/distPolyCentGeoJSON
 /api/BarrierSubs/barrierSubGeoJSON
-
-SETTINGS:
-prefer-online
-
-NETWORK:
-*
 
 FALLBACK:
 / /offline.html

@@ -5,10 +5,13 @@
       "loopback/server/models",
       "../common/models",
       "../common/models/Barrier",
+      "../common/models/Barrier/Agency",
       "../common/models/Boundaries",
       "../common/models/Regions_Counties",
       "../common/models/Disturbance",
+      "../common/models/Disturbance/Agency",
       "../common/models/Restoration",
+      "../common/models/Restoration/Agency",
       "../common/models/Roads",
       "../common/models/Snap_Soil",
       "../common/models/Submissions",
@@ -320,6 +323,406 @@
         "sharedMethods": {
           "*": false,
           "restoPolySubGeoJSON": true
+        }
+      }
+    }
+  },
+  "BarrierBLM": {
+    "dataSource": "mip",
+    "public": true
+  },
+  "DistLineBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPointBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygonBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLineBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPointBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygonBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "BarrierFS": {
+    "dataSource": "mip",
+    "public": true
+  },
+  "DistLineFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPointFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygonFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLineFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPointFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygonFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "BarrierFWS": {
+    "dataSource": "mip",
+    "public": true
+  },
+  "DistLineFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPointFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygonFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLineFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPointFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygonFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "BarrierNPS": {
+    "dataSource": "mip",
+    "public": true
+  },
+  "DistLineNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distLineNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPointNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPointNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolygonNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoLineNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoLineNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPointNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPointNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestoPolygonNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentNPSGeoJSON": true
         }
       }
     }

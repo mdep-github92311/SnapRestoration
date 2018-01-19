@@ -1,3 +1,34 @@
+var isMobile = false;
+      // device detection
+if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+   || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) isMobile = true;
+function hostReachable() {
+
+  // Handle IE and more capable browsers
+  var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
+  var status;
+
+  // Open new request as a HEAD to the root hostname with a random param to bust the cache
+  xhr.open( "HEAD", "//" + window.location.hostname + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
+
+  // Issue request and handle response
+  try {
+    xhr.send();
+    return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
+  } catch (error) {
+    return false;
+  }
+
+}
+
+function fixCollection(data) {
+  var newData = [];
+  newData.type = "FeatureCollection";
+  newData.features = data;
+  return newData;
+  
+}
+
 const dbCache = new Dexie('CachedData');
 
   dbCache.version(1).stores({
@@ -139,6 +170,9 @@ async function createLayer(data, layerName) {
         break;
 
       case 'BLM':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const blmRegions = await L.geoJson(data, {
           pane: 'Regions',
           style: blmRegion,
@@ -151,6 +185,9 @@ async function createLayer(data, layerName) {
         break;
 
       case 'FS Regions':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const fsRegions = await L.geoJson(data, {
           pane: 'Regions',
           style: fsRegion,
@@ -163,6 +200,9 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Nevada Counties':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const nvCounties = await L.geoJson(data, {
           pane: 'Bounds_County',
           style: nv_county,
@@ -175,6 +215,9 @@ async function createLayer(data, layerName) {
         break;
 
       case 'MDI Boundary':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const mdiBound = await L.geoJson(data, {
           pane: 'Bounds_County',
           style: mdep_i,
@@ -187,6 +230,9 @@ async function createLayer(data, layerName) {
         break;
 
       case 'MDEP Boundary':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const mdepBound = await L.geoJson(data, {
           pane: 'Bounds_County',
           style: mdep_i,
@@ -199,10 +245,14 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Roads':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const roads = await L.geoJson(data, {
           pane: 'Lines',
           style: roadColor
         }).addTo(map);
+        
 
         control.addOverlay(roads, layerName, {groupName: 'Roads', expanded: false});
         console.log(`added ${layerName} Unselected`);
@@ -210,6 +260,11 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Snap Extent':
+        console.log(data)
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        console.log(data)
         const snapExtent = await L.geoJson(data, {
           pane: 'Misc',
           style: soil_vuln,
@@ -222,6 +277,9 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Soil Vulnerability':
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
         const soilVuln = await L.geoJson(data, {
           pane: 'Misc',
           style: soil_vuln
@@ -232,6 +290,11 @@ async function createLayer(data, layerName) {
         console.log(`added ${layerName} Unselected`);
 
         break;
+    }
+    if (isMobile) {
+      control.unSelectGroup('Barrier Data');
+      control.unSelectGroup('Disturbance Data');
+      control.unSelectGroup('Restoration Data');
     }
     control.unSelectGroup('Regions/ Counties');
     control.unSelectGroup('Boundaries');
@@ -244,6 +307,11 @@ async function createLayer(data, layerName) {
 };
 
 async function getLayers() {
+  if (!hostReachable())
+  {
+    getOfflineLayers()
+    return;
+  }
   const progress = new LoadingOverlayProgress({
     bar     : {
       "background"    : "#e41a1c",
@@ -537,7 +605,7 @@ async function getLayers() {
           })
           .fail(function(jqXHR, textStatus, error) {
             console.log(JSON.stringify(jqXHR));
-          })                      
+          });                    
         }
       })
     ).then(function () {
@@ -547,5 +615,127 @@ async function getLayers() {
   }
   catch (err) {
     console.error(err);
+    console.log('Now Loading Offline layers')
+    count = 100;
+    getOfflineLayers();
   }
-};
+}
+
+
+async function getOfflineLayers() {
+  const progress = new LoadingOverlayProgress({
+    bar     : {
+      "background"    : "#e41a1c",
+      "top"           : "600px",
+      "height"        : "50px"
+    },
+    text    : {
+      "color"         : "black",
+      "font-family"   : "monospace",
+      "top"           : "575px"
+    }
+  });
+  $.LoadingOverlay("show", {
+    custom  : progress.Init()
+  });
+  var count = 0;
+  const interval = setInterval(function(){
+    if (count >= 100) {
+      clearInterval(interval);
+      //delete progress;
+      $.LoadingOverlay("hide");
+      return;
+    }
+    progress.Update(count);
+  }, 100);
+  var getUrl = window.location;
+  var baseUrl = getUrl.origin;
+  try {
+    $.when(
+      dbCache.roads.count(function (records) { 
+        if (records > 0) {
+          dbCache.roads.toArray(function(data) { 
+            createLayer(data, 'Roads');
+          });
+          console.log("cached data loaded");
+        }
+        count += 20;
+      }),
+      dbCache.soilVuln.count(function (records) { 
+        if (records > 0) {
+          dbCache.soilVuln.toArray(function(data) { 
+            createLayer(data, 'Soil Vulnerability');
+          });
+          console.log("cached data loaded");
+        }
+        count += 20;
+      }),
+      
+      dbCache.snapExtent.count(function (records) { 
+        if (records > 0) {
+          dbCache.snapExtent.toArray(function(data) { 
+            createLayer(data, 'Snap Extent');
+          });
+          console.log("cached snapExtent loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.blmRegion.count(function (records) { 
+        if (records > 0) {
+          dbCache.blmRegion.toArray(function(data) { 
+            createLayer(data, 'BLM');
+          });
+          console.log("cached blmRegion loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.fsRegion.count(function (records) { 
+        if (records > 0) {
+          dbCache.fsRegion.toArray(function(data) { 
+            createLayer(data, 'FS Regions');
+          });
+          console.log("cached fsRegion loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.mdepBound.count(function (records) { 
+        if (records > 0) {
+          dbCache.mdepBound.toArray(function(data) { 
+            createLayer(data, 'MDEP Boundary');
+          });
+          console.log("cached mdepBound loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.mdiBound.count(function (records) { 
+        if (records > 0) {
+          dbCache.mdiBound.toArray(function(data) { 
+            createLayer(data, 'MDI Boundary');
+          });
+          console.log("cached MDI Boundary loaded");
+        }
+        count += 10;
+      }),
+      
+      dbCache.nvCounties.count(function (records) { 
+        if (records > 0) {
+          dbCache.nvCounties.toArray(function(data) { 
+            createLayer(data, 'Nevada Counties');
+          });
+          console.log("cached Nevada Counties loaded");
+        }
+        count += 10;
+      })
+    ).then(function () {
+      //$.LoadingOverlay("hide");
+      console.log(count);
+    });
+  }
+  catch (err) {
+    console.error(err);
+  }
+}

@@ -26,6 +26,9 @@ html
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
     script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js')
+    //script(src='https://unpkg.com/geojson-vt@3.0.0/geojson-vt.js')
+    
+    
 
     //script(src="https://unpkg.com/shpjs@latest/dist/shp.min.js")
     //script(src='/public/scripts/leaflet.shapefile.js')
@@ -248,15 +251,33 @@ html
         font-size: 1.2em !important;
       }
       .rmtiles a {
-        display:none !important;
         float: right !important;
         height: 30px;
         padding-right: 10px !important;
         padding-left: 10px !important;
         font-size: 1.2em !important;
       }
+      
+      .tileCount {
+        display: none;
+        text-align: center;
+      }
+      .modalButtons {
+        width: auto;
+        text-align: right;
+      }
+      .savingProgress {
+        display: none;
+        text-align: center;
+      }
+      .savingComplete {
+        display: none;
+        text-align: center;
+      }
+      #storage {
+        text-align: center;
+      }
     body
-    
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
           .container-fluid
@@ -336,9 +357,8 @@ html
       #overlay
       #map
 
-        script(src='/public/scripts/asyncAddLayersV2.js')
+        script(src='/public/scripts/asyncAddLayersMobileV2.js')
         script.
-        
           function checkLogin() {
             $.ajax({
                 type: "GET",
@@ -378,16 +398,13 @@ html
           //import "babel-polyfill";
           var map;
           if (localStorage.getItem("mapBounds") == null) {
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1}).setView([36.211303, -115.114929], 8);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, preferCanvas: true}).setView([36.211303, -115.114929], 8);
             map.removeControl(map.zoomControl);
-            // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
-            // createPane was used in this thread to control the order of the layers
-          
-            
           }
           else {
+            console.log(localStorage.getItem("mapBounds"))
             var bounds = JSON.parse(localStorage.getItem("mapBounds"));
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12, preferCanvas: true,}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
             map.removeControl(map.zoomControl);
             map.setMaxBounds([bounds._northEast,bounds._southWest]);
           }
@@ -399,13 +416,19 @@ html
               '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
               maxZoom: 17,
-              minZoom: 6,
+              minZoom: 8,
               maxNativeZoom: 14,
               id: 'rogerdodger617.2p4pk9co',
               accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
             }).addTo(map);
           
           
+          var canvasRenderer = L.canvas();
+          
+          var polygonsPane = map.createPane('polygons');
+          var linesPane = map.createPane('lines');
+          
+
           map.createPane('Points').style.zIndex = 390;
           map.createPane('Lines').style.zIndex = 380;
           map.createPane('Polygons').style.zIndex = 370;
@@ -414,28 +437,200 @@ html
           map.createPane('Misc').style.zIndex = 340;
           
           
-          function confirmOfflineSave(nTilesToSave, continueSaveTiles) {
-            console.log(nTilesToSave)
-            console.log(continueSaveTiles)
-            alert('you sure?')
-          }
+          L.Canvas.include({
+          	_updatePoly: function (layer, closed) {
+          		if (!this._drawing) { return; }
           
-          L.control.savetiles(baseLayer,{
+          		var i, j, len2, p,
+          		    parts = layer._parts,
+          		    len = parts.length,
+          		    ctx = this._ctx;
+          
+          		if (!len) { return; }
+          
+          		// this._drawnLayers[layer._leaflet_id] = layer;
+          
+          		ctx.beginPath();
+          
+          		for (i = 0; i < len; i++) {
+          			for (j = 0, len2 = parts[i].length; j < len2; j++) {
+          				p = parts[i][j];
+          				ctx[j ? 'lineTo' : 'moveTo'](p.x, p.y);
+          			}
+          			if (closed) {
+          				ctx.closePath();
+          			}
+          		}
+          
+          		this._fillStroke(ctx, layer);
+          
+          		// TODO optimization: 1 fill/stroke for all features with equal style instead of 1 for each feature
+          	},
+          
+          	_updateCircle: function (layer) {
+          
+          		if (!this._drawing || layer._empty()) { return; }
+          
+          		var p = layer._point,
+          		    ctx = this._ctx,
+          		    r = Math.max(Math.round(layer._radius), 1),
+          		    s = (Math.max(Math.round(layer._radiusY), 1) || r) / r;
+          
+          		// this._drawnLayers[layer._leaflet_id] = layer;
+          
+          		if (s !== 1) {
+          			ctx.save();
+          			ctx.scale(1, s);
+          		}
+          
+          		ctx.beginPath();
+          		ctx.arc(p.x, p.y / s, r, 0, Math.PI * 2, false);
+          
+          		if (s !== 1) {
+          			ctx.restore();
+          		}
+          
+          		this._fillStroke(ctx, layer);
+          	},
+          
+          })
+
+          var roads = L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
+          	name: "Roads",
+          	storage: "Roads",
+          	mbtileLayerName: "roads",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	//legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			interactive: true,
+          			pane: 'Misc',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#000000',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#000000',
+          			fillOpacity: 0.4,
+          			// fill: false
+          		}
+          	}
+          })
+          
+          var roads = L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
+          	name: "Roads",
+          	storage: "Roads",
+          	mbtileLayerName: "roads",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	//legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			//interactive: true,
+          			pane: 'Roads',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#000000',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#000000',
+          			fillOpacity: 0.4,
+          			popup: false
+          			// fill: false
+          		}
+          	}
+          })
+          
+          var soil = L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+          	name: "Soil Vulnerability",
+          	storage: "Soil Vulnerability",
+          	mbtileLayerName: "soil",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	//legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			//interactive: true,
+          			pane: 'Misc',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#7c3400',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#7c3400',
+          			fillOpacity: 0.4,
+          			popup: true
+          			// fill: false
+          		}
+          	}
+          })
+          
+          var layerStorage = [
+          	'Roads',
+          	'Soil Vulnerability'
+          ];
+          
+          
+          var saveTileControl = L.control.savetiles(baseLayer,{
             'zoomlevels':[12,14],
             'position': 'topcenter',
             'saveWhatYouSee': false,
             'confirm': function(layer, succescallback) {
-                console.log(layer);
-                console.log(JSON.parse(localStorage.getItem("mapBounds")));
-                if (window.confirm("Save " + layer._tilesforSave.length)) {
-                    var bounds = map.getBounds();
-                    localStorage.setItem("mapBounds", JSON.stringify(bounds));
-                    $('#myModal').modal('show');
-                    succescallback();
-                }
+                $('#savingModal').modal('show');
+                document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+                document.getElementsByClassName('savingComplete')[0].style.display = 'none';
+                document.getElementsByClassName('tileCount')[0].innerHTML = "Save " + layer._tilesforSave.length + " tiles for offline"
+                document.getElementsByClassName('tileCount')[0].style.display = 'block';
+                document.getElementsByClassName('tileCount')[1].style.display = 'inline';
+                document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                $('#confirmTileSave').click(function() {
+                  document.getElementsByClassName('savingProgress')[0].style.display = 'block';
+                  document.getElementsByClassName('tileCount')[0].style.display = 'none';
+                  document.getElementsByClassName('tileCount')[1].style.display = 'none';
+                  document.getElementsByClassName('tileCount')[2].style.display = 'none';  
+                  var bounds = map.getBounds();
+                  localStorage.setItem("mapBounds", JSON.stringify(bounds));
+                  saveTileControl.options.toggleButton('none');
+                  map.setMaxBounds([bounds._northEast,bounds._southWest]);
+                  map.setMinZoom(12);
+                  succescallback();
+                });
+                // if (window.confirm("Save " + layer._tilesforSave.length)) {
+                //     var bounds = map.getBounds();
+                //     localStorage.setItem("mapBounds", JSON.stringify(bounds));
+                //     $('#savingModal').modal('show');
+                //     saveTileControl.options.toggleButton('none');
+                //     map.setMaxBounds([bounds._northEast,bounds._southWest]);
+                //     map.setMinZoom(12);
+                //     succescallback();
+                // }
             },
-            'saveText': 'Save Area'
+            'saveText': 'Save Area',
+            'confirmRemoval': function(layer, successCallback) {
+              $('#deletingModal').modal('show');
+              $('#confirmTileDelete').click(function() {
+                  successCallback();
+                  localStorage.removeItem("mapBounds");
+                  map.setMaxBounds(null);
+                  saveTileControl.options.toggleButton('');
+                  map.setMinZoom(8);
+                  $('#deletingModal').modal('hide');
+              });
+            },
+            'rmText': '<button>Delete Tiles</button>',
+            'toggleButton': function toggleButton(val) {
+              document.getElementsByClassName('savetiles')[0].style.display = val;
+            }
             }).addTo(map);
+          if (localStorage.getItem("mapBounds") != null)
+            saveTileControl.options.toggleButton('none')
           
           
           var progress;
@@ -450,7 +645,13 @@ html
           });
           baseLayer.on('loadend', function(e) {
               //alert("Saved all tiles");
+              document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+              document.getElementsByClassName('savingComplete')[0].style.display = 'block';
+              document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
           });
+          baseLayer.on('storagesize', function(e) {
+              document.getElementById('storage').innerHTML = e.storagesize + " offline tiles will be removed.";
+          })
           // var canvasRenderer = L.canvas();
           // function drawRect(context, style) {
           // 	context.strokeStyle = style.color;
@@ -501,8 +702,10 @@ html
                       _context.prev = 0;
                       _context.next = 3;
                       if (typeof Dexie == 'function') { 
-                        console.log('dexie is here');
-                        //return getLayers();
+                        if(navigator.onLine)
+                          return getLayers();
+                        else
+                          return getOfflineLayers();
                       }
                       else {
                         console.log('dexie not here rn');
@@ -557,20 +760,23 @@ html
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
           
-          var offlineLayers = null;
-          function onAreaClick(feature, layer) {
-            $(layer).on('click', function () {
-              map.flyToBounds([layer._bounds._northEast,layer._bounds._southWest]); 
-              map.removeLayer(offlineLayers);
+          control.addOverlay(roads, 'Roads', {groupName: 'Roads', expanded: false});
+          control.addOverlay(soil, 'Soil', {groupName: 'Misc', expanded: false});
+          
+          // var offlineLayers = null;
+          // function onAreaClick(feature, layer) {
+          //   $(layer).on('click', function () {
+          //     map.flyToBounds([layer._bounds._northEast,layer._bounds._southWest]); 
+          //     map.removeLayer(offlineLayers);
               
               
-            });
-          }
-          $.getJSON('/public/geoJSON/offlineAreas.json', function (data) {
-            offlineLayers = L.geoJson(data, {
-              onEachFeature: onAreaClick
-            }).addTo(map);
-          });
+          //   });
+          // }
+          // $.getJSON('/public/geoJSON/offlineAreas.json', function (data) {
+          //   offlineLayers = L.geoJson(data, {
+          //     onEachFeature: onAreaClick
+          //   }).addTo(map);
+          // });
           //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
@@ -704,7 +910,7 @@ html
               a(href='#savedSubs', role='tab')
                 span.glyphicon.glyphicon-list-alt(aria-hidden='true')
 
-          //ul(role='tablist')
+          ul(role='tablist')
             // bottom aligned tabs
             li
               a(href='#settings', role='tab')
@@ -797,21 +1003,61 @@ html
               table#tableSubs
                 #saved
               button#sync.btn Submit All Forms
-      #myModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel')
+              
+          #settings.sidebar-pane
+            h1.sidebar-header
+              | Settings
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            h3
+              | Would you like to download a new area?
+              #deleteTiles
+                
+      #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
-          .modal-content
+          .modal-content#savingModalContent
             .modal-header
               button.close(type='button', data-dismiss='modal', aria-label='Close')
                 span(aria-hidden='true') ×
-              h4#mySmallModalLabel.modal-title Saving Tiles
-            p 
+              h4#mySmallModalLabel.modal-title Offline Tiles
+            p.tileCount
+            div.modalButtons
+              button#confirmTileSave.tileCount.btn.btn-primary(type='button')
+                | Confirm
+              button#cancelTileSave.tileCount.btn.btn-default(type='button')
+                | Cancel
+            p.savingProgress 
               | Progress: 
               span#progress
               | /
               span#total
+            p.savingComplete
+      #deletingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
+        .modal-dialog.modal-sm(role='document')
+          .modal-content#savingModalContent
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+              h4#mySmallModalLabel.modal-title Remove all saved tiles?
+            p#storage
+            div.modalButtons
+              button#confirmTileDelete.btn.btn-danger(type='button')
+                | Confirm
+              button#cancelTileDelete.btn.btn-default(type='button')
+                | Cancel
 
 
       script. 
+        //$('#savingModal').modal({backdrop: 'static', keyboard: false})  
+        document.getElementById('deleteTiles').appendChild(
+          document.getElementsByClassName('rmtiles')[0]
+        );
+        $('#cancelTileDelete').click(function() {
+          $('#deletingModal').modal('hide');
+        });
+        $('#cancelTileSave').click(function() {
+          $('#savingModal').modal('hide');
+        });
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
@@ -846,24 +1092,32 @@ html
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('none');
         }
         function turnOffTools() {
           var myElements = document.querySelectorAll(".drawingController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('');
         }
         function turnOnEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('none');
         }
         function turnOffEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
+          if (localStorage.getItem('mapBounds') == null)
+            saveTileControl.options.toggleButton('');
         }
         document.getElementById("backStep1").addEventListener("click", function(){
           allOff();
@@ -990,7 +1244,6 @@ html
                 alert('site not availble offline')
             }
         });
-        
         // (function() {
 
         //   var allNavItems = $(".main-nav li");

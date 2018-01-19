@@ -379,7 +379,7 @@ html
           map.createPane('Misc').style.zIndex = 340;
           
           
-          var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
@@ -390,15 +390,6 @@ html
             id: 'rogerdodger617.2p4pk9co',
             accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
           }).addTo(map);
-          
-          
-          L.control.savetiles(baseLayer,{
-            'zoomlevels':[13,16],
-            'position': 'topright'
-              }
-          ).addTo(map);
-          
-          
           
           
           
