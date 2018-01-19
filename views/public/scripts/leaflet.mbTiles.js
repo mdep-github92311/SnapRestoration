@@ -62,8 +62,12 @@ L.MBTiles = L.Layer.extend({
 		        //map.panTo(this.getLatLng());
 		        $('#sidebar1').empty();
 		        $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
-		        for (var ii = 0; ii < popUpContent.length; ii++) {
-		            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+		        
+		        for (var prop in layer.feature.properties) {
+		            if (prop == 'agency') {
+		            	$('<p>' + '<B>' + prop + '</B>' + ' : ' + myAgency(layer.feature.properties[prop]) + '</p>').appendTo('#sidebar1');
+		            } else 
+		            	$('<p>' + '<B>' + prop + '</B>' + ' : ' + layer.feature.properties[prop] + '</p>').appendTo('#sidebar1');
 		        }
 			});
 		}
