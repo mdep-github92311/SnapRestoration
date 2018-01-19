@@ -1,0 +1,418 @@
+{
+  "name": "RestoLineBLM",
+  "options": {
+    "idInjection": false,
+    "postgresql": {
+      "schema": "public",
+      "table": "resto_line"
+    }
+  },
+  "properties": {
+    "gid": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "id": 1,
+      "postgresql": {
+        "columnName": "gid",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "NO"
+      }
+    },
+    "agency": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "agency",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "YES"
+      }
+    },
+    "region": {
+      "type": "String",
+      "required": false,
+      "length": 30,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "region",
+        "dataType": "character varying",
+        "dataLength": 30,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "ecosystem": {
+      "type": "String",
+      "required": false,
+      "length": 30,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "ecosystem",
+        "dataType": "character varying",
+        "dataLength": 30,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gpsDate": {
+      "type": "Date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "gps_date",
+        "dataType": "date",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "restoCode": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "resto_code",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "restoAct": {
+      "type": "String",
+      "required": false,
+      "length": 50,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "resto_act",
+        "dataType": "character varying",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "teAct": {
+      "type": "String",
+      "required": false,
+      "length": 5,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "te_act",
+        "dataType": "character varying",
+        "dataLength": 5,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "nonlistsA": {
+      "type": "String",
+      "required": false,
+      "length": 5,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "nonlists_a",
+        "dataType": "character varying",
+        "dataLength": 5,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "comments": {
+      "type": "String",
+      "required": false,
+      "length": 254,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "comments",
+        "dataType": "character varying",
+        "dataLength": 254,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "primaryOb": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "primary_ob",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "secondary": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "secondary_",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "projectNa": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "project_na",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "treatment": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "treatment_",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "signed": {
+      "type": "String",
+      "required": false,
+      "length": 5,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "signed",
+        "dataType": "character varying",
+        "dataLength": 5,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "mulch": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "mulch",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "deepTill": {
+      "type": "String",
+      "required": false,
+      "length": 5,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "deep_till",
+        "dataType": "character varying",
+        "dataLength": 5,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "barrierIn": {
+      "type": "String",
+      "required": false,
+      "length": 5,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "barrier_in",
+        "dataType": "character varying",
+        "dataLength": 5,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "milesRest": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "miles_rest",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "kmResto": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "km_resto",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gpsPhoto": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "gps_photo",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "photoAzim": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "photo_azim",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "YES"
+      }
+    },
+    "monitoring": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "monitoring",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "previously": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "previously",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "qaQc": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "qa_qc",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "shapeLeng": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "shape_leng",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "geom": {
+      "type": "String",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "geom",
+        "dataType": "USER-DEFINED",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    }
+  }
+}

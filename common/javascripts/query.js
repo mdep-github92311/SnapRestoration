@@ -860,3 +860,658 @@ exports.resto_poly_centroid_sub_query =
       mulch, monitoring, previously, orig_fid) As l)) As properties
     FROM rest_poly_centroid_sub As lg) As f) As fc`;
     
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    exports.barrier_blm_query =
+    `SELECT 
+      Row_to_json(fc)
+    FROM (SELECT
+      'FeatureCollection' AS type,
+      Array_to_json(Array_agg(f)) AS features
+    FROM (SELECT
+      'Feature' AS type,
+      ST_AsGeoJSON(geom) ::json AS geometry,
+      Row_to_json((SELECT
+        l
+    FROM (SELECT
+      gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
+    FROM barrier AS lg WHERE agency = 0) AS f) AS fc;`;
+
+exports.dist_line_blm_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
+      km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_leng) As l)) 
+      As properties
+    FROM dist_line As lg WHERE agency = 0) As f) As fc`;
+
+exports.dist_point_blm_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+    FROM dist_point As lg WHERE agency = 0) As f) As fc`;
+
+exports.dist_poly_blm_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      shape_leng, shape_area) 
+      As l)) As properties
+    FROM dist_polygon As lg WHERE agency = 0) As f) As fc`;
+
+exports.dist_poly_centroid_blm_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      orig_fid) As l)) As properties
+    FROM dist_poly_centroid As lg WHERE agency = 0) As f) As fc`;
+
+exports.restoPoint_blm_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
+      sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
+    FROM resto_point As lg WHERE agency = 0) As f) As fc`;
+
+exports.resto_line_blm_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+        array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
+      photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
+    FROM resto_line As lg WHERE agency = 0) As f) As fc`;
+
+exports.resto_poly_blm_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+       project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+       mulch, monitoring, previously, shape_leng, shape_area) As l)) As properties
+    FROM resto_polygon As lg WHERE agency = 0) As f) As fc`;
+
+exports.resto_poly_centroid_blm_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+      project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+      mulch, monitoring, previously, orig_fid) As l)) As properties
+    FROM rest_poly_centroid As lg WHERE agency = 0) As f) As fc`;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    exports.barrier_fs_query =
+    `SELECT 
+      Row_to_json(fc)
+    FROM (SELECT
+      'FeatureCollection' AS type,
+      Array_to_json(Array_agg(f)) AS features
+    FROM (SELECT
+      'Feature' AS type,
+      ST_AsGeoJSON(geom) ::json AS geometry,
+      Row_to_json((SELECT
+        l
+    FROM (SELECT
+      gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
+    FROM barrier AS lg WHERE agency = 1) AS f) AS fc;`;
+
+exports.dist_line_fs_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
+      km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_leng) As l)) 
+      As properties
+    FROM dist_line As lg WHERE agency = 1) As f) As fc`;
+
+exports.dist_point_fs_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+    FROM dist_point As lg WHERE agency = 1) As f) As fc`;
+
+exports.dist_poly_fs_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      shape_leng, shape_area) 
+      As l)) As properties
+    FROM dist_polygon As lg WHERE agency = 1) As f) As fc`;
+
+exports.dist_poly_centroid_fs_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      orig_fid) As l)) As properties
+    FROM dist_poly_centroid As lg WHERE agency = 1) As f) As fc`;
+
+exports.restoPoint_fs_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
+      sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
+    FROM resto_point As lg WHERE agency = 1) As f) As fc`;
+
+exports.resto_line_fs_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+        array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
+      photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
+    FROM resto_line As lg WHERE agency = 1) As f) As fc`;
+
+exports.resto_poly_fs_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+       project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+       mulch, monitoring, previously, shape_leng, shape_area) As l)) As properties
+    FROM resto_polygon As lg WHERE agency = 1) As f) As fc`;
+
+exports.resto_poly_centroid_fs_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+      project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+      mulch, monitoring, previously, orig_fid) As l)) As properties
+    FROM rest_poly_centroid As lg WHERE agency = 1) As f) As fc`;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    exports.barrier_fws_query =
+    `SELECT 
+      Row_to_json(fc)
+    FROM (SELECT
+      'FeatureCollection' AS type,
+      Array_to_json(Array_agg(f)) AS features
+    FROM (SELECT
+      'Feature' AS type,
+      ST_AsGeoJSON(geom) ::json AS geometry,
+      Row_to_json((SELECT
+        l
+    FROM (SELECT
+      gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
+    FROM barrier AS lg WHERE agency = 2) AS f) AS fc;`;
+
+exports.dist_line_fws_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
+      km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_leng) As l)) 
+      As properties
+    FROM dist_line As lg WHERE agency = 2) As f) As fc`;
+
+exports.dist_point_fws_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+    FROM dist_point As lg WHERE agency = 2) As f) As fc`;
+
+exports.dist_poly_fws_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      shape_leng, shape_area) 
+      As l)) As properties
+    FROM dist_polygon As lg WHERE agency = 2) As f) As fc`;
+
+exports.dist_poly_centroid_fws_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      orig_fid) As l)) As properties
+    FROM dist_poly_centroid As lg WHERE agency = 2) As f) As fc`;
+
+exports.restoPoint_fws_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
+      sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
+    FROM resto_point As lg WHERE agency = 2) As f) As fc`;
+
+exports.resto_line_fws_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+        array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
+      photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
+    FROM resto_line As lg WHERE agency = 2) As f) As fc`;
+
+exports.resto_poly_fws_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+       project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+       mulch, monitoring, previously, shape_leng, shape_area) As l)) As properties
+    FROM resto_polygon As lg WHERE agency = 2) As f) As fc`;
+
+exports.resto_poly_centroid_fws_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+      project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+      mulch, monitoring, previously, orig_fid) As l)) As properties
+    FROM rest_poly_centroid As lg WHERE agency = 2) As f) As fc`;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    exports.barrier_nps_query =
+    `SELECT 
+      Row_to_json(fc)
+    FROM (SELECT
+      'FeatureCollection' AS type,
+      Array_to_json(Array_agg(f)) AS features
+    FROM (SELECT
+      'Feature' AS type,
+      ST_AsGeoJSON(geom) ::json AS geometry,
+      Row_to_json((SELECT
+        l
+    FROM (SELECT
+      gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
+    FROM barrier AS lg WHERE agency = 3) AS f) AS fc;`;
+
+exports.dist_line_nps_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
+      km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_leng) As l)) 
+      As properties
+    FROM dist_line As lg WHERE agency = 3) As f) As fc`;
+
+exports.dist_point_nps_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
+      visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+    FROM dist_point As lg WHERE agency = 3) As f) As fc`;
+
+exports.dist_poly_nps_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      shape_leng, shape_area) 
+      As l)) As properties
+    FROM dist_polygon As lg WHERE agency = 3) As f) As fc`;
+
+exports.dist_poly_centroid_nps_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type, 
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      orig_fid) As l)) As properties
+    FROM dist_poly_centroid As lg WHERE agency = 3) As f) As fc`;
+
+exports.restoPoint_nps_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
+      sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
+    FROM resto_point As lg WHERE agency = 3) As f) As fc`;
+
+exports.resto_line_nps_query =
+    `SELECT 
+      row_to_json(fc)
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+        array_to_json(array_agg(f)) As features
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry,
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
+      photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
+    FROM resto_line As lg WHERE agency = 3) As f) As fc`;
+
+exports.resto_poly_nps_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+      array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+       project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+       mulch, monitoring, previously, shape_leng, shape_area) As l)) As properties
+    FROM resto_polygon As lg WHERE agency = 3) As f) As fc`;
+
+exports.resto_poly_centroid_nps_query =
+    `SELECT 
+      row_to_json(fc) 
+    FROM (SELECT 
+      'FeatureCollection' As type, 
+       array_to_json(array_agg(f)) As features 
+    FROM (SELECT 
+      'Feature' As type,
+      ST_AsGeoJSON(geom)::json As geometry, 
+      row_to_json((SELECT 
+        l 
+    FROM (SELECT 
+      gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
+      project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
+      mulch, monitoring, previously, orig_fid) As l)) As properties
+    FROM rest_poly_centroid As lg WHERE agency = 3) As f) As fc`;
+
+    

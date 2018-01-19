@@ -1,0 +1,523 @@
+{
+  "name": "DistPolygonFS",
+  "options": {
+    "idInjection": false,
+    "postgresql": {
+      "schema": "public",
+      "table": "dist_polygon"
+    }
+  },
+  "properties": {
+    "gid": {
+      "type": "Number",
+      "required": true,
+      "length": null,
+      "precision": 32,
+      "scale": 0,
+      "id": 1,
+      "postgresql": {
+        "columnName": "gid",
+        "dataType": "integer",
+        "dataLength": null,
+        "dataPrecision": 32,
+        "dataScale": 0,
+        "nullable": "NO"
+      }
+    },
+    "agency": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "agency",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "YES"
+      }
+    },
+    "regions": {
+      "type": "String",
+      "required": false,
+      "length": 30,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "regions",
+        "dataType": "character varying",
+        "dataLength": 30,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "ecosystem": {
+      "type": "String",
+      "required": false,
+      "length": 30,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "ecosystem",
+        "dataType": "character varying",
+        "dataLength": 30,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gpsDate": {
+      "type": "Date",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "gps_date",
+        "dataType": "date",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "distCode": {
+      "type": "String",
+      "required": false,
+      "length": 20,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "dist_code",
+        "dataType": "character varying",
+        "dataLength": 20,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "distUse": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "dist_use",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "useFreq": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "use_freq",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "useRecent": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "use_recent",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "siteStabi": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "site_stabi",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "distCrust": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "dist_crust",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "undistCru": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "undist_cru",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "depth": {
+      "type": "String",
+      "required": false,
+      "length": 20,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "depth",
+        "dataType": "character varying",
+        "dataLength": 20,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "distPoly": {
+      "type": "String",
+      "required": false,
+      "length": 30,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "dist_poly_",
+        "dataType": "character varying",
+        "dataLength": 30,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "plantDama": {
+      "type": "String",
+      "required": false,
+      "length": 40,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "plant_dama",
+        "dataType": "character varying",
+        "dataLength": 40,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "assessibil": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "assessibil",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "visibility": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "visibility",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "comments": {
+      "type": "String",
+      "required": false,
+      "length": 254,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "comments",
+        "dataType": "character varying",
+        "dataLength": 254,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "primaryOb": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "primary_ob",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "secondary": {
+      "type": "String",
+      "required": false,
+      "length": 25,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "secondary_",
+        "dataType": "character varying",
+        "dataLength": 25,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "acresRest": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "acres_rest",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "kmsqResto": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "kmsq_resto",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "treated": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "treated",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "distSever": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "dist_sever",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "YES"
+      }
+    },
+    "cultural": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "cultural",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "tESpecie": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "t_e_specie",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "gpsPhoto": {
+      "type": "String",
+      "required": false,
+      "length": 3,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "gps_photo",
+        "dataType": "character varying",
+        "dataLength": 3,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "siteVulne": {
+      "type": "String",
+      "required": false,
+      "length": 20,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "site_vulne",
+        "dataType": "character varying",
+        "dataLength": 20,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "photoAzim": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": 10,
+      "scale": 0,
+      "postgresql": {
+        "columnName": "photo_azim",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": 10,
+        "dataScale": 0,
+        "nullable": "YES"
+      }
+    },
+    "qaQc": {
+      "type": "String",
+      "required": false,
+      "length": 10,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "qa_qc",
+        "dataType": "character varying",
+        "dataLength": 10,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "oldDistco": {
+      "type": "String",
+      "required": false,
+      "length": 50,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "old_distco",
+        "dataType": "character varying",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "shapeLeng": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "shape_leng",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "shapeArea": {
+      "type": "Number",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "shape_area",
+        "dataType": "numeric",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    },
+    "geom": {
+      "type": "String",
+      "required": false,
+      "length": null,
+      "precision": null,
+      "scale": null,
+      "postgresql": {
+        "columnName": "geom",
+        "dataType": "USER-DEFINED",
+        "dataLength": null,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "YES"
+      }
+    }
+  }
+}
