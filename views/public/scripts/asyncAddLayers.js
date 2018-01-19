@@ -45,10 +45,6 @@ const dbCache = new Dexie('CachedData');
   });
 
 async function createLayer(data, layerName) {
-  //console.log(layerName)
-  if (data == null || data.features == null)
-    return;
-    console.log(data)
   try {
     switch (layerName) {
       case 'Barrier':
@@ -338,184 +334,39 @@ async function getLayers() {
   ipAddress = "snap-restoration-brstillwell.c9users.io";
   try {
     $.when(
-      await $.getJSON(baseUrl +  '/api/BarrierBLMs', function (data) {
+      await $.getJSON(baseUrl +  '/api/Barriers/barrierGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Barrier');
-        count += 1;
+        count += 5;
       }),
 
-      await $.getJSON(baseUrl + '/api/DistPointBLMs/distPointBLMGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/DistPoints/distPointGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Points');
-        count += 1;
+        count += 5;
       }),
 
-      await $.getJSON(baseUrl + '/api/DistLineBLMs/distLineBLMGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Lines');
-        count += 1;
+        count += 5;
       }),
 
-      await $.getJSON(baseUrl + '/api/DistPolygonBLMs/distPolyBLMGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Polygon');
-        count += 1;
+        count += 5;
       }),
 
-      $.getJSON(baseUrl + '/api/DistPolyCentroidBLMs/distPolyCentBLMGeoJSON', function (data) {
+      $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
-        count += 1;
+        count += 5;
       }),
 
-      await $.getJSON(baseUrl + '/api/RestoPointBLMs/restoPointBLMGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/RestoPoints/restoPointGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Points');
-        count += 1;
+        count += 5;
       }),
 
-      await $.getJSON(baseUrl + '/api/RestoLineBLMs/restoLineBLMGeoJSON', function (data) {
+      await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
         createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 1;
-      }),
-      
-      await $.getJSON(baseUrl + '/api/RestoPolygonBLMs/restoPolyBLMGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Polygon');
-        count += 2;
-      }),
-
-      $.getJSON(baseUrl + '/api/RestPolyCentroidBLMs/restoPolyCentBLMGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Poly Cent');
-        count += 2;
-      }),
-      
-      await $.getJSON(baseUrl +  '/api/BarrierFs', function (data) {
-        createLayer(data[0].row_to_json, 'Barrier');
-        count += 2;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistPointFs/distPointFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Points');
-        count += 2;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistLineFs/distLineFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Lines');
-        count += 2;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistPolygonFs/distPolyFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Polygon');
-        count += 2;
-      }),
-
-      $.getJSON(baseUrl + '/api/DistPolyCentroidFs/distPolyCentFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
-        count += 2;
-      }),
-
-      await $.getJSON(baseUrl + '/api/RestoPointFs/restoPointFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Points');
-        count += 2;
-      }),
-
-      await $.getJSON(baseUrl + '/api/RestoLineFs/restoLineFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 2;
-      }),
-      
-      await $.getJSON(baseUrl + '/api/RestoPolygonFs/restoPolyFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Polygon');
-        count += 2;
-      }),
-
-      $.getJSON(baseUrl + '/api/RestPolyCentroidFs/restoPolyCentFSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Poly Cent');
-        count += 2;
-      }),
-      
-      await $.getJSON(baseUrl +  '/api/BarrierFWs', function (data) {
-        createLayer(data[0].row_to_json, 'Barrier');
-        count += 2;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistPointFWs/distPointFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Points');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistLineFWs/distLineFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Lines');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistPolygonFWs/distPolyFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Polygon');
-        count += 1;
-      }),
-
-      $.getJSON(baseUrl + '/api/DistPolyCentroidFWs/distPolyCentFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/RestoPointFWs/restoPointFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Points');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/RestoLineFWs/restoLineFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 1;
-      }),
-      
-      await $.getJSON(baseUrl + '/api/RestoPolygonFWs/restoPolyFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Polygon');
-        count += 1;
-      }),
-
-      $.getJSON(baseUrl + '/api/RestPolyCentroidFWs/restoPolyCentFWSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Poly Cent');
-        count += 1;
-      }),
-      
-      await $.getJSON(baseUrl +  '/api/BarrierNPs', function (data) {
-        createLayer(data[0].row_to_json, 'Barrier');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistPointNPs/distPointNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Points');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistLineNPs/distLineNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Lines');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/DistPolygonNPs/distPolyNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Polygon');
-        count += 1;
-      }),
-
-      $.getJSON(baseUrl + '/api/DistPolyCentroidNPs/distPolyCentNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/RestoPointNPs/restoPointNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Points');
-        count += 1;
-      }),
-
-      await $.getJSON(baseUrl + '/api/RestoLineNPs/restoLineNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Lines');
-        count += 1;
-      }),
-      
-      await $.getJSON(baseUrl + '/api/RestoPolygonNPs/restoPolyNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Polygon');
-        count += 1;
-      }),
-
-      $.getJSON(baseUrl + '/api/RestPolyCentroidNPs/restoPolyCentNPSGeoJSON', function (data) {
-        createLayer(data[0].row_to_json, 'Restoration Poly Cent');
-        count += 1;
+        count += 5;
       }),
       //createLayer('/public/geoJSON/roads.zip', 'Roads'),
       
@@ -575,6 +426,16 @@ async function getLayers() {
             console.log(JSON.stringify(jqXHR));
           })                      
         }
+      }),
+
+      await $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
+        createLayer(data[0].row_to_json, 'Restoration Polygon');
+        count += 5;
+      }),
+
+      $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
+        createLayer(data[0].row_to_json, 'Restoration Poly Cent');
+        count += 5;
       }),
       
       dbCache.snapExtent.count(function (records) { 
