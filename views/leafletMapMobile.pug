@@ -495,7 +495,7 @@ html
           
           })
 
-          var roads = L.vectorGrid.protobuf("public/data/roads/{z}/{x}/{y}.pbf", {
+          var roads = L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
           	name: "Roads",
           	storage: "Roads",
           	mbtileLayerName: "roads",
@@ -518,7 +518,7 @@ html
           			// fill: false
           		}
           	}
-          })
+          }).addTo(map);
           
           console.log(roads);
           var layerStorage = [
