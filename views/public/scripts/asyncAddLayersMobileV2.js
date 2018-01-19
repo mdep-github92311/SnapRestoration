@@ -8,6 +8,7 @@ var createLayer = function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+            //console.log(layerName)
             _context.t0 = layerName;
             _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 10 : _context.t0 === 'Disturbance Points' ? 16 : _context.t0 === 'Disturbance Polygon' ? 22 : _context.t0 === 'Disturbance Poly Cent' ? 28 : _context.t0 === 'Restoration Polygon' ? 35 : _context.t0 === 'Restoration Lines' ? 41 : _context.t0 === 'Restoration Points' ? 47 : _context.t0 === 'Restoration Poly Cent' ? 53 : _context.t0 === 'BLM' ? 60 : _context.t0 === 'FS Regions' ? 67 : _context.t0 === 'Nevada Counties' ? 74 : _context.t0 === 'MDI Boundary' ? 81 : _context.t0 === 'MDEP Boundary' ? 88 : _context.t0 === 'Roads' ? 95 : _context.t0 === 'Snap Extent' ? 102 : _context.t0 === 'Soil Vulnerability' ? 111 : 118;
             break;
