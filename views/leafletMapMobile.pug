@@ -398,13 +398,13 @@ html
           //import "babel-polyfill";
           var map;
           if (localStorage.getItem("mapBounds") == null) {
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1}).setView([36.211303, -115.114929], 8);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, preferCanvas: true}).setView([36.211303, -115.114929], 8);
             map.removeControl(map.zoomControl);
           }
           else {
             console.log(localStorage.getItem("mapBounds"))
             var bounds = JSON.parse(localStorage.getItem("mapBounds"));
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12, preferCanvas: true,}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
             map.removeControl(map.zoomControl);
             map.setMaxBounds([bounds._northEast,bounds._southWest]);
           }
@@ -423,6 +423,12 @@ html
             }).addTo(map);
           
           
+          var canvasRenderer = L.canvas();
+          
+          var polygonsPane = map.createPane('polygons');
+          var linesPane = map.createPane('lines');
+          
+
           map.createPane('Points').style.zIndex = 390;
           map.createPane('Lines').style.zIndex = 380;
           map.createPane('Polygons').style.zIndex = 370;
@@ -431,11 +437,95 @@ html
           map.createPane('Misc').style.zIndex = 340;
           
           
-          function confirmOfflineSave(nTilesToSave, continueSaveTiles) {
-            console.log(nTilesToSave)
-            console.log(continueSaveTiles)
-            alert('you sure?')
-          }
+          L.Canvas.include({
+          	_updatePoly: function (layer, closed) {
+          		if (!this._drawing) { return; }
+          
+          		var i, j, len2, p,
+          		    parts = layer._parts,
+          		    len = parts.length,
+          		    ctx = this._ctx;
+          
+          		if (!len) { return; }
+          
+          		// this._drawnLayers[layer._leaflet_id] = layer;
+          
+          		ctx.beginPath();
+          
+          		for (i = 0; i < len; i++) {
+          			for (j = 0, len2 = parts[i].length; j < len2; j++) {
+          				p = parts[i][j];
+          				ctx[j ? 'lineTo' : 'moveTo'](p.x, p.y);
+          			}
+          			if (closed) {
+          				ctx.closePath();
+          			}
+          		}
+          
+          		this._fillStroke(ctx, layer);
+          
+          		// TODO optimization: 1 fill/stroke for all features with equal style instead of 1 for each feature
+          	},
+          
+          	_updateCircle: function (layer) {
+          
+          		if (!this._drawing || layer._empty()) { return; }
+          
+          		var p = layer._point,
+          		    ctx = this._ctx,
+          		    r = Math.max(Math.round(layer._radius), 1),
+          		    s = (Math.max(Math.round(layer._radiusY), 1) || r) / r;
+          
+          		// this._drawnLayers[layer._leaflet_id] = layer;
+          
+          		if (s !== 1) {
+          			ctx.save();
+          			ctx.scale(1, s);
+          		}
+          
+          		ctx.beginPath();
+          		ctx.arc(p.x, p.y / s, r, 0, Math.PI * 2, false);
+          
+          		if (s !== 1) {
+          			ctx.restore();
+          		}
+          
+          		this._fillStroke(ctx, layer);
+          	},
+          
+          })
+
+          var roads = L.vectorGrid.protobuf("public/data/roads/{z}/{x}/{y}.pbf", {
+          	name: "Roads",
+          	storage: "Roads",
+          	mbtileLayerName: "roads",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	//legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			interactive: true,
+          			pane: 'Misc',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#0f0',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#e39e1c',
+          			fillOpacity: 0.4,
+          			// fill: false
+          		}
+          	}
+          })
+          
+          
+          var layerStorage = [
+          	'Roads',
+          	'Soil Vulnerability'
+          ];
+          
           
           var saveTileControl = L.control.savetiles(baseLayer,{
             'zoomlevels':[12,14],
