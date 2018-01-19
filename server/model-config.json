@@ -630,5 +630,101 @@
         }
       }
     }
+  },
+  "DistPolyCentroidBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidBLM": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentBLMGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidFS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentFSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidFWS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentFWSGeoJSON": true
+        }
+      }
+    }
+  },
+  "DistPolyCentroidNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "distPolyCentNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "RestPolyCentroidNPS": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "restoPolyCentNPSGeoJSON": true
+        }
+      }
+    }
   }
 }
