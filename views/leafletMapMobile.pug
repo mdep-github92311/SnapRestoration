@@ -854,6 +854,7 @@ html
             //toggleButtons();
             
             turnOffTools();
+            sidebar.open('drawTools');
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
             if (barrButton != null) {
@@ -1110,6 +1111,7 @@ html
         lineButton.addEventListener("click", function(){
             allOff();
             lineButton.style.borderStyle = "inset";
+            sidebar.close();
             drawLine.enable();
             currShape = drawLine;
             turnOnTools();
@@ -1117,6 +1119,7 @@ html
         polygonButton.addEventListener("click", function(){
             allOff();
             polygonButton.style.borderStyle = "inset";
+            sidebar.close();
             drawPoly.enable();
             currShape = drawPoly;
             turnOnTools();
@@ -1124,6 +1127,7 @@ html
         markerButton.addEventListener("click", function(){
             allOff();
             markerButton.style.borderStyle = "inset";
+            sidebar.close();
             drawMark.enable();
             currShape = drawMark;
             //turnOnTools();

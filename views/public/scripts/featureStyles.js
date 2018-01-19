@@ -260,10 +260,10 @@ function onEachDistPoint(feature, layer) {
 }
 
 function onEachDistPoly(feature, layer) {
-    console.log('layer')
-    console.log(layer);
+    // console.log('layer')
+    // console.log(layer);
     $(layer).on('click', function () {
-        console.log(feature);
+        // console.log(feature);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
