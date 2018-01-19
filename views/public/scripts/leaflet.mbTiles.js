@@ -42,7 +42,7 @@ L.MBTiles = L.Layer.extend({
 	addLayer: function (layer) {
 		this._layers.push(layer);
 		
-		console.log(layer)
+		//console.log(layer)
 		if (layer.options.popup != null && layer.options.popup) {
 			layer.on('click', function showPopup(e) {
 				// var attr = '';
@@ -52,10 +52,10 @@ L.MBTiles = L.Layer.extend({
 				// map.openPopup(attr, e.latlng);
 				var popUpContent = [];
 		        // iterating through the "properties" so it can be displayed in the pop-ups
-		        for (var prop in layer.properties) {
+		        for (var prop in layer.feature.properties) {
 		            if (prop == 'agency') {
-		                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(layer.properties[prop]));
-		            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + layer.properties[prop]);
+		                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(layer.feature.properties[prop]));
+		            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + layer.feature.properties[prop]);
 		        }
 		        // opens the marker info tab on sidebar when clicked
 		        sidebar.open('formTools');
