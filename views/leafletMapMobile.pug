@@ -519,6 +519,57 @@ html
           		}
           	}
           })
+          
+          var roads = L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
+          	name: "Roads",
+          	storage: "Roads",
+          	mbtileLayerName: "roads",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	//legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			interactive: true,
+          			pane: 'Misc',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#000000',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#000000',
+          			fillOpacity: 0.4,
+          			// fill: false
+          		}
+          	}
+          })
+          
+          var soil = L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+          	name: "Soil",
+          	storage: "Soil",
+          	mbtileLayerName: "soil",
+          	maxNativeZoom: 10,
+          	minNativeZoom: 10,
+          	minZoom: 6,
+          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
+          	//legendIcon: drawRect,	
+          	style: function(feature) {
+          		return {
+          			interactive: true,
+          			pane: 'Misc',
+          			renderer: canvasRenderer,
+          			weight: 0.5,
+          			color: '#7c3400',
+          			opacity: 1,
+          			// dashArray: '5, 3',
+          			fillColor: '#7c3400',
+          			fillOpacity: 0.4,
+          			// fill: false
+          		}
+          	}
+          })
+          
           var layerStorage = [
           	'Roads',
           	'Soil Vulnerability'
@@ -707,7 +758,8 @@ html
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
           
-          control.addOverlay(roads, 'Roads', {groupName: 'Misc', expanded: false});
+          control.addOverlay(roads, 'Roads', {groupName: 'Roads', expanded: false});
+          control.addOverlay(soil, 'Soil', {groupName: 'Misc', expanded: false});
           
           // var offlineLayers = null;
           // function onAreaClick(feature, layer) {
