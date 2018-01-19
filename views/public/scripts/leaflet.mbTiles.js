@@ -1,4 +1,23 @@
 'use strict';
+function myAgency(agen) {
+    switch (agen) {
+        case 0:
+            return 'BLM';
+            break;
+        case 1:
+            return 'NPS';
+            break;
+        case 2:
+            return 'FS';
+            break;
+        case 3:
+            return 'FWS';
+            break;
+        default:
+            return 'null';
+            break;
+    }
+}
 
 L.MBTiles = L.Layer.extend({
 
@@ -24,13 +43,30 @@ L.MBTiles = L.Layer.extend({
 		this._layers.push(layer);
 		
 		console.log(layer)
-		layer.on('click', function showPopup(e) {
-			var attr = '';
-			for (var p in e.target.feature.properties) {
-				attr += p + ': ' + e.target.feature.properties[p] + '<br>'
-			}
-			map.openPopup(attr, e.latlng);
-		});
+		if (layer.options.popup != null && layer.options.popup) {
+			layer.on('click', function showPopup(e) {
+				// var attr = '';
+				// for (var p in e.target.feature.properties) {
+				// 	attr += p + ': ' + e.target.feature.properties[p] + '<br>'
+				// }
+				// map.openPopup(attr, e.latlng);
+				var popUpContent = [];
+		        // iterating through the "properties" so it can be displayed in the pop-ups
+		        for (var prop in layer.properties) {
+		            if (prop == 'agency') {
+		                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(layer.properties[prop]));
+		            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + layer.properties[prop]);
+		        }
+		        // opens the marker info tab on sidebar when clicked
+		        sidebar.open('formTools');
+		        //map.panTo(this.getLatLng());
+		        $('#sidebar1').empty();
+		        $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
+		        for (var ii = 0; ii < popUpContent.length; ii++) {
+		            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+		        }
+			});
+		}
 
 		if (this._map) {
 			this._map.addLayer(layer);
