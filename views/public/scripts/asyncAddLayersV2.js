@@ -1,22 +1,4 @@
-'use strict';
-function hostReachable() {
-
-  // Handle IE and more capable browsers
-  var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
-  var status;
-
-  // Open new request as a HEAD to the root hostname with a random param to bust the cache
-  xhr.open( "HEAD", "//" + window.location.hostname + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
-
-  // Issue request and handle response
-  try {
-    xhr.send();
-    return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
-  } catch (error) {
-    return false;
-  }
-
-}
+"use strict";
 
 var createLayer = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, layerName) {
@@ -27,12 +9,12 @@ var createLayer = function () {
           case 0:
             _context.prev = 0;
             _context.t0 = layerName;
-            _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 10 : _context.t0 === 'Disturbance Points' ? 16 : _context.t0 === 'Disturbance Polygon' ? 22 : _context.t0 === 'Disturbance Poly Cent' ? 28 : _context.t0 === 'Restoration Polygon' ? 35 : _context.t0 === 'Restoration Lines' ? 41 : _context.t0 === 'Restoration Points' ? 47 : _context.t0 === 'Restoration Poly Cent' ? 53 : _context.t0 === 'BLM' ? 60 : _context.t0 === 'FS Regions' ? 66 : _context.t0 === 'Nevada Counties' ? 72 : _context.t0 === 'MDI Boundary' ? 78 : _context.t0 === 'MDEP Boundary' ? 84 : _context.t0 === 'Roads' ? 90 : _context.t0 === 'Snap Extent' ? 96 : _context.t0 === 'Soil Vulnerability' ? 102 : 108;
+            _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 10 : _context.t0 === 'Disturbance Points' ? 16 : _context.t0 === 'Disturbance Polygon' ? 22 : _context.t0 === 'Disturbance Poly Cent' ? 28 : _context.t0 === 'Restoration Polygon' ? 35 : _context.t0 === 'Restoration Lines' ? 41 : _context.t0 === 'Restoration Points' ? 47 : _context.t0 === 'Restoration Poly Cent' ? 53 : _context.t0 === 'BLM' ? 60 : _context.t0 === 'FS Regions' ? 67 : _context.t0 === 'Nevada Counties' ? 74 : _context.t0 === 'MDI Boundary' ? 81 : _context.t0 === 'MDEP Boundary' ? 88 : _context.t0 === 'Roads' ? 95 : _context.t0 === 'Snap Extent' ? 103 : _context.t0 === 'Soil Vulnerability' ? 112 : 119;
             break;
 
           case 4:
             _context.next = 6;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Lines',
               style: myStyleLines,
               onEachFeature: onEachBarrier
@@ -43,13 +25,13 @@ var createLayer = function () {
 
 
             control.addOverlay(barrier, layerName, { groupName: 'Barrier Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 10:
             _context.next = 12;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Lines',
               style: myStyleLines,
               onEachFeature: onEachDistLine
@@ -60,13 +42,13 @@ var createLayer = function () {
 
 
             control.addOverlay(distLines, layerName, { groupName: 'Disturbance Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 16:
             _context.next = 18;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Points',
               style: myStylePoints,
               // changing the default point makers to circle markers
@@ -79,13 +61,13 @@ var createLayer = function () {
 
 
             control.addOverlay(distPoints, layerName, { groupName: 'Disturbance Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 22:
             _context.next = 24;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Polygons',
               style: myStyleDistPoly,
               onEachFeature: onEachDistPoly
@@ -96,13 +78,13 @@ var createLayer = function () {
 
 
             control.addOverlay(distPoly, layerName, { groupName: 'Disturbance Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 28:
             _context.next = 30;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Points',
               style: myStyleDistPoly,
               // changing the default point makers to circle markers
@@ -116,13 +98,13 @@ var createLayer = function () {
 
             control.addOverlay(distPolyCent, layerName, { groupName: 'Disturbance Data', expanded: true });
             control.unSelectLayer(distPolyCent);
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 35:
             _context.next = 37;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Polygons',
               style: myStyleRestoPoly,
               onEachFeature: onEachRestoPoly
@@ -133,13 +115,13 @@ var createLayer = function () {
 
 
             control.addOverlay(restoPoly, layerName, { groupName: 'Restoration Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 41:
             _context.next = 43;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Lines',
               style: myStyleLines,
               onEachFeature: onEachRestoLine
@@ -150,13 +132,13 @@ var createLayer = function () {
 
 
             control.addOverlay(restoLine, layerName, { groupName: 'Restoration Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 47:
             _context.next = 49;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Points',
               style: myStylePoints,
               // changing the default point makers to circle markers
@@ -169,13 +151,13 @@ var createLayer = function () {
 
 
             control.addOverlay(restoPoint, layerName, { groupName: 'Restoration Data', expanded: true });
-            console.log('added ' + layerName);
+            console.log("added " + layerName);
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 53:
             _context.next = 55;
-            return L.geoJson(data, {
+            return L.vectorGrid.slicer(data, {
               pane: 'Points',
               style: myStylePoints,
               // changing the default point makers to circle markers
@@ -189,165 +171,193 @@ var createLayer = function () {
 
             control.addOverlay(restoPolyCent, layerName, { groupName: 'Restoration Data', expanded: true });
             control.unSelectLayer(restoPolyCent);
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
           case 60:
-            _context.next = 62;
-            return L.geoJson(data, {
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 63;
+            return L.vectorGrid.slicer(data, {
               pane: 'Regions',
               style: blmRegion,
               onEachFeature: onEachBLMRegion
             }).addTo(map);
 
-          case 62:
+          case 63:
             blmRegions = _context.sent;
 
 
             control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 66:
-            _context.next = 68;
-            return L.geoJson(data, {
+          case 67:
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 70;
+            return L.vectorGrid.slicer(data, {
               pane: 'Regions',
               style: fsRegion,
               onEachFeature: onEachFSRegion
             }).addTo(map);
 
-          case 68:
+          case 70:
             fsRegions = _context.sent;
 
 
             control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 72:
-            _context.next = 74;
-            return L.geoJson(data, {
+          case 74:
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 77;
+            return L.vectorGrid.slicer(data, {
               pane: 'Bounds_County',
               style: nv_county,
               onEachFeature: onEachNVCounty
             }).addTo(map);
 
-          case 74:
+          case 77:
             nvCounties = _context.sent;
 
 
             control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Counties', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 78:
-            _context.next = 80;
-            return L.geoJson(data, {
+          case 81:
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 84;
+            return L.vectorGrid.slicer(data, {
               pane: 'Bounds_County',
               style: mdep_i,
               onEachFeature: onEachMDIBound
             }).addTo(map);
 
-          case 80:
+          case 84:
             mdiBound = _context.sent;
 
 
             control.addOverlay(mdiBound, layerName, { groupName: 'Boundaries', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 84:
-            _context.next = 86;
-            return L.geoJson(data, {
+          case 88:
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 91;
+            return L.vectorGrid.slicer(data, {
               pane: 'Bounds_County',
               style: mdep_i,
               onEachFeature: onEachMDEPBound
             }).addTo(map);
 
-          case 86:
+          case 91:
             mdepBound = _context.sent;
 
 
             control.addOverlay(mdepBound, layerName, { groupName: 'Boundaries', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 90:
-            _context.next = 92;
-            return L.geoJson(data, {
+          case 95:
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 98;
+            return L.vectorGrid.slicer(data, {
               pane: 'Lines',
               style: roadColor
             }).addTo(map);
 
-          case 92:
+          case 98:
             roads = _context.sent;
-
+            console.log(roads)
+            roads.setFeatureStyle(1,{ pane: 'Lines',
+              style: roadColor });
 
             control.addOverlay(roads, layerName, { groupName: 'Roads', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 96:
-            _context.next = 98;
-            return L.geoJson(data, {
+          case 103:
+            console.log(data);
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            console.log(data);
+            _context.next = 108;
+            return L.vectorGrid.slicer(data, {
               pane: 'Misc',
               style: soil_vuln,
               onEachFeature: onEachSoilVuln
             }).addTo(map);
 
-          case 98:
+          case 108:
             snapExtent = _context.sent;
 
 
             control.addOverlay(snapExtent, layerName, { groupName: 'Misc', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 102:
-            _context.next = 104;
-            return L.geoJson(data, {
+          case 112:
+            if (data.type == null) {
+              data = fixCollection(data);
+            }
+            _context.next = 115;
+            return L.vectorGrid.slicer(data, {
               pane: 'Misc',
               style: soil_vuln
               //onEachFeature: onEachSoilVuln
             }).addTo(map);
 
-          case 104:
+          case 115:
             soilVuln = _context.sent;
 
 
             control.addOverlay(soilVuln, layerName, { groupName: 'Misc', expanded: false });
-            console.log('added ' + layerName + ' Unselected');
+            console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt('break', 108);
+            return _context.abrupt("break", 119);
 
-          case 108:
+          case 119:
             control.unSelectGroup('Regions/ Counties');
             control.unSelectGroup('Boundaries');
             control.unSelectGroup('Roads');
             control.unSelectGroup('Misc');
-            _context.next = 117;
+            _context.next = 128;
             break;
 
-          case 114:
-            _context.prev = 114;
-            _context.t1 = _context['catch'](0);
+          case 125:
+            _context.prev = 125;
+            _context.t1 = _context["catch"](0);
 
             console.error(_context.t1);
 
-          case 117:
-          case 'end':
+          case 128:
+          case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 114]]);
+    }, _callee, this, [[0, 125]]);
   }));
 
   return function createLayer(_x, _x2) {
@@ -356,17 +366,21 @@ var createLayer = function () {
 }();
 
 var getLayers = function () {
-  if (!hostReachable())
-  {
-    getOfflineLayers()
-    return;
-  }
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
     var progress, count, interval, getUrl, baseUrl, ipAddress;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            if (hostReachable()) {
+              _context2.next = 3;
+              break;
+            }
+
+            getOfflineLayers();
+            return _context2.abrupt("return");
+
+          case 3:
             progress = new LoadingOverlayProgress({
               bar: {
                 "background": "#e41a1c",
@@ -398,59 +412,59 @@ var getLayers = function () {
             ipAddress = "216.117.167.186:443";
 
             ipAddress = "snap-restoration-brstillwell.c9users.io";
-            _context2.prev = 8;
+            _context2.prev = 11;
             _context2.t0 = $;
-            _context2.next = 12;
+            _context2.next = 15;
             return $.getJSON(baseUrl + '/api/Barriers/barrierGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Barrier');
               count += 5;
             });
 
-          case 12:
+          case 15:
             _context2.t1 = _context2.sent;
-            _context2.next = 15;
+            _context2.next = 18;
             return $.getJSON(baseUrl + '/api/DistPoints/distPointGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Points');
               count += 5;
             });
 
-          case 15:
+          case 18:
             _context2.t2 = _context2.sent;
-            _context2.next = 18;
+            _context2.next = 21;
             return $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Lines');
               count += 5;
             });
 
-          case 18:
+          case 21:
             _context2.t3 = _context2.sent;
-            _context2.next = 21;
+            _context2.next = 24;
             return $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Polygon');
               count += 5;
             });
 
-          case 21:
+          case 24:
             _context2.t4 = _context2.sent;
             _context2.t5 = $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
               count += 5;
             });
-            _context2.next = 25;
+            _context2.next = 28;
             return $.getJSON(baseUrl + '/api/RestoPoints/restoPointGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Points');
               count += 5;
             });
 
-          case 25:
+          case 28:
             _context2.t6 = _context2.sent;
-            _context2.next = 28;
+            _context2.next = 31;
             return $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Lines');
               count += 5;
             });
 
-          case 28:
+          case 31:
             _context2.t7 = _context2.sent;
             _context2.t8 =
             //createLayer('/public/geoJSON/roads.zip', 'Roads'),
@@ -503,13 +517,13 @@ var getLayers = function () {
                 });
               }
             });
-            _context2.next = 33;
+            _context2.next = 36;
             return $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Polygon');
               count += 5;
             });
 
-          case 33:
+          case 36:
             _context2.t10 = _context2.sent;
             _context2.t11 = $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Poly Cent');
@@ -661,31 +675,30 @@ var getLayers = function () {
 
             _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17).then(_context2.t18);
 
-            _context2.next = 48;
+            _context2.next = 54;
             break;
 
-          case 45:
-            _context2.prev = 45;
-            _context2.t19 = _context2['catch'](8);
-            
+          case 48:
+            _context2.prev = 48;
+            _context2.t19 = _context2["catch"](11);
+
             console.error(_context2.t19);
-            console.log('Now Loading Offline layers')
+            console.log('Now Loading Offline layers');
             count = 100;
             getOfflineLayers();
-            
-          case 48:
-          case 'end':
+
+          case 54:
+          case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[8, 45]]);
+    }, _callee2, this, [[11, 48]]);
   }));
 
   return function getLayers() {
     return _ref2.apply(this, arguments);
   };
 }();
-
 
 var getOfflineLayers = function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
@@ -797,7 +810,7 @@ var getOfflineLayers = function () {
             }
 
           case 7:
-          case 'end':
+          case "end":
             return _context3.stop();
         }
       }
@@ -809,8 +822,32 @@ var getOfflineLayers = function () {
   };
 }();
 
-
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function hostReachable() {
+
+  // Handle IE and more capable browsers
+  var xhr = new (window.ActiveXObject || XMLHttpRequest)("Microsoft.XMLHTTP");
+  var status;
+
+  // Open new request as a HEAD to the root hostname with a random param to bust the cache
+  xhr.open("HEAD", "//" + window.location.hostname + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false);
+
+  // Issue request and handle response
+  try {
+    xhr.send();
+    return xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304);
+  } catch (error) {
+    return false;
+  }
+}
+
+function fixCollection(data) {
+  var newData = [];
+  newData.type = "FeatureCollection";
+  newData.features = data;
+  return newData;
+}
 
 var dbCache = new Dexie('CachedData');
 
@@ -830,7 +867,5 @@ dbCache.open().then(function (db) {
 }).catch(function (err) {
   console.log(err);
 });
-
-;
 
 ;

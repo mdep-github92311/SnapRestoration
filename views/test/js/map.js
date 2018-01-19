@@ -283,7 +283,7 @@ var mdiBoundry = L.mbTiles("data/mdiBoundry/{z}/{x}/{y}.pbf", {
 	}
 })
 
-var roads = L.mbTiles("data/roadsTemp/{z}/{x}/{y}.pbf", {
+var roads = L.vectorGrid.protobuf("data/roadsTemp/{z}/{x}/{y}.pbf", {
 	name: "Roads",
 	storage: "Roads",
 	mbtileLayerName: "roads",

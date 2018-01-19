@@ -17,6 +17,14 @@ function hostReachable() {
 
 }
 
+function fixCollection(data) {
+  var newData = [];
+  newData.type = "FeatureCollection";
+  newData.features = data;
+  return newData;
+  
+}
+
 const dbCache = new Dexie('CachedData');
 
   dbCache.version(1).stores({
@@ -40,7 +48,7 @@ async function createLayer(data, layerName) {
   try {
     switch (layerName) {
       case 'Barrier':
-        const barrier = await L.geoJson(data, {
+        const barrier = await L.vectorGrid.slicer(data, {
           pane: 'Lines',
           style: myStyleLines,
           onEachFeature: onEachBarrier
@@ -52,7 +60,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Disturbance Lines':
-        const distLines = await L.geoJson(data, {
+        const distLines = await L.vectorGrid.slicer(data, {
           pane: 'Lines',
           style: myStyleLines,
           onEachFeature: onEachDistLine
@@ -64,7 +72,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Disturbance Points':
-        const distPoints = await L.geoJson(data, {
+        const distPoints = await L.vectorGrid.slicer(data, {
           pane: 'Points',
           style: myStylePoints,
           // changing the default point makers to circle markers
@@ -78,7 +86,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Disturbance Polygon':
-        const distPoly = await L.geoJson(data, {
+        const distPoly = await L.vectorGrid.slicer(data, {
           pane: 'Polygons',
           style: myStyleDistPoly,
           onEachFeature: onEachDistPoly
@@ -90,7 +98,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Disturbance Poly Cent':
-        const distPolyCent = await L.geoJson(data, {
+        const distPolyCent = await L.vectorGrid.slicer(data, {
           pane: 'Points',
           style: myStyleDistPoly,
           // changing the default point makers to circle markers
@@ -105,7 +113,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Restoration Polygon':
-        const restoPoly = await L.geoJson(data, {
+        const restoPoly = await L.vectorGrid.slicer(data, {
           pane: 'Polygons',
           style: myStyleRestoPoly,
           onEachFeature: onEachRestoPoly
@@ -117,7 +125,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Restoration Lines':
-        const restoLine = await L.geoJson(data, {
+        const restoLine = await L.vectorGrid.slicer(data, {
           pane: 'Lines',
           style: myStyleLines,
           onEachFeature: onEachRestoLine
@@ -129,7 +137,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Restoration Points':
-        const restoPoint = await L.geoJson(data, {
+        const restoPoint = await L.vectorGrid.slicer(data, {
           pane: 'Points',
           style: myStylePoints,
           // changing the default point makers to circle markers
@@ -143,7 +151,7 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Restoration Poly Cent':
-        const restoPolyCent = await L.geoJson(data, {
+        const restoPolyCent = await L.vectorGrid.slicer(data, {
           pane: 'Points',
           style: myStylePoints,
           // changing the default point makers to circle markers
@@ -158,7 +166,10 @@ async function createLayer(data, layerName) {
         break;
 
       case 'BLM':
-        const blmRegions = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const blmRegions = await L.vectorGrid.slicer(data, {
           pane: 'Regions',
           style: blmRegion,
           onEachFeature: onEachBLMRegion
@@ -170,7 +181,10 @@ async function createLayer(data, layerName) {
         break;
 
       case 'FS Regions':
-        const fsRegions = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const fsRegions = await L.vectorGrid.slicer(data, {
           pane: 'Regions',
           style: fsRegion,
           onEachFeature: onEachFSRegion
@@ -182,7 +196,10 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Nevada Counties':
-        const nvCounties = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const nvCounties = await L.vectorGrid.slicer(data, {
           pane: 'Bounds_County',
           style: nv_county,
           onEachFeature: onEachNVCounty
@@ -194,7 +211,10 @@ async function createLayer(data, layerName) {
         break;
 
       case 'MDI Boundary':
-        const mdiBound = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const mdiBound = await L.vectorGrid.slicer(data, {
           pane: 'Bounds_County',
           style: mdep_i,
           onEachFeature: onEachMDIBound
@@ -206,7 +226,10 @@ async function createLayer(data, layerName) {
         break;
 
       case 'MDEP Boundary':
-        const mdepBound = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const mdepBound = await L.vectorGrid.slicer(data, {
           pane: 'Bounds_County',
           style: mdep_i,
           onEachFeature: onEachMDEPBound
@@ -218,10 +241,15 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Roads':
-        const roads = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const roads = await L.vectorGrid.slicer(data, {
           pane: 'Lines',
           style: roadColor
         }).addTo(map);
+        roads.setFeatureStyle({pane: 'Lines',
+          style: roadColor})
 
         control.addOverlay(roads, layerName, {groupName: 'Roads', expanded: false});
         console.log(`added ${layerName} Unselected`);
@@ -229,7 +257,12 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Snap Extent':
-        const snapExtent = await L.geoJson(data, {
+        console.log(data)
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        console.log(data)
+        const snapExtent = await L.vectorGrid.slicer(data, {
           pane: 'Misc',
           style: soil_vuln,
           onEachFeature: onEachSoilVuln
@@ -241,7 +274,10 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Soil Vulnerability':
-        const soilVuln = await L.geoJson(data, {
+        if(data.type == null) {
+          data = fixCollection(data);
+        }
+        const soilVuln = await L.vectorGrid.slicer(data, {
           pane: 'Misc',
           style: soil_vuln
           //onEachFeature: onEachSoilVuln
