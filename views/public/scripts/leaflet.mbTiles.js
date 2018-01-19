@@ -22,7 +22,8 @@ L.MBTiles = L.Layer.extend({
 
 	addLayer: function (layer) {
 		this._layers.push(layer);
-
+		
+		console.log(layer)
 		layer.on('click', function showPopup(e) {
 			var attr = '';
 			for (var p in e.target.feature.properties) {
