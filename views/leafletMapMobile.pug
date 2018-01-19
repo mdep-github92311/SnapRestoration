@@ -518,9 +518,7 @@ html
           			// fill: false
           		}
           	}
-          }).addTo(map);
-          
-          console.log(roads);
+          })
           var layerStorage = [
           	'Roads',
           	'Soil Vulnerability'
@@ -708,6 +706,8 @@ html
 
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
+          
+          control.addOverlay(roads, 'Roads', {groupName: 'Misc', expanded: false});
           
           // var offlineLayers = null;
           // function onAreaClick(feature, layer) {
