@@ -309,6 +309,7 @@ html
                     frontFace.html(frontContent);
                   });
             // Collect the nav links, forms, and other content for toggling
+            .navbar-brand SNAP Restoration Map
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               ul.nav.navbar-nav
                 li.active
@@ -328,7 +329,7 @@ html
 
         script(src='/public/scripts/asyncAddLayersV2.js')
         script.
-        
+          var loggedIn = false;
           function checkLogin() {
             $.ajax({
                 type: "GET",
@@ -337,6 +338,7 @@ html
                 contentType: "application/json; charset=utf-8",
                 success: function (data) { 
                   console.log(data);
+                  loggedIn = true;
                   document.getElementById('logoutTab').style.display = "block";
                   document.getElementById('loginTab').style.display = "none";
                 },

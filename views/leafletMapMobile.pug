@@ -1,8 +1,7 @@
 //  Created by msgis-student on 6/9/2017.
 
 doctype html
-//html(manifest='cache.manifest', type='text/cache-manifest')
-html
+html(manifest='cache.manifest', type='text/cache-manifest')
   head
     title= 'SNAP Restoration Map'
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
@@ -296,16 +295,16 @@ html
                   ul.store
                     li
                       .content.content1
-                        img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
+                        img(alt='Brand' src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
                     li
                       .content.content2 
-                        img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
+                        img(alt='Brand' src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left')
                     li
                       .content.content3 
-                        img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
+                        img(alt='Brand' src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left')
                     li
                       .content.content4   
-                        img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
+                        img(alt='Brand' src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left')
                 script.
                   var topLogo = 1;
                   var currLogo = 1;
@@ -340,6 +339,7 @@ html
                     frontFace.html(frontContent);
                   });
             // Collect the nav links, forms, and other content for toggling
+            .navbar-brand SNAP Restoration Map
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               ul.nav.navbar-nav
                 li.active
@@ -398,13 +398,13 @@ html
           //import "babel-polyfill";
           var map;
           if (localStorage.getItem("mapBounds") == null) {
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, preferCanvas: true}).setView([36.211303, -115.114929], 8);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, preferCanvas: false}).setView([36.211303, -115.114929], 8);
             map.removeControl(map.zoomControl);
           }
           else {
             console.log(localStorage.getItem("mapBounds"))
             var bounds = JSON.parse(localStorage.getItem("mapBounds"));
-            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12, preferCanvas: true,}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
+            map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12, preferCanvas: false}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
             map.removeControl(map.zoomControl);
             map.setMaxBounds([bounds._northEast,bounds._southWest]);
           }
@@ -506,31 +506,6 @@ html
           	//legendIcon: drawRect,	
           	style: function(feature) {
           		return {
-          			interactive: true,
-          			pane: 'Misc',
-          			renderer: canvasRenderer,
-          			weight: 0.5,
-          			color: '#000000',
-          			opacity: 1,
-          			// dashArray: '5, 3',
-          			fillColor: '#000000',
-          			fillOpacity: 0.4,
-          			// fill: false
-          		}
-          	}
-          })
-          
-          var roads = L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
-          	name: "Roads",
-          	storage: "Roads",
-          	mbtileLayerName: "roads",
-          	maxNativeZoom: 10,
-          	minNativeZoom: 10,
-          	minZoom: 6,
-          	bounds: L.latLngBounds([36.9,-116.2],[35.0,-113.9]),
-          	//legendIcon: drawRect,	
-          	style: function(feature) {
-          		return {
           			//interactive: true,
           			pane: 'Roads',
           			renderer: canvasRenderer,
@@ -586,22 +561,33 @@ html
                 $('#savingModal').modal('show');
                 document.getElementsByClassName('savingProgress')[0].style.display = 'none';
                 document.getElementsByClassName('savingComplete')[0].style.display = 'none';
-                document.getElementsByClassName('tileCount')[0].innerHTML = "Save " + layer._tilesforSave.length + " tiles for offline"
-                document.getElementsByClassName('tileCount')[0].style.display = 'block';
-                document.getElementsByClassName('tileCount')[1].style.display = 'inline';
-                document.getElementsByClassName('tileCount')[2].style.display = 'inline';
-                $('#confirmTileSave').click(function() {
-                  document.getElementsByClassName('savingProgress')[0].style.display = 'block';
-                  document.getElementsByClassName('tileCount')[0].style.display = 'none';
-                  document.getElementsByClassName('tileCount')[1].style.display = 'none';
-                  document.getElementsByClassName('tileCount')[2].style.display = 'none';  
-                  var bounds = map.getBounds();
-                  localStorage.setItem("mapBounds", JSON.stringify(bounds));
-                  saveTileControl.options.toggleButton('none');
-                  map.setMaxBounds([bounds._northEast,bounds._southWest]);
-                  map.setMinZoom(12);
-                  succescallback();
-                });
+                document.getElementsByClassName('tileCount')[0].style.display = 'none';
+                document.getElementsByClassName('tileCount')[1].style.display = 'none';
+                document.getElementsByClassName('tileCount')[2].style.display = 'none';  
+                if (layer._tilesforSave.length > 350) {
+                  document.getElementsByClassName('tileCount')[0].innerHTML = "<span class='glyphicon glyphicon-remove' style='color: #ff0000' aria-hidden='true'></span>Warning: Cannot save large area of map. <br><br> Note: Zoom in to area needed. "
+                  document.getElementsByClassName('tileCount')[0].style.display = 'block';
+                  document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                }
+                else {
+                  document.getElementsByClassName('tileCount')[0].innerHTML = "Save " + layer._tilesforSave.length + " tiles for offline <br><br> Note: map will be locked until tiles are removed in the settings tab"
+                  document.getElementsByClassName('tileCount')[0].style.display = 'block';
+                  document.getElementsByClassName('tileCount')[1].style.display = 'inline';
+                  document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                  $('#confirmTileSave').click(function() {
+                    document.getElementsByClassName('savingProgress')[0].style.display = 'block';
+                    document.getElementsByClassName('tileCount')[0].style.display = 'none';
+                    document.getElementsByClassName('tileCount')[1].style.display = 'none';
+                    document.getElementsByClassName('tileCount')[2].style.display = 'none';  
+                    var bounds = map.getBounds();
+                    localStorage.setItem("mapBounds", JSON.stringify(bounds));
+                    saveTileControl.options.toggleButton('none');
+                    map.setMaxBounds([bounds._northEast,bounds._southWest]);
+                    map.setMinZoom(12);
+                    succescallback();
+                  });
+                }
+                
                 // if (window.confirm("Save " + layer._tilesforSave.length)) {
                 //     var bounds = map.getBounds();
                 //     localStorage.setItem("mapBounds", JSON.stringify(bounds));
@@ -636,18 +622,26 @@ html
           var progress;
           baseLayer.on('savestart', function(e) {
               progress = 0;
-              document.getElementById("total").innerHTML = e._tilesforSave.length;
-              document.getElementById('progress').innerHTML = progress;
+              document.getElementById('progress').innerHTML = progress + '/' + e._tilesforSave.length;
           });
           baseLayer.on('savetileend', function(e) {
               progress++;
-              document.getElementById('progress').innerHTML = progress;
+              // console.log(e)
+              document.getElementById('progress').innerHTML = progress + '/' + e.lengthToBeSaved;
+              if (e.lengthSaved >= e.lengthToBeSaved) {
+                document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+                document.getElementsByClassName('savingComplete')[0].style.display = 'block';
+                document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
+              }
           });
           baseLayer.on('loadend', function(e) {
+              //console.log(e)
               //alert("Saved all tiles");
-              document.getElementsByClassName('savingProgress')[0].style.display = 'none';
-              document.getElementsByClassName('savingComplete')[0].style.display = 'block';
-              document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
+              if (e._tilesforSave.length >= e.storagesize) {
+                document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+                document.getElementsByClassName('savingComplete')[0].style.display = 'block';
+                document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
+              }
           });
           baseLayer.on('storagesize', function(e) {
               document.getElementById('storage').innerHTML = e.storagesize + " offline tiles will be removed.";
@@ -879,6 +873,7 @@ html
             //toggleButtons();
             
             turnOffTools();
+            sidebar.open('drawTools');
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
             if (barrButton != null) {
@@ -1010,7 +1005,7 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             h3
-              | Would you like to download a new area?
+              | Remove offline tiles?
               #deleteTiles
                 
       #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
@@ -1029,8 +1024,6 @@ html
             p.savingProgress 
               | Progress: 
               span#progress
-              | /
-              span#total
             p.savingComplete
       #deletingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
@@ -1052,6 +1045,7 @@ html
         document.getElementById('deleteTiles').appendChild(
           document.getElementsByClassName('rmtiles')[0]
         );
+        document.getElementsByClassName('rmtiles')[0].children[0].className += "btn btn-danger";
         $('#cancelTileDelete').click(function() {
           $('#deletingModal').modal('hide');
         });
@@ -1135,6 +1129,7 @@ html
         lineButton.addEventListener("click", function(){
             allOff();
             lineButton.style.borderStyle = "inset";
+            sidebar.close();
             drawLine.enable();
             currShape = drawLine;
             turnOnTools();
@@ -1142,6 +1137,7 @@ html
         polygonButton.addEventListener("click", function(){
             allOff();
             polygonButton.style.borderStyle = "inset";
+            sidebar.close();
             drawPoly.enable();
             currShape = drawPoly;
             turnOnTools();
@@ -1149,6 +1145,7 @@ html
         markerButton.addEventListener("click", function(){
             allOff();
             markerButton.style.borderStyle = "inset";
+            sidebar.close();
             drawMark.enable();
             currShape = drawMark;
             //turnOnTools();

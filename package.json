@@ -36,7 +36,7 @@
     "loopback-component-explorer": "^4.0.0",
     "loopback-connector-postgresql": "^2.8.0",
     "mapbox": "^1.0.0-beta9",
-    "pg-promise": "^7.3.3",
+    "pg-promise": "^6.3.6",
     "pug": "^2.0.0-rc.4",
     "serve-favicon": "^2.0.1",
     "shpjs": "^3.4.2",
