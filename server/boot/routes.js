@@ -257,7 +257,7 @@ module.exports = function (app) {
       dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
       cultural, t_e_specie, gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
         distPointUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, 21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
+        $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
         .then(function () {
           console.log('distPoint form submitted');
           console.log(distPointIndexedDB);
@@ -372,7 +372,7 @@ module.exports = function (app) {
       use_recent, site_stabi, dist_crust, undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments,
      primary_ob, secondary_, miles_dist, km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne,
      photo_azim, qa_qc, old_dist_c, shape_stle, shape_leng, geom) VALUES $1` + distLineUpsert, Inserts(`$1, $2, $3, $4,
-     $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, 21, $22, $23, $24, $25, $26, $27, $28,
+     $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28,
      $29, $30, $31, $32, $33, $34, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($35)))`,
         distLineArrary))
         .then(function () {
@@ -930,7 +930,7 @@ module.exports = function (app) {
       dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
       cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
         distPointUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, 21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
+        $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
         .then(function () {
           console.log('distPoint form submitted');
           console.log(distPointIndexedDB);
@@ -1014,7 +1014,7 @@ module.exports = function (app) {
       use_recent, site_stabi, dist_crust, undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments,
      primary_ob, secondary_, miles_dist, km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne,
      photo_azim, qa_qc, old_dist_c, shape_leng, geom) VALUES $1` + distLineUpsert, Inserts(`$1, $2, $3, $4,
-     $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, 21, $22, $23, $24, $25, $26, $27, $28,
+     $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28,
      $29, $30, $31, $32, $34, ST_Force2D(ST_GeomFromGeoJSON($35))`,
         distLineArrary))
         .then(function () {

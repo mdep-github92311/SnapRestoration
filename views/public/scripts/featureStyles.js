@@ -215,6 +215,12 @@ function onEachBarrier(feature, layer) {
 }
 
 function onEachDistLine(feature, layer) {
+    if (loggedIn != null && !loggedIn)
+        if (feature.properties['t_e_specie'] == 'Yes' || feature.properties['cultural'] == 'Yes')
+            {
+                map.removeLayer(layer);
+                return;
+            }
     $(layer).on('click', function () {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
@@ -239,6 +245,12 @@ function onEachDistLine(feature, layer) {
 }
 
 function onEachDistPoint(feature, layer) {
+    if (loggedIn != null && !loggedIn)
+        if (feature.properties['t_e_specie'] == 'Yes' || feature.properties['cultural'] == 'Yes')
+            {
+                map.removeLayer(layer);
+                return;
+            }
     $(layer).on('click', function () {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
@@ -260,6 +272,12 @@ function onEachDistPoint(feature, layer) {
 }
 
 function onEachDistPoly(feature, layer) {
+    if (loggedIn != null && !loggedIn)
+        if (feature.properties['t_e_specie'] == 'Yes' || feature.properties['cultural'] == 'Yes')
+            {
+                map.removeLayer(layer);
+                return;
+            }
     // console.log('layer')
     // console.log(layer);
     $(layer).on('click', function () {
