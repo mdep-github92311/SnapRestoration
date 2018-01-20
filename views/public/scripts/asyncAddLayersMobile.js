@@ -593,25 +593,6 @@ async function getOfflineLayers() {
   var baseUrl = getUrl.origin;
   try {
     $.when(
-      dbCache.roads.count(function (records) { 
-        if (records > 0) {
-          dbCache.roads.toArray(function(data) { 
-            createLayer(data, 'Roads');
-          });
-          console.log("cached data loaded");
-        }
-        count += 20;
-      }),
-      dbCache.soilVuln.count(function (records) { 
-        if (records > 0) {
-          dbCache.soilVuln.toArray(function(data) { 
-            createLayer(data, 'Soil Vulnerability');
-          });
-          console.log("cached data loaded");
-        }
-        count += 20;
-      }),
-      
       dbCache.snapExtent.count(function (records) { 
         if (records > 0) {
           dbCache.snapExtent.toArray(function(data) { 
@@ -619,7 +600,7 @@ async function getOfflineLayers() {
           });
           console.log("cached snapExtent loaded");
         }
-        count += 10;
+        count += 20;
       }),
       
       dbCache.blmRegion.count(function (records) { 
@@ -629,7 +610,7 @@ async function getOfflineLayers() {
           });
           console.log("cached blmRegion loaded");
         }
-        count += 10;
+        count += 30;
       }),
       
       dbCache.fsRegion.count(function (records) { 
@@ -649,7 +630,7 @@ async function getOfflineLayers() {
           });
           console.log("cached mdepBound loaded");
         }
-        count += 10;
+        count += 20;
       }),
       
       dbCache.mdiBound.count(function (records) { 
