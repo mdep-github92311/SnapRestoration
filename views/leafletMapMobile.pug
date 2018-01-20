@@ -1,8 +1,7 @@
 //  Created by msgis-student on 6/9/2017.
 
 doctype html
-//html(manifest='cache.manifest', type='text/cache-manifest')
-html
+html(manifest='cache.manifest', type='text/cache-manifest')
   head
     title= 'SNAP Restoration Map'
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
@@ -1046,6 +1045,7 @@ html
         document.getElementById('deleteTiles').appendChild(
           document.getElementsByClassName('rmtiles')[0]
         );
+        document.getElementsByClassName('rmtiles')[0].children[0].className += "btn btn-danger";
         $('#cancelTileDelete').click(function() {
           $('#deletingModal').modal('hide');
         });

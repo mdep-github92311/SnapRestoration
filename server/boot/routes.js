@@ -221,7 +221,7 @@ module.exports = function (app) {
         }
         barrierArray.push(barrierProperties)
       }
-
+      // console.log(barrierArray)
       db.none(`INSERT INTO barrier_sub (gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
            shape_stle, shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
@@ -884,7 +884,7 @@ module.exports = function (app) {
       
       barrierProperties.push(barrierIndexedDB.geometry);
       barrierArray.push(barrierProperties)
-      console.log(barrierArray);
+      // console.log(barrierArray);
       db.none(`INSERT INTO barrier (gid, agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
            shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,

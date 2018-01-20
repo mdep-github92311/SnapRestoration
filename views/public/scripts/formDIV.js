@@ -414,6 +414,11 @@ $(document).ready(function () {
     }, 1000);
   }
   $(document).on('click', "#sync", function () {
+    
+    if(!loggedIn){
+      console.log('Not logged in')
+      return;
+    }
     console.log('Synchronizing...');
     db.barrierSub.count(function (count) {
       if (count > 0) {

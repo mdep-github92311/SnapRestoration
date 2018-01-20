@@ -329,7 +329,7 @@ html
 
         script(src='/public/scripts/asyncAddLayersV2.js')
         script.
-        
+          var loggedIn = false;
           function checkLogin() {
             $.ajax({
                 type: "GET",
@@ -338,6 +338,7 @@ html
                 contentType: "application/json; charset=utf-8",
                 success: function (data) { 
                   console.log(data);
+                  loggedIn = true;
                   document.getElementById('logoutTab').style.display = "block";
                   document.getElementById('loginTab').style.display = "none";
                 },
