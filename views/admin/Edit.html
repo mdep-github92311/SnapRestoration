@@ -45,6 +45,63 @@
             margin-left: auto;
             margin-right: auto;
         }
+        
+        .container {
+            position: relative;
+            width: 50px;
+            padding-left: 0px;
+            margin: 0 auto 40px auto;
+        
+            -webkit-perspective: 800px;
+               -moz-perspective: 800px;
+                -ms-perspective: 800px;
+                 -o-perspective: 800px;
+                    perspective: 800px;
+        }
+        .container .card {
+            height: 100%;
+        
+            -webkit-transition: -webkit-transform 1s;
+               -moz-transition:    -moz-transform 1s;
+                -ms-transition:     -ms-transform 1s;
+                 -o-transition:      -o-transform 1s;
+                    transition:         transform 1s;
+        
+            -webkit-transform-style: preserve-3d;
+               -moz-transform-style: preserve-3d;
+                -ms-transform-style: preserve-3d;
+                 -o-transform-style: preserve-3d;
+                    transform-style: preserve-3d;
+        }
+        .container .card .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+        
+            -webkit-backface-visibility: hidden;
+               -moz-backface-visibility: hidden;
+                -ms-backface-visibility: hidden;
+                 -o-backface-visibility: hidden;
+                    backface-visibility: hidden;
+        }
+        .container .card.flipped,
+        .container .card .face2 {
+            -webkit-transform: rotateY(180deg);
+               -moz-transform: rotateY(180deg);
+                -ms-transform: rotateY(180deg);
+                 -o-transform: rotateY(180deg);
+                    transform: rotateY(180deg);
+        }
+        .store {
+            display: none;
+        }
+        .buttons {
+            text-align: center;
+        }
         </style>
     </head>
     <body>
@@ -52,47 +109,68 @@
           <nav role="navigation" class="navbar navbar-default navbar-inverse">
             <div class="container-fluid">
               <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="pull-left"><img src="/public/css/images/logos/blm.png" width="45px" height="45px" float="left"/><img src="/public/css/images/logos/fs.png" width="38px" height="45px" float="left"/><img src="/public/css/images/logos/fws.png" width="45px" height="45px" float="left"/><img src="/public/css/images/logos/nps.png" width="45px" height="45px" float="left"/></a>
-              </div>
-              <div class="navbar-brand">SNAP Restoration Map</div>
-              <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                  <li><a href="/">Home</a></li>
-                  <li class="active"><a href="#">Admin</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                  <li>
-                    <p class="navbar-text">Already have an account?</p>
-                  </li>
-                  <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><b>Login</b><span class="caret"></span></a>
-                    <ul id="login-dp" class="dropdown-menu">
+                <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="pull-left">
+                  <div class="container">
+                    <div class="card">
+                      <div class="face face1"></div>
+                      <div class="face face2"></div>
+                    </div>
+                    <ul class="store">
                       <li>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <form id="login-nav" role="form" method="post" action="login" accept-charset="UTF-8" class="form">
-                              <div class="form-group">
-                                <label for="exampleInputEmail2" class="sr-only">Email address</label>
-                                <input id="exampleInputEmail2" type="email" placeholder="Email address" required="" class="form-control"/>
-                              </div>
-                              <div class="form-group">
-                                <label for="exampleInputPassword2" class="sr-only">Password</label>
-                                <input id="exampleInputPassword2" type="password" placeholder="Password" required="" class="form-control"/>
-                                <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-                              </div>
-                              <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                              </div>
-                              <div class="checkbox">
-                                <label>
-                                  <input type="checkbox"/> keep me logged-in
-                                </label>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
+                        <div class="content content1"><img alt="Brand" src="../public/css/images/logos/blm.png" width="45px" height="45px" float="left"/></div>
+                      </li>
+                      <li>
+                        <div class="content content2"> <img alt="Brand" src="../public/css/images/logos/fs.png" width="38px" height="45px" float="left"/></div>
+                      </li>
+                      <li>
+                        <div class="content content3"> <img alt="Brand" src="../public/css/images/logos/fws.png" width="45px" height="45px" float="left"/></div>
+                      </li>
+                      <li>
+                        <div class="content content4">  <img alt="Brand" src="../public/css/images/logos/nps.png" width="45px" height="45px" float="left"/></div>
                       </li>
                     </ul>
-                  </li>
+                  </div>
+                  <script>
+                    var topLogo = 1;
+                    var currLogo = 1;
+                    var facingUp = true;
+                    function flipLogo(n) {
+                      if (topLogo === n) return;
+                      // Replace the contents of the current back-face with the contents
+                      // of the element that should rotate into view.
+                      var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
+                      var nextContent = $('.store' + n).html();
+                      var nextContent = $('.store li:nth-child(' + n + ')').html();
+                      curBackFace.html(nextContent);
+                      // Rotate the content
+                      $('.card').toggleClass('flipped');
+                      topLogo = n;
+                      facingUp = !facingUp;
+                    }
+                    setInterval(function() {
+                      flipLogo(currLogo);
+                      if(currLogo > 3)
+                        currLogo = 1;
+                      else
+                        currLogo++;
+                    }, 5000);
+                    $(document).ready(function(){
+                      // Add the appropriate content to the initial "front side"
+                      var frontFace = $('.face1');
+                      var frontContent = $('.store li:first-child').html();
+                      frontFace.html(frontContent);
+                    });
+                  </script></a>
+              </div>
+                <div class="navbar-brand">SNAP Restoration Map</div>
+                <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+                <ul style="border-left: 1px solid #000000;" class="nav navbar-nav">
+                  <li><a href="/">Home</a></li>
+                  <li class="active"><a href="">Admin</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li id="loginTab"><a href="login.html"><b>Login</b></a></li>
+                  <li id="logoutTab"><a href="javascript:logout();"><b>Logout</b></a></li>
                 </ul>
               </div>
             </div>
@@ -102,7 +180,6 @@
             <ul class="nav nav-pills nav-stacked">
               <li role="presentation"><a href="Add.html">Submissions</a></li>
               <li role="presentation" class="active"><a href="#">Edit Records</a></li>
-              <li role="presentation"><a href="Delete.html">Delete Records</a></li>
             </ul>
         </div>
         <div id = "Items">
