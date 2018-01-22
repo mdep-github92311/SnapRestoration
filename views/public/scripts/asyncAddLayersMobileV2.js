@@ -16,7 +16,7 @@ var createLayer = function () {
             _context.next = 6;
             return L.geoJson(data, {
               pane: 'Lines',
-              style: myStyleLines,
+              style: myBarrierLines,
               onEachFeature: onEachBarrier
             }).addTo(map);
 

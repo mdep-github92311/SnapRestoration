@@ -54,7 +54,7 @@ async function createLayer(data, layerName) {
       case 'Barrier':
         const barrier = await L.geoJson(data, {
           pane: 'Lines',
-          style: myStyleLines,
+          style: myBarrierLines,
           onEachFeature: onEachBarrier
         }).addTo(map);
 

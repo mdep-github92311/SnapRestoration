@@ -110,6 +110,43 @@ function myStyleLines(feature) {
     }
 }
 
+function myBarrierLines(feature) {
+    switch (feature.properties.agency) {
+        case 0:
+            return {
+                color: "#e41a1c",
+                weight: 3,
+                opacity: 1,
+                dashArray: "2 7"
+            };
+            break;
+        case 1:
+            return {
+                color: "#4daf4a",
+                weight: 3,
+                opacity: 1,
+                dashArray: "2 7"
+            };
+            break;
+        case 2:
+            return {
+                color: "#984ea3",
+                weight: 3,
+                opacity: 1,
+                dashArray: "2 7"
+            };
+            break;
+        case 3:
+            return {
+                color: "#ff7f00",
+                weight: 3,
+                opacity: 1,
+                dashArray: "2 7"
+            };
+            break;
+    }
+}
+
 //creating a style function for Dist polygons in the map based on the agency number
 function myStyleDistPoly(feature) {
     switch (feature.properties.agency) {

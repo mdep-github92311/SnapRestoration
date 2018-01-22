@@ -896,19 +896,19 @@ html
         setParent(htmlObject, a);
         
                 
-        $(document).on("mobileinit", function () {
-          //register event to cache site for offline use
-        cache = window.applicationCache;
-        cache.addEventListener('updateready', cacheUpdatereadyListener, false);
-        cache.addEventListener('error', cacheErrorListener, false);
-        function cacheUpdatereadyListener (){
-            window.applicationCache.update();
-            window.applicationCache.swapCache();
-            }
-            function cacheErrorListener() {
-                alert('site not availble offline')
-            }
-        });
+        // $(document).on("mobileinit", function () {
+        //   //register event to cache site for offline use
+        // cache = window.applicationCache;
+        // cache.addEventListener('updateready', cacheUpdatereadyListener, false);
+        // cache.addEventListener('error', cacheErrorListener, false);
+        // function cacheUpdatereadyListener (){
+        //     window.applicationCache.update();
+        //     window.applicationCache.swapCache();
+        //     }
+        //     function cacheErrorListener() {
+        //         alert('site not availble offline')
+        //     }
+        // });
         
         // (function() {
 
