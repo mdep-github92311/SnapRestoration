@@ -25,7 +25,7 @@ function myStylePoints(feature) {
         case 0:
             return {
                 radius: 300,
-                fillColor: "#e41a1c",
+                fillColor: "#fdfe00",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -35,7 +35,7 @@ function myStylePoints(feature) {
         case 1:
             return {
                 radius: 300,
-                fillColor: "#4daf4a",
+                fillColor: "#54ff01",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -46,7 +46,7 @@ function myStylePoints(feature) {
         case 2:
             return {
                 radius: 300,
-                fillColor: "#984ea3",
+                fillColor: "#005de8",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -56,7 +56,7 @@ function myStylePoints(feature) {
         case 3:
             return {
                 radius: 300,
-                fillColor: "#ff7f00",
+                fillColor: "#8600ac",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -81,28 +81,28 @@ function myStyleLines(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#e41a1c",
+                color: "#fdfe00",
                 weight: 3,
                 opacity: 1
             };
             break;
         case 1:
             return {
-                color: "#4daf4a",
+                color: "#54ff01",
                 weight: 3,
                 opacity: 1
             };
             break;
         case 2:
             return {
-                color: "#984ea3",
+                color: "#005de8",
                 weight: 3,
                 opacity: 1
             };
             break;
         case 3:
             return {
-                color: "#ff7f00",
+                color: "#8600ac",
                 weight: 3,
                 opacity: 1
             };
@@ -114,7 +114,7 @@ function myBarrierLines(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#e41a1c",
+                color: "#fdfe00",
                 weight: 3,
                 opacity: 1,
                 dashArray: "2 7"
@@ -122,7 +122,7 @@ function myBarrierLines(feature) {
             break;
         case 1:
             return {
-                color: "#4daf4a",
+                color: "#54ff01",
                 weight: 3,
                 opacity: 1,
                 dashArray: "2 7"
@@ -130,7 +130,7 @@ function myBarrierLines(feature) {
             break;
         case 2:
             return {
-                color: "#984ea3",
+                color: "#005de8",
                 weight: 3,
                 opacity: 1,
                 dashArray: "2 7"
@@ -138,7 +138,7 @@ function myBarrierLines(feature) {
             break;
         case 3:
             return {
-                color: "#ff7f00",
+                color: "#8600ac",
                 weight: 3,
                 opacity: 1,
                 dashArray: "2 7"
@@ -152,22 +152,22 @@ function myStyleDistPoly(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#e41a1c"
+                color: "#fdfe00"
             };
             break;
         case 1:
             return {
-                color: "#4daf4a"
+                color: "#54ff01"
             };
             break;
         case 2:
             return {
-                color: "#984ea3"
+                color: "#005de8"
             };
             break;
         case 3:
             return {
-                color: "#ff7f00"
+                color: "#8600ac"
             };
             break;
     }
@@ -178,22 +178,22 @@ function myStyleRestoPoly(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#e41a1c"
+                color: "#fdfe00"
             };
             break;
         case 1:
             return {
-                color: "#4daf4a"
+                color: "#54ff01"
             };
             break;
         case 2:
             return {
-                color: "#984ea3"
+                color: "#005de8"
             };
             break;
         case 3:
             return {
-                color: "#ff7f00"
+                color: "#8600ac"
             };
             break;
     }
@@ -204,11 +204,11 @@ function pointToLayer(feature, latlng) {
 }
 
 function blmRegion(feature) {
-    return { color: "#e41a1c" };
+    return { color: "#fdfe00" };
 }
 
 function fsRegion(feature) {
-    return { color: "#4daf4a" };
+    return { color: "#54ff01" };
 }
 
 function mdep_i(feature) {

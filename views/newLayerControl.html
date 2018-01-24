@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+body {
+  background-color: black;
+}
 .switch {
   position: relative;
   display: inline-block;
@@ -63,16 +67,22 @@ input:checked + .slider:before {
 <body>
 
 <h2>Layer Control</h2>
+<div>
+    <label class="switch">
+      <input id="barrierLayer" type="checkbox">
+      <span class="slider round"></span>
+    </label>
+  <span>Barriers</span>
+</div>
 
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label>
 
-<label class="switch">
-  <input type="checkbox" checked>
-  <span class="slider round"></span>
-</label>
 
+
+<script>
+    $("#barrierLayer").change(function() {
+      if($('#barrierLayer').is(':checked'))
+        console.log("layer on")
+    });
+</script>
 </body>
 </html> 

@@ -5,7 +5,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
   head
     title= 'SNAP Restoration Map'
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
-    link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css')
+    //link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css')
+    link(rel='stylesheet', href='/public/css/leaflet.css')
     link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
     link(rel='stylesheet', href='/public/css/sidebarV2.css')
@@ -743,7 +744,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           var controlOptions = {
             container_width: "350px",
             container_maxHeight: "500px",
-            group_maxHeight: "170px",
+            group_maxHeight: "100%",
             autoZIndex: false,
             exclusive: false,
             collapsed: false
@@ -920,14 +921,14 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             p.legend
               span.legend-item
-                img(src='/public/css/images/greenSquare.png', width='8%', height='35%') 
+                img(src='/public/css/images/npsSquare.png', width='8%', height='35%') 
                 |  NPS 
-                img(src='/public/css/images/redSquare.png', width='8%', height='35%')  
+                img(src='/public/css/images/blmSquare.png', width='8%', height='35%')  
                 |  BLM 
               span.legend-item
-                img(src='/public/css/images/orangeSquare.png', width='8%', height='35%') 
+                img(src='/public/css/images/fwsSquare.png', width='8%', height='35%') 
                 |  FWS 
-                img(src='/public/css/images/purpleSquare.png', width='8%', height='35%') 
+                img(src='/public/css/images/fsSquare.png', width='8%', height='35%') 
                 |  FS 
             #layerTools2
           
