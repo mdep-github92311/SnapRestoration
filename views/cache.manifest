@@ -10,10 +10,10 @@ public/css/images/logos/blm.png
 public/css/images/logos/fs.png
 public/css/images/logos/fws.png
 public/css/images/logos/nps.png
+public/css/leaflet.css
 public/css/styledLayerControl.css
 public/css/sidebarV2.css
 public/css/leaflet-topCenter.css
-https://unpkg.com/leaflet@1.2.0/dist/leaflet.css
 https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css
 public/scripts/polyfill.min.js
 public/scripts/jquery.min.js
@@ -27,7 +27,7 @@ https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.mi
 https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js
 https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js
 public/scripts/formDIV.js
-public/scripts/asyncAddLayersV2.js
+public/scripts/asyncAddLayersMobileV2.js
 public/scripts/leaflet-topCenter.js
 public/lib/pako/pako_inflate.min.js
 public/lib/leaflet/leaflet.ajax.js
