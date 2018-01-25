@@ -78,6 +78,16 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         margin-bottom: 0;
       }
       
+      
+      @media only screen 
+        and (min-device-width: 280px) 
+        and (max-device-width: 350px)
+        and (-webkit-min-device-pixel-ratio: 2) {
+          .navbar-brand {
+            font-size: 17px !important;
+        }
+      }
+      
       .legend {
         color: black;
         background-color: white;
