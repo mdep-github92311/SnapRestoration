@@ -102,6 +102,39 @@
         .buttons {
             text-align: center;
         }
+        
+        li:active { 
+            background-color: #337ab7;
+            color:white;
+        }
+        
+        .loader {
+          margin-left: 50%;
+          margin-top: 10%;
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite; /* Safari */
+          animation: spin 2s linear infinite;
+        }
+                
+                
+        /* Safari */
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        .row {
+          margin-left: 30% !important;
+        }
         </style>
     </head>
     <body>
@@ -176,19 +209,70 @@
             </div>
           </nav>
         </div>
-        <div style="float:left;" id="side_tab">
+        <div style="float:left;">
+          <div id="side_tab">
             <ul class="nav nav-pills nav-stacked">
               <li role="presentation"><a href="Add.html">Submissions</a></li>
               <li role="presentation" class="active"><a href="#">Edit Records</a></li>
             </ul>
+          </div>
+          <hr>
+          <h4 style="text-align: center;">Filters</h4>
+          <div id="side_tab_filters">
+            <ul class="list-group">
+              <li id="barrierFilter" class="list-group-item">
+                <span id="barrierFilterCount" class="badge"></span>
+                Barriers
+              </li>
+              <li id="restoPointsFilter" class="list-group-item">
+                <span id="restoPointsFilterCount" class="badge"></span>
+                Restoration Points
+              </li>
+              <li id="restoLinesFilter" class="list-group-item">
+                <span id="restoLinesFilterCount" class="badge"></span>
+                Restoration Lines
+              </li>
+              <li id="restoPolysFilter" class="list-group-item">
+                <span id="restoPolysFilterCount" class="badge"></span>
+                Restoration Polygons
+              </li>
+              <li id="distPointsFilter" class="list-group-item">
+                <span id="distPointsFilterCount" class="badge"></span>
+                Disturbance Points
+              </li>
+              <li id="distLinesFilter" class="list-group-item">
+                <span id="distLinesFilterCount" class="badge"></span>
+                Disturbance Lines
+              </li>
+              <li id="distPolysFilter" class="list-group-item">
+                <span id="distPolysFilterCount" class="badge"></span>
+                Disturbance Polygons
+              </li>
+            </ul>
+          </div>
         </div>
-        <div id = "Items">
-          <div id="reviewItems"></div>
-          <table id="tableID" class="center">
-            <div id="tableItems"></div>
-          </table>
-        </div>
+        
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="input-group">
+              <input type="number" id="searchID"class="form-control" placeholder="Search by GID...">
+              <span class="input-group-btn">
+                <button id="searchButton" class="btn btn-default" type="button">Search</button>
+              </span>
+            </div><!-- /input-group -->
+            <br>
+            <div id = "Items">
+              <div id="reviewItems"></div>
+              <table id="tableID" class="center">
+                <div id="tableItems"><div class="loader"></div></div>
+              </table>
+            </div>
+          </div><!-- /.col-lg-6 -->
+        
+      
+        </div><!-- /.row -->
         <script>
+          var currRecords = null;
           mapMarkers = [];
           var currentData = [];
           var invalidated = false;
@@ -297,17 +381,15 @@
               maxZoom: 11
             });
           }
-          getData().then(function(defs){
-              //promise = (defs);
-              console.log(defs);
-              var count = document.getElementById('reviewItems');
+          function writeTables(defs) {
+            console.log(defs);
+              //var count = document.getElementById('reviewItems');
               var item = document.getElementById('tableItems');
-              count.innerHTML = "There are " + defs.overallCount + " overall markers";
+              //count.innerHTML = "There are " + defs.overallCount + " overall markers";
               $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
               var count = 0;
               
-              
-              if (defs.barriers.features != null)
+              if (defs.barriers != null && defs.barriers.features != null)
                 defs.barriers.features.forEach(function(features) {
                   count++;
                   features.dataType = "barriers";
@@ -328,11 +410,10 @@
                       populateModal(features, "Barrier", 2);
                   });
                     
-                    
                 });
               count = 0;
               
-              if (defs.distLines.features != null)
+              if (defs.distLines != null && defs.distLines.features != null)
                 defs.distLines.features.forEach(function(features) {
                   count++;
                   features.dataType = "distLines";
@@ -355,7 +436,7 @@
                 });
               count = 0;
               
-              if (defs.distPoints.features != null)
+              if (defs.distPoints != null && defs.distPoints.features != null)
                 defs.distPoints.features.forEach(function(features) {
                   count++;
                   features.dataType = "distPoints";
@@ -378,7 +459,7 @@
                 });
               count = 0;
               
-              if (defs.distPolys.features != null)
+              if (defs.distPolys != null && defs.distPolys.features != null)
                 defs.distPolys.features.forEach(function(features) {
                   count++;
                   features.dataType = "distPolys";
@@ -401,7 +482,7 @@
                 });
               count = 0;
               
-              if (defs.restoLines.features != null)
+              if (defs.restoLines != null && defs.restoLines.features != null)
                 defs.restoLines.features.forEach(function(features) {
                   count++;
                   features.dataType = "restoLines";
@@ -424,7 +505,7 @@
                 });
               count = 0;
               
-              if (defs.restoPoints.features != null)
+              if (defs.restoPoints != null && defs.restoPoints.features != null)
                 defs.restoPoints.features.forEach(function(features) {
                   count++;
                   features.dataType = "restoPoints";
@@ -447,7 +528,7 @@
                 });
               count = 0;
               
-              if (defs.restoPolys.features != null)
+              if (defs.restoPolys != null && defs.restoPolys.features != null)
                 defs.restoPolys.features.forEach(function(features) {
                   count++;
                   features.dataType = "restoPolys";
@@ -472,6 +553,181 @@
             var items = document.getElementById("tableItems");
             document.getElementById("tableID").appendChild(items);
             document.getElementById("tableID").style.textAlign = "center"; 
+            
+          }
+          $('#barrierFilter').addClass( 'active' );
+          $("#tableItems").html('');
+          getData('Barriers', 'barrierGeoJSON').then(function(defs){
+            $("#barrierFilterCount").html(defs.overallCount);
+            currRecords = defs;
+            writeTables(defs);
+          });
+          
+          document.getElementById("barrierFilter").addEventListener("click", function(){
+            $('#barrierFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#barrierFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#barrierFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('Barriers', 'barrierGeoJSON').then(function(defs){
+                $("#barrierFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("restoPointsFilter").addEventListener("click", function(){
+            $('#restoPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#restoPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#restoPointsFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('RestoPoints', 'restoPointGeoJSON').then(function(defs){
+                $("#restoPointsFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("restoLinesFilter").addEventListener("click", function(){
+            $('#restoLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#restoLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#restoLinesFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('RestoLines', 'restoLineGeoJSON').then(function(defs){
+                $("#restoLinesFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("restoPolysFilter").addEventListener("click", function(){
+            $('#restoPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#restoPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#restoPolysFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('RestoPolygons', 'restoPolyGeoJSON').then(function(defs){
+                $("#restoPolysFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("distPointsFilter").addEventListener("click", function(){
+            $('#distPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#distPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#distPointsFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('DistPoints', 'distPointGeoJSON').then(function(defs){
+                $("#distPointsFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("distLinesFilter").addEventListener("click", function(){
+            $('#distLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#distLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#distLinesFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('DistLines', 'distLineGeoJSON').then(function(defs){
+                $("#distLinesFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("distPolysFilter").addEventListener("click", function(){
+            $('#distPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+            $('#distPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#distPolysFilter').addClass( 'active' );
+            $("#tableItems").html('<div class="loader"></div>');
+            getData('DistPolygons', 'distPolyGeoJSON').then(function(defs){
+                $("#distPolysFilterCount").html(defs.overallCount);
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          
+          document.getElementById("searchButton").addEventListener("click", function(){
+            console.log($("#searchID").val());
+            if ($("#searchID").val() == ''){
+              $("#tableItems").html('');
+              writeTables(currRecords);
+              return;
+            }
+            $("#tableItems").html('No records match that ID');
+            if (currRecords.barriers.features != null) {
+                currRecords.barriers.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {barriers: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPoints.features != null) {
+                currRecords.distPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPoints: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distLines.features != null) {
+                currRecords.distLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distLines: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPolys.features != null) {
+                currRecords.distPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPolys: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPoints.features != null) {
+                currRecords.restoPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPoints: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoLines.features != null) {
+                currRecords.restoLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoLines: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPolys.features != null) {
+                currRecords.restoPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPolys: {features}};
+                    writeTables(searched);
+                  }
+              });
+            }
+            // currRecords; 
+            // writeTables(defs)
           });
           /*setTimeout(function(){ 
             console.log(promise); 
