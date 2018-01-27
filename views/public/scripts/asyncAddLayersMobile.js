@@ -66,7 +66,7 @@ async function createLayer(data, layerName) {
       case 'Disturbance Lines':
         const distLines = await L.geoJson(data, {
           pane: 'Lines',
-          style: myStyleLines,
+          style: myDistLines,
           onEachFeature: onEachDistLine
         }).addTo(map);
 
@@ -78,7 +78,7 @@ async function createLayer(data, layerName) {
       case 'Disturbance Points':
         const distPoints = await L.geoJson(data, {
           pane: 'Points',
-          style: myStylePoints,
+          style: myStyleDistPoints,
           // changing the default point makers to circle markers
           pointToLayer: pointToLayer,
           onEachFeature: onEachDistPoint
@@ -250,7 +250,8 @@ async function createLayer(data, layerName) {
         }
         const roads = await L.geoJson(data, {
           pane: 'Lines',
-          style: roadColor
+          style: roadColor,
+          interactive: false
         }).addTo(map);
         
 

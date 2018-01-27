@@ -33,7 +33,7 @@ var createLayer = function () {
             _context.next = 12;
             return L.geoJson(data, {
               pane: 'Lines',
-              style: myStyleLines,
+              style: myDistLines,
               onEachFeature: onEachDistLine
             }).addTo(map);
 
@@ -50,7 +50,7 @@ var createLayer = function () {
             _context.next = 18;
             return L.geoJson(data, {
               pane: 'Points',
-              style: myStylePoints,
+              style: myStyleDistPoints,
               // changing the default point makers to circle markers
               pointToLayer: pointToLayer,
               onEachFeature: onEachDistPoint
@@ -282,7 +282,8 @@ var createLayer = function () {
             _context.next = 98;
             return L.geoJson(data, {
               pane: 'Lines',
-              style: roadColor
+              style: roadColor,
+              interactive: false
             }).addTo(map);
 
           case 98:

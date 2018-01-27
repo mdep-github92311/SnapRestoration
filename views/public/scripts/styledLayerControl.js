@@ -425,7 +425,7 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
             obj,
             inputs = this._form.getElementsByTagName('input'),
             inputsLen = inputs.length;
-
+        
         this._handlingClick = true;
 
         for (i = 0; i < inputsLen; i++) {

@@ -26,6 +26,62 @@ function myStylePoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#fdfe00",
+                color: "#fdfe00",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+        case 1:
+            return {
+                radius: 300,
+                fillColor: "#54ff01",
+                color: "#54ff01",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+
+        case 2:
+            return {
+                radius: 300,
+                fillColor: "#005de8",
+                color: "#005de8",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+        case 3:
+            return {
+                radius: 300,
+                fillColor: "#8600ac",
+                color: "#8600ac",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+        default:
+            return {
+                radius: 300,
+                fillColor: "#ffffff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+            break;
+    }
+}
+
+function myStyleDistPoints(feature) {
+    switch (feature.properties.agency) {
+        case 0:
+            return {
+                radius: 300,
+                fillColor: "#fdfe00",
                 color: "#000",
                 weight: 1,
                 opacity: 1,
@@ -110,6 +166,13 @@ function myStyleLines(feature) {
     }
 }
 
+function myDistLines(feature) {
+    return {
+        color: '#000',
+        weight: 5
+    }
+    
+}
 function myBarrierLines(feature) {
     switch (feature.properties.agency) {
         case 0:
@@ -152,22 +215,26 @@ function myStyleDistPoly(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#fdfe00"
+                color: "#000",
+                fillColor: "#fdfe00"
             };
             break;
         case 1:
             return {
-                color: "#54ff01"
+                color: "#000",
+                fillColor: "#54ff01"
             };
             break;
         case 2:
             return {
-                color: "#005de8"
+                color: "#000",
+                fillColor: "#005de8"
             };
             break;
         case 3:
             return {
-                color: "#8600ac"
+                color: "#000",
+                fillColor: "#8600ac"
             };
             break;
     }
@@ -252,6 +319,12 @@ function onEachBarrier(feature, layer) {
 }
 
 function onEachDistLine(feature, layer) {
+    console.log(layer);
+    // adds black border to Dist Lines
+    L.geoJSON(feature, {
+        style: myStyleLines,
+        interactive: false
+    }).addTo(map);
     if (loggedIn != null && !loggedIn)
         if (feature.properties['t_e_specie'] == 'Yes' || feature.properties['cultural'] == 'Yes')
             {
