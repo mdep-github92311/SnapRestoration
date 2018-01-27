@@ -319,12 +319,13 @@ function onEachBarrier(feature, layer) {
 }
 
 function onEachDistLine(feature, layer) {
-    console.log(layer);
-    // adds black border to Dist Lines
-    L.geoJSON(feature, {
-        style: myStyleLines,
-        interactive: false
-    }).addTo(map);
+    // console.log(control);
+    // // adds black border to Dist Lines
+    // var distLines = L.geoJSON(feature, {
+    //     style: myStyleLines,
+    //     interactive: false
+    // }).addTo(map);
+    // control._addLayer(distLines, 'Disturbance Lines', {groupName: "Disturbance Data", expanded: true}, true);
     if (loggedIn != null && !loggedIn)
         if (feature.properties['t_e_specie'] == 'Yes' || feature.properties['cultural'] == 'Yes')
             {
