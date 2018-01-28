@@ -5,7 +5,6 @@
     <head>
         <title>SNAP Admin</title>
         <script src='../public/scripts/polyfill.min.js'></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
@@ -15,6 +14,12 @@
         <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
         <script src="../public/scripts/asyncGetDataV2.js"> </script>
         <script src="../public/scripts/featureStyles.js"> </script>
+        
+        
+	      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script> 
+ 
         <style>
         html, body {
             width: 100%;
@@ -107,6 +112,13 @@
             background-color: #337ab7;
             color:white;
         }
+        li:hover {
+          background-color: #337ab7;
+          color:white;
+        }
+        #side_tab_filters {
+          cursor:pointer;
+        }
         
         .loader {
           margin-left: 50%;
@@ -135,6 +147,8 @@
         .row {
           margin-left: 30% !important;
         }
+        
+        
         </style>
     </head>
     <body>
@@ -194,8 +208,8 @@
                       frontFace.html(frontContent);
                     });
                   </script></a>
+                  <div class="navbar-brand">SNAP Restoration</div>
               </div>
-                <div class="navbar-brand">SNAP Restoration</div>
                 <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul style="border-left: 1px solid #000000;" class="nav navbar-nav">
                   <li><a href="/">Map View</a></li>
@@ -254,17 +268,14 @@
         
         <div class="row">
           <div class="col-lg-6">
-            <div class="input-group">
-              <input type="number" id="searchID"class="form-control" placeholder="Search by GID...">
-              <span class="input-group-btn">
-                <button id="searchButton" class="btn btn-default" type="button">Search</button>
-              </span>
-            </div><!-- /input-group -->
             <br>
             <div id = "Items">
               <div id="reviewItems"></div>
-              <table id="tableID" class="center">
-                <div id="tableItems"><div class="loader"></div></div>
+              <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
+                <thead><tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr></thead>
+                <div id="tableItems">
+                  <div class="loader"></div>
+                  </div>
               </table>
             </div>
           </div><!-- /.col-lg-6 -->
@@ -272,6 +283,10 @@
       
         </div><!-- /.row -->
         <script>
+          var table = $("#tableID").dataTable({
+                  "iDisplayLength": 10,
+                  "aLengthMenu": [[10, 25, 50, 100,  -1], [10, 25, 50, 100, "All"]]
+                 });
           var currRecords = null;
           mapMarkers = [];
           var currentData = [];
@@ -386,22 +401,32 @@
               //var count = document.getElementById('reviewItems');
               var item = document.getElementById('tableItems');
               //count.innerHTML = "There are " + defs.overallCount + " overall markers";
-              $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
               var count = 0;
+              table.fnClearTable();
               
               if (defs.barriers != null && defs.barriers.features != null)
                 defs.barriers.features.forEach(function(features) {
                   count++;
                   features.dataType = "barriers";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td colspan='2'> Barriers"
-                            + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Barriers",
+                      "Barriers",
+                      "<a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] )
+                  
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td colspan='2'> Barriers"
+                  //           + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#barr" + count;
                   
                   $(barrID).click(function(){
@@ -418,15 +443,25 @@
                   count++;
                   features.dataType = "distLines";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Disturbance"
-                            + "</td><td> Lines"
-                            + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Disturbance",
+                      "Lines",
+                      "<a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] )
+                  
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td> Disturbance"
+                  //           + "</td><td> Lines"
+                  //           + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#dLine" + count;
                     
                   $(barrID).click(function(){
@@ -441,15 +476,26 @@
                   count++;
                   features.dataType = "distPoints";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Disturbance"
-                            + "</td><td> Points"
-                            + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Disturbance",
+                      "Points",
+                      "<a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] )
+                  
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td> Disturbance"
+                  //           + "</td><td> Points"
+                  //           + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#dPoint" + count;
                     
                   $(barrID).click(function(){
@@ -464,15 +510,25 @@
                   count++;
                   features.dataType = "distPolys";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Disturbance"
-                            + "</td><td> Polygon"
-                            + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Disturbance",
+                      "Polygon",
+                      "<a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] );
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td> Disturbance"
+                  //           + "</td><td> Polygon"
+                  //           + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#dPoly" + count;
                     
                   $(barrID).click(function(){
@@ -487,15 +543,26 @@
                   count++;
                   features.dataType = "restoLines";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Restoration"
-                            + "</td><td> Lines"
-                            + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Restoration",
+                      "Lines",
+                      "<a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] );
+                  
+                  
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td> Restoration"
+                  //           + "</td><td> Lines"
+                  //           + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#rLine" + count;
                     
                   $(barrID).click(function(){
@@ -510,15 +577,25 @@
                   count++;
                   features.dataType = "restoPoints";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Restoration"
-                            + "</td><td> Point"
-                            + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Restoration",
+                      "Point",
+                      "<a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] );
+                  
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td> Restoration"
+                  //           + "</td><td> Point"
+                  //           + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#rPoint" + count;
                     
                   $(barrID).click(function(){
@@ -533,15 +610,25 @@
                   count++;
                   features.dataType = "restoPolys";
                   var agen = getAgency(features.properties.agency);
-                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                            + "</td><td>"+agen
-                            + "</td><td> Restoration"
-                            + "</td><td> Polygon"
-                            + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  table.fnAddData( [
+                      features.properties.gid,
+                      agen,
+                      "Restoration",
+                      "Polygon",
+                      "<a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button></a>"
-                            +"</td></tr>");
+                            + "</button>"
+                  ] );
+                  
+                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                  //           + "</td><td>"+agen
+                  //           + "</td><td> Restoration"
+                  //           + "</td><td> Polygon"
+                  //           + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "</button></a>"
+                  //           +"</td></tr>");
                   var barrID = "#rPoly" + count;
                     
                   $(barrID).click(function(){
@@ -550,9 +637,12 @@
                       
                 });
             //Inserts table back into div
+            
             var items = document.getElementById("tableItems");
             document.getElementById("tableID").appendChild(items);
             document.getElementById("tableID").style.textAlign = "center"; 
+            
+              
             
           }
           $('#barrierFilter').addClass( 'active' );
@@ -567,6 +657,7 @@
             $('#barrierFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#barrierFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#barrierFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('Barriers', 'barrierGeoJSON').then(function(defs){
                 $("#barrierFilterCount").html(defs.overallCount);
@@ -579,6 +670,7 @@
             $('#restoPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoPointsFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('RestoPoints', 'restoPointGeoJSON').then(function(defs){
                 $("#restoPointsFilterCount").html(defs.overallCount);
@@ -591,6 +683,7 @@
             $('#restoLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoLinesFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('RestoLines', 'restoLineGeoJSON').then(function(defs){
                 $("#restoLinesFilterCount").html(defs.overallCount);
@@ -603,6 +696,7 @@
             $('#restoPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoPolysFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('RestoPolygons', 'restoPolyGeoJSON').then(function(defs){
                 $("#restoPolysFilterCount").html(defs.overallCount);
@@ -615,6 +709,7 @@
             $('#distPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distPointsFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('DistPoints', 'distPointGeoJSON').then(function(defs){
                 $("#distPointsFilterCount").html(defs.overallCount);
@@ -627,6 +722,7 @@
             $('#distLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distLinesFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('DistLines', 'distLineGeoJSON').then(function(defs){
                 $("#distLinesFilterCount").html(defs.overallCount);
@@ -639,6 +735,7 @@
             $('#distPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distPolysFilter').addClass( 'active' );
+            table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('DistPolygons', 'distPolyGeoJSON').then(function(defs){
                 $("#distPolysFilterCount").html(defs.overallCount);
@@ -648,87 +745,89 @@
             });
           });
           
-          document.getElementById("searchButton").addEventListener("click", function(){
-            console.log($("#searchID").val());
-            if ($("#searchID").val() == ''){
-              $("#tableItems").html('');
-              writeTables(currRecords);
-              return;
-            }
-            $("#tableItems").html('No records match that ID');
-            if (currRecords.barriers.features != null) {
-                currRecords.barriers.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {barriers: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            else if (currRecords.distPoints.features != null) {
-                currRecords.distPoints.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {distPoints: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            else if (currRecords.distLines.features != null) {
-                currRecords.distLines.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {distLines: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            else if (currRecords.distPolys.features != null) {
-                currRecords.distPolys.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {distPolys: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            else if (currRecords.restoPoints.features != null) {
-                currRecords.restoPoints.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {restoPoints: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            else if (currRecords.restoLines.features != null) {
-                currRecords.restoLines.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {restoLines: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            else if (currRecords.restoPolys.features != null) {
-                currRecords.restoPolys.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {restoPolys: {features}};
-                    writeTables(searched);
-                  }
-              });
-            }
-            // currRecords; 
-            // writeTables(defs)
-          });
+          // document.getElementById("searchButton").addEventListener("click", function(){
+          //   console.log($("#searchID").val());
+          //   if ($("#searchID").val() == ''){
+          //     $("#tableItems").html('');
+          //     writeTables(currRecords);
+          //     return;
+          //   }
+          //   $("#tableItems").html('No records match that ID');
+          //   if (currRecords.barriers.features != null) {
+          //       currRecords.barriers.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {barriers: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   else if (currRecords.distPoints.features != null) {
+          //       currRecords.distPoints.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {distPoints: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   else if (currRecords.distLines.features != null) {
+          //       currRecords.distLines.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {distLines: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   else if (currRecords.distPolys.features != null) {
+          //       currRecords.distPolys.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {distPolys: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   else if (currRecords.restoPoints.features != null) {
+          //       currRecords.restoPoints.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {restoPoints: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   else if (currRecords.restoLines.features != null) {
+          //       currRecords.restoLines.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {restoLines: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   else if (currRecords.restoPolys.features != null) {
+          //       currRecords.restoPolys.features.forEach(function(feature) {
+          //       if (feature.properties.gid == $("#searchID").val()) {
+          //           $("#tableItems").html('');
+          //           var features = [feature];
+          //           var searched = {restoPolys: { features: features }};
+          //           writeTables(searched);
+          //         }
+          //     });
+          //   }
+          //   // currRecords; 
+          //   // writeTables(defs)
+          // });
+          
+          
           /*setTimeout(function(){ 
             console.log(promise); 
             var elem = document.getElementById('para');
