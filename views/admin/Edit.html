@@ -277,6 +277,8 @@
                 <tbody id="tableItems">
                   </tbody>
               </table>
+              <button id="pageLeft">sfkjasfkj</button>
+              <button id="pageRight">sfkjasfkj</button>
             </div>
           </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -297,6 +299,7 @@
           mapMarkers = [];
           var currentData = [];
           var invalidated = false;
+          var pageNumber = 0;
           function getAgency(agency){
             switch (agency) {
                 case 0:
@@ -316,7 +319,7 @@
                   break;
             }
           }
-          function populateModal(data, type, draw) {
+          function populateModal(data, type) {
             var style;
             var bounds = null;
             this.currentData = data;
@@ -328,8 +331,8 @@
                   this.map.removeLayer(this.mapMarkers[i]);
               }
             console.log(data);
-            switch (draw) {
-              case 1:
+            switch (data.geometry.type) {
+              case 'Point':
                 style = myStylePoints(data);
                 console.log(style);
                 var marker = L.circle([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
@@ -350,7 +353,7 @@
                     //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
                     bounds = marker.getBounds();
                 break;
-              case 2:
+              case 'MultiLineString':
                 var marker = L.geoJson(data, {
                   style: myStyleLines,
                 }).addTo(map);
@@ -363,7 +366,7 @@
                 //map.panTo(middleLatLong);
                 bounds = marker._layers[marker._leaflet_id-1].getBounds();
                 break;
-              case 3:
+              case 'MultiPolygon':
                 var marker = L.geoJson(data, {
                   style: myStyleDistPoly
                 }).addTo(map);
@@ -372,7 +375,13 @@
                 
                 break;
               default:
-                // code
+                var marker = L.geoJson(data, {
+                  style: myStyleDistPoly
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                bounds = marker._layers[marker._leaflet_id-1].getBounds();
+                
+                break;
             }
             // this will invalidate the size of the map to make it fit in the modal
             $('#myModal').on('shown.bs.modal', function(){
@@ -402,9 +411,95 @@
               maxZoom: 11
             });
           }
-          function changePage () {
-            
-          }
+          // function changePage(move) {
+          //   var type = null;
+          //   var shape = null;
+          //   var data = null;
+          //   var count = 0;
+          //   var marker = null;
+          //   $("#tableItems").html('')
+          //   if (currRecords.barriers != null && currRecords.barriers.features != null) {
+          //     type = 'Barrier';
+          //     shape = 'Line';
+          //     this.data = currRecords.barriers.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.distLines != null && currRecords.distLines.features != null) {
+          //     type = 'Disturbance';
+          //     shape = 'Line';
+          //     this.data = currRecords.distLines.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.distPoints != null && currRecords.distPoints.features != null) {
+          //     type = 'Disturbance';
+          //     shape = 'Point';
+          //     this.data = currRecords.distPoints.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.distPolys != null && currRecords.distPolys.features != null) {
+          //     type = 'Disturbance';
+          //     shape = 'Polygon';
+          //     this.data = currRecords.distPolys.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.restoLines != null && currRecords.restoLines.features != null) {
+          //     type = 'Restoration';
+          //     shape = 'Line';
+          //     this.data = currRecords.restoLines.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.restoPoints != null && currRecords.restoPoints.features != null) {
+          //     type = 'Restoration';
+          //     shape = 'Point';
+          //     this.data = currRecords.restoPoints.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.restoPolys != null && currRecords.restoPolys.features != null) {
+          //     type = 'Restoration';
+          //     shape = 'Polygon';
+          //     this.data = currRecords.restoPolys.features;
+          //     marker = 0;
+          //   }
+          //   if(move == 'left') {
+          //     for (var ii = pageNumber*10; ii < (pageNumber+1)*10 && ii < currRecords.overallCount; ii++) {
+          //       $("#tableItems").append("<tr><td>"+ this.data[ii].properties.gid 
+          //                   + "</td><td>"+getAgency(this.data[ii].properties.agency)
+          //                   + "</td><td>"+type
+          //                   + "</td><td>"+shape
+          //                   + "</td><td><a id='tData"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+          //                   + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+          //                   + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+          //                   + "</button></a>"
+          //                   + "</td></tr>");
+          //         var barrID = "#tData" + count;
+          //         count++;
+          //         $(barrID).click(function(){
+          //             var elem = document.getElementById("tableMap");
+          //             elem.style.display = ""; 
+          //             console.log('sdfdsfsd')
+          //             console.log(this.data[ii]);
+          //             populateModal(this.data[ii], "Barrier");
+          //         });
+          //     }
+          //   }
+          // }
+          
+          $('#pageLeft').click(function(){
+              // console.log(currRecords)
+              $("#tableItems").html('')
+              if (pageNumber != 0)
+                pageNumber--;
+              writeTables(currRecords);
+          });
+          $('#pageRight').click(function(){
+              // console.log(currRecords)
+              $("#tableItems").html('')
+              if ((pageNumber+1)*10 < currRecords.overallCount)
+                pageNumber++;
+              writeTables(currRecords);
+          });
+                  
+                  
           function writeTables(defs) {
             console.log(defs);
               //var count = document.getElementById('reviewItems');
@@ -416,8 +511,8 @@
               if (defs.barriers != null && defs.barriers.features != null)
                 defs.barriers.features.forEach(function(features) {
                   count++;
-                    if(count > 10)
-                      return;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "barriers";
                   var agen = getAgency(features.properties.agency);
                   // table.fnAddData( [
@@ -432,7 +527,8 @@
                   
                   $("#tableItems").append("<tr><td>"+ features.properties.gid 
                             + "</td><td>"+agen
-                            + "</td><td colspan='2'> Barriers"
+                            + "</td><td> Barrier"
+                            + "</td><td> Line"
                             + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
@@ -443,7 +539,7 @@
                   $(barrID).click(function(){
                       var elem = document.getElementById("tableMap");
                       elem.style.display = ""; 
-                      populateModal(features, "Barrier", 2);
+                      populateModal(features, "Barrier");
                   });
                 });
               count = 0;
@@ -451,13 +547,15 @@
               if (defs.distLines != null && defs.distLines.features != null)
                 defs.distLines.features.forEach(function(features) {
                   count++;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "distLines";
                   var agen = getAgency(features.properties.agency);
                   // table.fnAddData( [
                   //     features.properties.gid,
                   //     agen,
                   //     "Disturbance",
-                  //     "Lines",
+                  //     "Line",
                   //     "<a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                   //           + "</button>"
@@ -466,18 +564,18 @@
                   $("#tableItems").append("<tr><td>"+ features.properties.gid 
                             + "</td><td>"+agen
                             + "</td><td> Disturbance"
-                            + "</td><td> Lines"
-                            + "</td><td><a id='dLine"+ count +"' href='javascript:populateModal("+features+",Disturbance Line,2);'>"
+                            + "</td><td> Line"
+                            + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dLine" + count;
                     
-                  // $(barrID).click(function(){
-                  //     console.log("button click")
-                  //     populateModal(features, "Disturbance Line", 2);
-                  // });
+                  $(barrID).click(function(){
+                      console.log("button click")
+                      populateModal(features, "Disturbance Line");
+                  });
                       
                 });
               count = 0;
@@ -485,6 +583,8 @@
               if (defs.distPoints != null && defs.distPoints.features != null)
                 defs.distPoints.features.forEach(function(features) {
                   count++;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "distPoints";
                   var agen = getAgency(features.properties.agency);
                   
@@ -492,7 +592,7 @@
                   //     features.properties.gid,
                   //     agen,
                   //     "Disturbance",
-                  //     "Points",
+                  //     "Point",
                   //     "<a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                   //           + "</button>"
@@ -501,7 +601,7 @@
                   $("#tableItems").append("<tr><td>"+ features.properties.gid 
                             + "</td><td>"+agen
                             + "</td><td> Disturbance"
-                            + "</td><td> Points"
+                            + "</td><td> Point"
                             + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
@@ -510,7 +610,7 @@
                   var barrID = "#dPoint" + count;
                     
                   $(barrID).click(function(){
-                      populateModal(features, "Disturbance Point",1);
+                      populateModal(features, "Disturbance Point");
                   });
                       
                 });
@@ -519,6 +619,8 @@
               if (defs.distPolys != null && defs.distPolys.features != null)
                 defs.distPolys.features.forEach(function(features) {
                   count++;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "distPolys";
                   var agen = getAgency(features.properties.agency);
                   
@@ -544,7 +646,7 @@
                   var barrID = "#dPoly" + count;
                     
                   $(barrID).click(function(){
-                      populateModal(features, "Disturbance Polygon",3);
+                      populateModal(features, "Disturbance Polygon");
                   });
                       
                 });
@@ -553,13 +655,15 @@
               if (defs.restoLines != null && defs.restoLines.features != null)
                 defs.restoLines.features.forEach(function(features) {
                   count++;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "restoLines";
                   var agen = getAgency(features.properties.agency);
                   // table.fnAddData( [
                   //     features.properties.gid,
                   //     agen,
                   //     "Restoration",
-                  //     "Lines",
+                  //     "Line",
                   //     "<a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                   //           + "</button>"
@@ -569,7 +673,7 @@
                   $("#tableItems").append("<tr><td>"+ features.properties.gid 
                             + "</td><td>"+agen
                             + "</td><td> Restoration"
-                            + "</td><td> Lines"
+                            + "</td><td> Line"
                             + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
@@ -578,7 +682,7 @@
                   var barrID = "#rLine" + count;
                     
                   $(barrID).click(function(){
-                      populateModal(features, "Restoration Line",2);
+                      populateModal(features, "Restoration Line");
                   });
                       
                 });
@@ -587,6 +691,8 @@
               if (defs.restoPoints != null && defs.restoPoints.features != null)
                 defs.restoPoints.features.forEach(function(features) {
                   count++;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "restoPoints";
                   var agen = getAgency(features.properties.agency);
                   // console.log(table.row())
@@ -612,7 +718,7 @@
                   var barrID = "#rPoint" + count;
                     
                   $(barrID).click(function(){
-                      populateModal(features, "Restoration Point",1);
+                      populateModal(features, "Restoration Point");
                   });
                       
                 });
@@ -621,6 +727,8 @@
               if (defs.restoPolys != null && defs.restoPolys.features != null)
                 defs.restoPolys.features.forEach(function(features) {
                   count++;
+                  if (count > (pageNumber+1)*10 || count < pageNumber*10)
+                    return;
                   features.dataType = "restoPolys";
                   var agen = getAgency(features.properties.agency);
                   // table.fnAddData( [
@@ -645,7 +753,7 @@
                   var barrID = "#rPoly" + count;
                     
                   $(barrID).click(function(){
-                      populateModal(features, "Restoration Polygon",3);
+                      populateModal(features, "Restoration Polygon");
                   });
                       
                 });
@@ -672,6 +780,7 @@
           
           
           document.getElementById("barrierFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#barrierFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#barrierFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#barrierFilter').addClass( 'active' );
@@ -685,6 +794,7 @@
             });
           });
           document.getElementById("restoPointsFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#restoPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoPointsFilter').addClass( 'active' );
@@ -698,6 +808,7 @@
             });
           });
           document.getElementById("restoLinesFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#restoLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoLinesFilter').addClass( 'active' );
@@ -711,6 +822,7 @@
             });
           });
           document.getElementById("restoPolysFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#restoPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoPolysFilter').addClass( 'active' );
@@ -724,6 +836,7 @@
             });
           });
           document.getElementById("distPointsFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#distPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distPointsFilter').addClass( 'active' );
@@ -737,6 +850,7 @@
             });
           });
           document.getElementById("distLinesFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#distLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distLinesFilter').addClass( 'active' );
@@ -750,6 +864,7 @@
             });
           });
           document.getElementById("distPolysFilter").addEventListener("click", function(){
+            pageNumber = 0;
             $('#distPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distPolysFilter').addClass( 'active' );
