@@ -14,6 +14,7 @@
         <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
         <script src="../public/scripts/asyncGetSubmittedV2.js"> </script>
         <script src="../public/scripts/featureStyles.js"> </script>
+        
         <style>
         html, body {
             width: 100%;
@@ -44,7 +45,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
         
         .container {
             position: relative;
@@ -102,6 +102,48 @@
         .buttons {
             text-align: center;
         }
+        
+        li:active { 
+            background-color: #337ab7;
+            color:white;
+        }
+        li:hover {
+          background-color: #337ab7;
+          color:white;
+        }
+        #side_tab_filters {
+          cursor:pointer;
+        }
+        
+        .loader {
+          margin-left: 50%;
+          margin-top: 10%;
+          border: 16px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 16px solid #3498db;
+          width: 120px;
+          height: 120px;
+          -webkit-animation: spin 2s linear infinite; /* Safari */
+          animation: spin 2s linear infinite;
+        }
+                
+                
+        /* Safari */
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        .row {
+          margin-left: 30% !important;
+        }
+        
+        
         </style>
     </head>
     <body>
@@ -163,7 +205,6 @@
                   </script></a>
                   <div class="navbar-brand">SNAP Restoration</div>
               </div>
-                
                 <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
                 <ul style="border-left: 1px solid #000000;" class="nav navbar-nav">
                   <li><a href="/">Map View</a></li>
@@ -177,22 +218,91 @@
             </div>
           </nav>
         </div>
-        <div style="float:left;" id="side_tab">
+        <div style="float:left;">
+          <div id="side_tab">
             <ul class="nav nav-pills nav-stacked">
               <li role="presentation" class="active"><a href="#">Submissions</a></li>
               <li role="presentation"><a href="Edit.html">Edit Records</a></li>
             </ul>
+          </div>
+          <hr>
+          <h4 style="text-align: center;">Filters</h4>
+          <div id="side_tab_filters">
+            <ul class="list-group">
+              <li id="barrierFilter" class="list-group-item">
+                <span id="barrierFilterCount" class="badge"></span>
+                Barriers
+              </li>
+              <li id="restoPointsFilter" class="list-group-item">
+                <span id="restoPointsFilterCount" class="badge"></span>
+                Restoration Points
+              </li>
+              <li id="restoLinesFilter" class="list-group-item">
+                <span id="restoLinesFilterCount" class="badge"></span>
+                Restoration Lines
+              </li>
+              <li id="restoPolysFilter" class="list-group-item">
+                <span id="restoPolysFilterCount" class="badge"></span>
+                Restoration Polygons
+              </li>
+              <li id="distPointsFilter" class="list-group-item">
+                <span id="distPointsFilterCount" class="badge"></span>
+                Disturbance Points
+              </li>
+              <li id="distLinesFilter" class="list-group-item">
+                <span id="distLinesFilterCount" class="badge"></span>
+                Disturbance Lines
+              </li>
+              <li id="distPolysFilter" class="list-group-item">
+                <span id="distPolysFilterCount" class="badge"></span>
+                Disturbance Polygons
+              </li>
+            </ul>
+          </div>
         </div>
-        <div id = "Items">
-          <div id="reviewItems"></div>
-          <table id="tableID" class="center">
-            <div id="tableItems"></div>
-          </table>
-        </div>
+        
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="input-group">	
+              <input type="number" id="searchID"class="form-control" placeholder="Search by GID...">	
+              <span class="input-group-btn">	
+                <button id="searchButton" class="btn btn-default" type="button">Search</button>	
+              </span>	
+            </div><!-- /input-group -->
+            <br>
+            <div id = "Items">
+              <div id="reviewItems"></div>
+              
+                  <div class="loading"></div>
+              <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
+                <thead><tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr></thead>
+                <tbody id="tableItems">
+                  </tbody>
+              </table>
+              <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+              <span id="pageNumber" style="font-size: 1.5em;">1</span>
+              <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+            </div>
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      
         <script>
+          // var table = $("#tableID").dataTable({
+          //         "bProcessing": true,
+          //         "bDeferRender": true,
+          //         "processing": true,
+          //         "iDisplayLength": 10,
+          //         "aLengthMenu": [[10, 25, 50, 100,  -1], [10, 25, 50, 100, "All"]]
+          //       });
+          
+          // var datatable = new DataTable(document.getElementById('tableID'), {
+          //     pageSize: 15,
+          // });
+          var currRecords = null;
           mapMarkers = [];
           var currentData = [];
           var invalidated = false;
+          var pageNumber = 0;
           function getAgency(agency){
             switch (agency) {
                 case 0:
@@ -212,7 +322,7 @@
                   break;
             }
           }
-          function populateModal(data, type, draw) {
+          function populateModal(data, type) {
             var style;
             var bounds = null;
             this.currentData = data;
@@ -224,8 +334,8 @@
                   this.map.removeLayer(this.mapMarkers[i]);
               }
             console.log(data);
-            switch (draw) {
-              case 1:
+            switch (data.geometry.type) {
+              case 'Point':
                 style = myStylePoints(data);
                 console.log(style);
                 var marker = L.circle([data.geometry.coordinates[1],data.geometry.coordinates[0]], {
@@ -242,18 +352,24 @@
                 
                 if (data.geometry != null)
                   if (data.geometry.coordinates.length >1)
+                    //map.panTo(marker._layers[marker._leaflet_id-1].getLatLng())
+                    //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
                     bounds = marker.getBounds();
                 break;
-              case 2:
+              case 'MultiLineString':
                 var marker = L.geoJson(data, {
                   style: myStyleLines,
                 }).addTo(map);
                 this.mapMarkers.push(marker);
                 
                 console.log(marker);
+                //console.log(marker._layers[marker._leaflet_id-1].getLatLngs());
+                //var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
+                //var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
+                //map.panTo(middleLatLong);
                 bounds = marker._layers[marker._leaflet_id-1].getBounds();
                 break;
-              case 3:
+              case 'MultiPolygon':
                 var marker = L.geoJson(data, {
                   style: myStyleDistPoly
                 }).addTo(map);
@@ -262,7 +378,13 @@
                 
                 break;
               default:
-                // code
+                var marker = L.geoJson(data, {
+                  style: myStyleDistPoly
+                }).addTo(map);
+                this.mapMarkers.push(marker);
+                bounds = marker._layers[marker._leaflet_id-1].getBounds();
+                
+                break;
             }
             // this will invalidate the size of the map to make it fit in the modal
             $('#myModal').on('shown.bs.modal', function(){
@@ -292,112 +414,534 @@
               maxZoom: 11
             });
           }
+          // function changePage(move) {
+          //   var type = null;
+          //   var shape = null;
+          //   var data = null;
+          //   var count = 0;
+          //   var marker = null;
+          //   $("#tableItems").html('')
+          //   if (currRecords.barriers != null && currRecords.barriers.features != null) {
+          //     type = 'Barrier';
+          //     shape = 'Line';
+          //     this.data = currRecords.barriers.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.distLines != null && currRecords.distLines.features != null) {
+          //     type = 'Disturbance';
+          //     shape = 'Line';
+          //     this.data = currRecords.distLines.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.distPoints != null && currRecords.distPoints.features != null) {
+          //     type = 'Disturbance';
+          //     shape = 'Point';
+          //     this.data = currRecords.distPoints.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.distPolys != null && currRecords.distPolys.features != null) {
+          //     type = 'Disturbance';
+          //     shape = 'Polygon';
+          //     this.data = currRecords.distPolys.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.restoLines != null && currRecords.restoLines.features != null) {
+          //     type = 'Restoration';
+          //     shape = 'Line';
+          //     this.data = currRecords.restoLines.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.restoPoints != null && currRecords.restoPoints.features != null) {
+          //     type = 'Restoration';
+          //     shape = 'Point';
+          //     this.data = currRecords.restoPoints.features;
+          //     marker = 0;
+          //   }
+          //   else if (currRecords.restoPolys != null && currRecords.restoPolys.features != null) {
+          //     type = 'Restoration';
+          //     shape = 'Polygon';
+          //     this.data = currRecords.restoPolys.features;
+          //     marker = 0;
+          //   }
+          //   if(move == 'left') {
+          //     for (var ii = pageNumber*10; ii < (pageNumber+1)*10 && ii < currRecords.overallCount; ii++) {
+          //       $("#tableItems").append("<tr><td>"+ this.data[ii].properties.gid 
+          //                   + "</td><td>"+getAgency(this.data[ii].properties.agency)
+          //                   + "</td><td>"+type
+          //                   + "</td><td>"+shape
+          //                   + "</td><td><a id='tData"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+          //                   + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+          //                   + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+          //                   + "</button></a>"
+          //                   + "</td></tr>");
+          //         var barrID = "#tData" + count;
+          //         count++;
+          //         $(barrID).click(function(){
+          //             var elem = document.getElementById("tableMap");
+          //             elem.style.display = ""; 
+          //             console.log('sdfdsfsd')
+          //             console.log(this.data[ii]);
+          //             populateModal(this.data[ii], "Barrier");
+          //         });
+          //     }
+          //   }
+          // }
           
-          getSubmissions().then(function (defs) {
-            //promise = (defs);
-            console.log(defs);
-            var count = document.getElementById('reviewItems');
-            var item = document.getElementById('tableItems');
-            count.innerHTML = "There are " + defs.overallCount + " submissions to add";
-            $("#tableItems").append("<tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr>");
-            var count = 0;
-          
-            if (defs.barriers.features != null) defs.barriers.features.forEach(function (features) {
-              count++;
-              features.dataType = "barriers";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td colspan='2'> Barriers" + "</td><td><a id='barr" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#barr" + count;
-          
-              $(barrID).click(function () {
-                var elem = document.getElementById("tableMap");
-                elem.style.display = "";
-                populateModal(features, "Barrier", 2);
-              });
-            });
-            count = 0;
-          
-            if (defs.distLines.features != null) defs.distLines.features.forEach(function (features) {
-              count++;
-              features.dataType = "distLines";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Lines" + "</td><td><a id='dLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#dLine" + count;
-          
-              $(barrID).click(function () {
-                populateModal(features, "Disturbance Line", 2);
-              });
-            });
-            count = 0;
-          
-            if (defs.distPoints.features != null) defs.distPoints.features.forEach(function (features) {
-              count++;
-              features.dataType = "distPoints";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Points" + "</td><td><a id='dPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#dPoint" + count;
-          
-              $(barrID).click(function () {
-                populateModal(features, "Disturbance Point", 1);
-              });
-            });
-            count = 0;
-          
-            if (defs.distPolys.features != null) defs.distPolys.features.forEach(function (features) {
-              count++;
-              features.dataType = "distPolys";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Disturbance" + "</td><td> Polygon" + "</td><td><a id='dPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#dPoly" + count;
-          
-              $(barrID).click(function () {
-                populateModal(features, "Disturbance Polygon", 3);
-              });
-            });
-            count = 0;
-          
-            if (defs.restoLines.features != null) defs.restoLines.features.forEach(function (features) {
-              count++;
-              features.dataType = "restoLines";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Lines" + "</td><td><a id='rLine" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#rLine" + count;
-          
-              $(barrID).click(function () {
-                populateModal(features, "Restoration Line", 2);
-              });
-            });
-            count = 0;
-          
-            if (defs.restoPoints.features != null) defs.restoPoints.features.forEach(function (features) {
-              count++;
-              features.dataType = "restoPoints";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Point" + "</td><td><a id='rPoint" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#rPoint" + count;
-          
-              $(barrID).click(function () {
-                populateModal(features, "Restoration Point", 1);
-              });
-            });
-            count = 0;
-          
-            if (defs.restoPolys.features != null) defs.restoPolys.features.forEach(function (features) {
-              count++;
-              features.dataType = "restoPolys";
-              var agen = getAgency(features.properties.agency);
-              $("#tableItems").append("<tr><td>" + features.properties.gid + "</td><td>" + agen + "</td><td> Restoration" + "</td><td> Polygon" + "</td><td><a id='rPoly" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" + "<button type=\"button\" class=\"btn btn-default btn-lg\">" + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review" + "</button></a>" + "</td></tr>");
-              var barrID = "#rPoly" + count;
-          
-              $(barrID).click(function () {
-                populateModal(features, "Restoration Polygon", 3);
-              });
-            });
+          $('#pageLeft').click(function(){
+              // console.log(currRecords)
+              $("#tableItems").html('')
+              if (pageNumber != 0)
+                pageNumber--;
+              writeTables(currRecords);
+          });
+          $('#pageRight').click(function(){
+              // console.log(currRecords)
+              $("#tableItems").html('')
+              if ((pageNumber+1)*10 < currRecords.overallCount)
+                pageNumber++;
+              writeTables(currRecords);
+          });
+                  
+          function writeTables(defs) {
+            //console.log(defs);
+              //var count = document.getElementById('reviewItems');
+              var item = document.getElementById('tableItems');
+              //count.innerHTML = "There are " + defs.overallCount + " overall markers";
+              var count = 0;
+              // table.fnClearTable();
+              $("#pageNumber").html(pageNumber+1)
+              $("#tableItems").html('<tr><td colspan=5>No more submissions for this filter</td></tr>');
+              if (defs.barriers != null && defs.barriers.features != null) {
+                $("#tableItems").html('');
+                defs.barriers.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "barriers";
+                  var agen = getAgency(features.properties.agency);
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Barrier"
+                            + "</td><td> Line"
+                            + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#barr" + count;
+                  
+                  $(barrID).click(function(){
+                      var elem = document.getElementById("tableMap");
+                      elem.style.display = ""; 
+                      populateModal(features, "Barrier");
+                  });
+                });
+              }
+              count = 0;
+              
+              if (defs.distLines != null && defs.distLines.features != null) {
+                $("#tableItems").html('');
+                defs.distLines.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "distLines";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Line"
+                            + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#dLine" + count;
+                    
+                  $(barrID).click(function(){
+                      console.log("button click")
+                      populateModal(features, "Disturbance Line");
+                  });
+                      
+                });
+              }
+              count = 0;
+              
+              if (defs.distPoints != null && defs.distPoints.features != null) {
+                $("#tableItems").html('');
+                defs.distPoints.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "distPoints";
+                  var agen = getAgency(features.properties.agency);
+                  
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Point"
+                            + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#dPoint" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Disturbance Point");
+                  });
+                      
+                });
+              }
+              count = 0;
+              
+              if (defs.distPolys != null && defs.distPolys.features != null) {
+                $("#tableItems").html('');
+                defs.distPolys.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "distPolys";
+                  var agen = getAgency(features.properties.agency);
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Polygon"
+                            + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#dPoly" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Disturbance Polygon");
+                  });
+                      
+                });
+              }
+              count = 0;
+              
+              if (defs.restoLines != null && defs.restoLines.features != null) {
+                $("#tableItems").html('');
+                defs.restoLines.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "restoLines";
+                  var agen = getAgency(features.properties.agency);
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Line"
+                            + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#rLine" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Restoration Line");
+                  });
+                      
+                });
+              }
+              count = 0;
+              
+              if (defs.restoPoints != null && defs.restoPoints.features != null) {
+                $("#tableItems").html('');
+                defs.restoPoints.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "restoPoints";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Point"
+                            + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#rPoint" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Restoration Point");
+                  });
+                      
+                });
+              }
+              count = 0;
+              
+              if (defs.restoPolys != null && defs.restoPolys.features != null) {
+                $("#tableItems").html('');
+                defs.restoPolys.features.forEach(function(features) {
+                  count++;
+                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
+                    return;
+                  features.dataType = "restoPolys";
+                  var agen = getAgency(features.properties.agency);
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Polygon"
+                            + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
+                  var barrID = "#rPoly" + count;
+                    
+                  $(barrID).click(function(){
+                      populateModal(features, "Restoration Polygon");
+                  });
+                      
+                });
+              }
             //Inserts table back into div
+            
             var items = document.getElementById("tableItems");
             document.getElementById("tableID").appendChild(items);
-            document.getElementById("tableID").style.textAlign = "center";
+            document.getElementById("tableID").style.textAlign = "center"; 
+            
+              
+            
+          }
+          
+          
+          
+          $('#barrierFilter').addClass( 'active' );
+          $("#tableItems").html('');
+          getSubmissions('BarrierSubs', 'barrierSubGeoJSON').then(function(defs){
+            currRecords = defs;
+            writeTables(defs);
           });
+          getSubmissions('AllSubs', '').then(function(defs){
+            console.log(defs)
+            if (defs.barriers.features != null)
+              $("#barrierFilterCount").html(defs.barriers.features.length);
+            else
+              $("#barrierFilterCount").html(0);
+              
+            if (defs.restoPoints.features != null)
+              $("#restoPointsFilterCount").html(defs.restoPoints.features.length);
+            else
+              $("#restoPointsFilterCount").html(0);
+              
+            if (defs.restoLines.features != null)
+              $("#restoLinesFilterCount").html(defs.restoLines.features.length);
+            else
+              $("#restoLinesFilterCount").html(0);
+              
+            if (defs.restoPolys.features != null)
+              $("#restoPolysFilterCount").html(defs.restoPolys.features.length);
+            else
+              $("#restoPolysFilterCount").html(0);
+              
+            if (defs.distPoints.features != null)
+              $("#distPointsFilterCount").html(defs.distPoints.features.length);
+            else
+              $("#distPointsFilterCount").html(0);
+              
+            if (defs.distLines.features != null)
+              $("#distLinesFilterCount").html(defs.distLines.features.length);
+            else
+              $("#distLinesFilterCount").html(0);
+              
+            if (defs.distPolys.features != null)
+              $("#distPolysFilterCount").html(defs.distPolys.features.length);
+            else
+              $("#distPolysFilterCount").html(0);
+          });
+          // document.getElementById("allFilter").addEventListener("click", function(){
+          //   pageNumber = 0;
+          //   $('#allFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
+          //   $('#allFilter').parent().find( 'li.active' ).removeClass( 'active' );
+          //   $('#allFilter').addClass( 'active' );
+          //   // table.fnClearTable();
+          //   $("#tableItems").html('<div class="loader"></div>');
+          //   getSubmissions('AllSubs', '').then(function(defs){
+          //       $("#allFilterCount").html(defs.overallCount);
+          //       currRecords = defs;
+          //       $("#tableItems").html('');
+          //       writeTables(defs);
+          //   });
+          // });
+          document.getElementById("barrierFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#barrierFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#barrierFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('BarrierSubs', 'barrierSubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("restoPointsFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#restoPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#restoPointsFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('RestoPointSubs', 'restoPointSubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("restoLinesFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#restoLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#restoLinesFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('RestoLineSubs', 'restoLineSubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("restoPolysFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#restoPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#restoPolysFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('RestoPolygonSubs', 'restoPolySubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("distPointsFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#distPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#distPointsFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('DistPointSubs', 'distPointSubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("distLinesFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#distLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#distLinesFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('DistLineSubs', 'distLineSubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          document.getElementById("distPolysFilter").addEventListener("click", function(){
+            pageNumber = 0;
+            $('#distPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
+            $('#distPolysFilter').addClass( 'active' );
+            // table.fnClearTable();
+            $("#tableItems").html('<div class="loader"></div>');
+            getSubmissions('DistPolygonSubs', 'distPolySubGeoJSON').then(function(defs){
+                currRecords = defs;
+                $("#tableItems").html('');
+                writeTables(defs);
+            });
+          });
+          
+          document.getElementById("searchButton").addEventListener("click", function(){
+            console.log($("#searchID").val());
+            if ($("#searchID").val() == ''){
+              $("#tableItems").html('');
+              writeTables(currRecords);
+              return;
+            }
+            $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
+            if (currRecords.barriers.features != null) {
+                currRecords.barriers.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {barriers: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPoints.features != null) {
+                currRecords.distPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPoints: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distLines.features != null) {
+                currRecords.distLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distLines: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPolys.features != null) {
+                currRecords.distPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPolys: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPoints.features != null) {
+                currRecords.restoPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPoints: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoLines.features != null) {
+                currRecords.restoLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoLines: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPolys.features != null) {
+                currRecords.restoPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPolys: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            // currRecords; 
+            // writeTables(defs)
+          });
+          
+          
           /*setTimeout(function(){ 
             console.log(promise); 
             var elem = document.getElementById('para');
@@ -451,7 +995,7 @@
               }).addTo(map);
               
               function editForm(){
-                //console.log(this.currentData);
+                console.log("edit data function");
                 $("#editInfo").load("../public/scripts/editForm.html");
                 
                 // Waits for form to be loaded before populating Data
@@ -459,6 +1003,9 @@
                   $.each(this.currentData.properties, function(name, val){
                     var $el = $('[name="'+name+'"]'),
                         type = $el.attr('type');
+                    
+                    //console.log("something is happenning = " + name + " -- " + val);
+                    //console.log(type);
                     switch(type){
                         case 'checkbox':
                             $el.attr('checked', 'checked');
@@ -471,6 +1018,7 @@
                               $el.val(val);
                     }
                   }); 
+                  console.log("data check -- " + this.currentData.dataType);
                     
                     $('#restoPointForm').toggle(
                       this.currentData.dataType === 'restoPoints'
@@ -494,7 +1042,7 @@
                       this.currentData.dataType === 'distLines'
                     );
                   //this sets the type of edit so the correct record is editted
-                  type = 'sub';
+                  type = 'reg';
                   
                 }, 400);
               }
@@ -545,6 +1093,7 @@
                 div.style.display ="";
                 editForm();
                 document.getElementById("buttons").style.display = "none"; 
+                console.log("edit button click");
               }); 
               
               document.getElementById("confirmButton").addEventListener('click',function () {
@@ -555,9 +1104,10 @@
                 confirmData();
                 document.getElementById("buttons").style.display = "none"; 
               }); 
-              
+            
             </script>
         
 
+    </body>
     </body>
 </html>
