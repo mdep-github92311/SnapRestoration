@@ -16,7 +16,7 @@ var createLayer = function () {
             _context.next = 6;
             return L.geoJson(data, {
               pane: 'Lines',
-              style: myStyleLines,
+              style: myBarrierLines,
               onEachFeature: onEachBarrier
             }).addTo(map);
 
@@ -50,7 +50,7 @@ var createLayer = function () {
             _context.next = 18;
             return L.geoJson(data, {
               pane: 'Points',
-              style: myStylePoints,
+              style: myStyleDistPoints,
               // changing the default point makers to circle markers
               pointToLayer: pointToLayer,
               onEachFeature: onEachDistPoint
@@ -177,7 +177,7 @@ var createLayer = function () {
 
           case 60:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 63;
             return L.geoJson(data, {
@@ -197,7 +197,7 @@ var createLayer = function () {
 
           case 67:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 70;
             return L.geoJson(data, {
@@ -217,7 +217,7 @@ var createLayer = function () {
 
           case 74:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 77;
             return L.geoJson(data, {
@@ -237,7 +237,7 @@ var createLayer = function () {
 
           case 81:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 84;
             return L.geoJson(data, {
@@ -257,7 +257,7 @@ var createLayer = function () {
 
           case 88:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 91;
             return L.geoJson(data, {
@@ -277,12 +277,13 @@ var createLayer = function () {
 
           case 95:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 98;
             return L.geoJson(data, {
               pane: 'Lines',
-              style: roadColor
+              style: roadColor,
+              interactive: false
             }).addTo(map);
 
           case 98:
@@ -297,7 +298,7 @@ var createLayer = function () {
           case 102:
             console.log(data);
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             console.log(data);
             _context.next = 107;
@@ -318,7 +319,7 @@ var createLayer = function () {
 
           case 111:
             if (data.type == null) {
-              data = fixCollection(data);
+              data = data;
             }
             _context.next = 114;
             return L.geoJson(data, {
@@ -475,6 +476,7 @@ var getLayers = function () {
             dbCache.roads.count(function (records) {
               if (records > 0) {
                 dbCache.roads.toArray(function (data) {
+                  console.log(data);
                   createLayer(data, 'Roads');
                   count += 15;
                 });

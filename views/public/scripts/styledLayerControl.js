@@ -304,14 +304,26 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
             input,
             checked = this._map.hasLayer(obj.layer),
             container;
-
-
+// <label class="switch">
+//   <input type="checkbox">
+//   <span class="slider round"></span>
+// </label>
+        var holder;
+        var table = document.createElement("table");
         if (obj.overlay) {
             input = document.createElement('input');
             input.type = 'checkbox';
-            input.className = 'leaflet-control-layers-selector';
             input.defaultChecked = checked;
-
+            
+            var slider = document.createElement('span');
+            slider.className = 'slider round';
+            
+            holder = document.createElement('label');
+            holder.className = "switch";
+            
+            holder.appendChild(input);
+            holder.appendChild(slider);
+            
             label.className = "menu-item-checkbox";
 
         } else {
@@ -326,10 +338,23 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
         L.DomEvent.on(input, 'click', this._onInputClick, this);
 
         var name = document.createElement('span');
-        name.innerHTML = ' ' + obj.name;
+        name.innerHTML = ' &nbsp;&nbsp;&nbsp;&nbsp;' + obj.name;
+        
+        
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+        td1.className = "layer-table-data";
+        td2.className = "layer-table-data";
+        table.style.border = 'none';
+        td1.style.paddingTop = '10px';
+        td1.appendChild(holder);
+        td2.appendChild(name);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        table.appendChild(tr);
 
-        label.appendChild(input);
-        label.appendChild(name);
+        label.appendChild(table);
 
         if (obj.layer.StyledLayerControl) {
 
@@ -362,6 +387,7 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
 
             groupContainer = document.createElement('div');
             groupContainer.id = 'leaflet-control-accordion-layers-' + obj.group.id;
+            groupContainer.className = 'leaflet-control-accordion';
 
             // verify if group is expanded
             var s_expanded = obj.group.expanded ? ' checked = "true" ' : '';
@@ -399,7 +425,7 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
             obj,
             inputs = this._form.getElementsByTagName('input'),
             inputsLen = inputs.length;
-
+        
         this._handlingClick = true;
 
         for (i = 0; i < inputsLen; i++) {

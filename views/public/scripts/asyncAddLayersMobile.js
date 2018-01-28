@@ -54,7 +54,7 @@ async function createLayer(data, layerName) {
       case 'Barrier':
         const barrier = await L.geoJson(data, {
           pane: 'Lines',
-          style: myStyleLines,
+          style: myBarrierLines,
           onEachFeature: onEachBarrier
         }).addTo(map);
 
@@ -78,7 +78,7 @@ async function createLayer(data, layerName) {
       case 'Disturbance Points':
         const distPoints = await L.geoJson(data, {
           pane: 'Points',
-          style: myStylePoints,
+          style: myStyleDistPoints,
           // changing the default point makers to circle markers
           pointToLayer: pointToLayer,
           onEachFeature: onEachDistPoint
@@ -171,7 +171,7 @@ async function createLayer(data, layerName) {
 
       case 'BLM':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const blmRegions = await L.geoJson(data, {
           pane: 'Regions',
@@ -186,7 +186,7 @@ async function createLayer(data, layerName) {
 
       case 'FS Regions':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const fsRegions = await L.geoJson(data, {
           pane: 'Regions',
@@ -201,7 +201,7 @@ async function createLayer(data, layerName) {
 
       case 'Nevada Counties':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const nvCounties = await L.geoJson(data, {
           pane: 'Bounds_County',
@@ -216,7 +216,7 @@ async function createLayer(data, layerName) {
 
       case 'MDI Boundary':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const mdiBound = await L.geoJson(data, {
           pane: 'Bounds_County',
@@ -231,7 +231,7 @@ async function createLayer(data, layerName) {
 
       case 'MDEP Boundary':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const mdepBound = await L.geoJson(data, {
           pane: 'Bounds_County',
@@ -246,11 +246,12 @@ async function createLayer(data, layerName) {
 
       case 'Roads':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const roads = await L.geoJson(data, {
           pane: 'Lines',
-          style: roadColor
+          style: roadColor,
+          interactive: false
         }).addTo(map);
         
 
@@ -262,7 +263,7 @@ async function createLayer(data, layerName) {
       case 'Snap Extent':
         console.log(data)
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         console.log(data)
         const snapExtent = await L.geoJson(data, {
@@ -278,7 +279,7 @@ async function createLayer(data, layerName) {
 
       case 'Soil Vulnerability':
         if(data.type == null) {
-          data = fixCollection(data);
+          data = data;
         }
         const soilVuln = await L.geoJson(data, {
           pane: 'Misc',
