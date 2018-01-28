@@ -267,6 +267,12 @@
         
         <div class="row">
           <div class="col-lg-6">
+            <div class="input-group">	
+              <input type="number" id="searchID"class="form-control" placeholder="Search by GID...">	
+              <span class="input-group-btn">	
+                <button id="searchButton" class="btn btn-default" type="button">Search</button>	
+              </span>	
+            </div><!-- /input-group -->
             <br>
             <div id = "Items">
               <div id="reviewItems"></div>
@@ -879,87 +885,87 @@
             });
           });
           
-          // document.getElementById("searchButton").addEventListener("click", function(){
-          //   console.log($("#searchID").val());
-          //   if ($("#searchID").val() == ''){
-          //     $("#tableItems").html('');
-          //     writeTables(currRecords);
-          //     return;
-          //   }
-          //   $("#tableItems").html('No records match that ID');
-          //   if (currRecords.barriers.features != null) {
-          //       currRecords.barriers.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {barriers: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.distPoints.features != null) {
-          //       currRecords.distPoints.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {distPoints: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.distLines.features != null) {
-          //       currRecords.distLines.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {distLines: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.distPolys.features != null) {
-          //       currRecords.distPolys.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {distPolys: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.restoPoints.features != null) {
-          //       currRecords.restoPoints.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {restoPoints: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.restoLines.features != null) {
-          //       currRecords.restoLines.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {restoLines: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.restoPolys.features != null) {
-          //       currRecords.restoPolys.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {restoPolys: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   // currRecords; 
-          //   // writeTables(defs)
-          // });
+          document.getElementById("searchButton").addEventListener("click", function(){
+            console.log($("#searchID").val());
+            if ($("#searchID").val() == ''){
+              $("#tableItems").html('');
+              writeTables(currRecords);
+              return;
+            }
+            $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
+            if (currRecords.barriers.features != null) {
+                currRecords.barriers.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {barriers: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPoints.features != null) {
+                currRecords.distPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPoints: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distLines.features != null) {
+                currRecords.distLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distLines: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPolys.features != null) {
+                currRecords.distPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPolys: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPoints.features != null) {
+                currRecords.restoPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPoints: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoLines.features != null) {
+                currRecords.restoLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoLines: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPolys.features != null) {
+                currRecords.restoPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPolys: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            // currRecords; 
+            // writeTables(defs)
+          });
           
           
           /*setTimeout(function(){ 
