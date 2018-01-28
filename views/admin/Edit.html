@@ -17,8 +17,7 @@
         
         
 	      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script> 
+        <script type="text/javascript" src="../public/scripts/datatable.min.js"></script>
  
         <style>
         html, body {
@@ -271,6 +270,8 @@
             <br>
             <div id = "Items">
               <div id="reviewItems"></div>
+              
+                  <div class="loading"></div>
               <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
                 <thead><tr><th>GID</th><th>Agency</th><th>Type</th><th>Shape</th><th>Action</th></tr></thead>
                 <tbody id="tableItems">
@@ -288,6 +289,10 @@
           //         "iDisplayLength": 10,
           //         "aLengthMenu": [[10, 25, 50, 100,  -1], [10, 25, 50, 100, "All"]]
           //       });
+          
+          // var datatable = new DataTable(document.getElementById('tableID'), {
+          //     pageSize: 15,
+          // });
           var currRecords = null;
           mapMarkers = [];
           var currentData = [];
@@ -397,6 +402,9 @@
               maxZoom: 11
             });
           }
+          function changePage () {
+            
+          }
           function writeTables(defs) {
             console.log(defs);
               //var count = document.getElementById('reviewItems');
@@ -435,7 +443,8 @@
                       elem.style.display = ""; 
                       populateModal(features, "Barrier", 2);
                   });
-                    
+                    if(count == 10)
+                      return;
                 });
               count = 0;
               
@@ -458,17 +467,17 @@
                             + "</td><td>"+agen
                             + "</td><td> Disturbance"
                             + "</td><td> Lines"
-                            + "</td><td><a id='dLine"+ count +"' href='#'>"
+                            + "</td><td><a id='dLine"+ count +"' href='javascript:populateModal("+features+",Disturbance Line,2);'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dLine" + count;
                     
-                  $(barrID).click(function(){
-                      console.log("button click")
-                      //populateModal(features, "Disturbance Line", 2);
-                  });
+                  // $(barrID).click(function(){
+                  //     console.log("button click")
+                  //     populateModal(features, "Disturbance Line", 2);
+                  // });
                       
                 });
               count = 0;
@@ -649,6 +658,9 @@
               
             
           }
+          
+          
+          
           $('#barrierFilter').addClass( 'active' );
           $("#tableItems").html('');
           getData('Barriers', 'barrierGeoJSON').then(function(defs){
@@ -656,6 +668,8 @@
             currRecords = defs;
             writeTables(defs);
           });
+          
+          
           
           document.getElementById("barrierFilter").addEventListener("click", function(){
             $('#barrierFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
