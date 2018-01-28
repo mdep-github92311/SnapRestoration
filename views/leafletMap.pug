@@ -212,6 +212,8 @@ html
       .drawControl2 {
         width: 100%;
         color: black;
+        height: 50px;
+        margin-bottom: 10px;
       }
       
       #editShapeB {
@@ -564,6 +566,7 @@ html
                   button.innerHTML = 'Insert Value';
                   button.style.width = '100px';
                   button.style.zIndex = 2000;
+                  button.className += " btn btn-default"
                   return button;
               },
               onRemove: function(map) {
@@ -577,7 +580,7 @@ html
                 return button;
               },
               setClass: function(newClass) {
-                button.className = newClass + ' leaflet-control';
+                button.className = newClass + ' leaflet-control btn btn-default';
               }
           });
           
@@ -587,12 +590,12 @@ html
           var undoButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           undoButton1.setVal('Undo Last', 'undoDraw');
           var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          compButton1.setVal('Finish Drawing', 'finishDraw');
+          compButton1.setVal('Finish', 'finishDraw');
           var cancelButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           cancelButton1.setVal('Undo Draw', 'cancelDraw');
           cancelButton1.setClass('drawingEditController');
           var saveButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          saveButton1.setVal('Save Redraw', 'saveDraw');
+          saveButton1.setVal('Finish', 'saveDraw');
           saveButton1.setClass('drawingEditController');
           
           var drawControl = new L.Control.Draw(options);
@@ -674,44 +677,46 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #step1
               h1 Select shape to draw:
-              button#drawLineB.drawControl2
+              button#drawLineB.drawControl2.btn.btn-default
                 | Line
               br
-              button#drawPolygonB.drawControl2
+              button#drawPolygonB.drawControl2.btn.btn-default
                 | Polygon
               br
-              button#drawMarkerB.drawControl2
+              button#drawMarkerB.drawControl2.btn.btn-default
                 | Marker
               br
             #step1Drawing
-              button#editShapeB.drawControl2
+              button#editShapeB.drawControl2.btn.btn-default
                 | Edit
               br
-              button#delShapeB.drawControl2
+              button#delShapeB.drawControl2.btn.btn-default
                 | Delete
               br
-              button#undoB.drawControl2
+              button#undoB.drawControl2.btn.btn-default
                 | Undo
               br
-              button#compB.drawControl2
+              button#compB.drawControl2.btn.btn-default
                 | Complete
               br
             #step2
-              button#backStep1
-                | Back
+              button#backStep1.btn.btn-danger
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+                |  Back
               h1 Select a feature type:
-              button#restButton.drawControl2
+              button#restButton.drawControl2.btn.btn-default
                 | Restoration
               br
-              button#distButton.drawControl2
+              button#distButton.drawControl2.btn.btn-default
                 | Disturbance
               br
-              button#barrButton.drawControl2
+              button#barrButton.drawControl2.btn.btn-default
                 | Barrier
               br
             #step3
-              button#backStep2
-                | Back
+              button#backStep2.btn.btn-danger
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+                |  Back
               #sidebar2
                 
 
@@ -732,7 +737,7 @@ html
               #savedCount
               table#tableSubs
                 #saved
-              button#sync.btn Submit All Forms
+              button#sync.btn.btn-primary Submit All Forms
           
                 
       script. 
@@ -758,12 +763,18 @@ html
         
         var currShape = null;
         function allOff() {
-            lineButton.style.borderStyle = "";
-            polygonButton.style.borderStyle = "";
-            markerButton.style.borderStyle = "";
-            drawLine.disable();
-            drawPoly.disable();
-            drawMark.disable();
+          var str = lineButton.className;
+          if (str.includes(" active")) 
+            lineButton.className = str.replace(" active", "");
+          str = polygonButton.className;
+          if (str.includes(" active")) 
+            polygonButton.className = str.replace(" active", "");
+          str = markerButton.className;
+          if (str.includes(" active")) 
+            markerButton.className = str.replace(" active", "");
+          drawLine.disable();
+          drawPoly.disable();
+          drawMark.disable();
         }
         
         function turnOnTools() {
@@ -805,21 +816,21 @@ html
         });
         lineButton.addEventListener("click", function(){
             allOff();
-            lineButton.style.borderStyle = "inset";
+            lineButton.className += " active";
             drawLine.enable();
             currShape = drawLine;
             turnOnTools();
         });
         polygonButton.addEventListener("click", function(){
             allOff();
-            polygonButton.style.borderStyle = "inset";
+            polygonButton.className += " active";
             drawPoly.enable();
             currShape = drawPoly;
             turnOnTools();
         });
         markerButton.addEventListener("click", function(){
             allOff();
-            markerButton.style.borderStyle = "inset";
+            markerButton.className += " active";
             drawMark.enable();
             currShape = drawMark;
             //turnOnTools();

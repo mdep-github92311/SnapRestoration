@@ -219,6 +219,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
       .drawControl2 {
         width: 100%;
         color: black;
+        height: 50px;
+        margin-bottom: 10px;
       }
       
       #editShapeB {
@@ -844,6 +846,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                   button.innerHTML = 'Insert Value';
                   button.style.width = '100px';
                   button.style.zIndex = 2000;
+                  button.className += " btn btn-default"
                   return button;
               },
               onRemove: function(map) {
@@ -857,7 +860,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 return button;
               },
               setClass: function(newClass) {
-                button.className = newClass + ' leaflet-control';
+                button.className = newClass + ' leaflet-control btn btn-default';
               }
           });
           
@@ -867,12 +870,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           var undoButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           undoButton1.setVal('Undo Last', 'undoDraw');
           var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          compButton1.setVal('Finish Drawing', 'finishDraw');
+          compButton1.setVal('Finish', 'finishDraw');
           var cancelButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           cancelButton1.setVal('Undo Draw', 'cancelDraw');
           cancelButton1.setClass('drawingEditController');
           var saveButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          saveButton1.setVal('Save Redraw', 'saveDraw');
+          saveButton1.setVal('Finish', 'saveDraw');
           saveButton1.setClass('drawingEditController');
           
           var drawControl = new L.Control.Draw(options);
@@ -956,43 +959,45 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #step1
               h1 Select shape to draw:
-              button#drawLineB.drawControl2
+              button#drawLineB.drawControl2.btn.btn-default
                 | Line
               br
-              button#drawPolygonB.drawControl2
+              button#drawPolygonB.drawControl2.btn.btn-default
                 | Polygon
               br
-              button#drawMarkerB.drawControl2
+              button#drawMarkerB.drawControl2.btn.btn-default
                 | Marker
               br
             #step1Drawing
-              button#editShapeB.drawControl2
+              button#editShapeB.drawControl2.btn.btn-danger
                 | Edit
               br
-              button#delShapeB.drawControl2
+              button#delShapeB.drawControl2.btn.btn-default
                 | Delete
               br
-              button#undoB.drawControl2
+              button#undoB.drawControl2.btn.btn-default
                 | Undo
               br
-              button#compB.drawControl2
+              button#compB.drawControl2.btn.btn-default
                 | Complete
               br
             #step2
-              button#backStep1
+              button#backStep1.btn.btn-danger
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
                 | Back
               h1 Select a feature type:
-              button#restButton.drawControl2
+              button#restButton.drawControl2.btn.btn-default
                 | Restoration
               br
-              button#distButton.drawControl2
+              button#distButton.drawControl2.btn.btn-default
                 | Disturbance
               br
-              button#barrButton.drawControl2
+              button#barrButton.drawControl2.btn.btn-default
                 | Barrier
               br
             #step3
-              button#backStep2
+              button#backStep2.btn.btn-danger
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
                 | Back
               #sidebar2
                 
@@ -1014,7 +1019,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               #savedCount
               table#tableSubs
                 #saved
-              button#sync.btn Submit All Forms
+              button#sync.btn.btn-primary Submit All Forms
               
           #settings.sidebar-pane
             h1.sidebar-header
