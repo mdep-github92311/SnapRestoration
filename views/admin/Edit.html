@@ -416,7 +416,7 @@
               if (defs.barriers != null && defs.barriers.features != null)
                 defs.barriers.features.forEach(function(features) {
                   count++;
-                    if(count == 10)
+                    if(count > 10)
                       return;
                   features.dataType = "barriers";
                   var agen = getAgency(features.properties.agency);
