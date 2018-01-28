@@ -282,13 +282,13 @@
         </div><!-- /.row -->
       
         <script>
-          var table = $("#tableID").dataTable({
-                  "bProcessing": true,
-                  "bDeferRender": true,
-                  "processing": true,
-                  "iDisplayLength": 10,
-                  "aLengthMenu": [[10, 25, 50, 100,  -1], [10, 25, 50, 100, "All"]]
-                 });
+          // var table = $("#tableID").dataTable({
+          //         "bProcessing": true,
+          //         "bDeferRender": true,
+          //         "processing": true,
+          //         "iDisplayLength": 10,
+          //         "aLengthMenu": [[10, 25, 50, 100,  -1], [10, 25, 50, 100, "All"]]
+          //       });
           var currRecords = null;
           mapMarkers = [];
           var currentData = [];
@@ -404,31 +404,31 @@
               var item = document.getElementById('tableItems');
               //count.innerHTML = "There are " + defs.overallCount + " overall markers";
               var count = 0;
-              table.fnClearTable();
+              // table.fnClearTable();
               
               if (defs.barriers != null && defs.barriers.features != null)
                 defs.barriers.features.forEach(function(features) {
                   count++;
                   features.dataType = "barriers";
                   var agen = getAgency(features.properties.agency);
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Barriers",
-                      "Barriers",
-                      "<a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] )
-                  
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td colspan='2'> Barriers"
-                  //           + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Barriers",
+                  //     "Barriers",
+                  //     "<a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] )
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td colspan='2'> Barriers"
+                            + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#barr" + count;
                   
                   $(barrID).click(function(){
@@ -445,25 +445,25 @@
                   count++;
                   features.dataType = "distLines";
                   var agen = getAgency(features.properties.agency);
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Disturbance",
-                      "Lines",
-                      "<a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] )
-                  console.log("line added")
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td> Disturbance"
-                  //           + "</td><td> Lines"
-                  //           + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Disturbance",
+                  //     "Lines",
+                  //     "<a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] )
+                  // console.log("line added")
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Lines"
+                            + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#dLine" + count;
                     
                   $(barrID).click(function(){
@@ -479,25 +479,25 @@
                   features.dataType = "distPoints";
                   var agen = getAgency(features.properties.agency);
                   
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Disturbance",
-                      "Points",
-                      "<a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] )
-                  
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td> Disturbance"
-                  //           + "</td><td> Points"
-                  //           + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Disturbance",
+                  //     "Points",
+                  //     "<a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] )
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Points"
+                            + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#dPoint" + count;
                     
                   $(barrID).click(function(){
@@ -513,24 +513,25 @@
                   features.dataType = "distPolys";
                   var agen = getAgency(features.properties.agency);
                   
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Disturbance",
-                      "Polygon",
-                      "<a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] );
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td> Disturbance"
-                  //           + "</td><td> Polygon"
-                  //           + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Disturbance",
+                  //     "Polygon",
+                  //     "<a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] );
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Disturbance"
+                            + "</td><td> Polygon"
+                            + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#dPoly" + count;
                     
                   $(barrID).click(function(){
@@ -545,26 +546,26 @@
                   count++;
                   features.dataType = "restoLines";
                   var agen = getAgency(features.properties.agency);
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Restoration",
-                      "Lines",
-                      "<a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] );
-                  
-                  
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td> Restoration"
-                  //           + "</td><td> Lines"
-                  //           + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Restoration",
+                  //     "Lines",
+                  //     "<a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] );
+                  
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Lines"
+                            + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#rLine" + count;
                     
                   $(barrID).click(function(){
@@ -580,25 +581,25 @@
                   features.dataType = "restoPoints";
                   var agen = getAgency(features.properties.agency);
                   // console.log(table.row())
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Restoration",
-                      "Point",
-                      "<a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] );
-                  
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td> Restoration"
-                  //           + "</td><td> Point"
-                  //           + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Restoration",
+                  //     "Point",
+                  //     "<a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] );
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Point"
+                            + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#rPoint" + count;
                     
                   $(barrID).click(function(){
@@ -613,25 +614,25 @@
                   count++;
                   features.dataType = "restoPolys";
                   var agen = getAgency(features.properties.agency);
-                  table.fnAddData( [
-                      features.properties.gid,
-                      agen,
-                      "Restoration",
-                      "Polygon",
-                      "<a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                            + "</button>"
-                  ] );
-                  
-                  // $("#tableItems").append("<tr><td>"+ features.properties.gid 
-                  //           + "</td><td>"+agen
-                  //           + "</td><td> Restoration"
-                  //           + "</td><td> Polygon"
-                  //           + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                  //           + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                  // table.fnAddData( [
+                  //     features.properties.gid,
+                  //     agen,
+                  //     "Restoration",
+                  //     "Polygon",
+                  //     "<a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-lg\">"
                   //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-                  //           + "</button></a>"
-                  //           +"</td></tr>");
+                  //           + "</button>"
+                  // ] );
+                  
+                  $("#tableItems").append("<tr><td>"+ features.properties.gid 
+                            + "</td><td>"+agen
+                            + "</td><td> Restoration"
+                            + "</td><td> Polygon"
+                            + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-default btn-lg\">"
+                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "</button></a>"
+                            +"</td></tr>");
                   var barrID = "#rPoly" + count;
                     
                   $(barrID).click(function(){
@@ -660,7 +661,7 @@
             $('#barrierFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#barrierFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#barrierFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('Barriers', 'barrierGeoJSON').then(function(defs){
                 $("#barrierFilterCount").html(defs.overallCount);
@@ -673,7 +674,7 @@
             $('#restoPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoPointsFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('RestoPoints', 'restoPointGeoJSON').then(function(defs){
                 $("#restoPointsFilterCount").html(defs.overallCount);
@@ -686,7 +687,7 @@
             $('#restoLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoLinesFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('RestoLines', 'restoLineGeoJSON').then(function(defs){
                 $("#restoLinesFilterCount").html(defs.overallCount);
@@ -699,7 +700,7 @@
             $('#restoPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#restoPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#restoPolysFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('RestoPolygons', 'restoPolyGeoJSON').then(function(defs){
                 $("#restoPolysFilterCount").html(defs.overallCount);
@@ -712,7 +713,7 @@
             $('#distPointsFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distPointsFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distPointsFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('DistPoints', 'distPointGeoJSON').then(function(defs){
                 $("#distPointsFilterCount").html(defs.overallCount);
@@ -725,7 +726,7 @@
             $('#distLinesFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distLinesFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distLinesFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('DistLines', 'distLineGeoJSON').then(function(defs){
                 $("#distLinesFilterCount").html(defs.overallCount);
@@ -738,7 +739,7 @@
             $('#distPolysFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
             $('#distPolysFilter').parent().find( 'li.active' ).removeClass( 'active' );
             $('#distPolysFilter').addClass( 'active' );
-            table.fnClearTable();
+            // table.fnClearTable();
             $("#tableItems").html('<div class="loader"></div>');
             getData('DistPolygons', 'distPolyGeoJSON').then(function(defs){
                 $("#distPolysFilterCount").html(defs.overallCount);
