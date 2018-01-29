@@ -261,11 +261,11 @@ async function createLayer(data, layerName) {
         break;
 
       case 'Snap Extent':
-        console.log(data)
+        // console.log(data)
         if(data.type == null) {
           data = data;
         }
-        console.log(data)
+        // console.log(data)
         const snapExtent = await L.geoJson(data, {
           pane: 'Misc',
           style: soil_vuln,
@@ -383,7 +383,7 @@ async function getLayers() {
       dbCache.roads.count(function (records) { 
         if (records > 0) {
           dbCache.roads.toArray(function(data) {
-            console.log(data)
+            // console.log(data)
             createLayer(data, 'Roads')
             count += 15;
           });
@@ -392,7 +392,7 @@ async function getLayers() {
         else {
           $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
             createLayer(data, 'Roads');
-            console.log(data);
+            // console.log(data);
             dbCache.roads.bulkAdd(data.features).then(function(lastKey) {
                 console.log("Done caching roads");
             }).catch(Dexie.BulkError, function (e) {
@@ -422,7 +422,7 @@ async function getLayers() {
         else {
           $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
             createLayer(data, 'Soil Vulnerability');
-            console.log(data);
+            // console.log(data);
             dbCache.soilVuln.bulkAdd(data.features).then(function(lastKey) {
                 console.log("Done caching soilVuln");
             }).catch(Dexie.BulkError, function (e) {

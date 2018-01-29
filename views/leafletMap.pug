@@ -85,7 +85,6 @@ html
         color: black;
         background-color: white;
         padding: 5px;
-        font-size: 0.7em;
       }
 
       #map {
@@ -253,7 +252,6 @@ html
       }
       
     body
-    
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
           .container-fluid
@@ -338,8 +336,7 @@ html
         script.
           //alert('Hello ' + bowser.name + ' ' + bowser.version);
           var loggedIn = false;
-          function checkLogin() {
-            $.ajax({
+          $.ajax({
                 type: "GET",
                 url: "/loginStatus",
                 dataType : "json",
@@ -354,7 +351,6 @@ html
                     console.warn(XMLHttpRequest.responseText);
                 }
             })
-          }
           
           function logout() {
             console.log("logout initiated")
@@ -374,7 +370,6 @@ html
             })
           }
           
-          checkLogin();
           //import "babel-polyfill";
           var map = L.map('map').setView([36.211303, -115.114929], 8);
           map.removeControl(map.zoomControl);
@@ -737,6 +732,7 @@ html
               #savedCount
               table#tableSubs
                 #saved
+              br
               button#sync.btn.btn-primary Submit All Forms
           
                 

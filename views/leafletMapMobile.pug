@@ -92,7 +92,6 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         color: black;
         background-color: white;
         padding: 5px;
-        font-size: 0.7em;
       }
 
       #map {
@@ -361,7 +360,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               ul.nav.navbar-nav(style='border-left: 1px solid #000000;')
                 li.active
                   a(href='#') Map View
-                li
+                li#adminTab
                   a(href='/admin/Add.html') Admin
               ul.nav.navbar-nav.navbar-right
                 li#loginTab
@@ -1019,6 +1018,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               #savedCount
               table#tableSubs
                 #saved
+              br
               button#sync.btn.btn-primary Submit All Forms
               
           #settings.sidebar-pane
