@@ -372,19 +372,19 @@ var layerGroups = [
 	}
 ];
 
-var layerStorage = [
-	'Disturbance Lines',
-	'Disturbance Points',
-	'Disturbance Polygon',
-	'Roads',
-	'Soil Vulnerability',
-	'BLM Regions',
-	'FS Regions',
-	'NV Counties',
-	'SNAP Extents',
-	'MDEP Boundry',
-	'MDI Boundry'
-];
+// var layerStorage = [
+// 	'Disturbance Lines',
+// 	'Disturbance Points',
+// 	'Disturbance Polygon',
+// 	'Roads',
+// 	'Soil Vulnerability',
+// 	'BLM Regions',
+// 	'FS Regions',
+// 	'NV Counties',
+// 	'SNAP Extents',
+// 	'MDEP Boundry',
+// 	'MDI Boundry'
+// ];
 
 //L.control.layers(baseLayers, overlays, {
 var layerControl = L.control.layers(layerGroups, {

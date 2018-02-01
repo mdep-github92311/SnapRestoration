@@ -391,12 +391,47 @@ html
               '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	minZoom: 7,
             maxZoom: 18,
             id: 'rogerdodger617.2p4pk9co',
             accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
           }).addTo(map);
           
+          var mapOpenStreet = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          	name: "OpenStreetMap",
+          	zIndex: 1,
+          	minZoom: 7,
+          	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+          });
           
+          var mapGRoad = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+          	name: "Google Roadmap",
+          	zIndex: 1,
+          	minZoom: 7,
+          	maxZoom: 20,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+          	name: "Google Satellite",
+          	zIndex: 1,
+          	maxZoom: 20,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGHyb = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+          	name: "Google Hybrid",
+          	zIndex: 1,
+          	maxZoom: 20,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGTerrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+          	name: "Google Terrain",
+          	zIndex: 1,
+          	maxZoom: 20,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
           
           
           // var canvasRenderer = L.canvas();
@@ -500,11 +535,16 @@ html
             collapsed: false
           };
 
-          var overLay = []
+          var overLay = [];
 
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
-          
+          control.addOverlay( baseLayer, "MapBox", {groupName : "Basemaps"} );
+          control.addOverlay( mapOpenStreet, "OpenStreetMap", {groupName : "Basemaps"} );
+          control.addOverlay( mapGRoad, "Google Roadmap", {groupName : "Basemaps"} );
+          control.addOverlay( mapGSatellite, "Google Satellite", {groupName : "Basemaps"} );
+          control.addOverlay( mapGHyb, "Google Hybrid", {groupName : "Basemaps"} );
+          control.addOverlay( mapGTerrain, "Google Terrain", {groupName : "Basemaps"} );
           //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
