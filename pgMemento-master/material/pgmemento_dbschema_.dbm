@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.0" author="Felix Kunde" last-position="0,0" last-zoom="1"
+	 default-owner="postgres">
+<database name="pgMemento_DB_schema">
+</database>
+
+<schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="pgmemento" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="transaction_log">
+	<schema name="pgmemento"/>
+	<role name="postgres"/>
+	<position x="962" y="242"/>
+	<column name="id" not-null="true">
+		<type name="integer"/>
+	</column>
+	<column name="txid" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="stmt_date" not-null="true">
+		<type name="timestamptz"/>
+	</column>
+	<column name="user_name">
+		<type name="text"/>
+	</column>
+	<column name="client_name">
+		<type name="text"/>
+	</column>
+	<constraint name="transaction_log_pk" type="pk-constr" table="pgmemento.transaction_log">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="transaction_log_unique_txid" type="uq-constr" table="pgmemento.transaction_log">
+		<columns names="txid" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="table_event_log">
+	<schema name="pgmemento"/>
+	<role name="postgres"/>
+	<position x="942" y="534.4"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="transaction_id">
+		<type name="bigint"/>
+	</column>
+	<column name="op_id" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="table_operation" not-null="true">
+		<type name="varchar" length="12"/>
+	</column>
+	<column name="table_relid" not-null="true">
+		<type name="oid"/>
+	</column>
+	<constraint name="table_event_log_pk" type="pk-constr" table="pgmemento.table_event_log">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="row_log">
+	<schema name="pgmemento"/>
+	<role name="postgres"/>
+	<position x="1454" y="391"/>
+	<column name="id" not-null="true">
+		<type name="bigserial"/>
+	</column>
+	<column name="event_id" not-null="true">
+		<type name="integer"/>
+	</column>
+	<column name="audit_id" not-null="true">
+		<type name="bigint"/>
+	</column>
+	<column name="changes">
+		<type name="jsonb"/>
+	</column>
+	<constraint name="row_log_pk" type="pk-constr" table="pgmemento.row_log">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="audit_id_seq"
+	 start="1" increment="1"
+	 min-value="0" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="pgmemento"/>
+	<role name="postgres"/>
+</sequence>
+
+<index name="transaction_log_txid_idx" table="pgmemento.transaction_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="txid"/>
+		</idxelement>
+</index>
+
+<index name="row_log_event_idx" table="pgmemento.row_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="event_id"/>
+		</idxelement>
+</index>
+
+<index name="row_log_audit_idx" table="pgmemento.row_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="audit_id"/>
+		</idxelement>
+</index>
+
+<index name="row_log_changes_idx" table="pgmemento.row_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gin" factor="0">
+		<idxelement use-sorting="false">
+			<column name="changes"/>
+		</idxelement>
+</index>
+
+<table name="audit_table_log">
+	<schema name="pgmemento"/>
+	<role name="postgres"/>
+	<position x="293" y="240"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="relid">
+		<type name="oid"/>
+	</column>
+	<column name="schema_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="table_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="txid_range">
+		<type name="numrange"/>
+	</column>
+	<constraint name="audit_table_log_pk" type="pk-constr" table="pgmemento.audit_table_log">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="audit_column_log">
+	<schema name="pgmemento"/>
+	<role name="postgres"/>
+	<position x="261" y="444"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="audit_table_id" not-null="true">
+		<type name="integer"/>
+	</column>
+	<column name="column_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="ordinal_position">
+		<type name="integer"/>
+	</column>
+	<column name="data_type">
+		<type name="text"/>
+	</column>
+	<column name="column_default">
+		<type name="text"/>
+	</column>
+	<column name="not_null">
+		<type name="boolean" length="3"/>
+	</column>
+	<column name="txid_range">
+		<type name="numrange"/>
+	</column>
+	<constraint name="audit_column_log_pk" type="pk-constr" table="pgmemento.audit_column_log">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<index name="transaction_log_date_idx" table="pgmemento.transaction_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="stmt_date"/>
+		</idxelement>
+</index>
+
+<index name="table_log_idx" table="pgmemento.audit_table_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="table_name"/>
+		</idxelement>
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="schema_name"/>
+		</idxelement>
+</index>
+
+<index name="table_log_range_idx" table="pgmemento.audit_table_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gist" factor="0">
+		<idxelement use-sorting="false">
+			<column name="txid_range"/>
+		</idxelement>
+</index>
+
+<index name="column_log_table_idx" table="pgmemento.audit_column_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="audit_table_id"/>
+		</idxelement>
+</index>
+
+<index name="column_log_column_idx" table="pgmemento.audit_column_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="column_name"/>
+		</idxelement>
+</index>
+
+<index name="column_log_range_idx" table="pgmemento.audit_column_log"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="gist" factor="0">
+		<idxelement use-sorting="false">
+			<column name="txid_range"/>
+		</idxelement>
+</index>
+
+<index name="table_event_log_unique_idx" table="pgmemento.table_event_log"
+	 concurrent="false" unique="true" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="transaction_id"/>
+		</idxelement>
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="table_relid"/>
+		</idxelement>
+		<idxelement use-sorting="true" nulls-first="false" asc-order="true">
+			<column name="op_id"/>
+		</idxelement>
+</index>
+
+<constraint name="table_event_log_txid_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="pgmemento.transaction_log" table="pgmemento.table_event_log">
+	<columns names="transaction_id" ref-type="src-columns"/>
+	<columns names="txid" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="row_log_table_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="pgmemento.table_event_log" table="pgmemento.row_log">
+	<columns names="event_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="audt_column_log_fk" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="CASCADE" del-action="CASCADE" ref-table="pgmemento.audit_table_log" table="pgmemento.audit_column_log">
+	<columns names="audit_table_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="event_to_transaction" type="relfk"
+	 src-table="pgmemento.table_event_log"
+	 dst-table="pgmemento.transaction_log"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="838" y="587"/>
+	<position x="840" y="294"/>
+	</line>
+	<label ref-type="src-label">
+		<position x="-4.35999" y="-0.600037"/>
+	</label>
+	<label ref-type="dst-label">
+		<position x="-2.35999" y="0.799988"/>
+	</label>
+	<label ref-type="name-label">
+		<position x="90.9757" y="-7.34854"/>
+	</label>
+</relationship>
+
+<relationship name="changed_rows_to_event" type="relfk"
+	 src-table="pgmemento.row_log"
+	 dst-table="pgmemento.table_event_log"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="1371" y="443"/>
+	<position x="1372" y="569"/>
+	</line>
+	<label ref-type="name-label">
+		<position x="-103.524" y="-40.8485"/>
+	</label>
+</relationship>
+
+<relationship name="audit_column_to_audit_table" type="relfk"
+	 src-table="pgmemento.audit_column_log"
+	 dst-table="pgmemento.audit_table_log"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="693" y="496"/>
+	<position x="695" y="273"/>
+	</line>
+	<label ref-type="src-label">
+		<position x="0.539978" y="-0.200012"/>
+	</label>
+	<label ref-type="dst-label">
+		<position x="1.53998" y="-0.200012"/>
+	</label>
+	<label ref-type="name-label">
+		<position x="-4.02429" y="-54.3485"/>
+	</label>
+</relationship>
+
+</dbmodel>

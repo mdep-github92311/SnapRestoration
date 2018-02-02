@@ -15,6 +15,7 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
         this._handlingClick = false;
         this._groupList = [];
         this._domGroups = [];
+		this._basemaps = [];
 
         for (i in baseLayers) {
             for (var j in baseLayers[i].layers) {
@@ -55,6 +56,14 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
     },
 
     addOverlay: function(layer, name, group) {
+        // console.log(group);
+        if (group.groupName == "Basemaps"){
+            this._basemaps.push({
+				layer: layer,
+				name: name
+			})
+        }
+        // console.log(this._basemaps)
         this._addLayer(layer, name, group, true);
         this._update();
         return this;
@@ -298,8 +307,33 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
 
         return radioFragment.firstChild;
     },
+    
+    _onRadioClick: function (e) {
+		
+		var i,
+            input,
+            obj,
+            inputs = this._form.getElementsByClassName('radioBaseLayer'),
+            inputsLen = inputs.length;
+        
+        this._handlingClick = true;
+        for (var i = 0; this._basemaps.length > i; i++) {
+			if (L.Util.stamp(this._basemaps[i].layer) === e.target.layerId) {
+				this._basemaps[i].layer.addTo(this._map);
+			} else {
+				this._basemaps[i].layer.removeFrom(this._map);
+			}
+		}
+		for (var i = 0; inputsLen > i; i++) {
+		    if (inputs[i].id != e.target.layerId)
+			    inputs[i].checked = false;
+		}
+        this._handlingClick = false;
+        
+	},
 
     _addItem: function(obj) {
+        // console.log(obj)
         var label = document.createElement('div'),
             input,
             checked = this._map.hasLayer(obj.layer),
@@ -312,9 +346,15 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
         var table = document.createElement("table");
         if (obj.overlay) {
             input = document.createElement('input');
-            input.type = 'checkbox';
+            //console.log(obj)
+            if(obj.group.name == "Basemaps") {
+                input.type = 'radio';
+                input.className = "radioBaseLayer";
+                input.id = obj.layer._leaflet_id;
+            }
+            else
+                input.type = 'checkbox'
             input.defaultChecked = checked;
-            
             var slider = document.createElement('span');
             slider.className = 'slider round';
             
@@ -334,8 +374,10 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
 
 
         input.layerId = L.Util.stamp(obj.layer);
-
-        L.DomEvent.on(input, 'click', this._onInputClick, this);
+        if(obj.group.name == "Basemaps") 
+            L.DomEvent.on(input, 'click', this._onRadioClick, this);
+        else
+            L.DomEvent.on(input, 'click', this._onInputClick, this);
 
         var name = document.createElement('span');
         name.innerHTML = ' &nbsp;&nbsp;&nbsp;&nbsp;' + obj.name;

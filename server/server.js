@@ -3,7 +3,8 @@ var boot = require('loopback-boot');
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var app = module.exports = loopback();
-var session = require('client-sessions');
+// var session = require('client-sessions');
+var session = require('express-session')
 var path = require('path');
 var crypto = require("crypto");
 var clientCertificateAuth = require('client-certificate-auth');
@@ -19,12 +20,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(compression({ threshold: 0 }));
 app.use(loopback.static(__dirname+'../views'));
 
+// app.use(session({
+//   cookieName: 'session',
+//   secret: crypto.randomBytes(20).toString('hex'),
+//   duration: 60 * 60 * 1000,
+//   activeDuration: 10 * 60 * 1000,
+// }));
+app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-  cookieName: 'session',
   secret: crypto.randomBytes(20).toString('hex'),
-  duration: 60 * 60 * 1000,
-  activeDuration: 10 * 60 * 1000,
-}));
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 // var opts = {
 //   // Server SSL private key and certificate

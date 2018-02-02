@@ -296,11 +296,11 @@ var createLayer = function () {
             return _context.abrupt("break", 118);
 
           case 102:
-            console.log(data);
+            // console.log(data);
             if (data.type == null) {
               data = data;
             }
-            console.log(data);
+            // console.log(data);
             _context.next = 107;
             return L.geoJson(data, {
               pane: 'Misc',
@@ -476,7 +476,7 @@ var getLayers = function () {
             dbCache.roads.count(function (records) {
               if (records > 0) {
                 dbCache.roads.toArray(function (data) {
-                  console.log(data);
+                  // console.log(data);
                   createLayer(data, 'Roads');
                   count += 15;
                 });
@@ -484,7 +484,7 @@ var getLayers = function () {
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
                   createLayer(data, 'Roads');
-                  console.log(data);
+                  // console.log(data);
                   dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching roads");
                   }).catch(Dexie.BulkError, function (e) {
@@ -508,7 +508,7 @@ var getLayers = function () {
               } else {
                 $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
                   createLayer(data, 'Soil Vulnerability');
-                  console.log(data);
+                  // console.log(data);
                   dbCache.soilVuln.bulkAdd(data.features).then(function (lastKey) {
                     console.log("Done caching soilVuln");
                   }).catch(Dexie.BulkError, function (e) {

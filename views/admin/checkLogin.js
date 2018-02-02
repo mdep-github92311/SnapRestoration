@@ -5,9 +5,13 @@ function checkLogin() {
         dataType : "json",
         contentType: "application/json; charset=utf-8",
         success: function (data) { 
-          console.log(data);
-          document.getElementById('logoutTab').style.display = "block";
-          document.getElementById('loginTab').style.display = "none";
+            console.log(data);
+            var login = document.getElementById('loginTab');
+            var logout = document.getElementById('logoutTab');
+            if (login != null)
+                login.style.display = "block";
+            if (logout != null)
+                logout.style.display = "none";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.warn(XMLHttpRequest.responseText);
@@ -34,4 +38,5 @@ function logout() {
         }
     })
 }
-     
+
+checkLogin()

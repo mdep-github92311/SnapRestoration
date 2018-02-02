@@ -15,10 +15,6 @@
         <script src="../public/scripts/asyncGetDataV2.js"> </script>
         <script src="../public/scripts/featureStyles.js"> </script>
         
-        
-	      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-        <script type="text/javascript" src="../public/scripts/datatable.min.js"></script>
- 
         <style>
         html, body {
             width: 100%;
@@ -215,7 +211,6 @@
                   <li class="active"><a href="">Admin</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                  <li id="loginTab"><a href="login.html"><b>Login</b></a></li>
                   <li id="logoutTab"><a href="javascript:logout();"><b>Logout</b></a></li>
                 </ul>
               </div>
@@ -267,6 +262,12 @@
         
         <div class="row">
           <div class="col-lg-6">
+            <div class="input-group">	
+              <input type="number" id="searchID"class="form-control" placeholder="Search by GID...">	
+              <span class="input-group-btn">	
+                <button id="searchButton" class="btn btn-default" type="button">Search</button>	
+              </span>	
+            </div><!-- /input-group -->
             <br>
             <div id = "Items">
               <div id="reviewItems"></div>
@@ -277,9 +278,9 @@
                 <tbody id="tableItems">
                   </tbody>
               </table>
-              <a id="pageLeft" style="cursor:pointer;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
-              <span id="pageNumber">1</span>
-              <a id="pageRight" style="cursor:pointer;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+              <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+              <span id="pageNumber" style="font-size: 1.5em;">1</span>
+              <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
             </div>
           </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -469,7 +470,7 @@
           //                   + "</td><td>"+shape
           //                   + "</td><td><a id='tData"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
           //                   + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-          //                   + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+          //                   + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
           //                   + "</button></a>"
           //                   + "</td></tr>");
           //         var barrID = "#tData" + count;
@@ -522,7 +523,7 @@
                   //     "Barriers",
                   //     "Barriers",
                   //     "<a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] )
                   
@@ -532,7 +533,7 @@
                             + "</td><td> Line"
                             + "</td><td><a id='barr"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#barr" + count;
@@ -558,7 +559,7 @@
                   //     "Disturbance",
                   //     "Line",
                   //     "<a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] )
                   // console.log("line added")
@@ -568,7 +569,7 @@
                             + "</td><td> Line"
                             + "</td><td><a id='dLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dLine" + count;
@@ -595,7 +596,7 @@
                   //     "Disturbance",
                   //     "Point",
                   //     "<a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] )
                   
@@ -605,7 +606,7 @@
                             + "</td><td> Point"
                             + "</td><td><a id='dPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dPoint" + count;
@@ -631,7 +632,7 @@
                   //     "Disturbance",
                   //     "Polygon",
                   //     "<a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] );
                   
@@ -641,7 +642,7 @@
                             + "</td><td> Polygon"
                             + "</td><td><a id='dPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dPoly" + count;
@@ -666,7 +667,7 @@
                   //     "Restoration",
                   //     "Line",
                   //     "<a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] );
                   
@@ -677,7 +678,7 @@
                             + "</td><td> Line"
                             + "</td><td><a id='rLine"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#rLine" + count;
@@ -703,7 +704,7 @@
                   //     "Restoration",
                   //     "Point",
                   //     "<a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] );
                   
@@ -713,7 +714,7 @@
                             + "</td><td> Point"
                             + "</td><td><a id='rPoint"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#rPoint" + count;
@@ -738,7 +739,7 @@
                   //     "Restoration",
                   //     "Polygon",
                   //     "<a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'><button type=\"button\" class=\"btn btn-default btn-sm\">"
-                  //           + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                  //           + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                   //           + "</button>"
                   // ] );
                   
@@ -748,7 +749,7 @@
                             + "</td><td> Polygon"
                             + "</td><td><a id='rPoly"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
+                            + "<span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span> Edit"
                             + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#rPoly" + count;
@@ -879,87 +880,87 @@
             });
           });
           
-          // document.getElementById("searchButton").addEventListener("click", function(){
-          //   console.log($("#searchID").val());
-          //   if ($("#searchID").val() == ''){
-          //     $("#tableItems").html('');
-          //     writeTables(currRecords);
-          //     return;
-          //   }
-          //   $("#tableItems").html('No records match that ID');
-          //   if (currRecords.barriers.features != null) {
-          //       currRecords.barriers.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {barriers: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.distPoints.features != null) {
-          //       currRecords.distPoints.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {distPoints: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.distLines.features != null) {
-          //       currRecords.distLines.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {distLines: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.distPolys.features != null) {
-          //       currRecords.distPolys.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {distPolys: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.restoPoints.features != null) {
-          //       currRecords.restoPoints.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {restoPoints: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.restoLines.features != null) {
-          //       currRecords.restoLines.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {restoLines: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   else if (currRecords.restoPolys.features != null) {
-          //       currRecords.restoPolys.features.forEach(function(feature) {
-          //       if (feature.properties.gid == $("#searchID").val()) {
-          //           $("#tableItems").html('');
-          //           var features = [feature];
-          //           var searched = {restoPolys: { features: features }};
-          //           writeTables(searched);
-          //         }
-          //     });
-          //   }
-          //   // currRecords; 
-          //   // writeTables(defs)
-          // });
+          document.getElementById("searchButton").addEventListener("click", function(){
+            console.log($("#searchID").val());
+            if ($("#searchID").val() == ''){
+              $("#tableItems").html('');
+              writeTables(currRecords);
+              return;
+            }
+            $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
+            if (currRecords.barriers.features != null) {
+                currRecords.barriers.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {barriers: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPoints.features != null) {
+                currRecords.distPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPoints: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distLines.features != null) {
+                currRecords.distLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distLines: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.distPolys.features != null) {
+                currRecords.distPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {distPolys: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPoints.features != null) {
+                currRecords.restoPoints.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPoints: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoLines.features != null) {
+                currRecords.restoLines.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoLines: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            else if (currRecords.restoPolys.features != null) {
+                currRecords.restoPolys.features.forEach(function(feature) {
+                if (feature.properties.gid == $("#searchID").val()) {
+                    $("#tableItems").html('');
+                    var features = [feature];
+                    var searched = {restoPolys: { features: features }};
+                    writeTables(searched);
+                  }
+              });
+            }
+            // currRecords; 
+            // writeTables(defs)
+          });
           
           
           /*setTimeout(function(){ 

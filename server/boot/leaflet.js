@@ -3,17 +3,20 @@
  */
 var path = require('path');
 var users = 0;
-function checkAuth(req, res, next) 
-{
-  console.log(req.session)
-  if (!req.session.user_id) {
-    res.send('You are not authorized to view this page');
-  } else {
-    next();
-  }
-}
+
 
 module.exports = function (app) {
+  
+  function checkAuth(req, res, next) 
+  {
+    if (req.session.user_id == null) {
+      res.send('You are not authorized to view this page');
+      console.log(req.session.user_id)
+    } else {
+      console.log('you are logged in')
+      next();
+    }
+  }
   app.get('/', function (req, res) {
     res.render('leafletMap.pug');
   });
@@ -24,7 +27,7 @@ module.exports = function (app) {
   
   app.get('/my_secret_page', checkAuth, function (req, res) {
     //res.send('if you are viewing this page it means you are logged in');
-    console.log('you are logged in')
+    //console.log('you are logged in')
     var response = {
         status  : 200,
         success : 'Logged in successfully'

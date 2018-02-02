@@ -8,7 +8,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
     //link(rel='stylesheet', href='https://unpkg.com/leaflet@1.2.0/dist/leaflet.css')
     
     link(rel='stylesheet', href='/public/css/leaflet.css')
-    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css")
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css")
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
     link(rel='stylesheet', href='/public/css/sidebarV2.css')
     link(rel='stylesheet', href='/public/css/leaflet-topCenter.css')
@@ -22,7 +22,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
     script(src='/public/scripts/leaflet.offline.min.js')
     script(src='https://unpkg.com/pbf@3.0.5/dist/pbf.js')
 
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
+    script(src='/public/scripts/leaflet.draw.js' type='text/javascript')
+    // script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
@@ -92,7 +93,6 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         color: black;
         background-color: white;
         padding: 5px;
-        font-size: 0.7em;
       }
 
       #map {
@@ -219,6 +219,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
       .drawControl2 {
         width: 100%;
         color: black;
+        height: 50px;
+        margin-bottom: 10px;
       }
       
       #editShapeB {
@@ -292,6 +294,9 @@ html(manifest='cache.manifest', type='text/cache-manifest')
       #storage {
         text-align: center;
       }
+      .modal-backdrop {
+        z-index: 1250 !important;
+      }
     body
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
@@ -359,7 +364,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               ul.nav.navbar-nav(style='border-left: 1px solid #000000;')
                 li.active
                   a(href='#') Map View
-                li
+                li#adminTab
                   a(href='/admin/Add.html') Admin
               ul.nav.navbar-nav.navbar-right
                 li#loginTab
@@ -439,6 +444,45 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
             }).addTo(map);
           
+          var mapOpenStreet = L.tileLayer.offline('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          	name: "OpenStreetMap",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+          });
+          
+          var mapGRoad = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+          	name: "Google Roadmap",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGSatellite = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+          	name: "Google Satellite",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGHyb = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+          	name: "Google Hybrid",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGTerrain = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+          	name: "Google Terrain",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
           
           var canvasRenderer = L.canvas();
           
@@ -618,6 +662,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
             'saveText': 'Save Area',
             'confirmRemoval': function(layer, successCallback) {
               $('#deletingModal').modal('show');
+              sidebar.close();
               $('#confirmTileDelete').click(function() {
                   successCallback();
                   localStorage.removeItem("mapBounds");
@@ -770,6 +815,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
 
           var control = L.Control.styledLayerControl(null, overLay, controlOptions);
           map.addControl(control);
+          control.addOverlay( baseLayer, "MapBox", {groupName : "Basemaps"} );
+          control.addOverlay( mapOpenStreet, "OpenStreetMap", {groupName : "Basemaps"} );
+          control.addOverlay( mapGRoad, "Google Roadmap", {groupName : "Basemaps"} );
+          control.addOverlay( mapGSatellite, "Google Satellite", {groupName : "Basemaps"} );
+          control.addOverlay( mapGHyb, "Google Hybrid", {groupName : "Basemaps"} );
+          control.addOverlay( mapGTerrain, "Google Terrain", {groupName : "Basemaps"} );
           
           control.addOverlay(roads, 'Roads', {groupName: 'Roads', expanded: false});
           control.addOverlay(soil, 'Soil', {groupName: 'Misc', expanded: false});
@@ -844,6 +895,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                   button.innerHTML = 'Insert Value';
                   button.style.width = '100px';
                   button.style.zIndex = 2000;
+                  button.className += " btn btn-default"
                   return button;
               },
               onRemove: function(map) {
@@ -857,7 +909,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 return button;
               },
               setClass: function(newClass) {
-                button.className = newClass + ' leaflet-control';
+                button.className = newClass + ' leaflet-control btn btn-default';
               }
           });
           
@@ -867,12 +919,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           var undoButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           undoButton1.setVal('Undo Last', 'undoDraw');
           var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          compButton1.setVal('Finish Drawing', 'finishDraw');
+          compButton1.setVal('Finish', 'finishDraw');
           var cancelButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           cancelButton1.setVal('Undo Draw', 'cancelDraw');
           cancelButton1.setClass('drawingEditController');
           var saveButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
-          saveButton1.setVal('Save Redraw', 'saveDraw');
+          saveButton1.setVal('Finish', 'saveDraw');
           saveButton1.setClass('drawingEditController');
           
           var drawControl = new L.Control.Draw(options);
@@ -956,43 +1008,45 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #step1
               h1 Select shape to draw:
-              button#drawLineB.drawControl2
+              button#drawLineB.drawControl2.btn.btn-default
                 | Line
               br
-              button#drawPolygonB.drawControl2
+              button#drawPolygonB.drawControl2.btn.btn-default
                 | Polygon
               br
-              button#drawMarkerB.drawControl2
+              button#drawMarkerB.drawControl2.btn.btn-default
                 | Marker
               br
             #step1Drawing
-              button#editShapeB.drawControl2
+              button#editShapeB.drawControl2.btn.btn-danger
                 | Edit
               br
-              button#delShapeB.drawControl2
+              button#delShapeB.drawControl2.btn.btn-default
                 | Delete
               br
-              button#undoB.drawControl2
+              button#undoB.drawControl2.btn.btn-default
                 | Undo
               br
-              button#compB.drawControl2
+              button#compB.drawControl2.btn.btn-default
                 | Complete
               br
             #step2
-              button#backStep1
+              button#backStep1.btn.btn-danger
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
                 | Back
               h1 Select a feature type:
-              button#restButton.drawControl2
+              button#restButton.drawControl2.btn.btn-default
                 | Restoration
               br
-              button#distButton.drawControl2
+              button#distButton.drawControl2.btn.btn-default
                 | Disturbance
               br
-              button#barrButton.drawControl2
+              button#barrButton.drawControl2.btn.btn-default
                 | Barrier
               br
             #step3
-              button#backStep2
+              button#backStep2.btn.btn-danger
+                span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
                 | Back
               #sidebar2
                 
@@ -1014,7 +1068,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               #savedCount
               table#tableSubs
                 #saved
-              button#sync.btn Submit All Forms
+              br
+              button#sync.btn.btn-primary Submit All Forms
               
           #settings.sidebar-pane
             h1.sidebar-header
@@ -1025,7 +1080,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               | Remove offline tiles?
               #deleteTiles
                 
-      #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
+      #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', style="z-index: 1300;", data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
           .modal-content#savingModalContent
             .modal-header
@@ -1042,7 +1097,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               | Progress: 
               span#progress
             p.savingComplete
-      #deletingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', data-backdrop='static')
+      #deletingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', style="z-index: 1300;",data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
           .modal-content#savingModalContent
             .modal-header
@@ -1090,9 +1145,15 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         
         var currShape = null;
         function allOff() {
-            lineButton.style.borderStyle = "";
-            polygonButton.style.borderStyle = "";
-            markerButton.style.borderStyle = "";
+            var str = lineButton.className;
+            if (str.includes(" active")) 
+              lineButton.className = str.replace(" active", "");
+            str = polygonButton.className;
+            if (str.includes(" active")) 
+              polygonButton.className = str.replace(" active", "");
+            str = markerButton.className;
+            if (str.includes(" active")) 
+              markerButton.className = str.replace(" active", "");
             drawLine.disable();
             drawPoly.disable();
             drawMark.disable();
@@ -1145,7 +1206,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         });
         lineButton.addEventListener("click", function(){
             allOff();
-            lineButton.style.borderStyle = "inset";
+            lineButton.className += " active";
             sidebar.close();
             drawLine.enable();
             currShape = drawLine;
@@ -1153,7 +1214,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         });
         polygonButton.addEventListener("click", function(){
             allOff();
-            polygonButton.style.borderStyle = "inset";
+            polygonButton.className += " active";
             sidebar.close();
             drawPoly.enable();
             currShape = drawPoly;
@@ -1161,7 +1222,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         });
         markerButton.addEventListener("click", function(){
             allOff();
-            markerButton.style.borderStyle = "inset";
+            markerButton.className += " active";
             sidebar.close();
             drawMark.enable();
             currShape = drawMark;
