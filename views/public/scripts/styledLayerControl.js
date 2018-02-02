@@ -323,7 +323,9 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
 			} else {
 				this._basemaps[i].layer.removeFrom(this._map);
 			}
-			if (inputs[i].id != e.target.layerId)
+		}
+		for (var i = 0; inputsLen > i; i++) {
+		    if (inputs[i].id != e.target.layerId)
 			    inputs[i].checked = false;
 		}
         this._handlingClick = false;

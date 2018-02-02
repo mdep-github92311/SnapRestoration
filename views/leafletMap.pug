@@ -31,7 +31,7 @@ html
     
     script(src='/public/scripts/bowser.min.js')
 
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js' type='text/javascript')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
     script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
@@ -250,7 +250,9 @@ html
       .drawingEditController {
         display: none;
       }
-      
+      .modal-backdrop {
+        z-index: 1250 !important;
+      }
     body
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
@@ -391,6 +393,7 @@ html
               '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	zIndex: 1,
           	minZoom: 7,
             maxZoom: 18,
             id: 'rogerdodger617.2p4pk9co',
@@ -401,6 +404,7 @@ html
           	name: "OpenStreetMap",
           	zIndex: 1,
           	minZoom: 7,
+            maxZoom: 18,
           	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
           });
           
@@ -408,28 +412,31 @@ html
           	name: "Google Roadmap",
           	zIndex: 1,
           	minZoom: 7,
-          	maxZoom: 20,
+            maxZoom: 18,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
           var mapGSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
           	name: "Google Satellite",
           	zIndex: 1,
-          	maxZoom: 20,
+          	minZoom: 7,
+            maxZoom: 18,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
           var mapGHyb = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
           	name: "Google Hybrid",
           	zIndex: 1,
-          	maxZoom: 20,
+          	minZoom: 7,
+            maxZoom: 18,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
           var mapGTerrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
           	name: "Google Terrain",
           	zIndex: 1,
-          	maxZoom: 20,
+          	minZoom: 7,
+            maxZoom: 18,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
