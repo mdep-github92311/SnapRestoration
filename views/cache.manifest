@@ -2,10 +2,10 @@ CACHE MANIFEST
 # version 1.0.1
 
 public/scripts/dexie.min.js
-public/css/images/purpleSquare.png
-public/css/images/orangeSquare.png
-public/css/images/redSquare.png
-public/css/images/greenSquare.png
+public/css/images/blmSquare.png
+public/css/images/fsSquare.png
+public/css/images/fwsSquare.png
+public/css/images/npsSquare.png
 public/css/images/logos/blm.png
 public/css/images/logos/fs.png
 public/css/images/logos/fws.png
@@ -14,14 +14,14 @@ public/css/leaflet.css
 public/css/styledLayerControl.css
 public/css/sidebarV2.css
 public/css/leaflet-topCenter.css
-https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css
+https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css
 public/scripts/polyfill.min.js
 public/scripts/jquery.min.js
 public/scripts/leaflet.js
 public/scripts/localforage.min.js
 public/scripts/leaflet.offline.min.js
 https://unpkg.com/pbf@3.0.5/dist/pbf.js
-https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.js
+public/scripts/leaflet.draw.js
 https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js
 https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js
 https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js
