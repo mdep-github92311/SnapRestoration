@@ -6,7 +6,7 @@ function setProp(prop) {
             return 'GID';
         case 'agency':
             return 'Agency';
-        case 'region ':
+        case 'region':
             return 'Region';
         case 'regions':
             return 'Region';
