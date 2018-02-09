@@ -16,6 +16,8 @@ function setProp(prop) {
             return 'Date collected?';
         case 'dist_code':
             return 'Disturbance Code';
+        case 'old_dist_c':
+            return 'Old Disturbance Code';
         case 'dist_use':
             return 'Disturbance Use';
         case 'use_freq':
