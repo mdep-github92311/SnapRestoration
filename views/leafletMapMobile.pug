@@ -1,7 +1,8 @@
 //  Created by msgis-student on 6/9/2017.
 
 doctype html
-html(manifest='cache.manifest', type='text/cache-manifest')
+//html(manifest='cache.manifest', type='text/cache-manifest')
+html
   head
     title= 'SNAP Restoration Map'
     meta(name='viewport', content='width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
@@ -263,8 +264,6 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         float: left !important;
         width: auto !important;
         height: 30px;
-        padding-right: 10px !important;
-        padding-left: 10px !important;
         font-size: 1.2em !important;
       }
       .rmtiles a {
@@ -273,6 +272,14 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         padding-right: 10px !important;
         padding-left: 10px !important;
         font-size: 1.2em !important;
+      }
+      
+      #saveTilesStep {
+        display: none;
+      }
+      
+      #removeTilesStep {
+        display: none;
       }
       
       .tileCount {
@@ -424,66 +431,136 @@ html(manifest='cache.manifest', type='text/cache-manifest')
             map.removeControl(map.zoomControl);
           }
           else {
-            console.log(localStorage.getItem("mapBounds"))
+            //console.log(localStorage.getItem("mapBounds"))
             var bounds = JSON.parse(localStorage.getItem("mapBounds"));
+            var zoom = JSON.parse(localStorage.getItem("mapZoom"));
             map = L.map('map', {zoomSnap: 0.5, zoomDelta: 1, maxBoundsViscosity: 0.8, minZoom: 12, preferCanvas: false}).setView([(bounds._northEast.lat + bounds._southWest.lat)/2, (bounds._northEast.lng + bounds._southWest.lng)/2], 12);
             map.removeControl(map.zoomControl);
             map.setMaxBounds([bounds._northEast,bounds._southWest]);
+            map.setMinZoom(zoom);
           }
-            var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-              attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+          var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+            '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	mapID: 0,
+          	zIndex: 1,
+            maxZoom: 18,
+            minZoom: 8,
+            maxNativeZoom: 14,
+            id: 'rogerdodger617.2p4pk9co',
+            accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+          });
+          
+          var mapOpenStreet = L.tileLayer.offline('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
               '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
-              maxZoom: 17,
-              minZoom: 8,
-              maxNativeZoom: 14,
-              id: 'rogerdodger617.2p4pk9co',
-              accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
-            }).addTo(map);
-          
-          var mapOpenStreet = L.tileLayer.offline('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           	name: "OpenStreetMap",
+          	mapID: 1,
           	zIndex: 1,
-          	minZoom: 7,
             maxZoom: 18,
-          	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+            minZoom: 8,
+            maxNativeZoom: 14
           });
           
           var mapGRoad = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
           	name: "Google Roadmap",
+          	mapID: 2,
           	zIndex: 1,
-          	minZoom: 7,
             maxZoom: 18,
+            minZoom: 8,
+            maxNativeZoom: 14,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
           var mapGSatellite = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
           	name: "Google Satellite",
+          	mapID: 3,
           	zIndex: 1,
-          	minZoom: 7,
             maxZoom: 18,
+            minZoom: 8,
+            maxNativeZoom: 14,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
           var mapGHyb = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
           	name: "Google Hybrid",
+          	mapID: 4,
           	zIndex: 1,
-          	minZoom: 7,
             maxZoom: 18,
+            minZoom: 8,
+            maxNativeZoom: 14,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
           var mapGTerrain = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
           	name: "Google Terrain",
+          	mapID: 5,
           	zIndex: 1,
-          	minZoom: 7,
             maxZoom: 18,
+            minZoom: 8,
+            maxNativeZoom: 14,
           	subdomains:['mt0','mt1','mt2','mt3']
           });
           
+          console.log(localStorage.getItem("currMapNum"));
+          var currMapNum = JSON.parse(localStorage.getItem("currMapNum"));
+          var currMap = baseLayer;
+          if (currMap == null)
+            localStorage.setItem("currMapNum", 0);
+          
+          switch (currMapNum){
+            case 0:
+              currMap = baseLayer;
+              break;
+            case 1:
+              currMap = mapOpenStreet;
+              break;
+            case 2:
+              currMap = mapGRoad;
+              break;
+            case 3:
+              currMap = mapGSatellite;
+              break;
+            case 4:
+              currMap = mapGHyb;
+              break;
+            case 5:
+              currMap = mapGTerrain;
+              break;
+          }
+          currMap.addTo(map);
           var canvasRenderer = L.canvas();
           
           var polygonsPane = map.createPane('polygons');
@@ -612,9 +689,9 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           	'Roads',
           	'Soil Vulnerability'
           ];
+          console.log(baseLayer)
           
-          
-          var saveTileControl = L.control.savetiles(baseLayer,{
+          var saveTileControl = L.control.savetiles(currMap,{
             'zoomlevels':[12,14],
             'position': 'topcenter',
             'saveWhatYouSee': false,
@@ -630,6 +707,11 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                   document.getElementsByClassName('tileCount')[0].style.display = 'block';
                   document.getElementsByClassName('tileCount')[2].style.display = 'inline';
                 }
+                else if (layer._tilesforSave.length < 10) {
+                  document.getElementsByClassName('tileCount')[0].innerHTML = "<span class='glyphicon glyphicon-remove' style='color: #ff0000' aria-hidden='true'></span>Warning: Cannot save small area of map. <br><br> Note: Zoom out to area needed. "
+                  document.getElementsByClassName('tileCount')[0].style.display = 'block';
+                  document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                }
                 else {
                   document.getElementsByClassName('tileCount')[0].innerHTML = "Save " + layer._tilesforSave.length + " tiles for offline <br><br> Note: map will be locked until tiles are removed in the settings tab"
                   document.getElementsByClassName('tileCount')[0].style.display = 'block';
@@ -641,10 +723,13 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                     document.getElementsByClassName('tileCount')[1].style.display = 'none';
                     document.getElementsByClassName('tileCount')[2].style.display = 'none';  
                     var bounds = map.getBounds();
+                    localStorage.setItem("mapZoom", JSON.stringify(map.getZoom()));
                     localStorage.setItem("mapBounds", JSON.stringify(bounds));
-                    saveTileControl.options.toggleButton('none');
+                    localStorage.setItem("currMapNum", JSON.stringify(saveTileControl.getLayer().options.mapID));
+                    document.getElementById('saveTilesStep').style.display = 'none';
+                    document.getElementById('removeTilesStep').style.display = 'block';
                     map.setMaxBounds([bounds._northEast,bounds._southWest]);
-                    map.setMinZoom(12);
+                    map.setMinZoom(map.getZoom());
                     succescallback();
                   });
                 }
@@ -653,21 +738,23 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 //     var bounds = map.getBounds();
                 //     localStorage.setItem("mapBounds", JSON.stringify(bounds));
                 //     $('#savingModal').modal('show');
-                //     saveTileControl.options.toggleButton('none');
+                //     document.getElementById('saveTilesStep').style.display = 'none';
                 //     map.setMaxBounds([bounds._northEast,bounds._southWest]);
                 //     map.setMinZoom(12);
                 //     succescallback();
                 // }
             },
-            'saveText': 'Save Area',
+            'saveText': '<button class="btn btn-primary">Save Area</button>',
             'confirmRemoval': function(layer, successCallback) {
               $('#deletingModal').modal('show');
               sidebar.close();
               $('#confirmTileDelete').click(function() {
                   successCallback();
                   localStorage.removeItem("mapBounds");
+                  localStorage.removeItem("currMapNum");
                   map.setMaxBounds(null);
-                  saveTileControl.options.toggleButton('');
+                  document.getElementById('saveTilesStep').style.display = 'block';
+                  document.getElementById('removeTilesStep').style.display = 'none';
                   map.setMinZoom(8);
                   $('#deletingModal').modal('hide');
               });
@@ -677,37 +764,45 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               document.getElementsByClassName('savetiles')[0].style.display = val;
             }
             }).addTo(map);
-          if (localStorage.getItem("mapBounds") != null)
-            saveTileControl.options.toggleButton('none')
           
           
-          var progress;
-          baseLayer.on('savestart', function(e) {
-              progress = 0;
-              document.getElementById('progress').innerHTML = progress + '/' + e._tilesforSave.length;
-          });
-          baseLayer.on('savetileend', function(e) {
-              progress++;
-              // console.log(e)
-              document.getElementById('progress').innerHTML = progress + '/' + e.lengthToBeSaved;
-              if (e.lengthSaved >= e.lengthToBeSaved) {
-                document.getElementsByClassName('savingProgress')[0].style.display = 'none';
-                document.getElementsByClassName('savingComplete')[0].style.display = 'block';
-                document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
-              }
-          });
-          baseLayer.on('loadend', function(e) {
-              //console.log(e)
-              //alert("Saved all tiles");
-              if (e._tilesforSave.length >= e.storagesize) {
-                document.getElementsByClassName('savingProgress')[0].style.display = 'none';
-                document.getElementsByClassName('savingComplete')[0].style.display = 'block';
-                document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
-              }
-          });
-          baseLayer.on('storagesize', function(e) {
-              document.getElementById('storage').innerHTML = e.storagesize + " offline tiles will be removed.";
-          })
+          function setOfflineButtons(layer) {
+            var progress;
+            layer.on('savestart', function(e) {
+                progress = 0;
+                document.getElementById('progress').innerHTML = progress + '/' + e._tilesforSave.length;
+            });
+            layer.on('savetileend', function(e) {
+                progress++;
+                // console.log(e)
+                document.getElementById('progress').innerHTML = progress + '/' + e.lengthToBeSaved;
+                if (e.lengthSaved >= e.lengthToBeSaved) {
+                  document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+                  document.getElementsByClassName('savingComplete')[0].style.display = 'block';
+                  document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
+                }
+            });
+            layer.on('loadend', function(e) {
+                //console.log(e)
+                //alert("Saved all tiles");
+                if (e._tilesforSave.length >= e.storagesize) {
+                  document.getElementsByClassName('savingProgress')[0].style.display = 'none';
+                  document.getElementsByClassName('savingComplete')[0].style.display = 'block';
+                  document.getElementsByClassName('savingComplete')[0].innerHTML = '<span class="glyphicon glyphicon-ok" style="color: #02ea02" aria-hidden="true"></span> Saved all tiles';
+                }
+            });
+            layer.on('storagesize', function(e) {
+                document.getElementById('storage').innerHTML = e.storagesize + " offline tiles will be removed.";
+            })
+          }
+          // set functions for each layer to save tiles
+          
+          setOfflineButtons(baseLayer);
+          setOfflineButtons(mapOpenStreet);
+          setOfflineButtons(mapGRoad);
+          setOfflineButtons(mapGSatellite);
+          setOfflineButtons(mapGHyb);
+          setOfflineButtons(mapGTerrain);
           // var canvasRenderer = L.canvas();
           // function drawRect(context, style) {
           // 	context.strokeStyle = style.color;
@@ -1077,8 +1172,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             h3
-              | Remove offline tiles?
-              #deleteTiles
+              #removeTilesStep
+                | Remove offline tiles?
+                #deleteTiles
+              #saveTilesStep
+                | Save offline tiles?
+                #confirmSaveTiles
                 
       #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', style="z-index: 1300;", data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
@@ -1118,6 +1217,9 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           document.getElementsByClassName('rmtiles')[0]
         );
         document.getElementsByClassName('rmtiles')[0].children[0].className += "btn btn-danger";
+        document.getElementById('confirmSaveTiles').appendChild(
+          document.getElementsByClassName('savetiles')[0]
+        );
         $('#cancelTileDelete').click(function() {
           $('#deletingModal').modal('hide');
         });
@@ -1164,32 +1266,48 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('none');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'none';
+            document.getElementById('removeTilesStep').style.display = 'block';
+          }
         }
         function turnOffTools() {
           var myElements = document.querySelectorAll(".drawingController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'block';
+            document.getElementById('removeTilesStep').style.display = 'none';
+          }
         }
         function turnOnEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('none');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'none';
+            document.getElementById('removeTilesStep').style.display = 'block';
+          }
         }
         function turnOffEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'block';
+            document.getElementById('removeTilesStep').style.display = 'none';
+          }
+        }
+        if (localStorage.getItem("mapBounds") != null) {
+          $('#saveTilesStep').css("display", "none");
+          $('#removeTilesStep').css("display", "block");
+        }
+        else {
+          $('#saveTilesStep').css("display", "block");
+          $('#removeTilesStep').css("display", "none");
         }
         document.getElementById("backStep1").addEventListener("click", function(){
           allOff();

@@ -1,4 +1,119 @@
 
+// sets name of properties
+function setProp(prop) {
+    switch (prop) {
+        case 'gid':
+            return 'GID';
+        case 'agency':
+            return 'Agency';
+        case 'region ':
+            return 'Region';
+        case 'regions':
+            return 'Region';
+        case 'ecosystem':
+            return 'Ecosystem';
+        case 'gps_date':
+            return 'Date collected?';
+        case 'dist_code':
+            return 'Disturbance Code';
+        case 'dist_use':
+            return 'Disturbance Use';
+        case 'use_freq':
+            return 'Frequent Use';
+        case 'use_recent':
+            return 'Recent Use';
+        case 'dist_pt_ty':
+            return 'Disturbance Type';
+        case 'accessibil':
+            return 'Accessibility'; 
+        case 'visibility':
+            return 'Visibility';
+        case 'comments':
+            return 'Comments';
+        case 'primary_ob':
+            return 'Primary Observer';
+            //return 'Who collected the data?';
+        case 'secondary_':
+            return 'Secondary Observer';
+            //return 'Who was with you?';
+        case 'previously':
+            return 'Previously Restored';
+        case 'project_na':
+            return 'Project Name';
+        case 'estimate_s':
+            return 'Estimated Size';
+        case 'treated':
+            return 'Was the disturbance treated?';
+        case 'cultural':
+            return 'Are cultural resources impacted?';
+        case 't_e_specie':
+            return 'Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments)';
+        case 'gps_photo':
+            return 'Is there a GPS tagged photo?';
+        case 'soil_vulne':
+            return 'Soil Vunerability';
+        case 'photo_azim':
+            return 'Which way is photo facing (degrees)?';
+        case 'qa_qc':
+            return 'QA/QC';
+        case 'old_distco':
+            return 'Old Disturbance Code';
+        case 'site_stabi':
+            return 'Site Stability';
+        case 'dist_crust':
+            return 'Disturbed Soil Crust';
+        case 'undist_cru':
+            return 'Undisturbed Crust';
+        case 'depth':
+            return 'Depth';
+        case 'width':
+            return 'Width';
+        case 'type':
+            return 'Type';
+        case 'plant_dama':
+            return 'Plant Canopy Damage';
+        case 'miles_dist':
+            return 'Miles Disturbed';
+        case 'km_dist':
+            return 'Km Disturbed';
+        case 'dist_sever':
+            return 'Disturbance Severity';
+        case 'dist_poly_':
+            return 'Disturbance Polygon';
+        case 'acres_rest':
+            return 'Acres Restored';
+        case 'kmsq_resto':
+            return 'Km^2 Restored';
+        case 'resto_code':
+            return 'Restoration Code';
+        case 'resto_acti':
+            return 'Restoration Activity';
+        case 'sqft_resto':
+            return 'Ft^2 Restored';
+        case 'cultural':
+            return 'Are cultural resources impacted?';
+        case 'te_act':
+            return 'Threatened or Endangered Species Activity';
+        case 'nonlists_a':
+            return 'Non-listed Species';
+        case 'signed':
+            return 'Signed';
+        case 'mulch':
+            return 'Mulch';
+        case 'deep_till':
+            return 'Deep Tillage';
+        case 'barrier_in':
+            return 'Barrier Installed';
+        case 'monitoring':
+            return 'Monitoring';
+        case 'shape_leng':
+            return 'Shape Length';
+        case 'shape_area':
+            return 'Shape Area';
+        default:
+            return prop;
+    }
+}
 // switch value with agency name
 function myAgency(agen) {
     switch (agen) {
@@ -303,8 +418,8 @@ function onEachBarrier(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -337,8 +452,8 @@ function onEachDistLine(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -367,8 +482,8 @@ function onEachDistPoint(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -397,8 +512,8 @@ function onEachDistPoly(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -421,8 +536,8 @@ function onEachDistPolyCent(feature, layer) {
         for (var prop in feature.properties) {
             //console.log(prop + ' : ' + feature.properties[prop]);
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -442,8 +557,8 @@ function onEachRestoPoly(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -466,8 +581,8 @@ function onEachRestoPoint(feature, layer) {
         for (var prop in feature.properties) {
             if (prop == 'agency') {
                 //console.log(prop + ' : ' + feature.properties[prop]);
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -486,8 +601,8 @@ function onEachRestoPolyCent(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -506,8 +621,8 @@ function onEachRestoLine(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -530,8 +645,8 @@ function onEachBLMRegion(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -550,8 +665,8 @@ function onEachFSRegion(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -570,8 +685,8 @@ function onEachMDEPBound(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -590,8 +705,8 @@ function onEachMDIBound(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -610,8 +725,8 @@ function onEachNVCounty(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
@@ -630,8 +745,8 @@ function onEachSoilVuln(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             if (prop == 'agency') {
-                popUpContent.push('<B>' + prop + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + prop + '</B>' + ' : ' + feature.properties[prop]);
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');

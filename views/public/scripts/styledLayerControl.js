@@ -319,6 +319,7 @@ L.Control.StyledLayerControl = L.Control.Layers.extend({
         this._handlingClick = true;
         for (var i = 0; this._basemaps.length > i; i++) {
 			if (L.Util.stamp(this._basemaps[i].layer) === e.target.layerId) {
+			    saveTileControl.setLayer(this._basemaps[i].layer)
 				this._basemaps[i].layer.addTo(this._map);
 			} else {
 				this._basemaps[i].layer.removeFrom(this._map);
