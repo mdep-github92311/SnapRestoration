@@ -1,8 +1,10 @@
+
+// sets name of properties
 function setProp(prop) {
     switch (prop) {
         case 'gid':
             return 'GID';
-        case 'agency ':
+        case 'agency':
             return 'Agency';
         case 'region ':
             return 'Region';
@@ -29,9 +31,11 @@ function setProp(prop) {
         case 'comments':
             return 'Comments';
         case 'primary_ob':
-            return 'Who collected the data?';
+            return 'Primary Observer';
+            //return 'Who collected the data?';
         case 'secondary_':
-            return 'Who was with you?';
+            return 'Secondary Observer';
+            //return 'Who was with you?';
         case 'previously':
             return 'Previously Restored';
         case 'project_na':
@@ -51,7 +55,7 @@ function setProp(prop) {
         case 'photo_azim':
             return 'Which way is photo facing (degrees)?';
         case 'qa_qc':
-            return "QA\QC";
+            return 'QA/QC';
         case 'old_distco':
             return 'Old Disturbance Code';
         case 'site_stabi':

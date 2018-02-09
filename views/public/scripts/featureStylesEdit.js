@@ -2,6 +2,7 @@
 var newShapeGeom = null;
 var currPos = null;
 var currLayer = null;
+
 // creating a style function for points in the map based on the agency number
 function myStylePointsEdit(feature) {
     switch (feature.properties.agency) {
