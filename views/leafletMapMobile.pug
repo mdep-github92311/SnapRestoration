@@ -1,7 +1,8 @@
 //  Created by msgis-student on 6/9/2017.
 
 doctype html
-html(manifest='cache.manifest', type='text/cache-manifest')
+//html(manifest='cache.manifest', type='text/cache-manifest')
+html
   head
     title= 'SNAP Restoration Map'
     meta(name='viewport', content='width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
@@ -263,8 +264,6 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         float: left !important;
         width: auto !important;
         height: 30px;
-        padding-right: 10px !important;
-        padding-left: 10px !important;
         font-size: 1.2em !important;
       }
       .rmtiles a {
@@ -273,6 +272,14 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         padding-right: 10px !important;
         padding-left: 10px !important;
         font-size: 1.2em !important;
+      }
+      
+      #saveTilesStep {
+        display: none;
+      }
+      
+      #removeTilesStep {
+        display: none;
       }
       
       .tileCount {
@@ -719,7 +726,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                     localStorage.setItem("mapZoom", JSON.stringify(map.getZoom()));
                     localStorage.setItem("mapBounds", JSON.stringify(bounds));
                     localStorage.setItem("currMapNum", JSON.stringify(saveTileControl.getLayer().options.mapID));
-                    saveTileControl.options.toggleButton('none');
+                    document.getElementById('saveTilesStep').style.display = 'none';
+                    document.getElementById('removeTilesStep').style.display = 'block';
                     map.setMaxBounds([bounds._northEast,bounds._southWest]);
                     map.setMinZoom(map.getZoom());
                     succescallback();
@@ -730,13 +738,13 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 //     var bounds = map.getBounds();
                 //     localStorage.setItem("mapBounds", JSON.stringify(bounds));
                 //     $('#savingModal').modal('show');
-                //     saveTileControl.options.toggleButton('none');
+                //     document.getElementById('saveTilesStep').style.display = 'none';
                 //     map.setMaxBounds([bounds._northEast,bounds._southWest]);
                 //     map.setMinZoom(12);
                 //     succescallback();
                 // }
             },
-            'saveText': 'Save Area',
+            'saveText': '<button class="btn btn-primary">Save Area</button>',
             'confirmRemoval': function(layer, successCallback) {
               $('#deletingModal').modal('show');
               sidebar.close();
@@ -745,7 +753,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                   localStorage.removeItem("mapBounds");
                   localStorage.removeItem("currMapNum");
                   map.setMaxBounds(null);
-                  saveTileControl.options.toggleButton('');
+                  document.getElementById('saveTilesStep').style.display = 'block';
+                  document.getElementById('removeTilesStep').style.display = 'none';
                   map.setMinZoom(8);
                   $('#deletingModal').modal('hide');
               });
@@ -755,8 +764,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               document.getElementsByClassName('savetiles')[0].style.display = val;
             }
             }).addTo(map);
-          if (localStorage.getItem("mapBounds") != null)
-            saveTileControl.options.toggleButton('none')
+          
           
           function setOfflineButtons(layer) {
             var progress;
@@ -1164,8 +1172,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             h3
-              | Remove offline tiles?
-              #deleteTiles
+              #removeTilesStep
+                | Remove offline tiles?
+                #deleteTiles
+              #saveTilesStep
+                | Save offline tiles?
+                #confirmSaveTiles
                 
       #savingModal.modal.fade.bs-example-modal-sm(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', data-keyboard='false', style="z-index: 1300;", data-backdrop='static')
         .modal-dialog.modal-sm(role='document')
@@ -1205,6 +1217,9 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           document.getElementsByClassName('rmtiles')[0]
         );
         document.getElementsByClassName('rmtiles')[0].children[0].className += "btn btn-danger";
+        document.getElementById('confirmSaveTiles').appendChild(
+          document.getElementsByClassName('savetiles')[0]
+        );
         $('#cancelTileDelete').click(function() {
           $('#deletingModal').modal('hide');
         });
@@ -1251,32 +1266,48 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('none');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'none';
+            document.getElementById('removeTilesStep').style.display = 'block';
+          }
         }
         function turnOffTools() {
           var myElements = document.querySelectorAll(".drawingController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'block';
+            document.getElementById('removeTilesStep').style.display = 'none';
+          }
         }
         function turnOnEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "block";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('none');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'none';
+            document.getElementById('removeTilesStep').style.display = 'block';
+          }
         }
         function turnOffEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
               myElements[i].style.display = "none";
           }
-          if (localStorage.getItem('mapBounds') == null)
-            saveTileControl.options.toggleButton('');
+          if (localStorage.getItem('mapBounds') == null) {
+            document.getElementById('saveTilesStep').style.display = 'block';
+            document.getElementById('removeTilesStep').style.display = 'none';
+          }
+        }
+        if (localStorage.getItem("mapBounds") != null) {
+          $('#saveTilesStep').css("display", "none");
+          $('#removeTilesStep').css("display", "block");
+        }
+        else {
+          $('#saveTilesStep').css("display", "block");
+          $('#removeTilesStep').css("display", "none");
         }
         document.getElementById("backStep1").addEventListener("click", function(){
           allOff();
