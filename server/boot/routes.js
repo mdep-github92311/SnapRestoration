@@ -492,10 +492,10 @@ module.exports = function (app) {
       const barrierUpdate = req.body;
 
       db.none(`UPDATE barrier_sub
-      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
+      SET agency = $2:name, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, qa_qc = $18,
            shape_stle = $19, shape_leng = $20
-      WHERE gid = $1 `,  barrierUpdate)
+      WHERE gid = $1:name`,  barrierUpdate)
         .then(function () {
           console.log('barrier updated');
           console.log(barrierUpdate);
