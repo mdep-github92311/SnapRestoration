@@ -702,25 +702,31 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 document.getElementsByClassName('tileCount')[1].style.display = 'none';
                 document.getElementsByClassName('tileCount')[2].style.display = 'none';  
                 if (layer._tilesforSave.length > 350) {
-                  document.getElementsByClassName('tileCount')[0].innerHTML = "<span class='glyphicon glyphicon-remove' style='color: #ff0000' aria-hidden='true'></span>Warning: Cannot save large area of map. <br><br> Note: Zoom in to area needed. "
                   document.getElementsByClassName('tileCount')[0].style.display = 'block';
-                  document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                  document.getElementsByClassName('tileCount')[0].innerHTML = "<span class='glyphicon glyphicon-remove' style='color: #ff0000' aria-hidden='true'></span>Warning: Cannot save large area of map. <br><br> Note: Zoom in to area needed. "
+                  document.getElementById('confirmTileSave').style.display = 'none';
+                  document.getElementById('setZoomTileSave').style.display = 'inline';
+                  document.getElementById('cancelTileSave').style.display = 'inline';
                 }
                 else if (layer._tilesforSave.length < 10) {
-                  document.getElementsByClassName('tileCount')[0].innerHTML = "<span class='glyphicon glyphicon-remove' style='color: #ff0000' aria-hidden='true'></span>Warning: Cannot save small area of map. <br><br> Note: Zoom out to area needed. "
                   document.getElementsByClassName('tileCount')[0].style.display = 'block';
-                  document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                  document.getElementsByClassName('tileCount')[0].innerHTML = "<span class='glyphicon glyphicon-remove' style='color: #ff0000' aria-hidden='true'></span>Warning: Cannot save small area of map. <br><br> Note: Zoom out to area needed. "
+                  document.getElementById('confirmTileSave').style.display = 'none';
+                  document.getElementById('setZoomTileSave').style.display = 'inline';
+                  document.getElementById('cancelTileSave').style.display = 'inline';
                 }
                 else {
                   document.getElementsByClassName('tileCount')[0].innerHTML = "Save " + layer._tilesforSave.length + " tiles for offline <br><br> Note: map will be locked until tiles are removed in the settings tab"
                   document.getElementsByClassName('tileCount')[0].style.display = 'block';
-                  document.getElementsByClassName('tileCount')[1].style.display = 'inline';
-                  document.getElementsByClassName('tileCount')[2].style.display = 'inline';
+                  document.getElementById('confirmTileSave').style.display = 'inline';
+                  document.getElementById('setZoomTileSave').style.display = 'none';
+                  document.getElementById('cancelTileSave').style.display = 'inline';
                   $('#confirmTileSave').click(function() {
                     document.getElementsByClassName('savingProgress')[0].style.display = 'block';
                     document.getElementsByClassName('tileCount')[0].style.display = 'none';
-                    document.getElementsByClassName('tileCount')[1].style.display = 'none';
-                    document.getElementsByClassName('tileCount')[2].style.display = 'none';  
+                    document.getElementById('confirmTileSave').style.display = 'none';
+                    document.getElementById('setZoomTileSave').style.display = 'none';
+                    document.getElementById('cancelTileSave').style.display = 'none'; 
                     var bounds = map.getBounds();
                     localStorage.setItem("mapZoom", JSON.stringify(map.getZoom()));
                     localStorage.setItem("mapBounds", JSON.stringify(bounds));
@@ -1189,6 +1195,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
             div.modalButtons
               button#confirmTileSave.tileCount.btn.btn-primary(type='button')
                 | Confirm
+              button#setZoomTileSave.tileCount.btn.btn-primary(type='button')
+                | Set Zoom
               button#cancelTileSave.tileCount.btn.btn-default(type='button')
                 | Cancel
             p.savingProgress 
@@ -1224,6 +1232,10 @@ html(manifest='cache.manifest', type='text/cache-manifest')
         });
         $('#cancelTileSave').click(function() {
           $('#savingModal').modal('hide');
+        });
+        $('#setZoomTileSave').click(function() {
+          $('#savingModal').modal('hide');
+          map.setZoom(12);
         });
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");

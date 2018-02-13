@@ -41,20 +41,22 @@ $(document).ready(function () {
   
   $( ".agencyInput" ).change(function(e) {
     console.log(e.currentTarget.value);
+    console.log(e)
     var agencyID = null;
     if (e.currentTarget.value == 0)
       agencyID = 'BLM';
-    else if (e.currentTarget.value == 1)
-      agencyID = 'FS';
     else if (e.currentTarget.value == 2)
-      agencyID = 'FWS';
+      agencyID = 'FS';
     else if (e.currentTarget.value == 3)
+      agencyID = 'FWS';
+    else if (e.currentTarget.value == 1)
       agencyID = 'NPS';
     var newDate = new Date();
     var newDay = ("0" + newDate.getDate()).slice(-2);
     var newMonth = ("0" + (newDate.getMonth() + 1)).slice(-2);
     var currDate = newDate.getFullYear()+(newMonth)+(newDay);
     $( ".dist_code_input" ).val(agencyID+"-"+currDate+"-"+newDate.getHours()+newDate.getMinutes()+("0"+newDate.getSeconds()).slice(-2));
+    $( ".resto_code_input" ).val(agencyID+"-"+currDate+"-"+newDate.getHours()+newDate.getMinutes()+("0"+newDate.getSeconds()).slice(-2));
   });
 
   function getDB(){

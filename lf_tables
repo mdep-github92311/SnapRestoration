@@ -134,7 +134,7 @@ ALTER SEQUENCE barrier_gid_seq OWNED BY barrier.gid;
 --
 
 CREATE TABLE barrier_sub (
-    gid integer NOT NULL,
+    gid integer AUTO_INCREMENT,
     agency integer,
     regions character varying(30),
     ecosystem character varying(30),
