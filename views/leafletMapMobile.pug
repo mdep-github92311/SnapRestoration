@@ -303,6 +303,10 @@ html(manifest='cache.manifest', type='text/cache-manifest')
       .modal-backdrop {
         z-index: 1250 !important;
       }
+      .leaflet-control-attribution {
+        margin-left: 40px !important;
+      }
+      
     body
       #header
         nav.navbar.navbar-default.navbar-inverse(role='navigation')
@@ -439,12 +443,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
             map.setMinZoom(zoom);
           }
           var baseLayer = L.tileLayer.offline('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-            '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank" style="display:inline-block;">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank" style="display:inline-block;">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank" style="display:inline-block;">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank" style="display:inline-block;">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank" style="display:inline-block;">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank" style="display:inline-block;">USA.gov</a>',
           	mapID: 0,
           	zIndex: 1,
             maxZoom: 18,
@@ -455,12 +459,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           });
           
           var mapOpenStreet = L.tileLayer.offline('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank" style="display:inline-block;">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank" style="display:inline-block;">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank" style="display:inline-block;">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank" style="display:inline-block;">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank" style="display:inline-block;">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank" style="display:inline-block;">USA.gov</a>',
           	name: "OpenStreetMap",
           	mapID: 1,
           	zIndex: 1,
@@ -470,12 +474,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           });
           
           var mapGRoad = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank" style="display:inline-block;">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank" style="display:inline-block;">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank" style="display:inline-block;">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank" style="display:inline-block;">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank" style="display:inline-block;">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank" style="display:inline-block;">USA.gov</a>',
           	name: "Google Roadmap",
           	mapID: 2,
           	zIndex: 1,
@@ -486,12 +490,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           });
           
           var mapGSatellite = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank" style="display:inline-block;">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank" style="display:inline-block;">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank" style="display:inline-block;">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank" style="display:inline-block;">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank" style="display:inline-block;">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank" style="display:inline-block;">USA.gov</a>',
           	name: "Google Satellite",
           	mapID: 3,
           	zIndex: 1,
@@ -502,12 +506,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           });
           
           var mapGHyb = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank" style="display:inline-block;">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank" style="display:inline-block;">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank" style="display:inline-block;">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank" style="display:inline-block;">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank" style="display:inline-block;">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank" style="display:inline-block;">USA.gov</a>',
           	name: "Google Hybrid",
           	mapID: 4,
           	zIndex: 1,
@@ -518,12 +522,12 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           });
           
           var mapGTerrain = L.tileLayer.offline('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
-            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
-              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank" style="display:inline-block;">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank" style="display:inline-block;">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank" style="display:inline-block;">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank" style="display:inline-block;">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank" style="display:inline-block;">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank" style="display:inline-block;">USA.gov</a>',
           	name: "Google Terrain",
           	mapID: 5,
           	zIndex: 1,
