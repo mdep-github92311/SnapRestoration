@@ -439,6 +439,7 @@ $(document).ready(function () {
     
     if(!loggedIn){
       console.log('Not logged in')
+      popupMessage('Please login to submit');
       return;
     }
     console.log('Synchronizing...');
