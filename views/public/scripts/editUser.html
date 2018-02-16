@@ -1,0 +1,97 @@
+<div class="form">
+   <div class="collectionForm">
+      <form id="userForm">
+         <label for="userForm">User Info</label>
+         <br>
+         <label for="user_name">Username: <br>
+            <input type="text" name="user_name">
+            <br>
+         </label>
+         <label for="first_name">First Name: <br>
+            <input type="text" name="first_name">
+            <br>
+         </label>
+         <label for="last_name">Last Name: <br>
+            <input type="text" name="last_name">
+            <br>
+         </label>
+         <label for="agency">
+            Agency: <br>
+            <select id="agency" name="agency">
+               <option value="0">BLM</option>
+               <option value="1">NPS</option>
+               <option value="2">FS</option>
+               <option value="3">FWS</option>
+               <option selected="selected" value="select"></option>
+            </select>
+            <br>
+         </label>
+         <br><br>
+         <input id="userEditButton" type="button" value="Save">
+      </form>
+   </div>
+</div>
+
+<script>
+   function editData(submission) {
+      if (submission != null) {
+         console.log(submission);
+         $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: '/updateUser',
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+            }
+         })
+      }
+   }
+   
+   function collectData(form) {
+      var count = 0;
+      var obj = [];
+      $(form).serializeArray().reduce(function(i, item) {
+         
+         if (item.value === '' || item.value === 'select') {
+            obj[count] = null;
+         } else if (item.name === 'agency') {
+            obj[count] = parseInt(item.value);
+         } else {
+            obj[count] = item.value;
+         }
+         count++;
+      }, {});
+      console.log(form);
+      obj[count] = this.currentData.user_name;
+      editData(obj);
+   }
+   
+   $("#userEditButton").on("click", function(event) {
+        collectData('#userForm');
+   });
+    $.each(this.currentData, function(name, val){
+        var $el = $('[name="'+name+'"]'),
+            type = $el.attr('type');
+    
+        switch(type){
+            case 'checkbox':
+                $el.attr('checked', 'checked');
+                break;
+            case 'radio':
+                $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+                break;
+            default:
+                if (val != null && val != '')
+                    $el.val(val);
+                else if (val == 0)
+                    $el.val(val);
+        }
+    });
+</script>

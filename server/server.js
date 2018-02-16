@@ -4,7 +4,7 @@ var compression = require('compression');
 var bodyParser = require('body-parser');
 var app = module.exports = loopback();
 // var session = require('client-sessions');
-var session = require('express-session')
+var session = require('express-session');
 var path = require('path');
 var crypto = require("crypto");
 var clientCertificateAuth = require('client-certificate-auth');

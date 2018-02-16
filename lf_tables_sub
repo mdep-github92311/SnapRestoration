@@ -77,7 +77,9 @@ CREATE TABLE users (
   first_name character varying(50) NOT NULL,
   last_name character varying(50) NOT NULL,
   password character varying(225) NOT NULL,
+  agency integer NOT NULL,
   certificate character varying(255),
+  password_reset integer,
   PRIMARY KEY (user_name)
 );
 

@@ -222,6 +222,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li role="presentation"><a href="Add.html">Submissions</a></li>
               <li role="presentation" class="active"><a href="#">Edit Records</a></li>
+              <li role="presentation"><a href="manageUsers.html">Manage Users</a></li>
             </ul>
           </div>
           <hr>
@@ -300,6 +301,8 @@
           var currRecords = null;
           mapMarkers = [];
           var currentData = [];
+          //sets the type of form to be saved
+          var formType = 'reg';
           var invalidated = false;
           var pageNumber = 0;
           function getAgency(agency){
@@ -988,7 +991,7 @@
                         </table>
                         <div id='editInfo'></div>
                         <div id='buttons'>
-                          <button id="editButton">Edit</button>
+                          <button id="editButton" class="btn btn-default">Edit</button>
                         </div>
                       </div>
             
@@ -1015,56 +1018,9 @@
               }).addTo(map);
               
               function editForm(){
-                console.log("edit data function");
                 $("#editInfo").load("../public/scripts/editForm.html");
-                
-                // Waits for form to be loaded before populating Data
-                setTimeout(function(){ 
-                  $.each(this.currentData.properties, function(name, val){
-                    var $el = $('[name="'+name+'"]'),
-                        type = $el.attr('type');
-                    
-                    //console.log("something is happenning = " + name + " -- " + val);
-                    //console.log(type);
-                    switch(type){
-                        case 'checkbox':
-                            $el.attr('checked', 'checked');
-                            break;
-                        case 'radio':
-                            $el.filter('[value="'+val+'"]').attr('checked', 'checked');
-                            break;
-                        default:
-                            if (val != null && val != '')
-                              $el.val(val);
-                    }
-                  }); 
-                  console.log("data check -- " + this.currentData.dataType);
-                    
-                    $('#restoPointForm').toggle(
-                      this.currentData.dataType === 'restoPoints'
-                    );
-                    $('#restoPolyForm').toggle(
-                      this.currentData.dataType === 'restoPolys'
-                    );
-                    $('#restoLineForm').toggle(
-                      this.currentData.dataType === 'restoLines'
-                    );
-                    $('#barrierForm').toggle(
-                      this.currentData.dataType === 'barriers'
-                    );
-                    $('#distPointForm').toggle(
-                      this.currentData.dataType === 'distPoints'
-                    );
-                    $('#distPolyForm').toggle(
-                      this.currentData.dataType === 'distPolys'
-                    );
-                    $('#distLineForm').toggle(
-                      this.currentData.dataType === 'distLines'
-                    );
-                  //this sets the type of edit so the correct record is editted
-                  type = 'reg';
-                  
-                }, 400);
+                console.log("data check -- " + this.currentData.dataType);
+              
               }
               
               

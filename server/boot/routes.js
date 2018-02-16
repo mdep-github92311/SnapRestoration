@@ -1041,5 +1041,62 @@ module.exports = function (app) {
         .catch(function (err) {
           throw err;
         })
+    })
+    .get('/checkLogin', (req,res) => {
+      const loginCred = req.query;
+      console.log(req.query)
+      db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
+      .then(function (users) {
+        console.log(users)
+        this.users++;
+        req.session.user_id = users;
+        res.end(JSON.stringify(users));
+      })
+      .catch(function (err) {
+          throw err;
+      })
+    })
+    .get('/getUsers', (req, res) => {
+      db.any('SELECT user_name,first_name,last_name,agency FROM users')
+      .then(function (users) {
+        res.end(JSON.stringify(users));
+      })
+      .catch(function (err) {
+          throw err;
+      })
+    })
+    .post('/updateUser', (req, res) => {
+      const userUpdate = req.body;
+
+      db.none(`UPDATE users
+      SET user_name = $1, first_name = $2, last_name = $3, agency = $4
+      WHERE user_name = $5 `,  userUpdate)
+        .then(function () {
+          console.log('user updated');
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    .post('/resetPass', (req, res) => {
+      const userUpdate = req.body;
+
+      db.none(`UPDATE users SET password = $2 WHERE user_name = $1 `,  userUpdate)
+        .then(function () {
+          console.log('password reset');
+          var response = {
+              status  : 200,
+              success : 'Password successfully reset'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
     });
 };
