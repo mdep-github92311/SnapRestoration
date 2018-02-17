@@ -3,7 +3,7 @@
  */
 var path = require('path');
 const url = require('url');   
-this.users = 0;
+var users = 0;
 
 
 module.exports = function (app) {
@@ -45,14 +45,14 @@ module.exports = function (app) {
        pathname:"/checkLogin",
        query: [post.user, post.password]
      }));
-    if (post.user === 'admin' && post.password === 'password') {
-      users++;
-      req.session.user_id = users;
-      //console.log(req.session)
-      //res.redirect('/my_secret_page');
-    } else {
-      //res.send('Bad user/pass');
-    }
+    // if (post.user === 'admin' && post.password === 'password') {
+    //   users++;
+    //   req.session.user_id = users;
+    //   //console.log(req.session)
+    //   //res.redirect('/my_secret_page');
+    // } else {
+    //   //res.send('Bad user/pass');
+    // }
   });
   
   app.get('/loginStatus', checkAuth, function (req, res) {

@@ -6,6 +6,7 @@ module.exports = function (app) {
   var loopback = require('loopback');
   const bodyParser = require('body-parser');
   const promise = require('bluebird');
+  var users = 0;
 //
 //   var testQuery = require("/loopback-getting-started/common/javascripts/query.js");
 //
@@ -49,6 +50,16 @@ module.exports = function (app) {
           throw err;
           return false
         });
+  }
+  function checkAuth(req, res, next) 
+  {
+    if (req.session.user_id == null) {
+      res.send('You are not authorized to view this page');
+      console.log(req.session.user_id)
+    } else {
+      console.log('you are logged in')
+      next();
+    }
   }
 
   app.use(bodyParser.json())
@@ -1048,16 +1059,15 @@ module.exports = function (app) {
       db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
       .then(function (user) {
         console.log(user.password_reset)
-        if (user.password_reset == 1)
-        this.users++;
-        req.session.user_id = this.users;
+        users++;
+        req.session.user_id = users;
         res.end(JSON.stringify(user));
       })
       .catch(function (err) {
           throw err;
       })
     })
-    .get('/getUsers', (req, res) => {
+    .get('/getUsers', checkAuth, (req, res) => {
       db.any('SELECT user_name,first_name,last_name,agency FROM users')
       .then(function (users) {
         res.end(JSON.stringify(users));
@@ -1066,7 +1076,7 @@ module.exports = function (app) {
           throw err;
       })
     })
-    .post('/updateUser', (req, res) => {
+    .post('/updateUser', checkAuth, (req, res) => {
       const userUpdate = req.body;
 
       db.none(`UPDATE users
@@ -1084,7 +1094,7 @@ module.exports = function (app) {
           throw err;
         })
     })
-    .post('/resetPass', (req, res) => {
+    .post('/resetPass', checkAuth, (req, res) => {
       const userUpdate = req.body;
 
       db.none(`UPDATE users SET password = $2, password_reset = 1 WHERE user_name = $1 `,  userUpdate)
@@ -1093,6 +1103,22 @@ module.exports = function (app) {
           var response = {
               status  : 200,
               success : 'Password successfully reset'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    .post('/changePass', checkAuth, (req, res) => {
+      const userUpdate = req.body;
+      db.none(`UPDATE users SET password = $2, password_reset = 0 WHERE user_name = $1 `,  userUpdate)
+        .then(function () {
+          console.log('password reset');
+          var response = {
+              status  : 200,
+              success : 'Password successfully changed'
           }
           res.end(JSON.stringify(response));
         })
