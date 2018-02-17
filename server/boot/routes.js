@@ -1044,13 +1044,14 @@ module.exports = function (app) {
     })
     .get('/checkLogin', (req,res) => {
       const loginCred = req.query;
-      console.log(req.query)
+      //console.log(req.query)
       db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
-      .then(function (users) {
-        console.log(users)
+      .then(function (user) {
+        console.log(user.password_reset)
+        if (user.password_reset == 1)
         this.users++;
-        req.session.user_id = users;
-        res.end(JSON.stringify(users));
+        req.session.user_id = this.users;
+        res.end(JSON.stringify(user));
       })
       .catch(function (err) {
           throw err;
@@ -1086,7 +1087,7 @@ module.exports = function (app) {
     .post('/resetPass', (req, res) => {
       const userUpdate = req.body;
 
-      db.none(`UPDATE users SET password = $2 WHERE user_name = $1 `,  userUpdate)
+      db.none(`UPDATE users SET password = $2, password_reset = 1 WHERE user_name = $1 `,  userUpdate)
         .then(function () {
           console.log('password reset');
           var response = {
