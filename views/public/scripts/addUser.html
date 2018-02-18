@@ -1,7 +1,8 @@
 <div class="form">
    <div class="collectionForm">
-      <form id="userForm">
+      <form id="addUserForm">
          <label for="userForm">User Info</label>
+         <label id="usernameError" style="color:red; display:none;"for="error">Username is already taken</label>
          <br>
          <label for="user_name">Username: <br>
             <input type="text" name="user_name">
@@ -27,37 +28,47 @@
             <br>
          </label>
          <br><br>
-         <input class="btn btn-primary" id="userEditButton" type="button" value="Save">
-         <button id="cancelButton" class="btn btn-default" type="button" data-toggle='modal' data-target='#myModal'>Cancel</button>
+         <input class="btn btn-primary" id="userAddButton" type="button" value="Add">
+         <button id="cancelButton" type="button" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
       </form>
    </div>
 </div>
 
 <script>
-   function editData(submission) {
+   function addData(submission) {
       if (submission != null) {
          console.log(submission);
          $.ajax({
             type: "POST",
             datatype: "json",
-            url: '/updateUser',
+            url: '/addUser',
             contentType: 'application/json',
             data: JSON.stringify(submission),
             success: function (data) {
-              window.location.reload(true); 
-              console.log("success!!");
-              console.log(data);
+               data = JSON.parse(data)
+               console.log("success!!");
+               if (data.status == 200)
+                  document.getElementById('editInfo').innerHTML = '<h4>User has been created!</h4><h5>Username: <Strong>'+submission[0]+'</Strong></h5><h5>Password: <Strong>'+submission[5]+'</Strong></h5>'
+               else
+                  document.getElementById('usernameError').style.display = "block";
+               console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
+               console.log("some error");
             }
          })
       }
    }
    
-   function collectData(form) {
+   function collectData1(form) {
       var count = 0;
       var obj = [];
+      var length = 8,
+         charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+         password = "";
+      for (var i = 0, n = charset.length; i < length; ++i) {
+         password += charset.charAt(Math.floor(Math.random() * n));
+      }
       $(form).serializeArray().reduce(function(i, item) {
          
          if (item.value === '' || item.value === 'select') {
@@ -70,12 +81,12 @@
          count++;
       }, {});
       console.log(form);
-      obj[count] = this.currentData.user_name;
-      editData(obj);
+      obj[count] = password;
+      addData(obj);
    }
    
-   $("#userEditButton").on("click", function(event) {
-        collectData('#userForm');
+   $("#userAddButton").on("click", function(event) {
+        collectData1('#addUserForm');
    });
     $.each(this.currentData, function(name, val){
         var $el = $('[name="'+name+'"]'),

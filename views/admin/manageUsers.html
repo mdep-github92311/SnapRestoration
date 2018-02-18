@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
+  <script src='../admin/checkLogin.js'></script>
     <head>
         <title>SNAP Admin</title>
         <script src='../public/scripts/polyfill.min.js'></script>
@@ -223,12 +223,17 @@
               <li role="presentation" class="active"><a href="#">Manage Users</a></li>
             </ul>
           </div>
+          <hr>
+          <h4 style="text-align: center;">Options</h4>
+          <ul class="list-group">
+              <li id="barrierFilter" class="list-group-item btn btn-default"data-toggle='modal' data-target='#myModal' onClick="addUser()">Add new user</li>
+            </ul>
         </div>
         
         <div class="row">
           <div class="col-lg-6">
             <div class="input-group">	
-              <input type="number" id="searchID"class="form-control" placeholder="Search by username...">	
+              <input type="text" id="searchID"class="form-control" placeholder="Search by username...">	
               <span class="input-group-btn">	
                 <button id="searchButton" class="btn btn-default" type="button">Search</button>	
               </span>	
@@ -330,7 +335,20 @@
                     }
                 })
             }
-          
+            function addUser() {
+                document.getElementById("pInfo").style.display = "none";  
+                document.getElementById("resetButton").style.display = "none"; 
+                document.getElementById("clipButton").style.display = "none"; 
+                document.getElementById("resetPass").style.display = "none"; 
+                
+                $("#myModalLabel").html("<h1> Add User </h1>");
+                var div = document.getElementById("editInfo");
+                div.innerHTML = "";
+                div.style.display ="";
+                $("#editInfo").load("../public/scripts/addUser.html");
+                document.getElementById("buttons").style.display = "none"; 
+              
+            }
             $('#pageLeft').click(function(){
                 // console.log(currRecords)
                 $("#tableItems").html('')
@@ -436,11 +454,9 @@
             $("#tableItems").html('<tr><td colspan=5>No records match that Username</td></tr>');
             if (currRecords != null) {
                 currRecords.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
+                if (feature.user_name == $("#searchID").val()) {
                     $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {barriers: { features: features }};
-                    writeTables(searched);
+                    writeTables(features);
                   }
               });
             }

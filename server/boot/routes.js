@@ -1125,5 +1125,26 @@ module.exports = function (app) {
         .catch(function (err) {
           throw err;
         })
+    })
+    
+    .post('/addUser', checkAuth, (req, res) => {
+      const user = req.body;
+      db.none(`INSERT INTO users(user_name, first_name, last_name, agency, password) VALUES($1,$2,$3,$4,$5)`,  user)
+        .then(function () {
+          console.log('user added');
+          var response = {
+              status  : 200,
+              success : 'User successfully added'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          var response = {
+              status  : 400,
+              success : 'Username already in use'
+          }
+          res.end(JSON.stringify(response));
+          throw err;
+        })
     });
 };
