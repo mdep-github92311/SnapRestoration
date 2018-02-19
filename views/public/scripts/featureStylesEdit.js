@@ -180,6 +180,7 @@ function onEachBarrierEdit(feature, layer) {
     setToolEvents(layer);
     $("#barrierEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -198,6 +199,7 @@ function onEachDistLineEdit(feature, layer) {
     setToolEvents(layer);
     $("#distLineEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -235,6 +237,7 @@ function onEachDistPolyEdit(feature, layer) {
     setToolEvents(layer);
     $("#distPolyEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -254,6 +257,7 @@ function onEachDistPolyCentEdit(feature, layer) {
     setToolEvents(layer);
     $("#distPolyCentEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -272,6 +276,7 @@ function onEachRestoPolyEdit(feature, layer) {
     setToolEvents(layer);
     $("#restoPolyEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -310,6 +315,7 @@ function onEachRestoPolyCentEdit(feature, layer) {
     setToolEvents(layer);
     $("#restoPolyCentEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });
@@ -328,6 +334,7 @@ function onEachRestoLineEdit(feature, layer) {
     setToolEvents(layer);
     $("#restoLineEditDrawButton").on("click", function(event) {
         currPos = layer.getLatLngs();
+        layer.options.editing || (layer.options.editing = {});
         layer.editing.enable();
         turnOnEditTools();
     });

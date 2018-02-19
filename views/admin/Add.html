@@ -222,6 +222,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li role="presentation" class="active"><a href="#">Submissions</a></li>
               <li role="presentation"><a href="Edit.html">Edit Records</a></li>
+              <li role="presentation"><a href="manageUsers.html">Manage Users</a></li>
             </ul>
           </div>
           <hr>
@@ -300,6 +301,8 @@
           var currRecords = null;
           mapMarkers = [];
           var currentData = [];
+          //sets the type of form to be saved
+          var formType = 'sub';
           var invalidated = false;
           var pageNumber = 0;
           function getAgency(agency){
@@ -966,8 +969,8 @@
                         </table>
                         <div id='editInfo'></div>
                         <div id='buttons'>
-                          <button id="editButton">Edit</button>
-                          <button id="confirmButton">Confirm Submission</button>
+                          <button id="editButton" class="btn btn-default">Edit</button>
+                          <button id="confirmButton" class="btn btn-default">Confirm Submission</button>
                         </div>
                       </div>
             
@@ -994,56 +997,9 @@
               }).addTo(map);
               
               function editForm(){
-                console.log("edit data function");
                 $("#editInfo").load("../public/scripts/editForm.html");
-                
-                // Waits for form to be loaded before populating Data
-                setTimeout(function(){ 
-                  $.each(this.currentData.properties, function(name, val){
-                    var $el = $('[name="'+name+'"]'),
-                        type = $el.attr('type');
+                console.log("data check -- " + this.currentData.dataType);
                     
-                    //console.log("something is happenning = " + name + " -- " + val);
-                    //console.log(type);
-                    switch(type){
-                        case 'checkbox':
-                            $el.attr('checked', 'checked');
-                            break;
-                        case 'radio':
-                            $el.filter('[value="'+val+'"]').attr('checked', 'checked');
-                            break;
-                        default:
-                            if (val != null && val != '')
-                              $el.val(val);
-                    }
-                  }); 
-                  console.log("data check -- " + this.currentData.dataType);
-                    
-                    $('#restoPointForm').toggle(
-                      this.currentData.dataType === 'restoPoints'
-                    );
-                    $('#restoPolyForm').toggle(
-                      this.currentData.dataType === 'restoPolys'
-                    );
-                    $('#restoLineForm').toggle(
-                      this.currentData.dataType === 'restoLines'
-                    );
-                    $('#barrierForm').toggle(
-                      this.currentData.dataType === 'barriers'
-                    );
-                    $('#distPointForm').toggle(
-                      this.currentData.dataType === 'distPoints'
-                    );
-                    $('#distPolyForm').toggle(
-                      this.currentData.dataType === 'distPolys'
-                    );
-                    $('#distLineForm').toggle(
-                      this.currentData.dataType === 'distLines'
-                    );
-                  //this sets the type of edit so the correct record is editted
-                  type = 'reg';
-                  
-                }, 400);
               }
               
               function confirmData(){
@@ -1063,6 +1019,8 @@
                 else if (this.currentData.dataType === 'distLines')
                   link = "/distLineConfirm";
                   
+                
+                
                 console.log("submitting to " + link);
                 console.log(this.currentData);
                 var submission = this.currentData;

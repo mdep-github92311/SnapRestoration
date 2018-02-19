@@ -140,7 +140,8 @@
             <input type="text" name="geom">
          </label>
          <br><br>
-         <input id="restoPointEditButton" type="button" value="Save">
+         <input id="restoPointEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="restoPolyForm" action="/restoPolyFormSubmit" style="display: none;">
          <label for="restoPolyForm">Restoration Polygon Collection</label><br>
@@ -374,7 +375,8 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="restoPolyEditButton" type="button" value="Save">
+         <br><br><input id="restoPolyEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="restoLineForm" style="display: none;">
          <label for="restoLineForm">Restoration Line Collection</label><br>
@@ -602,7 +604,8 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="restoLineEditButton" type="button" value="Save">
+         <br><br><input id="restoLineEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="barrierForm" style="display: none;">
          <label for="barrierForm">Barrier Collection</label><br>
@@ -765,7 +768,8 @@
          </label>
          <label for="geom">geom: <br><input type="text" name="geom"></label>
          <br><br>
-         <input id="barrierEditButton" type="button" value="Save">
+         <input id="barrierEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="distPointForm" style="display: none;">
          <label for="distPointForm">Disturbance Point Collection</label><br>
@@ -1001,7 +1005,8 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distPointEditButton" type="button" value="Save">
+         <br><br><input id="distPointEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="distPolyForm" style="display: none;">
          <label for="distPolyForm">Disturbance Polygon Collection</label><br>
@@ -1302,7 +1307,8 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distPolyEditButton" type="button" value="Save">
+         <br><br><input id="distPolyEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="distLineForm" style="display: none;">
          <label for="distLineForm">Disturbance Line Collection</label><br>
@@ -1596,7 +1602,7 @@
          <label for="qa_qc">QA/QC: <br>
             <input type="text" name="qa_qc"><br>
          </label>
-         <label for="old_dist_c">old_dist_c: <br>
+         <label for="old_dist_c">Old Disturbance Code: <br>
             <input type="text" name="old_dist_c"><br>
          </label>
          <label for="shape_stle">shape_stle: <br>
@@ -1608,15 +1614,13 @@
          <label for="geom">geom: <br>
             <input type="text" name="geom">
          </label>
-         <br><br><input id="distLineEditButton" type="button" value="Save">
+         <br><br><input id="distLineEditButton" type="button" class="btn btn-default" value="Save">
+         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
    </div>
 </div>
 
 <script>
-   //set type for either submission records or regular records
-   var type = null;
-   
    function editData(submission, route) {
       if (submission != null) {
          console.log(submission);
@@ -1664,60 +1668,99 @@
    }
 
    $("#restoPointEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#restoPointForm','/restoPointSubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#restoPointForm','/restoPointFormEdit');
       else
          console.log("error setting value of type variable");
    });
    $("#restoPolyEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#restoPolyForm','/restoPolySubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#restoPolyForm','/restoPolyFormEdit');
       else
          console.log("error setting value of type variable");
    });
    $("#restoLineEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#restoLineForm','/restoLineSubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#restoLineForm','/restoLineFormEdit');
       else
          console.log("error setting value of type variable");
    });
    $("#barrierEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#barrierForm','/barrierSubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#barrierForm','/barrierFormEdit');
       else
          console.log("error setting value of type variable");
    });
    $("#distPointEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#distPointForm','/distPointSubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#distPointForm','/distPointFormEdit');
       else
          console.log("error setting value of type variable");
    });
    $("#distPolyEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#distPolyForm','/distPolySubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#distPolyForm','/distPolyFormEdit');
       else
          console.log("error setting value of type variable");
    });
    $("#distLineEditButton").on("click", function(event) {
-      if (type == 'sub')
+      if (this.formType == 'sub')
          collectData('#distLineForm','/distLineSubFormEdit');
-      else if (type == 'reg')
+      else if (this.formType == 'reg')
          collectData('#distLineForm','/distLineFormEdit');
       else
          console.log("error setting value of type variable");
    });
-   
+   $.each(this.currentData.properties, function(name, val){
+      var $el = $('[name="'+name+'"]'),
+         type = $el.attr('type');
+      switch(type){
+         case 'checkbox':
+            $el.attr('checked', 'checked');
+            break;
+         case 'radio':
+            $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+            break;
+         default:
+            if (val != null && val != '')
+               $el.val(val);
+            else if (val == 0)
+               $el.val(val);
+     }
+   });
+    
+
+   $('#restoPointForm').toggle(
+      this.currentData.dataType === 'restoPoints'
+   );
+   $('#restoPolyForm').toggle(
+      this.currentData.dataType === 'restoPolys'
+   );
+   $('#restoLineForm').toggle(
+      this.currentData.dataType === 'restoLines'
+   );
+   $('#barrierForm').toggle(
+      this.currentData.dataType === 'barriers'
+   );
+   $('#distPointForm').toggle(
+      this.currentData.dataType === 'distPoints'
+   );
+   $('#distPolyForm').toggle(
+      this.currentData.dataType === 'distPolys'
+   );
+   $('#distLineForm').toggle(
+      this.currentData.dataType === 'distLines'
+   );
 </script>

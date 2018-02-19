@@ -6,6 +6,7 @@ module.exports = function (app) {
   var loopback = require('loopback');
   const bodyParser = require('body-parser');
   const promise = require('bluebird');
+  var users = 0;
 //
 //   var testQuery = require("/loopback-getting-started/common/javascripts/query.js");
 //
@@ -49,6 +50,16 @@ module.exports = function (app) {
           throw err;
           return false
         });
+  }
+  function checkAuth(req, res, next) 
+  {
+    if (req.session.user_id == null) {
+      res.send('You are not authorized to view this page');
+      console.log(req.session.user_id)
+    } else {
+      console.log('you are logged in')
+      next();
+    }
   }
 
   app.use(bodyParser.json())
@@ -492,10 +503,10 @@ module.exports = function (app) {
       const barrierUpdate = req.body;
 
       db.none(`UPDATE barrier_sub
-      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
+      SET agency = $2:name, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, qa_qc = $18,
            shape_stle = $19, shape_leng = $20
-      WHERE gid = $1 `,  barrierUpdate)
+      WHERE gid = $1:name`,  barrierUpdate)
         .then(function () {
           console.log('barrier updated');
           console.log(barrierUpdate);
@@ -1039,6 +1050,100 @@ module.exports = function (app) {
           
         })
         .catch(function (err) {
+          throw err;
+        })
+    })
+    .get('/checkLogin', (req,res) => {
+      const loginCred = req.query;
+      //console.log(req.query)
+      db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
+      .then(function (user) {
+        console.log(user.password_reset)
+        users++;
+        req.session.user_id = users;
+        res.end(JSON.stringify(user));
+      })
+      .catch(function (err) {
+          throw err;
+      })
+    })
+    .get('/getUsers', checkAuth, (req, res) => {
+      db.any('SELECT user_name,first_name,last_name,agency FROM users')
+      .then(function (users) {
+        res.end(JSON.stringify(users));
+      })
+      .catch(function (err) {
+          throw err;
+      })
+    })
+    .post('/updateUser', checkAuth, (req, res) => {
+      const userUpdate = req.body;
+
+      db.none(`UPDATE users
+      SET user_name = $1, first_name = $2, last_name = $3, agency = $4
+      WHERE user_name = $5 `,  userUpdate)
+        .then(function () {
+          console.log('user updated');
+          var response = {
+              status  : 200,
+              success : 'Updated Successfully'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    .post('/resetPass', checkAuth, (req, res) => {
+      const userUpdate = req.body;
+
+      db.none(`UPDATE users SET password = $2, password_reset = 1 WHERE user_name = $1 `,  userUpdate)
+        .then(function () {
+          console.log('password reset');
+          var response = {
+              status  : 200,
+              success : 'Password successfully reset'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    .post('/changePass', checkAuth, (req, res) => {
+      const userUpdate = req.body;
+      db.none(`UPDATE users SET password = $2, password_reset = 0 WHERE user_name = $1 `,  userUpdate)
+        .then(function () {
+          console.log('password reset');
+          var response = {
+              status  : 200,
+              success : 'Password successfully changed'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
+    
+    .post('/addUser', checkAuth, (req, res) => {
+      const user = req.body;
+      db.none(`INSERT INTO users(user_name, first_name, last_name, agency, password) VALUES($1,$2,$3,$4,$5)`,  user)
+        .then(function () {
+          console.log('user added');
+          var response = {
+              status  : 200,
+              success : 'User successfully added'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          var response = {
+              status  : 400,
+              success : 'Username already in use'
+          }
+          res.end(JSON.stringify(response));
           throw err;
         })
     });

@@ -2,6 +2,7 @@
  * Created by msgis-student on 6/9/2017.
  */
 var path = require('path');
+const url = require('url');   
 var users = 0;
 
 
@@ -38,14 +39,20 @@ module.exports = function (app) {
   app.post('/login', function (req, res) {
     var post = req.body;
     //console.log(req.session)
-    if (post.user === 'admin' && post.password === 'password') {
-      users++;
-      req.session.user_id = users;
-      //console.log(req.session)
-      res.redirect('/my_secret_page');
-    } else {
-      res.send('Bad user/pass');
-    }
+     
+    
+    res.redirect(url.format({
+       pathname:"/checkLogin",
+       query: [post.user, post.password]
+     }));
+    // if (post.user === 'admin' && post.password === 'password') {
+    //   users++;
+    //   req.session.user_id = users;
+    //   //console.log(req.session)
+    //   //res.redirect('/my_secret_page');
+    // } else {
+    //   //res.send('Bad user/pass');
+    // }
   });
   
   app.get('/loginStatus', checkAuth, function (req, res) {

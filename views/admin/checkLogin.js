@@ -9,9 +9,9 @@ function checkLogin() {
             var login = document.getElementById('loginTab');
             var logout = document.getElementById('logoutTab');
             if (login != null)
-                login.style.display = "block";
+                login.style.display = "none";
             if (logout != null)
-                logout.style.display = "none";
+                logout.style.display = "block";
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.warn(XMLHttpRequest.responseText);
