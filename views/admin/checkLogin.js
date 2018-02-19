@@ -9,7 +9,7 @@ function checkLogin() {
             var login = document.getElementById('loginTab');
             var logout = document.getElementById('logoutTab');
             if (login != null)
-                login.style.display = "nonw";
+                login.style.display = "none";
             if (logout != null)
                 logout.style.display = "block";
         },
