@@ -13,7 +13,7 @@ function setProp(prop) {
         case 'ecosystem':
             return 'Ecosystem';
         case 'gps_date':
-            return 'Date collected?';
+            return 'Date collected:';
         case 'dist_code':
             return 'Disturbance Code';
         case 'old_dist_c':
