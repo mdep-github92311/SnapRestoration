@@ -1,5 +1,16 @@
-
+var selected = null, selectedColor = {fillColor: 'white', color: 'white'};
 // sets name of properties
+function selectedFeature(layer) {
+    if (selected == null)
+        selected = layer;
+    else
+        selected.setStyle(selectedColor);
+    selectedColor.fillColor = layer.options.fillColor;
+    selectedColor.color = layer.options.color;
+    layer.setStyle({fillColor :'white', color :'white'});
+    selected = layer;
+}
+
 function setProp(prop) {
     switch (prop) {
         case 'gid':
@@ -199,7 +210,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#fdfe00",
-                color: "#000",
+                color: "#fdfe00",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -209,7 +220,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#54ff01",
-                color: "#000",
+                color: "#54ff01",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -220,7 +231,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#005de8",
-                color: "#000",
+                color: "#005de8",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -230,7 +241,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#8600ac",
-                color: "#000",
+                color: "#8600ac",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -332,25 +343,25 @@ function myStyleDistPoly(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#000",
+                color: "#fdfe00",
                 fillColor: "#fdfe00"
             };
             break;
         case 1:
             return {
-                color: "#000",
+                color: "#54ff01",
                 fillColor: "#54ff01"
             };
             break;
         case 2:
             return {
-                color: "#000",
+                color: "#005de8",
                 fillColor: "#005de8"
             };
             break;
         case 3:
             return {
-                color: "#000",
+                color: "#8600ac",
                 fillColor: "#8600ac"
             };
             break;
@@ -416,6 +427,7 @@ function roadColor(feature) {
 
 function onEachBarrier(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -450,6 +462,7 @@ function onEachDistLine(feature, layer) {
                 return;
             }
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -480,6 +493,7 @@ function onEachDistPoint(feature, layer) {
                 return;
             }
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -509,6 +523,7 @@ function onEachDistPoly(feature, layer) {
     // console.log('layer')
     // console.log(layer);
     $(layer).on('click', function () {
+        selectedFeature(layer);
         // console.log(feature);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
@@ -533,6 +548,7 @@ function onEachDistPoly(feature, layer) {
 
 function onEachDistPolyCent(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -554,6 +570,7 @@ function onEachDistPolyCent(feature, layer) {
 
 function onEachRestoPoly(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         //console.log(feature);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
@@ -578,6 +595,7 @@ function onEachRestoPoly(feature, layer) {
 
 function onEachRestoPoint(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -599,6 +617,7 @@ function onEachRestoPoint(feature, layer) {
 
 function onEachRestoPolyCent(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -619,6 +638,7 @@ function onEachRestoPolyCent(feature, layer) {
 
 function onEachRestoLine(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
