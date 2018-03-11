@@ -150,7 +150,6 @@ function setProp(prop) {
         case 'km_resto':
             return 'Km Restored';
         default:
-            console.log(prop)
             return prop;
     }
 }
