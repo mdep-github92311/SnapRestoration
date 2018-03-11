@@ -39,6 +39,8 @@ function setProp(prop) {
             return 'Disturbance Type';
         case 'accessibil':
             return 'Accessibility'; 
+        case 'assessibil':
+            return 'Accessibility'; 
         case 'visibility':
             return 'Visibility';
         case 'comments':
@@ -123,7 +125,32 @@ function setProp(prop) {
             return 'Shape Length';
         case 'shape_area':
             return 'Shape Area';
+        case 'te_action':
+            return 'T&E Species';
+        case 'treatment_':
+            return 'Treatment Type';
+        case 'non_list_a':
+            return 'Non-listed Species';
+        case 'site_vulne':
+            return 'Site Vulnerability';
+        case 'barr_code':
+            return 'Barrier Code';
+        case 'barr_actio':
+            return 'Barrier Action';
+        case 'barr_type':
+            return 'Barrier Type';
+        case 'barr_miles':
+            return 'Miles of Barrier';
+        case 'barr_km':
+            return 'Km of Barrier';
+        case 'resto_act':
+            return 'Restoration Activity';
+        case 'miles_rest':
+            return 'Miles Restored';
+        case 'km_resto':
+            return 'Km Restored';
         default:
+            console.log(prop)
             return prop;
     }
 }

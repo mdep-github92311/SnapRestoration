@@ -17,6 +17,7 @@ html
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
     link(rel='stylesheet', href='/public/css/sidebarV2.css')
     link(rel='stylesheet', href='/public/css/leaflet-topCenter.css')
+    link(rel='stylesheet', href='/public/css/leaflet.search.min.css')
     
     script(src='/public/scripts/jquery.min.js')
     //script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
@@ -53,6 +54,7 @@ html
     //script(src='https://unpkg.com/leaflet-sidebar')
     
     script(src='/public/scripts/leaflet.sidebar.min.js')
+    script(src='/public/scripts/leaflet.search.min.js')
     
     script(src='/public/scripts/featureStyles.js')
     script(src='/public/scripts/featureStylesEdit.js')
@@ -761,6 +763,9 @@ html
             li
               a(href='#savedSubs', role='tab')
                 span.glyphicon.glyphicon-list-alt(aria-hidden='true')
+            li
+              a(href='#searchBar', role='tab')
+                span.glyphicon.glyphicon-search(aria-hidden='true')
 
           //ul(role='tablist')
             // bottom aligned tabs
@@ -857,10 +862,17 @@ html
                 #saved
               br
               button#sync.btn.btn-primary Submit All Forms
+              
+          #searchBar.sidebar-pane
+            h1.sidebar-header
+              | Search
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #searchBarTag
+            #filters
           
                 
       script. 
-        
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
