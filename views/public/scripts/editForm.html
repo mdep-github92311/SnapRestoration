@@ -77,7 +77,7 @@
             </select>
             <br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="resto_code">Restoration Code: <br>
@@ -121,7 +121,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="previously">
             Previously Restored: <br>
@@ -136,9 +136,7 @@
          <label for="qa_qc">QA/QC: <br>
             <input type="text" name="qa_qc"><br>
          </label>
-         <label for="geom">geom: <br>
-            <input type="text" name="geom">
-         </label>
+         
          <br><br>
          <input id="restoPointEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
@@ -240,7 +238,7 @@
             <br>
          </label>
          <label for="te_action">
-            te_action: <br>
+            T&E Species: <br>
             <select id="te_actionRPoly" name="te_action">
                <option value="select"></option>
                <option value="Yes">Yes</option>
@@ -249,7 +247,7 @@
             <br>
          </label>
          <label for="non_list_a">
-            non_list_a: <br>
+            Non-listed Species: <br>
             <select id="non_list_aRPoly" name="non_list_a">
                <option value="select"></option>
                <option value="Yes">Yes</option>
@@ -270,7 +268,7 @@
             <input type="text" name="project_na"><br>
          </label>
          <label for="treatment_">
-            treatment_: <br>
+            Treatment Type: <br>
             <select id="treatment_RPoly" name="treatment_">
                <option value="select"></option>
                <option value="Active">Active</option>
@@ -284,7 +282,7 @@
          <label for="kmsq_resto">Km^2 Restored: <br>
             <input type="text" name="kmsq_resto"><br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="gps_photo">
@@ -297,7 +295,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="signed">
             Signed: <br>
@@ -372,9 +370,7 @@
          <label for="shape_area">Shape Area: <br>
             <input type="text" name="shape_area"><br>
          </label>
-         <label for="geom">geom: <br>
-            <input type="text" name="geom">
-         </label>
+         
          <br><br><input id="restoPolyEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
@@ -453,14 +449,14 @@
             </select>
             <br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="resto_code">Restoration Code: <br>
             <input type="text" name="resto_code"><br>
          </label>
          <label for="resto_act">
-            resto_act: <br>
+            Restoration Action: <br>
             <select id="resto_actRLine" name="resto_act">
                <option value="select"></option>
                <option value="Road Decommissioning">Road Decommissioning*</option>
@@ -505,7 +501,7 @@
             <input type="text" name="project_na"><br>
          </label>
          <label for="treatment_">
-            treatment_: <br>
+            Treatment Type: <br>
             <select id="treatment_RLine" name="treatment_">
                <option value="select"></option>
                <option value="Active">Active</option>
@@ -555,10 +551,10 @@
             </select>
             <br>
          </label>
-         <label for="miles_rest">miles_rest: <br>
+         <label for="miles_rest">Miles Restored: <br>
             <input type="text" name="miles_rest"><br>
          </label>
-         <label for="km_resto">km_resto: <br>
+         <label for="km_resto">Km Restored: <br>
             <input type="text" name="km_resto"><br>
          </label>
          <label for="gps_photo">
@@ -571,7 +567,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="monitoring">
             Monitoring: <br>
@@ -601,9 +597,7 @@
          <label for="shape_leng">Shape Length: <br>
             <input type="text" name="shape_leng"><br>
          </label>
-         <label for="geom">geom: <br>
-            <input type="text" name="geom">
-         </label>
+         
          <br><br><input id="restoLineEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
@@ -682,7 +676,7 @@
             </select>
             <br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="barr_code">barr_code: <br>
@@ -755,7 +749,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="qa_qc">QA/QC: <br>
             <input type="text" name="qa_qc"><br>
@@ -766,7 +760,7 @@
          <label for="shape_leng">Shape Length: <br>
             <input type="text" name="shape_leng"><br>
          </label>
-         <label for="geom">geom: <br><input type="text" name="geom"></label>
+         
          <br><br>
          <input id="barrierEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
@@ -846,7 +840,7 @@
             </select>
             <br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="dist_code">Disturbance Code: <br>
@@ -994,7 +988,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="qa_qc">QA/QC: <br>
             <input type="text" name="qa_qc"><br>
@@ -1002,9 +996,7 @@
          <label for="old_distco">Old Disturbance Code: <br>
             <input type="text" name="old_distco"><br>
          </label>
-         <label for="geom">geom: <br>
-            <input type="text" name="geom">
-         </label>
+         
          <br><br><input id="distPointEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
@@ -1083,7 +1075,7 @@
             </select>
             <br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="dist_code">Disturbance Code: <br>
@@ -1197,7 +1189,7 @@
             <br>
          </label>
          <label for="assessibil">
-            assessibil: <br>
+            Accessibility: <br>
             <select id="assessibilDPoly" name="assessibil">
                <option value="select"></option>
                <option value="High">High</option>
@@ -1271,7 +1263,7 @@
             <br>
          </label>
          <label for="site_vulne">
-            site_vulne: <br>
+            Site Vulnerability <br>
             <select id="site_vulneDPoly" name="site_vulne">
                <option value="select"></option>
                <option value="Low">Low</option>
@@ -1284,7 +1276,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="qa_qc">QA/QC: <br>
             <input type="text" name="qa_qc"><br>
@@ -1304,9 +1296,7 @@
          <label for="shape_area">Shape Area: <br>
             <input type="text" name="shape_area"><br>
          </label>
-         <label for="geom">geom: <br>
-            <input type="text" name="geom">
-         </label>
+         
          <br><br><input id="distPolyEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
@@ -1385,7 +1375,7 @@
             </select>
             <br>
          </label>
-         <label for="gps_date">Date collected? <br>
+         <label for="gps_date">Date collected: <br>
             <input type="date" name="gps_date"><br>
          </label>
          <label for="dist_code">Disturbance Code: <br>
@@ -1597,7 +1587,7 @@
             <br>
          </label>
          <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="text" name="photo_azim"><br>
+            <input type="number" name="photo_azim" min="1" max="360"><br>
          </label>
          <label for="qa_qc">QA/QC: <br>
             <input type="text" name="qa_qc"><br>
@@ -1611,9 +1601,7 @@
          <label for="shape_leng">Shape Length: <br>
             <input type="text" name="shape_leng"><br>
          </label>
-         <label for="geom">geom: <br>
-            <input type="text" name="geom">
-         </label>
+         
          <br><br><input id="distLineEditButton" type="button" class="btn btn-default" value="Save">
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>

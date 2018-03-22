@@ -12,6 +12,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
     link(rel='stylesheet', href='/public/css/styledLayerControl.css')
     link(rel='stylesheet', href='/public/css/sidebarV2.css')
     link(rel='stylesheet', href='/public/css/leaflet-topCenter.css')
+    link(rel='stylesheet', href='/public/css/leaflet.search.min.css')
     script(src='/public/scripts/jquery.min.js')
     //script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
     
@@ -49,6 +50,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
     //script(src='https://unpkg.com/leaflet-sidebar')
     
     script(src='/public/scripts/leaflet.sidebar.min.js')
+    script(src='/public/scripts/leaflet.search.min.js')
     
     script(src='/public/scripts/featureStyles.js')
     script(src='/public/scripts/featureStylesEdit.js')
@@ -1203,7 +1205,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 | Polygon
               br
               button#drawMarkerB.drawControl2.btn.btn-default
-                | Marker
+                | Point
               br
             #step1Drawing
               button#editShapeB.drawControl2.btn.btn-danger

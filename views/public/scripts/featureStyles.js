@@ -1,5 +1,16 @@
-
+var selected = null, selectedColor = {fillColor: 'white', color: 'white'};
 // sets name of properties
+function selectedFeature(layer) {
+    if (selected == null)
+        selected = layer;
+    else
+        selected.setStyle(selectedColor);
+    selectedColor.fillColor = layer.options.fillColor;
+    selectedColor.color = layer.options.color;
+    layer.setStyle({fillColor :'white', color :'white'});
+    selected = layer;
+}
+
 function setProp(prop) {
     switch (prop) {
         case 'gid':
@@ -13,7 +24,7 @@ function setProp(prop) {
         case 'ecosystem':
             return 'Ecosystem';
         case 'gps_date':
-            return 'Date collected?';
+            return 'Date collected:';
         case 'dist_code':
             return 'Disturbance Code';
         case 'old_dist_c':
@@ -27,6 +38,8 @@ function setProp(prop) {
         case 'dist_pt_ty':
             return 'Disturbance Type';
         case 'accessibil':
+            return 'Accessibility'; 
+        case 'assessibil':
             return 'Accessibility'; 
         case 'visibility':
             return 'Visibility';
@@ -112,6 +125,30 @@ function setProp(prop) {
             return 'Shape Length';
         case 'shape_area':
             return 'Shape Area';
+        case 'te_action':
+            return 'T&E Species';
+        case 'treatment_':
+            return 'Treatment Type';
+        case 'non_list_a':
+            return 'Non-listed Species';
+        case 'site_vulne':
+            return 'Site Vulnerability';
+        case 'barr_code':
+            return 'Barrier Code';
+        case 'barr_actio':
+            return 'Barrier Action';
+        case 'barr_type':
+            return 'Barrier Type';
+        case 'barr_miles':
+            return 'Miles of Barrier';
+        case 'barr_km':
+            return 'Km of Barrier';
+        case 'resto_act':
+            return 'Restoration Activity';
+        case 'miles_rest':
+            return 'Miles Restored';
+        case 'km_resto':
+            return 'Km Restored';
         default:
             return prop;
     }
@@ -199,7 +236,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#fdfe00",
-                color: "#000",
+                color: "#fdfe00",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -209,7 +246,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#54ff01",
-                color: "#000",
+                color: "#54ff01",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -220,7 +257,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#005de8",
-                color: "#000",
+                color: "#005de8",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -230,7 +267,7 @@ function myStyleDistPoints(feature) {
             return {
                 radius: 300,
                 fillColor: "#8600ac",
-                color: "#000",
+                color: "#8600ac",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -332,25 +369,25 @@ function myStyleDistPoly(feature) {
     switch (feature.properties.agency) {
         case 0:
             return {
-                color: "#000",
+                color: "#fdfe00",
                 fillColor: "#fdfe00"
             };
             break;
         case 1:
             return {
-                color: "#000",
+                color: "#54ff01",
                 fillColor: "#54ff01"
             };
             break;
         case 2:
             return {
-                color: "#000",
+                color: "#005de8",
                 fillColor: "#005de8"
             };
             break;
         case 3:
             return {
-                color: "#000",
+                color: "#8600ac",
                 fillColor: "#8600ac"
             };
             break;
@@ -416,6 +453,7 @@ function roadColor(feature) {
 
 function onEachBarrier(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -450,6 +488,7 @@ function onEachDistLine(feature, layer) {
                 return;
             }
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -480,6 +519,7 @@ function onEachDistPoint(feature, layer) {
                 return;
             }
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -509,6 +549,7 @@ function onEachDistPoly(feature, layer) {
     // console.log('layer')
     // console.log(layer);
     $(layer).on('click', function () {
+        selectedFeature(layer);
         // console.log(feature);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
@@ -533,6 +574,7 @@ function onEachDistPoly(feature, layer) {
 
 function onEachDistPolyCent(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -554,6 +596,7 @@ function onEachDistPolyCent(feature, layer) {
 
 function onEachRestoPoly(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         //console.log(feature);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
@@ -578,6 +621,7 @@ function onEachRestoPoly(feature, layer) {
 
 function onEachRestoPoint(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -599,6 +643,7 @@ function onEachRestoPoint(feature, layer) {
 
 function onEachRestoPolyCent(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -619,6 +664,7 @@ function onEachRestoPolyCent(feature, layer) {
 
 function onEachRestoLine(feature, layer) {
     $(layer).on('click', function () {
+        selectedFeature(layer);
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
@@ -642,121 +688,121 @@ function onEachRestoLine(feature, layer) {
 }
 
 function onEachBLMRegion(feature, layer) {
-    $(layer).on('click', function () {
-        var popUpContent = [];
-        // iterating through the "properties" so it can be displayed in the pop-ups
-        for (var prop in feature.properties) {
-            if (prop == 'agency') {
-                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-        }
-        // opens the marker info tab on sidebar when clicked
-        sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
-        $('#sidebar1').empty();
-        $("<B><U>BLM Region</U></B><br />").appendTo('#sidebar1');
-        for (var ii = 0; ii < popUpContent.length; ii++) {
-            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-        }
-    });
+    // $(layer).on('click', function () {
+    //     var popUpContent = [];
+    //     // iterating through the "properties" so it can be displayed in the pop-ups
+    //     for (var prop in feature.properties) {
+    //         if (prop == 'agency') {
+    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+    //     }
+    //     // opens the marker info tab on sidebar when clicked
+    //     sidebar.open('formTools');
+    //     //map.panTo(this.getLatLng());
+    //     $('#sidebar1').empty();
+    //     $("<B><U>BLM Region</U></B><br />").appendTo('#sidebar1');
+    //     for (var ii = 0; ii < popUpContent.length; ii++) {
+    //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+    //     }
+    // });
 }
 
 function onEachFSRegion(feature, layer) {
-    $(layer).on('click', function () {
-        var popUpContent = [];
-        // iterating through the "properties" so it can be displayed in the pop-ups
-        for (var prop in feature.properties) {
-            if (prop == 'agency') {
-                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-        }
-        // opens the marker info tab on sidebar when clicked
-        sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
-        $('#sidebar1').empty();
-        $("<B><U>FS Region</U></B><br />").appendTo('#sidebar1');
-        for (var ii = 0; ii < popUpContent.length; ii++) {
-            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-        }
-    });
+    // $(layer).on('click', function () {
+    //     var popUpContent = [];
+    //     // iterating through the "properties" so it can be displayed in the pop-ups
+    //     for (var prop in feature.properties) {
+    //         if (prop == 'agency') {
+    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+    //     }
+    //     // opens the marker info tab on sidebar when clicked
+    //     sidebar.open('formTools');
+    //     //map.panTo(this.getLatLng());
+    //     $('#sidebar1').empty();
+    //     $("<B><U>FS Region</U></B><br />").appendTo('#sidebar1');
+    //     for (var ii = 0; ii < popUpContent.length; ii++) {
+    //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+    //     }
+    // });
 }
 
 function onEachMDEPBound(feature, layer) {
-    $(layer).on('click', function () {
-        var popUpContent = [];
-        // iterating through the "properties" so it can be displayed in the pop-ups
-        for (var prop in feature.properties) {
-            if (prop == 'agency') {
-                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-        }
-        // opens the marker info tab on sidebar when clicked
-        sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
-        $('#sidebar1').empty();
-        $("<B><U>MDEP Bound</U></B><br />").appendTo('#sidebar1');
-        for (var ii = 0; ii < popUpContent.length; ii++) {
-            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-        }
-    });
+    // $(layer).on('click', function () {
+    //     var popUpContent = [];
+    //     // iterating through the "properties" so it can be displayed in the pop-ups
+    //     for (var prop in feature.properties) {
+    //         if (prop == 'agency') {
+    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+    //     }
+    //     // opens the marker info tab on sidebar when clicked
+    //     sidebar.open('formTools');
+    //     //map.panTo(this.getLatLng());
+    //     $('#sidebar1').empty();
+    //     $("<B><U>MDEP Bound</U></B><br />").appendTo('#sidebar1');
+    //     for (var ii = 0; ii < popUpContent.length; ii++) {
+    //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+    //     }
+    // });
 }
 
 function onEachMDIBound(feature, layer) {
-    $(layer).on('click', function () {
-        var popUpContent = [];
-        // iterating through the "properties" so it can be displayed in the pop-ups
-        for (var prop in feature.properties) {
-            if (prop == 'agency') {
-                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-        }
-        // opens the marker info tab on sidebar when clicked
-        sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
-        $('#sidebar1').empty();
-        $("<B><U>MDI Bound</U></B><br />").appendTo('#sidebar1');
-        for (var ii = 0; ii < popUpContent.length; ii++) {
-            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-        }
-    });
+    // $(layer).on('click', function () {
+    //     var popUpContent = [];
+    //     // iterating through the "properties" so it can be displayed in the pop-ups
+    //     for (var prop in feature.properties) {
+    //         if (prop == 'agency') {
+    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+    //     }
+    //     // opens the marker info tab on sidebar when clicked
+    //     sidebar.open('formTools');
+    //     //map.panTo(this.getLatLng());
+    //     $('#sidebar1').empty();
+    //     $("<B><U>MDI Bound</U></B><br />").appendTo('#sidebar1');
+    //     for (var ii = 0; ii < popUpContent.length; ii++) {
+    //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+    //     }
+    // });
 }
 
 function onEachNVCounty(feature, layer) {
-    $(layer).on('click', function () {
-        var popUpContent = [];
-        // iterating through the "properties" so it can be displayed in the pop-ups
-        for (var prop in feature.properties) {
-            if (prop == 'agency') {
-                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-        }
-        // opens the marker info tab on sidebar when clicked
-        sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
-        $('#sidebar1').empty();
-        $("<B><U>NV Counties</U></B><br />").appendTo('#sidebar1');
-        for (var ii = 0; ii < popUpContent.length; ii++) {
-            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-        }
-    });
+    // $(layer).on('click', function () {
+    //     var popUpContent = [];
+    //     // iterating through the "properties" so it can be displayed in the pop-ups
+    //     for (var prop in feature.properties) {
+    //         if (prop == 'agency') {
+    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+    //     }
+    //     // opens the marker info tab on sidebar when clicked
+    //     sidebar.open('formTools');
+    //     //map.panTo(this.getLatLng());
+    //     $('#sidebar1').empty();
+    //     $("<B><U>NV Counties</U></B><br />").appendTo('#sidebar1');
+    //     for (var ii = 0; ii < popUpContent.length; ii++) {
+    // //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+    //      }
+    // });
 }
 
 function onEachSoilVuln(feature, layer) {
-    $(layer).on('click', function () {
-        var popUpContent = [];
-        // iterating through the "properties" so it can be displayed in the pop-ups
-        for (var prop in feature.properties) {
-            if (prop == 'agency') {
-                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-        }
-        // opens the marker info tab on sidebar when clicked
-        sidebar.open('formTools');
-        //map.panTo(this.getLatLng());
-        $('#sidebar1').empty();
-        $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
-        for (var ii = 0; ii < popUpContent.length; ii++) {
-            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-        }
-    });
+    // $(layer).on('click', function () {
+    //     var popUpContent = [];
+    //     // iterating through the "properties" so it can be displayed in the pop-ups
+    //     for (var prop in feature.properties) {
+    //         if (prop == 'agency') {
+    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+    //     }
+    //     // opens the marker info tab on sidebar when clicked
+    //     sidebar.open('formTools');
+    //     //map.panTo(this.getLatLng());
+    //     $('#sidebar1').empty();
+    //     $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
+    //     for (var ii = 0; ii < popUpContent.length; ii++) {
+    //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+    //     }
+    // });
 }
