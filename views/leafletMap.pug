@@ -590,7 +590,7 @@ html
           
           
           
-          
+          // this used to be a simple async function but in order to work on I.E. this is what it has become...
           function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
             _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -738,6 +738,8 @@ html
           L.control.drawingController = function(opts) {
               return new L.Control.DrawingController(opts);
           }
+          
+          // These buttons are the drawing tools buttons that appear when drawing/editing. 
           var undoButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
           undoButton1.setVal('Undo Last', 'undoDraw');
           var compButton1 = L.control.drawingController({ position: 'topcenter' }).addTo(map);
@@ -752,9 +754,11 @@ html
           var drawControl = new L.Control.Draw(options);
           //map.addControl(drawControl);
           L.control.zoom({position: 'topright'}).addTo(map);
+          
           var thisLayerJSON
           var thisLayer
-
+          
+          // Function is called when a feature drawing is completed. 
           map.on(L.Draw.Event.CREATED, function (event) {
             var layer = event.layer;
             thisLayer = layer;
@@ -900,30 +904,49 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #searchBarTag
+              .input-group
+                span.input-group-btn
+                  button#filterSearch.btn.btn-default(type='button') Filters
+                input#searchID.form-control(type='number', placeholder='Search by GID...')
+                span.input-group-btn
+                  button#searchButton.btn.btn-default(type='button') Search
             #filters
+              
           
                 
       script. 
+        // step 1 buttons
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
+        // Editing Buttons
         var editButton = document.getElementById("editShapeB");
         var deleteButton = document.getElementById("delShapeB");
+        // step 2 buttons
         var restButton = document.getElementById("restButton");
         var distButton = document.getElementById("distButton");
         var barrButton = document.getElementById("barrButton");
+        // draw tool buttons
         var undoDrawButton = document.getElementById("undoDraw");
         var finDrawButton = document.getElementById("finishDraw");
+        
+        // "currForm" holds the current form that is selected. 
         var currForm = null;
         
+        // Not sure what I used these for.
         var undoButton = document.getElementById("undoB");
         var compButton = document.getElementById("compB");
         
+        // These are enabled to draw featues onto the map. 
         var drawLine = new L.Draw.Polyline(map, drawControl.options.polyline);
         var drawPoly = new L.Draw.Polygon(map, drawControl.options.polygon);
         var drawMark = new L.Draw.Marker(map, drawControl.options.marker);
         
+        // This saves the value of the current drawShape selected to properly remove
+        // vertices when using tool buttons because it contains bugs, update Leaflet Draw to fix. 
         var currShape = null;
+        
+        // Function turns off all drawtools and unsets all buttons. 
         function allOff() {
           var str = lineButton.className;
           if (str.includes(" active")) 
@@ -939,6 +962,7 @@ html
           drawMark.disable();
         }
         
+        // These functions turn on/off the tools when drawing a feature.
         function turnOnTools() {
           var myElements = document.querySelectorAll(".drawingController");
           for (var i = 0; i < myElements.length; i++) {
@@ -951,6 +975,8 @@ html
               myElements[i].style.display = "none";
           }
         }
+        
+        // These functions turn on/off the tools when editing a saved submission. 
         function turnOnEditTools() {
           var myElements = document.querySelectorAll(".drawingEditController");
           for (var i = 0; i < myElements.length; i++) {
@@ -963,6 +989,8 @@ html
               myElements[i].style.display = "none";
           }
         }
+        
+        // These listeners are for the back buttons in the draw tools tab. 
         document.getElementById("backStep1").addEventListener("click", function(){
           allOff();
           document.getElementById('step1').style.display = 'block';
@@ -976,6 +1004,8 @@ html
           document.getElementById('step3').style.display = 'none';
           currForm.toggle();
         });
+        
+        // These listeners are for the buttons are to select a feature to draw.
         lineButton.addEventListener("click", function(){
             allOff();
             lineButton.className += " active";
@@ -997,6 +1027,8 @@ html
             currShape = drawMark;
             //turnOnTools();
         });
+        
+        // These listeners are for the draw tools when drawing a new feature. 
         undoDrawButton.addEventListener("click", function(){ 
           if (bowser.name != "Firefox")
             currShape.deleteLastVertex();
@@ -1007,6 +1039,8 @@ html
             currShape.deleteLastVertex();
           currShape.completeShape();
         });
+        
+        // These listeners are used when editing a saved submission, I think. 
         editButton.addEventListener("click", function(){
             new L.EditToolbar.Edit(map, {
                 featureGroup: drawControl.options.edit.featureGroup,
@@ -1018,6 +1052,8 @@ html
                 featureGroup: drawControl.options.edit.featureGroup
             }).enable()
         });
+        
+        // These three button listeners toggle the correct form for which option is selected
         restButton.addEventListener("click", function(){
           allOff();
           document.getElementById('step2').style.display = 'none';
@@ -1063,12 +1099,14 @@ html
           currForm = $('#barrierForm');
           $('#barrierForm').toggle(thisLayerJSON.geometry.type === 'LineString');
         });
+        
+        // side bar is added to map after everything is drawn. 
         var sidebar = L.control.sidebar({ autopan: true, id: 'sidebar' }).addTo(map);
+        
+        
         // Moves the layer controls into the sidebar
         var htmlObject = control.getContainer();
-        // Get the desired parent node.
         var a = document.getElementById('layerTools2');
-        
         // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
         function setParent(el, newParent)
         {
@@ -1076,64 +1114,12 @@ html
         }
         setParent(htmlObject, a);
         
+        // This is the function that creates a Toast popup Message. 
         function popupMessage(text) {
-          // Get the snackbar DIV
           var popup = document.getElementById("snackbar")
           popup.innerHTML = text;
-          // Add the "show" class to DIV
           popup.className = "show";
       
           // After 3 seconds, remove the show class from DIV
           setTimeout(function(){ popup.className = popup.className.replace("show", ""); }, 3000);
         }
-        
-        
-        // $(document).on("mobileinit", function () {
-        //   //register event to cache site for offline use
-        // cache = window.applicationCache;
-        // cache.addEventListener('updateready', cacheUpdatereadyListener, false);
-        // cache.addEventListener('error', cacheErrorListener, false);
-        // function cacheUpdatereadyListener (){
-        //     window.applicationCache.update();
-        //     window.applicationCache.swapCache();
-        //     }
-        //     function cacheErrorListener() {
-        //         alert('site not availble offline')
-        //     }
-        // });
-        
-        // (function() {
-
-        //   var allNavItems = $(".main-nav li");
-        //   var allTabs = $(".tab");
-        
-        //   allNavItems.on("click", function(e) {
-        
-        //     e.preventDefault();
-        
-        //     allNavItems.removeClass("active");
-        //     allTabs.removeClass("active");
-        
-        //     // this = list item
-        //     $(this).addClass("active");
-        
-        //     var selector = $(this).find("a").attr("href");
-        //     $(selector).addClass("active");
-        
-        //   });
-        
-        //   // ServiceWorker is a progressive technology. Ignore unsupported browsers
-        //   if ('serviceWorker' in navigator) {
-        //     console.log('CLIENT: service worker registration in progress.');
-        //     navigator.serviceWorker.register('public/scripts/service-worker.js').then(function() {
-        //       console.log('CLIENT: service worker registration complete.');
-        //     }, function() {
-        //       console.log('CLIENT: service worker registration failure.');
-        //     });
-        //   } else {
-        //     console.log('CLIENT: service worker is not supported.');
-        //   }
-        
-        // })();
-
-      
