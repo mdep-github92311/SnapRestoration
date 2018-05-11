@@ -904,17 +904,42 @@ html
               .sidebar-close
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #searchBarTag
-              .input-group
-                span.input-group-btn
-                  button#filterSearch.btn.btn-default(type='button') Filters
-                input#searchID.form-control(type='number', placeholder='Search by GID...')
-                span.input-group-btn
-                  button#searchButton.btn.btn-default(type='button') Search
+              #searchFilters(style="display:none;")
+                ul.nav.nav-pills.nav-justified.filterType
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='D' ) Disturbance
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='R' ) Restoration
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='B' ) Barrier
+                ul.nav.nav-pills.nav-justified.filterShape
+                  li(role='presentation', style='background-color: white;')
+                    a#markerFilter(data-toggle='tab', value='M' ) Marker
+                  li(role='presentation', style='background-color: white;')
+                    a#lineFilter(data-toggle='tab', value='L' ) Line
+                  li(role='presentation', style='background-color: white;')
+                    a#polygonFilter(data-toggle='tab', value='P' ) Polygon
+                    // https://www.bootply.com/112163
+                #filterForm
+              #searchStep
+                .input-group
+                  span.input-group-btn
+                    button#filterSearch.btn.btn-default(type='button') Filters
+                  input#searchID.form-control(type='number', placeholder='Search by GID...')
+                  span.input-group-btn
+                    button#searchButton.btn.btn-default(type='button') Search
             #filters
               
           
                 
       script. 
+        // search button stuff
+        $("#filterSearch").click(function(){
+          $("#searchStep").hide();
+          $("#searchFilters").show()
+          
+        });
+        
         // step 1 buttons
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
