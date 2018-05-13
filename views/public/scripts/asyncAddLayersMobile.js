@@ -49,7 +49,7 @@ dbCache.open().then(function(db) {
 }).catch(function(err) {
   console.log(err)
 });
-
+var savedLayers = {Barriers: [], RPoints: [], RLines: [], RPolys:[], DPoints: [], DLines: [], DPolys:[] }
 async function createLayer(data, layerName) {
   try {
     switch (layerName) {
@@ -59,8 +59,8 @@ async function createLayer(data, layerName) {
           style: myBarrierLines,
           onEachFeature: onEachBarrier
         }).addTo(map);
-
-        control.addOverlay(barrier, layerName, { groupName: 'Barrier Data', expanded: true });
+        savedLayers.Barriers = barrier;
+        control.addOverlay(barrier, layerName, {groupName: 'Barrier Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
@@ -71,8 +71,8 @@ async function createLayer(data, layerName) {
           style: myStyleLines,
           onEachFeature: onEachDistLine
         }).addTo(map);
-
-        control.addOverlay(distLines, layerName, { groupName: 'Disturbance Data', expanded: true });
+        savedLayers.DLines = distLines;
+        control.addOverlay(distLines, layerName, {groupName: 'Disturbance Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
@@ -85,8 +85,8 @@ async function createLayer(data, layerName) {
           pointToLayer: pointToLayer,
           onEachFeature: onEachDistPoint
         }).addTo(map);
-
-        control.addOverlay(distPoints, layerName, { groupName: 'Disturbance Data', expanded: true });
+        savedLayers.DPoints = distPoints;
+        control.addOverlay(distPoints, layerName, {groupName: 'Disturbance Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
@@ -97,8 +97,8 @@ async function createLayer(data, layerName) {
           style: myStyleDistPoly,
           onEachFeature: onEachDistPoly
         }).addTo(map);
-
-        control.addOverlay(distPoly, layerName, { groupName: 'Disturbance Data', expanded: true });
+        savedLayers.DPolys = distPoly;
+        control.addOverlay(distPoly, layerName, {groupName: 'Disturbance Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
@@ -111,8 +111,7 @@ async function createLayer(data, layerName) {
           pointToLayer: pointToLayer,
           onEachFeature: onEachDistPolyCent
         }).addTo(map);
-
-        control.addOverlay(distPolyCent, layerName, { groupName: 'Disturbance Data', expanded: true });
+        control.addOverlay(distPolyCent, layerName, {groupName: 'Disturbance Data', expanded: true});
         control.unSelectLayer(distPolyCent);
         console.log(`added ${layerName} Unselected`);
 
@@ -124,8 +123,8 @@ async function createLayer(data, layerName) {
           style: myStyleRestoPoly,
           onEachFeature: onEachRestoPoly
         }).addTo(map);
-
-        control.addOverlay(restoPoly, layerName, { groupName: 'Restoration Data', expanded: true });
+        savedLayers.RPolys = restoPoly;
+        control.addOverlay(restoPoly, layerName, {groupName: 'Restoration Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
@@ -136,8 +135,8 @@ async function createLayer(data, layerName) {
           style: myStyleLines,
           onEachFeature: onEachRestoLine
         }).addTo(map);
-
-        control.addOverlay(restoLine, layerName, { groupName: 'Restoration Data', expanded: true });
+        savedLayers.RLines = restoLine;
+        control.addOverlay(restoLine, layerName, {groupName: 'Restoration Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
@@ -150,8 +149,8 @@ async function createLayer(data, layerName) {
           pointToLayer: pointToLayer,
           onEachFeature: onEachRestoPoint
         }).addTo(map);
-
-        control.addOverlay(restoPoint, layerName, { groupName: 'Restoration Data', expanded: true });
+        savedLayers.RPoints = restoPoint;
+        control.addOverlay(restoPoint, layerName, {groupName: 'Restoration Data', expanded: true});
         console.log(`added ${layerName}`);
 
         break;
