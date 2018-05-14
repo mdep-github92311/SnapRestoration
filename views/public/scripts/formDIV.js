@@ -186,7 +186,6 @@ $(document).ready(function () {
     $("#searchStep").show();
     clearLayers(type)
     filteredLayers = [];
-    console.log(filteredLayers)
     for (var index in filterArray)
     {
       if (filterArray[index] != null) {
@@ -201,10 +200,12 @@ $(document).ready(function () {
       }
     }
     $("#filteredFeatures").html("");
+    if (filteredLayers.length == 0)
+      $("#filteredFeatures").html("<tr><td colspan=42>No records were found for selected filters</td></tr>");
     for (var index in filteredLayers){
-      $("#filteredFeatures").append("<tr><td>"+getAgencyName(filteredLayers[index].feature.properties.agency)+"</td><td>"+filteredLayers[index].feature.properties.gid+"</td><td><button class='btn btn-default'>View</button></td></tr>");
+      $("#filteredFeatures").append("<tr><td>"+getAgencyName(filteredLayers[index].feature.properties.agency)+"</td><td>"+filteredLayers[index].feature.properties.gid+"</td><td><button id='viewFiltered"+index+"' value='"+index+"' class='btn btn-default'>View</button></td></tr>");
+      $("#viewFiltered"+index).click(function(e){console.log(e);filteredLayers[e.target.value].fireEvent('click')});
     }
-    console.log(filteredLayers)
   }
   function editForm(data, dataType, index){
     //console.log(data);
