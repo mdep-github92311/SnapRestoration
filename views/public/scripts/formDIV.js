@@ -87,79 +87,125 @@ $(document).ready(function () {
     return obj;
     
   }
-  var filterType = null, filterShape = null, filterArray = [];
-  $("ul.filterType > li > a").click(function() {
-      filterType = $(this).attr("value");
-      changeFilterForm()
-        
-    });
-    $("ul.filterShape > li > a").click(function() {
-      filterShape = $(this).attr("value");
-      changeFilterForm()
-    });
-  
-  function changeFilterForm(){
-    //console.log(data);
-    $("#filterForm").css("display", "block");
-    $("#filterForm").html(filterForm);
-    //console.log(data);
-      // Waits for form to be loaded before populating Data
-      setTimeout(function(){ 
-        $('#restoPointFormFilter').toggle(
-          filterType === 'R'&& filterShape === "M"
-        );
-        $('#restoPolyFormFilter').toggle(
-          filterType === 'R'&& filterShape === "P"
-        );
-        $('#restoLineFormFilter').toggle(
-          filterType === 'R'&& filterShape === "L"
-        );
-        $('#barrierFormFilter').toggle(
-          filterType === 'B'&& filterShape === "L"
-        );
-        $('#distPointFormFilter').toggle(
-          filterType === 'D'&& filterShape === "M"
-        );
-        $('#distPolyFormFilter').toggle(
-          filterType === 'D'&& filterShape === "P"
-        );
-        $('#distLineFormFilter').toggle(
-          filterType === 'D'&& filterShape === "L"
-        );
-        
-        $("#restoPointSaveFilter").on("click", function(event) {
+  var filterType = null, filterShape = null, filterArray = [], filteredLayers = [];
+  $("#filterForm").css("display", "block");
+  $("#filterForm").html(filterForm);
+  $("#restoPointSaveFilter").on("click", function(event) {
      filterArray = collectData('#restoPointFormFilter');
-     searchByFilter()
+     searchByFilter("RPoints")
   });
   $("#restoPolySaveFilter").on("click", function(event) {
      filterArray = collectData('#restoPolyFormFilter');
-     searchByFilter()
+     searchByFilter("RPolys")
   });
   $("#restoLineSaveFilter").on("click", function(event) {
      filterArray = collectData('#restoLineFormFilter');
-     searchByFilter()
+     console.log("click")
+     searchByFilter("RLines")
   });
   $("#barrierSaveFilter").on("click", function(event) {
      filterArray = collectData('#barrierFormFilter');
-     searchByFilter()
+     searchByFilter("Barriers")
   });
   $("#distPointSaveFilter").on("click", function(event) {
      filterArray = collectData('#distPointFormFilter');
-     searchByFilter()
+     searchByFilter("DPoints")
   });
   $("#distPolySaveFilter").on("click", function(event) {
      filterArray = collectData('#distPolyFormFilter');
-     searchByFilter()
+     searchByFilter("DPolys")
   });
   $("#distLineSaveFilter").on("click", function(event) {
      filterArray = collectData('#distLineFormFilter');
-     searchByFilter()
+     searchByFilter("DLines")
   });
-        },400);
+    
+  $("ul.filterType > li > a").click(function() {
+    filterType = $(this).attr("value");
+    changeFilterForm()
+      
+  });
+  $("ul.filterShape > li > a").click(function() {
+    filterShape = $(this).attr("value");
+    changeFilterForm()
+  });
+  
+  function changeFilterForm(){
+    $('#restoPointFormFilter').toggle(
+      filterType === 'R'&& filterShape === "M"
+    );
+    $('#restoPolyFormFilter').toggle(
+      filterType === 'R'&& filterShape === "P"
+    );
+    $('#restoLineFormFilter').toggle(
+      filterType === 'R'&& filterShape === "L"
+    );
+    $('#barrierFormFilter').toggle(
+      filterType === 'B'&& filterShape === "L"
+    );
+    $('#distPointFormFilter').toggle(
+      filterType === 'D'&& filterShape === "M"
+    );
+    $('#distPolyFormFilter').toggle(
+      filterType === 'D'&& filterShape === "P"
+    );
+    $('#distLineFormFilter').toggle(
+      filterType === 'D'&& filterShape === "L"
+    );
   }
-  function searchByFilter() {
+  function getAgencyName(agency)
+  {
+    switch (agency) {
+      case 0:
+        return "BLM";
+        break;
+      case 1:
+        return "NPS";
+        break;
+      case 2:
+        return "FS";
+        break;
+      case 3:
+        return "FWS";
+        break;
+      default:
+        return "NULL"
+        break;
+    }
+  }
+  function clearLayers(exception) {
+    for (var type in savedLayers){
+      if (type != exception)
+        map.removeLayer(savedLayers[type]);
+      else
+        map.addLayer(savedLayers[type]);
+    }
+  }
+  function searchByFilter(type) {
     $("#searchFilters").hide()
     $("#searchStep").show();
+    clearLayers(type)
+    filteredLayers = [];
+    for (var index in filterArray)
+    {
+      if (filterArray[index] != null) {
+        for(var feature in savedLayers[type]._layers)
+        {
+          if (filterArray[index] != savedLayers[type]._layers[feature].feature.properties[index]){
+            map.removeLayer(savedLayers[type]._layers[feature]);
+          }
+          else if (filteredLayers.indexOf(savedLayers[type]._layers[feature]) == -1)
+            filteredLayers.push(savedLayers[type]._layers[feature]);
+        }
+      }
+    }
+    $("#filteredFeatures").html("");
+    if (filteredLayers.length == 0)
+      $("#filteredFeatures").html("<tr><td colspan=42>No records were found for selected filters</td></tr>");
+    for (var index in filteredLayers){
+      $("#filteredFeatures").append("<tr><td>"+getAgencyName(filteredLayers[index].feature.properties.agency)+"</td><td>"+filteredLayers[index].feature.properties.gid+"</td><td><button id='viewFiltered"+index+"' value='"+index+"' class='btn btn-default'>View</button></td></tr>");
+      $("#viewFiltered"+index).click(function(e){console.log(e);filteredLayers[e.target.value].fireEvent('click')});
+    }
   }
   function editForm(data, dataType, index){
     //console.log(data);

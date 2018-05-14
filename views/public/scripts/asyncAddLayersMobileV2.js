@@ -9,7 +9,7 @@ var createLayer = function () {
           case 0:
             _context.prev = 0;
             _context.t0 = layerName;
-            _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 10 : _context.t0 === 'Disturbance Points' ? 16 : _context.t0 === 'Disturbance Polygon' ? 22 : _context.t0 === 'Disturbance Poly Cent' ? 28 : _context.t0 === 'Restoration Polygon' ? 35 : _context.t0 === 'Restoration Lines' ? 41 : _context.t0 === 'Restoration Points' ? 47 : _context.t0 === 'Restoration Poly Cent' ? 53 : _context.t0 === 'BLM' ? 60 : _context.t0 === 'FS Regions' ? 67 : _context.t0 === 'Nevada Counties' ? 74 : _context.t0 === 'MDI Boundary' ? 81 : _context.t0 === 'MDEP Boundary' ? 88 : _context.t0 === 'Roads' ? 95 : _context.t0 === 'Snap Extent' ? 102 : _context.t0 === 'Soil Vulnerability' ? 111 : 118;
+            _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 11 : _context.t0 === 'Disturbance Points' ? 18 : _context.t0 === 'Disturbance Polygon' ? 25 : _context.t0 === 'Disturbance Poly Cent' ? 32 : _context.t0 === 'Restoration Polygon' ? 39 : _context.t0 === 'Restoration Lines' ? 46 : _context.t0 === 'Restoration Points' ? 53 : _context.t0 === 'Restoration Poly Cent' ? 60 : _context.t0 === 'BLM' ? 67 : _context.t0 === 'FS Regions' ? 74 : _context.t0 === 'Nevada Counties' ? 81 : _context.t0 === 'MDI Boundary' ? 88 : _context.t0 === 'MDEP Boundary' ? 95 : _context.t0 === 'Roads' ? 102 : _context.t0 === 'Snap Extent' ? 109 : _context.t0 === 'Soil Vulnerability' ? 118 : 125;
             break;
 
           case 4:
@@ -23,31 +23,31 @@ var createLayer = function () {
           case 6:
             barrier = _context.sent;
 
-
+            savedLayers.Barriers = barrier;
             control.addOverlay(barrier, layerName, { groupName: 'Barrier Data', expanded: true });
             console.log("added " + layerName);
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 10:
-            _context.next = 12;
+          case 11:
+            _context.next = 13;
             return L.geoJson(data, {
               pane: 'Lines',
               style: myStyleLines,
               onEachFeature: onEachDistLine
             }).addTo(map);
 
-          case 12:
+          case 13:
             distLines = _context.sent;
 
-
+            savedLayers.DLines = distLines;
             control.addOverlay(distLines, layerName, { groupName: 'Disturbance Data', expanded: true });
             console.log("added " + layerName);
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 16:
-            _context.next = 18;
+          case 18:
+            _context.next = 20;
             return L.geoJson(data, {
               pane: 'Points',
               style: myStyleDistPoints,
@@ -56,34 +56,34 @@ var createLayer = function () {
               onEachFeature: onEachDistPoint
             }).addTo(map);
 
-          case 18:
+          case 20:
             distPoints = _context.sent;
 
-
+            savedLayers.DPoints = distPoints;
             control.addOverlay(distPoints, layerName, { groupName: 'Disturbance Data', expanded: true });
             console.log("added " + layerName);
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 22:
-            _context.next = 24;
+          case 25:
+            _context.next = 27;
             return L.geoJson(data, {
               pane: 'Polygons',
               style: myStyleDistPoly,
               onEachFeature: onEachDistPoly
             }).addTo(map);
 
-          case 24:
+          case 27:
             distPoly = _context.sent;
 
-
+            savedLayers.DPolys = distPoly;
             control.addOverlay(distPoly, layerName, { groupName: 'Disturbance Data', expanded: true });
             console.log("added " + layerName);
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 28:
-            _context.next = 30;
+          case 32:
+            _context.next = 34;
             return L.geoJson(data, {
               pane: 'Points',
               style: myStyleDistPoly,
@@ -92,68 +92,48 @@ var createLayer = function () {
               onEachFeature: onEachDistPolyCent
             }).addTo(map);
 
-          case 30:
+          case 34:
             distPolyCent = _context.sent;
-
 
             control.addOverlay(distPolyCent, layerName, { groupName: 'Disturbance Data', expanded: true });
             control.unSelectLayer(distPolyCent);
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 35:
-            _context.next = 37;
+          case 39:
+            _context.next = 41;
             return L.geoJson(data, {
               pane: 'Polygons',
               style: myStyleRestoPoly,
               onEachFeature: onEachRestoPoly
             }).addTo(map);
 
-          case 37:
+          case 41:
             restoPoly = _context.sent;
 
-
+            savedLayers.RPolys = restoPoly;
             control.addOverlay(restoPoly, layerName, { groupName: 'Restoration Data', expanded: true });
             console.log("added " + layerName);
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 41:
-            _context.next = 43;
+          case 46:
+            _context.next = 48;
             return L.geoJson(data, {
               pane: 'Lines',
               style: myStyleLines,
               onEachFeature: onEachRestoLine
             }).addTo(map);
 
-          case 43:
+          case 48:
             restoLine = _context.sent;
 
-
+            savedLayers.RLines = restoLine;
             control.addOverlay(restoLine, layerName, { groupName: 'Restoration Data', expanded: true });
             console.log("added " + layerName);
 
-            return _context.abrupt("break", 118);
-
-          case 47:
-            _context.next = 49;
-            return L.geoJson(data, {
-              pane: 'Points',
-              style: myStylePoints,
-              // changing the default point makers to circle markers
-              pointToLayer: pointToLayer,
-              onEachFeature: onEachRestoPoint
-            }).addTo(map);
-
-          case 49:
-            restoPoint = _context.sent;
-
-
-            control.addOverlay(restoPoint, layerName, { groupName: 'Restoration Data', expanded: true });
-            console.log("added " + layerName);
-
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
           case 53:
             _context.next = 55;
@@ -162,10 +142,29 @@ var createLayer = function () {
               style: myStylePoints,
               // changing the default point makers to circle markers
               pointToLayer: pointToLayer,
-              onEachFeature: onEachRestoPolyCent
+              onEachFeature: onEachRestoPoint
             }).addTo(map);
 
           case 55:
+            restoPoint = _context.sent;
+
+            savedLayers.RPoints = restoPoint;
+            control.addOverlay(restoPoint, layerName, { groupName: 'Restoration Data', expanded: true });
+            console.log("added " + layerName);
+
+            return _context.abrupt("break", 125);
+
+          case 60:
+            _context.next = 62;
+            return L.geoJson(data, {
+              pane: 'Points',
+              style: myStylePoints,
+              // changing the default point makers to circle markers
+              pointToLayer: pointToLayer,
+              onEachFeature: onEachRestoPolyCent
+            }).addTo(map);
+
+          case 62:
             restoPolyCent = _context.sent;
 
 
@@ -173,27 +172,7 @@ var createLayer = function () {
             control.unSelectLayer(restoPolyCent);
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
-
-          case 60:
-            if (data.type == null) {
-              data = data;
-            }
-            _context.next = 63;
-            return L.geoJson(data, {
-              pane: 'Regions',
-              style: blmRegion,
-              onEachFeature: onEachBLMRegion
-            }).addTo(map);
-
-          case 63:
-            blmRegions = _context.sent;
-
-
-            control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
-            console.log("added " + layerName + " Unselected");
-
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
           case 67:
             if (data.type == null) {
@@ -202,18 +181,18 @@ var createLayer = function () {
             _context.next = 70;
             return L.geoJson(data, {
               pane: 'Regions',
-              style: fsRegion,
-              onEachFeature: onEachFSRegion
+              style: blmRegion,
+              onEachFeature: onEachBLMRegion
             }).addTo(map);
 
           case 70:
-            fsRegions = _context.sent;
+            blmRegions = _context.sent;
 
 
-            control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
+            control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
           case 74:
             if (data.type == null) {
@@ -221,19 +200,19 @@ var createLayer = function () {
             }
             _context.next = 77;
             return L.geoJson(data, {
-              pane: 'Bounds_County',
-              style: nv_county,
-              onEachFeature: onEachNVCounty
+              pane: 'Regions',
+              style: fsRegion,
+              onEachFeature: onEachFSRegion
             }).addTo(map);
 
           case 77:
-            nvCounties = _context.sent;
+            fsRegions = _context.sent;
 
 
-            control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Counties', expanded: false });
+            control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
           case 81:
             if (data.type == null) {
@@ -242,18 +221,18 @@ var createLayer = function () {
             _context.next = 84;
             return L.geoJson(data, {
               pane: 'Bounds_County',
-              style: mdep_i,
-              onEachFeature: onEachMDIBound
+              style: nv_county,
+              onEachFeature: onEachNVCounty
             }).addTo(map);
 
           case 84:
-            mdiBound = _context.sent;
+            nvCounties = _context.sent;
 
 
-            control.addOverlay(mdiBound, layerName, { groupName: 'Boundaries', expanded: false });
+            control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Counties', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
           case 88:
             if (data.type == null) {
@@ -263,17 +242,17 @@ var createLayer = function () {
             return L.geoJson(data, {
               pane: 'Bounds_County',
               style: mdep_i,
-              onEachFeature: onEachMDEPBound
+              onEachFeature: onEachMDIBound
             }).addTo(map);
 
           case 91:
-            mdepBound = _context.sent;
+            mdiBound = _context.sent;
 
 
-            control.addOverlay(mdepBound, layerName, { groupName: 'Boundaries', expanded: false });
+            control.addOverlay(mdiBound, layerName, { groupName: 'Boundaries', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
           case 95:
             if (data.type == null) {
@@ -281,63 +260,83 @@ var createLayer = function () {
             }
             _context.next = 98;
             return L.geoJson(data, {
+              pane: 'Bounds_County',
+              style: mdep_i,
+              onEachFeature: onEachMDEPBound
+            }).addTo(map);
+
+          case 98:
+            mdepBound = _context.sent;
+
+
+            control.addOverlay(mdepBound, layerName, { groupName: 'Boundaries', expanded: false });
+            console.log("added " + layerName + " Unselected");
+
+            return _context.abrupt("break", 125);
+
+          case 102:
+            if (data.type == null) {
+              data = data;
+            }
+            _context.next = 105;
+            return L.geoJson(data, {
               pane: 'Lines',
               style: roadColor,
               interactive: false
             }).addTo(map);
 
-          case 98:
+          case 105:
             roads = _context.sent;
 
 
             control.addOverlay(roads, layerName, { groupName: 'Roads', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 102:
+          case 109:
             console.log(data);
             if (data.type == null) {
               data = data;
             }
             console.log(data);
-            _context.next = 107;
+            _context.next = 114;
             return L.geoJson(data, {
               pane: 'Misc',
               style: soil_vuln,
               onEachFeature: onEachSoilVuln
             }).addTo(map);
 
-          case 107:
+          case 114:
             snapExtent = _context.sent;
 
 
             control.addOverlay(snapExtent, layerName, { groupName: 'Misc', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 111:
+          case 118:
             if (data.type == null) {
               data = data;
             }
-            _context.next = 114;
+            _context.next = 121;
             return L.geoJson(data, {
               pane: 'Misc',
               style: soil_vuln
               //onEachFeature: onEachSoilVuln
             }).addTo(map);
 
-          case 114:
+          case 121:
             soilVuln = _context.sent;
 
 
             control.addOverlay(soilVuln, layerName, { groupName: 'Misc', expanded: false });
             console.log("added " + layerName + " Unselected");
 
-            return _context.abrupt("break", 118);
+            return _context.abrupt("break", 125);
 
-          case 118:
+          case 125:
             if (isMobile) {
               control.unSelectGroup('Barrier Data');
               control.unSelectGroup('Disturbance Data');
@@ -347,21 +346,21 @@ var createLayer = function () {
             control.unSelectGroup('Boundaries');
             control.unSelectGroup('Roads');
             control.unSelectGroup('Misc');
-            _context.next = 128;
+            _context.next = 135;
             break;
 
-          case 125:
-            _context.prev = 125;
+          case 132:
+            _context.prev = 132;
             _context.t1 = _context["catch"](0);
 
             console.error(_context.t1);
 
-          case 128:
+          case 135:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 125]]);
+    }, _callee, this, [[0, 132]]);
   }));
 
   return function createLayer(_x, _x2) {
@@ -764,6 +763,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var isMobile = false;
 // device detection
 if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) isMobile = true;
+
 function hostReachable() {
 
   // Handle IE and more capable browsers
@@ -807,5 +807,5 @@ dbCache.open().then(function (db) {
 }).catch(function (err) {
   console.log(err);
 });
-
+var savedLayers = { Barriers: [], RPoints: [], RLines: [], RPolys: [], DPoints: [], DLines: [], DPolys: [] };
 ;
