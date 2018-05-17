@@ -64,7 +64,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
     // Latest compiled and minified JavaScript
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
-    
+    link(rel='stylesheet', href='/public/css/style.css')
 
 
     style(type='text/css').
@@ -1164,6 +1164,9 @@ html(manifest='cache.manifest', type='text/cache-manifest')
             li
               a(href='#savedSubs', role='tab')
                 span.glyphicon.glyphicon-list-alt(aria-hidden='true')
+            li
+              a(href='#searchBar', role='tab')
+                span.glyphicon.glyphicon-search(aria-hidden='true')
 
           ul(role='tablist')
             // bottom aligned tabs
@@ -1262,6 +1265,47 @@ html(manifest='cache.manifest', type='text/cache-manifest')
               br
               button#sync.btn.btn-primary Submit All Forms
               
+              
+          #searchBar.sidebar-pane
+            h1.sidebar-header
+              | Search
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #searchBarTag
+              #searchFilters(style="display:none;")
+                ul.nav.nav-pills.nav-justified.filterType
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='D' ) Disturbance
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='R' ) Restoration
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='B' ) Barrier
+                ul.nav.nav-pills.nav-justified.filterShape
+                  li(role='presentation', style='background-color: white;')
+                    a#markerFilter(data-toggle='tab', value='M' ) Marker
+                  li(role='presentation', style='background-color: white;')
+                    a#lineFilter(data-toggle='tab', value='L' ) Line
+                  li(role='presentation', style='background-color: white;')
+                    a#polygonFilter(data-toggle='tab', value='P' ) Polygon
+                    // https://www.bootply.com/112163
+                #filterForm
+              #searchStep
+                .input-group
+                  span.input-group-btn
+                    button#filterSearch.btn.btn-default(type='button') Filters
+                  input#searchID.form-control(type='number', placeholder='Search by GID...')
+                  span.input-group-btn
+                    button#searchButton.btn.btn-default(type='button') Search
+                table(style="width: 100%")
+                  thead
+                  tr
+                    th Agency
+                    th GID
+                    th(style="width: 56px") Action
+                  tbody#filteredFeatures
+            #filters
+            
+              
           #settings.sidebar-pane
             h1.sidebar-header
               | Settings
@@ -1328,6 +1372,14 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           $('#savingModal').modal('hide');
           map.setZoom(12);
         });
+        
+        // search button stuff
+        $("#filterSearch").click(function(){
+          $("#searchStep").hide();
+          $("#searchFilters").show()
+          
+        });
+        
         var lineButton = document.getElementById("drawLineB");
         var polygonButton = document.getElementById("drawPolygonB");
         var markerButton = document.getElementById("drawMarkerB");
