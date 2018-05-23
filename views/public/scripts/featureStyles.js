@@ -788,21 +788,21 @@ function onEachNVCounty(feature, layer) {
 }
 
 function onEachSoilVuln(feature, layer) {
-    // $(layer).on('click', function () {
-    //     var popUpContent = [];
-    //     // iterating through the "properties" so it can be displayed in the pop-ups
-    //     for (var prop in feature.properties) {
-    //         if (prop == 'agency') {
-    //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-    //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
-    //     }
-    //     // opens the marker info tab on sidebar when clicked
-    //     sidebar.open('formTools');
-    //     //map.panTo(this.getLatLng());
-    //     $('#sidebar1').empty();
-    //     $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
-    //     for (var ii = 0; ii < popUpContent.length; ii++) {
-    //         $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
-    //     }
-    // });
+    $(layer).on('click', function () {
+        var popUpContent = [];
+        // iterating through the "properties" so it can be displayed in the pop-ups
+        for (var prop in feature.properties) {
+            if (prop == 'agency') {
+                popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
+            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+        }
+        // opens the marker info tab on sidebar when clicked
+        sidebar.open('formTools');
+        //map.panTo(this.getLatLng());
+        $('#sidebar1').empty();
+        $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
+        for (var ii = 0; ii < popUpContent.length; ii++) {
+            $('<p>' + popUpContent[ii] + '</p>').appendTo('#sidebar1');
+        }
+    });
 }
