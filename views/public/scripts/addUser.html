@@ -47,8 +47,10 @@
             success: function (data) {
                data = JSON.parse(data)
                console.log("success!!");
-               if (data.status == 200)
-                  document.getElementById('editInfo').innerHTML = '<h4>User has been created!</h4><h5>Username: <Strong>'+submission[0]+'</Strong></h5><h5>Password: <Strong>'+submission[5]+'</Strong></h5>'
+               if (data.status == 200) {
+                  document.getElementById('editInfo').innerHTML = '<h4>User has been created!</h4><h5>Username: <Strong>'+submission[0]+'</Strong></h5><h5>Password: <Strong>'+submission[4]+'</Strong></h5>';
+                  window.location.reload(true); 
+               }
                else
                   document.getElementById('usernameError').style.display = "block";
                console.log(data);

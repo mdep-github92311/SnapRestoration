@@ -1110,6 +1110,23 @@ module.exports = function (app) {
           throw err;
         })
     })
+    .post('/deleteUser', checkAuth, (req, res) => {
+      console.log(req.body)
+      const userDelete = req.body.username;
+
+      db.none(`DELETE FROM users WHERE user_name = $1 `,  userDelete)
+        .then(function () {
+          console.log('user deleted');
+          var response = {
+              status  : 200,
+              success : 'User successfully deleted'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
     
     .post('/changePass', checkAuth, (req, res) => {
       const userUpdate = req.body;

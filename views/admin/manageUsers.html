@@ -324,11 +324,29 @@
                     contentType: 'application/json',
                     data: JSON.stringify([data.user_name,tempPass]),
                     success: function (data) {
-                        console.log(data);
+                        document.getElementById("resetButton").style.display = "none"; 
+                        document.getElementById("clipButton").style.display = "inline-block"; 
                         document.getElementById('resetInfo').innerHTML = '<h4>Password has been successfully reset!</h4><h5>New password is: <Strong id="tempPass">'+tempPass+'</Strong></h5>'
                         document.getElementById("clipButton").addEventListener("click", function(){
                             copyToClipboard(tempPass);
                         })
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        console.log("some error");
+                    }
+                })
+            }
+            function deleteUser(data) {
+                $.ajax({
+                    type: "POST",
+                    datatype: "json",
+                    url: '/deleteUser',
+                    contentType: 'application/json',
+                    data: JSON.stringify({username: data.user_name}),
+                    success: function (data) {
+                        document.getElementById("deleteButton").style.display = "none";  
+                        document.getElementById('deleteInfo').innerHTML = '<h4>User has been deleted</h4>';
+                        window.location.reload(true); 
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                         console.log("some error");
@@ -340,6 +358,7 @@
                 document.getElementById("resetButton").style.display = "none"; 
                 document.getElementById("clipButton").style.display = "none"; 
                 document.getElementById("resetPass").style.display = "none"; 
+                document.getElementById("deleteUser").style.display = 'none';
                 
                 $("#myModalLabel").html("<h1> Add User </h1>");
                 var div = document.getElementById("editInfo");
@@ -384,20 +403,26 @@
                             + "</td><td>"+ features.first_name
                             + "</td><td>"+ features.last_name
                             + "</td><td>"+ getAgency(features.agency)
-                            + "</td><td><div style='width:200px;'><a id='user"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "</td><td><div style='width:100%;'><a id='user"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> View"
                             + "</button></a>&nbsp"
                             + "<a id='reset"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
                             + "<button type=\"button\" class=\"btn btn-warning btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-repeat\" aria-hidden=\"true\"></span> Reset Password"
+                            + "</button></a>&nbsp"
+                            + "<a id='delete"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
                             + "</button></a></div>"
                             +"</td></tr>");
                   var userID = "#user" + count;
                   var resetID = "#reset" + count;
+                  var deleteID = "#delete" + count;
                   
                   $(userID).click(function(){
                       document.getElementById("resetPass").style.display = 'none';
+                      document.getElementById("deleteUser").style.display = 'none';
                       document.getElementById("userInfo").style.display = 'block';
                       var elem = document.getElementById("pInfo");
                       elem.style.display = ""; 
@@ -406,11 +431,24 @@
                   $(resetID).click(function(){
                       currentData = features;
                       document.getElementById("userInfo").style.display = 'none';
+                      document.getElementById("deleteUser").style.display = 'none';
                       document.getElementById("resetPass").style.display = 'block';
                       document.getElementById("resetButton").style.display = "inline-block"; 
                       document.getElementById("clipButton").style.display = "none"; 
                       $("#myModalLabel").html("<h1> Password Reset </h1>");
                       document.getElementById("userToReset").innerHTML = "<Strong>"+features.user_name+"</Strong>";
+                      var elem = document.getElementById("pInfo");
+                      elem.style.display = ""; 
+                  });
+                  $(deleteID).click(function(){
+                      currentData = features;
+                      document.getElementById("userInfo").style.display = 'none';
+                      document.getElementById("resetPass").style.display = 'none';
+                      document.getElementById("deleteUser").style.display = 'block';
+                      document.getElementById("deleteButton").style.display = "inline-block"; 
+                      document.getElementById("clipButton").style.display = "none"; 
+                      $("#myModalLabel").html("<h1> User Delete </h1>");
+                      document.getElementById("userToDelete").innerHTML = "<Strong>"+features.user_name+"</Strong>";
                       var elem = document.getElementById("pInfo");
                       elem.style.display = ""; 
                   });
@@ -488,6 +526,11 @@
                             <button id="clipButton" class="btn btn-default">Copy to Clipboard</button>
                             <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
                         </div>
+                        <div id="deleteUser">
+                            <div id="deleteInfo"><h5>Are you sure you want to delete <span id='userToDelete'>username</span>?</h5></div>
+                            <button id="deleteButton" class="btn btn-default">Confirm</button>
+                            <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
+                        </div>
                       </div>
             
                     </div>
@@ -513,8 +556,11 @@
               
               document.getElementById("resetButton").addEventListener('click',function () {
                 resetPass(currentData);
-                document.getElementById("resetButton").style.display = "none"; 
-                document.getElementById("clipButton").style.display = "inline-block"; 
+              }); 
+              
+              document.getElementById("deleteButton").addEventListener('click',function () {
+                document.getElementById("deleteButton").style.display = "none";  
+                deleteUser(currentData);
               }); 
             </script>
         
