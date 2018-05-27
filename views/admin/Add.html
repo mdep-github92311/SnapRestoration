@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src='../admin/checkLogin.js'></script>
+  <!--<script src='../admin/checkLogin.js'></script>-->
     <head>
         <title>SNAP Admin</title>
         <script src='../public/scripts/polyfill.min.js'></script>
@@ -324,6 +324,21 @@
                   break;
             }
           }
+          function deleteSubmission(table, id) {
+                $.ajax({
+                    type: "POST",
+                    datatype: "json",
+                    url: '/deleteSubmission',
+                    contentType: 'application/json',
+                    data: JSON.stringify({table: table, id: id}),
+                    success: function (data) {
+                        window.location.reload(true); 
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        console.log("some error");
+                    }
+                })
+            }
           function populateModal(data, type) {
             var style;
             var bounds = null;
@@ -530,13 +545,22 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='barrDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#barr" + count;
-                  
+                  var barrDelID = "#barrDel" + count;
                   $(barrID).click(function(){
                       var elem = document.getElementById("tableMap");
                       elem.style.display = ""; 
                       populateModal(features, "Barrier");
+                  });
+                  $(barrDelID).click(function(){
+                    if (confirm('Are you sure you want to remove this feature from the database?')) {
+                      deleteSubmission('barrier_sub', features.properties.gid);
+                    }
                   });
                 });
               }
@@ -558,12 +582,22 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='dLineDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dLine" + count;
+                  var barrDelID = "#dLineDel" + count;
                     
                   $(barrID).click(function(){
                       console.log("button click")
                       populateModal(features, "Disturbance Line");
+                  });
+                  $(barrDelID).click(function(){
+                      if (confirm('Are you sure you want to remove this feature from the database?')) {
+                        deleteSubmission('dist_line_sub', features.properties.gid);
+                      }
                   });
                       
                 });
@@ -588,11 +622,21 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='dPointDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dPoint" + count;
+                  var barrDelID = "#dPointDel" + count;
                     
                   $(barrID).click(function(){
                       populateModal(features, "Disturbance Point");
+                  });
+                  $(barrDelID).click(function(){
+                      if (confirm('Are you sure you want to remove this feature from the database?')) {
+                        deleteSubmission('dist_point_sub', features.properties.gid);
+                      }
                   });
                       
                 });
@@ -616,11 +660,21 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='dPolyDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#dPoly" + count;
+                  var barrDelID = "#dPolyDel" + count;
                     
                   $(barrID).click(function(){
                       populateModal(features, "Disturbance Polygon");
+                  });
+                  $(barrDelID).click(function(){
+                      if (confirm('Are you sure you want to remove this feature from the database?')) {
+                        deleteSubmission('dist_polygon_sub', features.properties.gid);
+                      }
                   });
                       
                 });
@@ -644,11 +698,21 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='rLineDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#rLine" + count;
+                  var barrDelID = "#rLineDel" + count;
                     
                   $(barrID).click(function(){
                       populateModal(features, "Restoration Line");
+                  });
+                  $(barrDelID).click(function(){
+                      if (confirm('Are you sure you want to remove this feature from the database?')) {
+                        deleteSubmission('resto_line_sub', features.properties.gid);
+                      }
                   });
                       
                 });
@@ -671,11 +735,21 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='rPointDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#rPoint" + count;
+                  var barrDelID = "#rPointDel" + count;
                     
                   $(barrID).click(function(){
                       populateModal(features, "Restoration Point");
+                  });
+                  $(barrDelID).click(function(){
+                      if (confirm('Are you sure you want to remove this feature from the database?')) {
+                        deleteSubmission('resto_point_sub', features.properties.gid);
+                      }
                   });
                       
                 });
@@ -698,11 +772,21 @@
                             + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
                             + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
                             + "</button></a>"
+                            + "<a id='rPolyDel"+ count +"' href='#'>"
+                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
+                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
+                            + "</button></a>"
                             +"</td></tr>");
                   var barrID = "#rPoly" + count;
+                  var barrDelID = "#rPolyDel" + count;
                     
                   $(barrID).click(function(){
                       populateModal(features, "Restoration Polygon");
+                  });
+                  $(barrDelID).click(function(){
+                      if (confirm('Are you sure you want to remove this feature from the database?')) {
+                        deleteSubmission('resto_polygon_sub', features.properties.gid);
+                      }
                   });
                       
                 });

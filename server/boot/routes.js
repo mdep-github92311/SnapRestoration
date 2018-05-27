@@ -415,12 +415,49 @@ module.exports = function (app) {
     })
     
     
-    
-    
-    
-    
-    
-    
+    .post('/deleteSubmission', (req, res) => {
+      const data = req.body
+      var table = ``;
+      console.log(data)
+      switch (data.table) {
+        case 'barrier_sub':
+          table = `DELETE FROM barrier_sub WHERE gid = $1 `
+          break;
+        case 'resto_point_sub':
+          table = `DELETE FROM resto_point_sub WHERE gid = $1 `
+          break;
+        case 'resto_line_sub':
+          table = `DELETE FROM resto_line_sub WHERE gid = $1 `
+          break;
+        case 'resto_polygon_sub':
+          table = `DELETE FROM resto_polygon_sub WHERE gid = $1 `
+          break;
+        case 'dist_point_sub':
+          table = `DELETE FROM dist_point_sub WHERE gid = $1 `
+          break;
+        case 'dist_polygon_sub':
+          table = `DELETE FROM dist_polygon_sub WHERE gid = $1 `
+          break;
+        case 'dist_line_sub':
+          table = `DELETE FROM dist_line_sub WHERE gid = $1 `
+          break;
+        
+        default:
+          table = null;
+      }
+      db.none(table,  data.id)
+        .then(function () {
+          console.log('record deleted');
+          var response = {
+              status  : 200,
+              success : 'Record successfully deleted'
+          }
+          res.end(JSON.stringify(response));
+        })
+        .catch(function (err) {
+          throw err;
+        })
+    })
     
     
       ///////////////////////////////////
