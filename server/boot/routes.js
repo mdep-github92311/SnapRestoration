@@ -136,9 +136,9 @@ module.exports = function (app) {
       console.log(req.body[0].geometry.coordinates);
       db.none(`INSERT INTO resto_polygon_sub (agency, region, ecosystem, resto_code, resto_acti, te_action,
       non_list_a, comments, primary_ob, secondary_, project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo,
-      photo_azim, signed, deep_till, barrier_in, mulch, monitoring, previously, shape_star, shape_leng,
+      photo_azim, signed, deep_till, barrier_in, mulch, monitoring, previously, shape_leng,
       shape_area, geom) VALUES $1` + restoPolyUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($27)))`, restoPolyArray))
+      $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($26)))`, restoPolyArray))
         .then(function () {
           console.log('restoPoly forms submitted');
           console.log(restoPolyIndexedDB);
@@ -331,9 +331,9 @@ module.exports = function (app) {
       db.none(`INSERT INTO dist_polygon_sub (agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
       use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
       primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
-      photo_azim, qa_qc, old_distco, shape_star, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
+      photo_azim, qa_qc, old_distco, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
         Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
-        $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($34)))`,
+        $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($33)))`,
           distPolyArrary))
         .then(function () {
           console.log('distPoly forms submitted');
