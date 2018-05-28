@@ -24,8 +24,8 @@
           margin: 0 auto;
         }
         #mapID { 
-          height: 380px;
-          width: 280px;
+          height: 100%;
+          width: 100%;
         }
         #side_tab {
           font-size: 2em;
@@ -285,19 +285,33 @@
             </div>
           </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
-      
+      <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"> </h4>
+                      </div>
+                      <div class="modal-body"style="height: 100%">
+                        
+                        <table id='tableMap'style="height: 100%; width: 100%">
+                          <td style="height: 100%; width: 50%"><div id="pInfo"></div></td>
+                        
+                          <td style="height: 100%; width: 50%"><div id="mapID"></div></td>
+                        </table>
+                        <div id='editInfo'></div>
+                        <div id='buttons'>
+                          <button id="editButton" class="btn btn-default">Edit</button>
+                          <button id="confirmButton" class="btn btn-default">Confirm Submission</button>
+                        </div>
+                      </div>
+            
+                    </div>
+                  </div>
+                </div>
+                
         <script>
-          // var table = $("#tableID").dataTable({
-          //         "bProcessing": true,
-          //         "bDeferRender": true,
-          //         "processing": true,
-          //         "iDisplayLength": 10,
-          //         "aLengthMenu": [[10, 25, 50, 100,  -1], [10, 25, 50, 100, "All"]]
-          //       });
-          
-          // var datatable = new DataTable(document.getElementById('tableID'), {
-          //     pageSize: 15,
-          // });
           var currRecords = null;
           mapMarkers = [];
           var currentData = [];
@@ -305,6 +319,7 @@
           var formType = 'sub';
           var invalidated = false;
           var pageNumber = 0;
+          var bounds = null;
           function getAgency(agency){
             switch (agency) {
                 case 0:
@@ -341,7 +356,6 @@
             }
           function populateModal(data, type) {
             var style;
-            var bounds = null;
             this.currentData = data;
             document.getElementById("editInfo").innerHTML = "";
             document.getElementById("tableMap").style.display = "";  
@@ -370,8 +384,6 @@
                   console.log(marker);
                   
                   if (data.geometry.coordinates.length >1)
-                    //map.panTo(marker._layers[marker._leaflet_id-1].getLatLng())
-                    //map.panTo([data.geometry.coordinates[1],data.geometry.coordinates[0]]);
                     bounds = marker.getBounds();
                   break;
                 case 'MultiLineString':
@@ -381,10 +393,6 @@
                   this.mapMarkers.push(marker);
                   
                   console.log(marker);
-                  //console.log(marker._layers[marker._leaflet_id-1].getLatLngs());
-                  //var latLang = marker._layers[marker._leaflet_id-1].getLatLngs();
-                  //var middleLatLong = latLang[0][Math.floor(latLang[0].length/2)];
-                  //map.panTo(middleLatLong);
                   bounds = marker._layers[marker._leaflet_id-1].getBounds();
                   break;
                 case 'MultiPolygon':
@@ -409,17 +417,6 @@
               
             }
             // this will invalidate the size of the map to make it fit in the modal
-            $('#myModal').on('shown.bs.modal', function(){
-              setTimeout(function() {
-                map.invalidateSize();
-                if (!invalidated) {
-                  map.fitBounds(bounds, {
-                    maxZoom: 11
-                  });
-                  invalidated = true;
-                }
-              }, 5);
-            });
             $("#myModalLabel").html("<h1>"+type +"</h1>");
             $("#pInfo").html("");
               
@@ -436,78 +433,6 @@
               maxZoom: 11
             });
           }
-          // function changePage(move) {
-          //   var type = null;
-          //   var shape = null;
-          //   var data = null;
-          //   var count = 0;
-          //   var marker = null;
-          //   $("#tableItems").html('')
-          //   if (currRecords.barriers != null && currRecords.barriers.features != null) {
-          //     type = 'Barrier';
-          //     shape = 'Line';
-          //     this.data = currRecords.barriers.features;
-          //     marker = 0;
-          //   }
-          //   else if (currRecords.distLines != null && currRecords.distLines.features != null) {
-          //     type = 'Disturbance';
-          //     shape = 'Line';
-          //     this.data = currRecords.distLines.features;
-          //     marker = 0;
-          //   }
-          //   else if (currRecords.distPoints != null && currRecords.distPoints.features != null) {
-          //     type = 'Disturbance';
-          //     shape = 'Point';
-          //     this.data = currRecords.distPoints.features;
-          //     marker = 0;
-          //   }
-          //   else if (currRecords.distPolys != null && currRecords.distPolys.features != null) {
-          //     type = 'Disturbance';
-          //     shape = 'Polygon';
-          //     this.data = currRecords.distPolys.features;
-          //     marker = 0;
-          //   }
-          //   else if (currRecords.restoLines != null && currRecords.restoLines.features != null) {
-          //     type = 'Restoration';
-          //     shape = 'Line';
-          //     this.data = currRecords.restoLines.features;
-          //     marker = 0;
-          //   }
-          //   else if (currRecords.restoPoints != null && currRecords.restoPoints.features != null) {
-          //     type = 'Restoration';
-          //     shape = 'Point';
-          //     this.data = currRecords.restoPoints.features;
-          //     marker = 0;
-          //   }
-          //   else if (currRecords.restoPolys != null && currRecords.restoPolys.features != null) {
-          //     type = 'Restoration';
-          //     shape = 'Polygon';
-          //     this.data = currRecords.restoPolys.features;
-          //     marker = 0;
-          //   }
-          //   if(move == 'left') {
-          //     for (var ii = pageNumber*10; ii < (pageNumber+1)*10 && ii < currRecords.overallCount; ii++) {
-          //       $("#tableItems").append("<tr><td>"+ this.data[ii].properties.gid 
-          //                   + "</td><td>"+getAgency(this.data[ii].properties.agency)
-          //                   + "</td><td>"+type
-          //                   + "</td><td>"+shape
-          //                   + "</td><td><a id='tData"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-          //                   + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-          //                   + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Review"
-          //                   + "</button></a>"
-          //                   + "</td></tr>");
-          //         var barrID = "#tData" + count;
-          //         count++;
-          //         $(barrID).click(function(){
-          //             var elem = document.getElementById("tableMap");
-          //             elem.style.display = ""; 
-          //             console.log('sdfdsfsd')
-          //             console.log(this.data[ii]);
-          //             populateModal(this.data[ii], "Barrier");
-          //         });
-          //     }
-          //   }
-          // }
           
           $('#pageLeft').click(function(){
               // console.log(currRecords)
@@ -523,14 +448,21 @@
                 pageNumber++;
               writeTables(currRecords);
           });
-                  
+          $('#myModal').on('shown.bs.modal', function(){
+              setTimeout(function() {
+                console.log("invalidate")
+                map.invalidateSize();
+                if (!invalidated) {
+                  map.fitBounds(bounds, {
+                    maxZoom: 11
+                  });
+                  invalidated = true;
+                }
+              }, 5);
+          });       
           function writeTables(defs) {
-            //console.log(defs);
-              //var count = document.getElementById('reviewItems');
               var item = document.getElementById('tableItems');
-              //count.innerHTML = "There are " + defs.overallCount + " overall markers";
               var count = 0;
-              // table.fnClearTable();
               $("#pageNumber").html(pageNumber+1)
               $("#tableItems").html('<tr><td colspan=5>No more submissions for this filter</td></tr>');
               if (defs.barriers != null && defs.barriers.features != null) {
@@ -851,20 +783,6 @@
             else
               $("#distPolysFilterCount").html(0);
           });
-          // document.getElementById("allFilter").addEventListener("click", function(){
-          //   pageNumber = 0;
-          //   $('#allFilter').parent().find( 'li.active' ).children()[0].innerHTML = '';
-          //   $('#allFilter').parent().find( 'li.active' ).removeClass( 'active' );
-          //   $('#allFilter').addClass( 'active' );
-          //   // table.fnClearTable();
-          //   $("#tableItems").html('<div class="loader"></div>');
-          //   getSubmissions('AllSubs', '').then(function(defs){
-          //       $("#allFilterCount").html(defs.overallCount);
-          //       currRecords = defs;
-          //       $("#tableItems").html('');
-          //       writeTables(defs);
-          //   });
-          // });
           document.getElementById("barrierFilter").addEventListener("click", function(){
             pageNumber = 0;
             $('#barrierFilter').parent().find( 'li.active' ).removeClass( 'active' );
@@ -1028,56 +946,9 @@
                   }
               });
             }
-            // currRecords; 
-            // writeTables(defs)
           });
           
-          
-          /*setTimeout(function(){ 
-            console.log(promise); 
-            var elem = document.getElementById('para');
-          }, 3000);*/
-          
-        </script>
-        
-        
-        <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"> </h4>
-                      </div>
-                      <div class="modal-body">
-                        
-                        <table id='tableMap'>
-                          <td><div id="pInfo"></div></td>
-                        
-                          <td><div id="mapID"></div></td>
-                        </table>
-                        <div id='editInfo'></div>
-                        <div id='buttons'>
-                          <button id="editButton" class="btn btn-default">Edit</button>
-                          <button id="confirmButton" class="btn btn-default">Confirm Submission</button>
-                        </div>
-                      </div>
-            
-                    </div>
-                  </div>
-                </div>
-                
-        <script>
               var map = L.map('mapID').setView([36.211303, -115.114929], 10);
-    
-              // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
-              // createPane was used in this thread to control the order of the layers
-              
-              //map.createPane('Points').style.zIndex = 390;
-              //map.createPane('Lines').style.zIndex = 380;
-              //map.createPane('Polygons').style.zIndex = 370;
-              
-    
               L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: '',
                 maxZoom: 18,
