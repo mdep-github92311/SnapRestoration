@@ -282,8 +282,8 @@ async function createLayer(data, layerName) {
         }
         const soilVuln = await L.geoJson(data, {
           pane: 'Misc',
-          style: soil_vuln
-          //onEachFeature: onEachSoilVuln
+          style: soil_vuln,
+          onEachFeature: onEachSoilVuln
         }).addTo(map);
 
         control.addOverlay(soilVuln, layerName, {groupName: 'Misc', expanded: false});
