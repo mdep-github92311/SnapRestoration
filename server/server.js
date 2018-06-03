@@ -30,6 +30,8 @@ app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: crypto.randomBytes(20).toString('hex'),
   resave: false,
+  duration: 60 * 60 * 1000,
+  activeDuration: 10 * 60 * 1000,
   saveUninitialized: true,
   cookie: { secure: true }
 }))

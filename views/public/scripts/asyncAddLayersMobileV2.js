@@ -323,8 +323,8 @@ var createLayer = function () {
             _context.next = 121;
             return L.geoJson(data, {
               pane: 'Misc',
-              style: soil_vuln
-              //onEachFeature: onEachSoilVuln
+              style: soil_vuln,
+              onEachFeature: onEachSoilVuln
             }).addTo(map);
 
           case 121:
