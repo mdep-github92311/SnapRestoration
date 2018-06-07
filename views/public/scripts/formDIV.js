@@ -181,6 +181,15 @@ $(document).ready(function () {
         map.addLayer(savedLayers[type]);
     }
   }
+  function createFilteredList(featureList){
+    $("#filteredFeatures").html("");
+    if (featureList.length == 0)
+      $("#filteredFeatures").html("<tr><td colspan=42>No records were found for selected filters</td></tr>");
+    for (var index in featureList){
+      $("#filteredFeatures").append("<tr><td>"+getAgencyName(featureList[index].feature.properties.agency)+"</td><td>"+featureList[index].feature.properties.gid+"</td><td><button id='viewFiltered"+index+"' value='"+index+"' class='btn btn-default'>View</button></td></tr>");
+      $("#viewFiltered"+index).click(function(e){featureList[e.target.value].fireEvent('click')});
+    }
+  }
   function searchByFilter(type) {
     $("#searchFilters").hide()
     $("#searchStep").show();
@@ -199,14 +208,34 @@ $(document).ready(function () {
         }
       }
     }
-    $("#filteredFeatures").html("");
-    if (filteredLayers.length == 0)
-      $("#filteredFeatures").html("<tr><td colspan=42>No records were found for selected filters</td></tr>");
-    for (var index in filteredLayers){
-      $("#filteredFeatures").append("<tr><td>"+getAgencyName(filteredLayers[index].feature.properties.agency)+"</td><td>"+filteredLayers[index].feature.properties.gid+"</td><td><button id='viewFiltered"+index+"' value='"+index+"' class='btn btn-default'>View</button></td></tr>");
-      $("#viewFiltered"+index).click(function(e){console.log(e);filteredLayers[e.target.value].fireEvent('click')});
-    }
+    createFilteredList(filteredLayers);
   }
+  
+  $("#searchButton").click(function(){
+    //console.log($("#searchID").val())
+    var val = $("#searchID").val().toLowerCase();
+    filteredLayers = [];
+    for(var index in savedLayers){
+      //console.log(savedLayers[index]._layers)
+      for (var layer in savedLayers[index]._layers)
+        {
+          //console.log(savedLayers[index]._layers[layer])
+          var match = false;
+          for (var prop in savedLayers[index]._layers[layer].feature.properties){
+            //console.log(savedLayers[index]._layers[layer].feature.properties[prop])
+            if (typeof savedLayers[index]._layers[layer].feature.properties[prop] === 'string')
+              if (savedLayers[index]._layers[layer].feature.properties[prop].toLowerCase().includes(val)){
+                match = true;
+                break;
+              }
+          }
+          if (match == true)
+            filteredLayers.push(savedLayers[index]._layers[layer]);
+        }
+    }
+    console.log(filteredLayers)
+    createFilteredList(filteredLayers);
+  })
   function editForm(data, dataType, index){
     //console.log(data);
     $("#editSaved").css("display", "block");
@@ -341,64 +370,6 @@ $(document).ready(function () {
         });
     }, 400);
   }
-  //$(sync).appendTo('#sidebar2');
-
-  //https://stackoverflow.com/questions/18602331/why-is-this-jquery-click-function-not-working
-  // link above helped with the on click event which then leads to grabbing the data from IndexedDB
-
-
-  /*$('#featureType, #featureStyle').change(function () {
-
-    const featureTypeSel = $('#featureType').val();
-    const featureStyleSel = $('#featureStyle').val();
-
-    $('#restoPointForm').toggle(
-      featureStyleSel === 'resto' && featureTypeSel === 'point'
-    );
-    $('#restoPolyForm').toggle(
-      featureStyleSel === 'resto' && featureTypeSel === 'poly'
-    );
-    $('#restoLineForm').toggle(
-      featureStyleSel === 'resto' && featureTypeSel === 'line'
-    );
-    $('#barrierForm').toggle(
-      featureTypeSel === 'test' && featureStyleSel === 'barrier'
-    );
-    $('#distPointForm').toggle(
-      featureStyleSel === 'disturb' && featureTypeSel === 'point'
-    );
-    $('#distPolyForm').toggle(
-      featureStyleSel === 'disturb' && featureTypeSel === 'poly'
-    );
-    $('#distLineForm').toggle(
-      featureStyleSel === 'disturb' && featureTypeSel === 'line'
-    );
-  });*/
-
-  // $('form').submit(function (event) {
-  //   // what this code is doing is stopping the browser from refreshing when a form is submitted
-  //   event.preventDefault();
-  //   var $this = $(this); // this is the current form that is selected
-  //   // this is posting to the desired action ex "/restoLineFormSubmit" on the server side
-  //   $.post($this.attr('action'), $this.serialize(), function (data) {
-  //     // once posted is will switch the top two selections to default and reset the form that was submitted and
-  //     // hide that form
-  //
-  //     // idea came from here
-  //     //http://stackoverflow.com/questions/10502093/how-to-reset-a-select-element-with-jquery
-  //     $('#featureType').prop('selectedIndex', 0);
-  //     $('#featureStyle').prop('selectedIndex', 0);
-  //     // idea came from here
-  //     //http://stackoverflow.com/questions/6653556/jquery-javascripts-function-to-clear-all-the-fields-of-a-form
-  //     $this.trigger('reset');
-  //     // idea come from here
-  //     // http://stackoverflow.com/questions/27846286/how-to-set-style-displaynone-using-jquerys-attr-method
-  //     $this.hide();
-  //     alert(data.message);
-  //     console.log(data);
-  //   })
-  // })
-
   
   var tableContent = $("#saved");
   var counts = 0;
@@ -421,8 +392,6 @@ $(document).ready(function () {
             });
             num++;
           });
-          
-          //console.log(test);
         });
       }
     });
