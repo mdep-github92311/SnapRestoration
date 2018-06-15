@@ -25,7 +25,9 @@ module.exports = function (app) {
   app.get('/mobile', function (req, res) {
     res.render('leafletMapMobile.pug');
   });
-  
+  app.get('/public', function (req, res) {
+    res.render('leafletMapPublic.pug');
+  });
   app.get('/my_secret_page', checkAuth, function (req, res) {
     //res.send('if you are viewing this page it means you are logged in');
     //console.log('you are logged in')
