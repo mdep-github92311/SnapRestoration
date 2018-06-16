@@ -1,0 +1,468 @@
+//  Created by msgis-student on 6/9/2017.
+
+doctype html
+html
+  head
+    title= 'SNAP Restoration Map'
+    script. 
+    link(rel='stylesheet', href='/public/css/leaflet.css')
+    link(rel='stylesheet', href='/public/css/styledLayerControl.css')
+    link(rel='stylesheet', href='/public/css/sidebarV2.css')
+    link(rel='stylesheet', href='/public/css/leaflet-topCenter.css')
+    link(rel='stylesheet', href='/public/css/leaflet.search.min.css')
+    
+    script(src='/public/scripts/jquery.min.js')
+    //script(src="https://unpkg.com/kinto@9.0.2/dist/kinto.min.js")
+    
+    script(src="/public/scripts/polyfill.min.js")
+    script(src="/public/scripts/dexie.min.js")
+    script(src='/public/scripts/leaflet.js' type='text/javascript')
+    script(src='/public/scripts/localforage.min.js')
+    script(src='https://unpkg.com/pbf@3.0.5/dist/pbf.js')
+    
+    script(src='/public/scripts/bowser.min.js')
+
+    script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/1.5.3/loadingoverlay.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js' type='text/javascript')
+    script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js')
+    script(src='https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js')
+    
+
+    script(src='/public/scripts/leaflet-topCenter.js')
+    
+    
+    script(src='/public/lib/pako/pako_inflate.min.js')
+    script(src='/public/lib/leaflet/leaflet.ajax.js')
+    script(src='/public/lib/leaflet/leaflet.VectorTile.js')
+    script(src='/public/scripts/leaflet.LayerControl.Include.js')
+    script(src='/public/scripts/leaflet.VectorGrid.mod.js')
+    script(src='/public/scripts/leaflet.mbTiles.js')
+    script(src='/public/scripts/leaflet.sidebar.min.js')
+    script(src='/public/scripts/leaflet.search.min.js')
+    script(src='/public/scripts/featureStyles.js')
+    script(src='/public/scripts/featureStylesEdit.js')
+    script(src='/public/scripts/styledLayerControl.js')
+    //link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")
+    
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    // Optional theme
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+    // Latest compiled and minified JavaScript
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    
+    link(rel='stylesheet', href='/public/css/style.css')
+    meta(name='viewport', content='initial-scale=1, maximum-scale=1')
+
+    body
+      #snackbar Some text some message..
+
+      #header
+        nav.navbar.navbar-default.navbar-inverse(role='navigation', style='z-index: 10000;')
+          .container-fluid
+            // Brand and toggle get grouped for better mobile display
+            .navbar-header
+              button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+                
+              a.pull-left  
+                #card
+                  .front
+                    img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
+                  .back
+                    img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left') 
+                //#wrapD3Cube
+                  #D3Cube
+                    #side2
+                      img(src='/public/css/images/logos/blm.png', width='45px', height='45px', float='left') 
+                    #side3
+                      img(src='/public/css/images/logos/fs.png', width='38px', height='45px', float='left') 
+                    #side4
+                      img(src='/public/css/images/logos/fws.png', width='45px', height='45px', float='left') 
+                    #side5
+                      img(src='/public/css/images/logos/nps.png', width='45px', height='45px', float='left') 
+                
+                script.
+                  $("#card").flip();
+                  
+                  var count = 2;
+                  setInterval(function() {
+                    $("#card").flip('toggle');
+                    
+                  }, 5000);
+                  
+              // Collect the nav links, forms, and other content for toggling
+              .navbar-brand SNAP Restoration
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              ul.nav.navbar-nav(style='border-left: 1px solid #000000;')
+                li.active
+                  a(href='#') Map View
+              ul.nav.navbar-nav.navbar-right
+                li#loginTab
+                  a(href='login.html')
+                    b Login
+                li#logoutTab
+                  a(href='javascript:logout();')
+                    b Logout
+                                
+      #overlay
+      #map
+
+        script(src='/public/scripts/asyncAddLayersV2.js')
+        script.
+          //alert('Hello ' + bowser.name + ' ' + bowser.version);
+          var loggedIn = false;
+          $.ajax({
+                type: "GET",
+                url: "/loginStatus",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  loggedIn = true;
+                  document.getElementById('logoutTab').style.display = "block";
+                  document.getElementById('loginTab').style.display = "none";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          
+          function logout() {
+            console.log("logout initiated")
+            $.ajax({
+                type: "GET",
+                url: "/logout",
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) { 
+                  console.log(data);
+                  document.getElementById('logoutTab').style.display = "none";
+                  document.getElementById('loginTab').style.display = "block";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.warn(XMLHttpRequest.responseText);
+                }
+            })
+          }
+          
+          //import "babel-polyfill";
+          var map = L.map('map').setView([36.211303, -115.114929], 8);
+          map.removeControl(map.zoomControl);
+          // https://stackoverflow.com/questions/39767499/how-to-set-the-zindex-layer-order-for-geojson-layers
+          // createPane was used in this thread to control the order of the layers
+          
+          map.createPane('Points').style.zIndex = 390;
+          map.createPane('Lines').style.zIndex = 380;
+          map.createPane('Polygons').style.zIndex = 370;
+          map.createPane('Regions').style.zIndex = 360;
+          map.createPane('Bounds_County').style.zIndex = 350;
+          map.createPane('Misc').style.zIndex = 340;
+          
+          
+          var baseLayer = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+            id: 'rogerdodger617.2p4pk9co',
+            accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
+          }).addTo(map);
+          
+          var mapOpenStreet = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	name: "OpenStreetMap",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18
+          });
+          
+          var mapGRoad = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	name: "Google Roadmap",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGSatellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	name: "Google Satellite",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGHyb = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	name: "Google Hybrid",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          var mapGTerrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+            attribution: '<a href="/attribution/privacy-security.html" target="_blank">Privacy &amp; Security</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/foia.html" target="_blank">FOIA</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/nofear.html" target="_blank">No Fear Act</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="/attribution/license.html" target="_blank">License</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://dodcio.defense.gov/DoDSection508/Std_Stmt.aspx" target="_blank">Accessibility/Section 508</a>&nbsp;&nbsp;&nbsp;' +
+              '<a href="http://www.usa.gov" target="_blank">USA.gov</a>',
+          	name: "Google Terrain",
+          	zIndex: 1,
+          	minZoom: 7,
+            maxZoom: 18,
+          	subdomains:['mt0','mt1','mt2','mt3']
+          });
+          
+          
+          
+          // this used to be a simple async function but in order to work on I.E. this is what it has become...
+          function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+            _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+              return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.prev = 0;
+                      _context.next = 3;
+                      if (typeof Dexie == 'function') { 
+                        console.log('dexie is here');
+                        return getLayers();
+                      }
+                      else {
+                        console.log('dexie not here rn');
+                      }
+                    case 3:
+                      _context.next = 8;
+                      break;
+            
+                    case 5:
+                      _context.prev = 5;
+                      _context.t0 = _context["catch"](0);
+            
+                      console.error(_context.t0);
+            
+                    case 8:
+                    case "end":
+                      return _context.stop();
+                  }
+                }
+              }, _callee, this, [[0, 5]]);
+            }))();
+        
+          var controlOptions = {
+            container_width: "350px",
+            container_maxHeight: "100%",
+            group_maxHeight: "100%",
+            autoZIndex: false,
+            exclusive: false,
+            collapsed: false
+          };
+
+          var overLay = [];
+
+          var control = L.Control.styledLayerControl(null, overLay, controlOptions);
+          map.addControl(control);
+          control.addOverlay( baseLayer, "MapBox", {groupName : "Basemaps"} );
+          control.addOverlay( mapOpenStreet, "OpenStreetMap", {groupName : "Basemaps"} );
+          control.addOverlay( mapGRoad, "Google Roadmap", {groupName : "Basemaps"} );
+          control.addOverlay( mapGSatellite, "Google Satellite", {groupName : "Basemaps"} );
+          control.addOverlay( mapGHyb, "Google Hybrid", {groupName : "Basemaps"} );
+          control.addOverlay( mapGTerrain, "Google Terrain", {groupName : "Basemaps"} );
+          //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
+          // creates a temp layer so it can store the new features
+          var editableLayers = new L.FeatureGroup();
+          map.addLayer(editableLayers);
+          L.control.scale({position: 'bottomright'}).addTo(map);
+          
+          var options = {
+            position: 'bottomright',
+            draw: {
+              polyline: {
+                allowIntersection: false,
+                drawError: {
+                  color: '#e10100', // Color the shape will turn when intersects
+                  message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                },
+                shapeOptions: {
+                  color: '#e10100',
+                  weight: 3
+                }
+              },
+              polygon: {
+                allowIntersection: false, // Restricts shapes to simple polygons
+                drawError: {
+                  color: '#e10100', // Color the shape will turn when intersects
+                  message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+                },
+                shapeOptions: {
+                  color: '#e10100'
+                }
+              },
+              circle: false, // Turns off this drawing tool
+              rectangle: false,
+              marker: {
+                icon: new L.Icon.Default()
+              }
+            },
+            edit: {
+              featureGroup: editableLayers, //REQUIRED!!
+              edit: true,
+              remove: true,
+              selectedPathOptions: { // this property should be one level up
+                color: '#000',
+                fillColor: '#000'
+              }
+            }
+          };
+          
+          
+          L.control.zoom({position: 'topright'}).addTo(map);
+          
+      #sidebar.sidebar.collapsed
+        // Nav tabs
+        .sidebar-tabs
+          ul(role='tablist')
+            // top aligned tabs
+            li
+              a(href='#layers', role='tab')
+                span.glyphicon.glyphicon-menu-hamburger(aria-hidden='true')
+            li
+              a(href='#formTools', role='tab')
+                span.glyphicon.glyphicon-info-sign(aria-hidden='true')
+            li
+              a(href='#searchBar', role='tab')
+                span.glyphicon.glyphicon-search(aria-hidden='true')
+
+        // Tab panes
+        .sidebar-content
+          #layers.sidebar-pane
+            h1.sidebar-header
+              | Layers
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            p.legend
+              span.legend-item
+                img(src='/public/css/images/npsSquare.png', width='8%', height='35%') 
+                |  NPS 
+                img(src='/public/css/images/blmSquare.png', width='8%', height='35%')  
+                |  BLM 
+              span.legend-item
+                img(src='/public/css/images/fwsSquare.png', width='8%', height='35%') 
+                |  FWS 
+                img(src='/public/css/images/fsSquare.png', width='8%', height='35%') 
+                |  FS 
+            #layerTools2
+            
+          #formTools.sidebar-pane
+            h1.sidebar-header
+              | Marker Info
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #sidebar1
+              
+          #searchBar.sidebar-pane
+            h1.sidebar-header
+              | Search
+              .sidebar-close
+                span.glyphicon.glyphicon-menu-left(aria-hidden='true')
+            #searchBarTag
+              #searchFilters(style="display:none;")
+                ul.nav.nav-pills.nav-justified.filterType
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='D' ) Disturbance
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='R' ) Restoration
+                  li(role='presentation', style='background-color: white;')
+                    a(data-toggle='tab', value='B' ) Barrier
+                ul.nav.nav-pills.nav-justified.filterShape
+                  li(role='presentation', style='background-color: white;')
+                    a#markerFilter(data-toggle='tab', value='M' ) Marker
+                  li(role='presentation', style='background-color: white;')
+                    a#lineFilter(data-toggle='tab', value='L' ) Line
+                  li(role='presentation', style='background-color: white;')
+                    a#polygonFilter(data-toggle='tab', value='P' ) Polygon
+                    // https://www.bootply.com/112163
+                #filterForm
+              #searchStep
+                .input-group
+                  span.input-group-btn
+                    button#filterSearch.btn.btn-default(type='button') Filters
+                  input#searchID.form-control(type='text', placeholder='Search by keyword...')
+                  span.input-group-btn
+                    button#searchButton.btn.btn-default(type='button') Search
+                table(style="width: 100%")
+                  thead
+                  tr
+                    th Agency
+                    th GID
+                    th(style="width: 56px") Action
+                  tbody#filteredFeatures
+            #filters
+              
+          
+                
+      script. 
+        // search button stuff
+        $("#filterSearch").click(function(){
+          $("#searchStep").hide();
+          $("#searchFilters").show()
+          
+        });
+        
+        // side bar is added to map after everything is drawn. 
+        var sidebar = L.control.sidebar({ autopan: true, id: 'sidebar' }).addTo(map);
+        
+        
+        // Moves the layer controls into the sidebar
+        var htmlObject = control.getContainer();
+        var a = document.getElementById('layerTools2');
+        // Finally append that node to the new parent, recursively searching out and re-parenting nodes.
+        function setParent(el, newParent)
+        {
+          newParent.appendChild(el);
+        }
+        setParent(htmlObject, a);
+        
+        // This is the function that creates a Toast popup Message. 
+        function popupMessage(text) {
+          var popup = document.getElementById("snackbar")
+          popup.innerHTML = text;
+          popup.className = "show";
+      
+          // After 3 seconds, remove the show class from DIV
+          setTimeout(function(){ popup.className = popup.className.replace("show", ""); }, 3000);
+        }
