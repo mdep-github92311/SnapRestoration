@@ -625,10 +625,15 @@ function onEachRestoPoint(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop == 'agency') {
+            if (prop == "gid")
+            {
+                //do nothings
+            }
+            else if (prop == 'agency') {
                 //console.log(prop + ' : ' + feature.properties[prop]);
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
-            } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
+            } 
+            else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
