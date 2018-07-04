@@ -412,11 +412,11 @@ html
       script. 
         // search button stuff
         $("#filterSearch").click(function(){
+          $(this).hide();
           $("#searchStep").hide();
-          $("#searchFilters").show()
-          
+          $("#searchFilters").show();
+          $("#filterClear").show();
         });
-        
         // side bar is added to map after everything is drawn. 
         var sidebar = L.control.sidebar({ autopan: true, id: 'sidebar' }).addTo(map);
         
