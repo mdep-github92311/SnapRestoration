@@ -98,16 +98,6 @@ html
               // Collect the nav links, forms, and other content for toggling
               .navbar-brand SNAP Restoration
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
-              ul.nav.navbar-nav(style='border-left: 1px solid #000000;')
-                li.active
-                  a(href='#') Map View
-              ul.nav.navbar-nav.navbar-right
-                li#loginTab
-                  a(href='login.html')
-                    b Login
-                li#logoutTab
-                  a(href='javascript:logout();')
-                    b Logout
                                 
       #overlay
       #map
@@ -115,22 +105,6 @@ html
         script(src='/public/scripts/asyncAddLayersV2.js')
         script.
           //alert('Hello ' + bowser.name + ' ' + bowser.version);
-          var loggedIn = false;
-          $.ajax({
-                type: "GET",
-                url: "/loginStatus",
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) { 
-                  console.log(data);
-                  loggedIn = true;
-                  document.getElementById('logoutTab').style.display = "block";
-                  document.getElementById('loginTab').style.display = "none";
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.warn(XMLHttpRequest.responseText);
-                }
-            })
           
           function logout() {
             console.log("logout initiated")
@@ -438,11 +412,11 @@ html
       script. 
         // search button stuff
         $("#filterSearch").click(function(){
+          $(this).hide();
           $("#searchStep").hide();
-          $("#searchFilters").show()
-          
+          $("#searchFilters").show();
+          $("#filterClear").show();
         });
-        
         // side bar is added to map after everything is drawn. 
         var sidebar = L.control.sidebar({ autopan: true, id: 'sidebar' }).addTo(map);
         
