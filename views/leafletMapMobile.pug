@@ -1273,6 +1273,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #searchBarTag
               #searchFilters(style="display:none;")
+                button.btn.btn-danger#filterBack Back
+                h5 Select Feature Type
                 ul.nav.nav-pills.nav-justified.filterType
                   li(role='presentation', style='background-color: white;')
                     a(data-toggle='tab', value='D' ) Disturbance
@@ -1280,6 +1282,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                     a(data-toggle='tab', value='R' ) Restoration
                   li(role='presentation', style='background-color: white;')
                     a(data-toggle='tab', value='B' ) Barrier
+                h5 Select Feature Shape
                 ul.nav.nav-pills.nav-justified.filterShape
                   li(role='presentation', style='background-color: white;')
                     a#markerFilter(data-toggle='tab', value='M' ) Marker
@@ -1293,7 +1296,8 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                 .input-group
                   span.input-group-btn
                     button#filterSearch.btn.btn-default(type='button') Filters
-                  input#searchID.form-control(type='number', placeholder='Search by GID...')
+                    button#filterClear.btn.btn-warning(type='button' style='display: none;') Clear Filters
+                  input#searchID.form-control(type='text', placeholder='Search by keyword...')
                   span.input-group-btn
                     button#searchButton.btn.btn-default(type='button') Search
                 table(style="width: 100%")
