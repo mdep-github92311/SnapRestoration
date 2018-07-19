@@ -375,6 +375,8 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #searchBarTag
               #searchFilters(style="display:none;")
+                button.btn.btn-danger#filterBack Back
+                h5 Select Feature Type
                 ul.nav.nav-pills.nav-justified.filterType
                   li(role='presentation', style='background-color: white;')
                     a(data-toggle='tab', value='D' ) Disturbance
@@ -382,6 +384,7 @@ html
                     a(data-toggle='tab', value='R' ) Restoration
                   li(role='presentation', style='background-color: white;')
                     a(data-toggle='tab', value='B' ) Barrier
+                h5 Select Feature Shape
                 ul.nav.nav-pills.nav-justified.filterShape
                   li(role='presentation', style='background-color: white;')
                     a#markerFilter(data-toggle='tab', value='M' ) Marker
@@ -395,6 +398,7 @@ html
                 .input-group
                   span.input-group-btn
                     button#filterSearch.btn.btn-default(type='button') Filters
+                    button#filterClear.btn.btn-warning(type='button' style='display: none;') Clear Filters
                   input#searchID.form-control(type='text', placeholder='Search by keyword...')
                   span.input-group-btn
                     button#searchButton.btn.btn-default(type='button') Search
@@ -402,7 +406,7 @@ html
                   thead
                   tr
                     th Agency
-                    th GID
+                    th Region
                     th(style="width: 56px") Action
                   tbody#filteredFeatures
             #filters
@@ -410,13 +414,6 @@ html
           
                 
       script. 
-        // search button stuff
-        $("#filterSearch").click(function(){
-          $(this).hide();
-          $("#searchStep").hide();
-          $("#searchFilters").show();
-          $("#filterClear").show();
-        });
         // side bar is added to map after everything is drawn. 
         var sidebar = L.control.sidebar({ autopan: true, id: 'sidebar' }).addTo(map);
         
