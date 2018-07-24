@@ -468,7 +468,10 @@ function onEachBarrier(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
-        map.panTo(this.getCenter());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         $('#sidebar1').empty();
         $("<B><U>Barrier</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -509,7 +512,10 @@ function onEachDistLine(feature, layer) {
 
         // gets the point in the middle of the line to pan the camera to
 
-        map.panTo(this.getCenter());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
 
         $('#sidebar1').empty();
         $("<B><U>Dist Line</U></B><br />").appendTo('#sidebar1');
@@ -541,7 +547,10 @@ function onEachDistPoint(feature, layer) {
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        map.panTo(this.getLatLng());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         console.log("Dist Point - " + this.getLatLng());
         $('#sidebar1').empty();
         $("<B><U>Dist Point</U></B><br />").appendTo('#sidebar1');
@@ -578,7 +587,10 @@ function onEachDistPoly(feature, layer) {
         sidebar.open('formTools');
 
         //gets the center of the poly to pan the camera
-        map.panTo(this.getCenter());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
 
         $('#sidebar1').empty();
         $("<B><U>Dist Polygon</U></B><br />").appendTo('#sidebar1');
@@ -606,6 +618,10 @@ function onEachDistPolyCent(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         $('#sidebar1').empty();
         $("<B><U>Dist Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -633,7 +649,10 @@ function onEachRestoPoly(feature, layer) {
         sidebar.open('formTools');
 
         //gets the center of the poly to pan the camera
-        map.panTo(this.getCenter());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         //map.panTo(this.getLatLng());
         $('#sidebar1').empty();
         $("<B><U>Resto Polygon</U></B><br />").appendTo('#sidebar1');
@@ -661,7 +680,10 @@ function onEachRestoPoint(feature, layer) {
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        map.panTo(this.getLatLng());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         $('#sidebar1').empty();
         $("<B><U>Resto Point</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -686,7 +708,10 @@ function onEachRestoPolyCent(feature, layer) {
         }
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
-        map.panTo(this.getCenter());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         $('#sidebar1').empty();
         $("<B><U>Resto Poly Cent</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -713,9 +738,11 @@ function onEachRestoLine(feature, layer) {
         sidebar.open('formTools');
 
         // gets the point in the middle of the line to pan the camera to
-
-        map.panTo(this.getCenter());
-
+        
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         $('#sidebar1').empty();
         $("<B><U>Resto Line</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
@@ -860,6 +887,10 @@ function onEachSoilVuln(feature, layer) {
         // opens the marker info tab on sidebar when clicked
         sidebar.open('formTools');
         //map.panTo(this.getLatLng());
+        map.fitBounds(this.getBounds(), {
+              maxZoom: 14,
+              paddingTopLeft: [200,0]
+        });
         $('#sidebar1').empty();
         $("<B><U>Soil Vulnerability</U></B><br />").appendTo('#sidebar1');
         for (var ii = 0; ii < popUpContent.length; ii++) {
