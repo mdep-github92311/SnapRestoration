@@ -265,7 +265,7 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="input-group">	
-              <input type="number" id="searchID"class="form-control" placeholder="Search by GID...">	
+              <input type="text" id="searchID"class="form-control" placeholder="Search by keyword">	
               <span class="input-group-btn">	
                 <button id="searchButton" class="btn btn-default" type="button">Search</button>	
               </span>	
@@ -884,87 +884,143 @@
             });
           });
           
-          document.getElementById("searchButton").addEventListener("click", function(){
-            console.log($("#searchID").val());
-            if ($("#searchID").val() == ''){
-              $("#tableItems").html('');
-              writeTables(currRecords);
+    document.getElementById("searchButton").addEventListener("click", function() {
+      if ($("#searchID").val() == '') {
+        $("#tableItems").html('');
+        writeTables(currRecords);
+        return;
+      }
+      var searched = [];
+      var searchedValue = $("#searchID").val().toLowerCase();
+      $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
+      if (currRecords.barriers.features != null) {
+        currRecords.barriers.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
+            }
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
               return;
             }
-            $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
-            if (currRecords.barriers.features != null) {
-                currRecords.barriers.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {barriers: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ barriers: { features: searched } });
+      }
+      else if (currRecords.distPoints.features != null) {
+        currRecords.distPoints.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
             }
-            else if (currRecords.distPoints.features != null) {
-                currRecords.distPoints.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {distPoints: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
+              return;
             }
-            else if (currRecords.distLines.features != null) {
-                currRecords.distLines.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {distLines: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ distPoints: { features: searched } });
+      }
+      else if (currRecords.distLines.features != null) {
+        currRecords.distLines.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
             }
-            else if (currRecords.distPolys.features != null) {
-                currRecords.distPolys.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {distPolys: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
+              return;
             }
-            else if (currRecords.restoPoints.features != null) {
-                currRecords.restoPoints.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {restoPoints: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ distLines: { features: searched } });
+      }
+      else if (currRecords.distPolys.features != null) {
+        currRecords.distPolys.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
             }
-            else if (currRecords.restoLines.features != null) {
-                currRecords.restoLines.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {restoLines: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
+              return;
             }
-            else if (currRecords.restoPolys.features != null) {
-                currRecords.restoPolys.features.forEach(function(feature) {
-                if (feature.properties.gid == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    var features = [feature];
-                    var searched = {restoPolys: { features: features }};
-                    writeTables(searched);
-                  }
-              });
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ distPolys: { features: searched } });
+      }
+      else if (currRecords.restoPoints.features != null) {
+        currRecords.restoPoints.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
             }
-            // currRecords; 
-            // writeTables(defs)
-          });
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
+              return;
+            }
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ restoPoints: { features: searched } });
+      }
+      else if (currRecords.restoLines.features != null) {
+        currRecords.restoLines.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
+            }
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
+              return;
+            }
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ restoLines: { features: searched } });
+      }
+      else if (currRecords.restoPolys.features != null) {
+        currRecords.restoPolys.features.forEach(function(feature) {
+          for (prop in feature.properties) {
+            if (prop == "agency") {
+              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
+                searched.push(feature);
+                return;
+              }
+            }
+            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
+              searched.push(feature);
+              return;
+            }
+          }
+        });
+        $("#tableItems").html('');
+        writeTables({ restoPolys: { features: searched } });
+      }
+    });
+
           
           
           /*setTimeout(function(){ 
