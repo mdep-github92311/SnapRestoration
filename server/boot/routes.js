@@ -55,7 +55,8 @@ module.exports = function (app) {
   {
     if (req.session.user_id == null) {
       res.send('You are not authorized to view this page');
-      console.log(req.session.user_id)
+      console.log("you are not logged in")
+      console.log(req.session)
     } else {
       console.log('you are logged in')
       next();
@@ -1091,13 +1092,15 @@ module.exports = function (app) {
         })
     })
     .get('/checkLogin', (req,res) => {
+      console.log("Check Login", req.query)
       const loginCred = req.query;
       //console.log(req.query)
       db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
       .then(function (user) {
-        console.log(user.password_reset)
+        console.log("check user account", user)
         users++;
         req.session.user_id = users;
+        console.log(req.session)
         res.end(JSON.stringify(user));
       })
       .catch(function (err) {
