@@ -66,7 +66,7 @@ module.exports = function (app) {
   });
   
   app.get('/logout', function (req, res) {
-    if (req.session.user_id != null) {
+    if (req.session.user != null) {
       delete req.session.user;
       var response = {
           status  : 200,
