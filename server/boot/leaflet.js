@@ -3,16 +3,15 @@
  */
 var path = require('path');
 const url = require('url');   
-var users = 0;
 
 
 module.exports = function (app) {
   
   function checkAuth(req, res, next) 
   {
-    if (req.session.user_id == null) {
+    if (req.session.user == null) {
       res.send('You are not authorized to view this page');
-      console.log(req.session.user_id)
+      console.log(req.session.user)
     } else {
       console.log('you are logged in')
       next();
@@ -72,6 +71,7 @@ module.exports = function (app) {
           status  : 200,
           success : 'logged out successfully'
       }
+      console.log(response);
       res.end(JSON.stringify(response));
     }
     else {
@@ -79,6 +79,7 @@ module.exports = function (app) {
           status  : 201,
           error : 'No session ID'
       }
+      console.log(response);
       res.end(JSON.stringify(response));
     }
   });     

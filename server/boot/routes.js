@@ -6,7 +6,6 @@ module.exports = function (app) {
   var loopback = require('loopback');
   const bodyParser = require('body-parser');
   const promise = require('bluebird');
-  var users = 0;
 //
 //   var testQuery = require("/loopback-getting-started/common/javascripts/query.js");
 //
@@ -53,7 +52,7 @@ module.exports = function (app) {
   }
   function checkAuth(req, res, next) 
   {
-    if (req.session.user_id == null) {
+    if (req.session.user == null) {
       res.send('You are not authorized to view this page');
       console.log("you are not logged in")
       console.log(req.session)
@@ -1098,8 +1097,7 @@ module.exports = function (app) {
       db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
       .then(function (user) {
         console.log("check user account", user)
-        users++;
-        req.session.user_id = users;
+        req.session.user = user;
         console.log(req.session)
         res.end(JSON.stringify(user));
       })
