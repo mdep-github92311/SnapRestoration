@@ -119,7 +119,7 @@ html
               ul.nav.navbar-nav(style='border-left: 1px solid #000000;')
                 li.active
                   a(href='#') Map View
-                li
+                li#adminTab
                   a(href='/admin/Add.html') Admin
               ul.nav.navbar-nav.navbar-right
                 li#loginTab
@@ -146,6 +146,7 @@ html
                   loggedIn = true;
                   document.getElementById('logoutTab').style.display = "block";
                   document.getElementById('loginTab').style.display = "none";
+                  document.getElementById('adminTab').style.display = "block";
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.warn(XMLHttpRequest.responseText);
@@ -163,6 +164,7 @@ html
                   console.log(data);
                   document.getElementById('logoutTab').style.display = "none";
                   document.getElementById('loginTab').style.display = "block";
+                  document.getElementById('adminTab').style.display = "none";
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.warn(XMLHttpRequest.responseText);

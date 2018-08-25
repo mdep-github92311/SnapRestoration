@@ -120,6 +120,10 @@ html, body {
   display: none;
 }
 
+#adminTab {
+  display: none;
+}
+
 .container {
     position: relative;
     width: 50px;

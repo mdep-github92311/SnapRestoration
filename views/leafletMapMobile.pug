@@ -193,7 +193,9 @@ html(manifest='cache.manifest', type='text/cache-manifest')
       #logoutTab {
         display: none;
       }
-      
+      #adminTab {
+        display: none;
+      }
       .container {
           position: relative;
           width: 50px;
@@ -488,6 +490,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                   loggedIn = true;
                   document.getElementById('logoutTab').style.display = "block";
                   document.getElementById('loginTab').style.display = "none";
+                  document.getElementById('adminTab').style.display = "block";
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.warn(XMLHttpRequest.responseText);
@@ -506,6 +509,7 @@ html(manifest='cache.manifest', type='text/cache-manifest')
                   console.log(data);
                   document.getElementById('logoutTab').style.display = "none";
                   document.getElementById('loginTab').style.display = "block";
+                  document.getElementById('adminTab').style.display = "none";
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.warn(XMLHttpRequest.responseText);
