@@ -1101,7 +1101,7 @@ module.exports = function (app) {
                         var correct = bcrypt.compareSync(loginCred[1], user[0].password); // true
                         if (correct) {
                             console.log("check user account", user)
-                            req.session.user = user;
+                            req.session.user = user[0];
                             console.log(req.session)
                             res.end(JSON.stringify(user));
                         }

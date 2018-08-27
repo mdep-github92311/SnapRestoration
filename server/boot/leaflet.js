@@ -27,39 +27,20 @@ module.exports = function (app) {
   app.get('/public', function (req, res) {
     res.render('leafletMapPublic.pug');
   });
-  app.get('/my_secret_page', checkAuth, function (req, res) {
-    //res.send('if you are viewing this page it means you are logged in');
-    //console.log('you are logged in')
-    var response = {
-        status  : 200,
-        success : 'Logged in successfully'
-    }
-    res.end(JSON.stringify(response));
-  });
 
   app.post('/login', function (req, res) {
     var post = req.body;
-    //console.log(req.session)
-     
-    
     res.redirect(url.format({
        pathname:"/checkLogin",
        query: [post.user, post.password]
      }));
-    // if (post.user === 'admin' && post.password === 'password') {
-    //   users++;
-    //   req.session.user_id = users;
-    //   //console.log(req.session)
-    //   //res.redirect('/my_secret_page');
-    // } else {
-    //   //res.send('Bad user/pass');
-    // }
   });
   
   app.get('/loginStatus', checkAuth, function (req, res) {
     var response = {
         status  : 200,
-        success : 'Logged in successfully'
+        success: 'Logged in successfully',
+        user: req.session.user.user_name
     }
     res.end(JSON.stringify(response));
   });
