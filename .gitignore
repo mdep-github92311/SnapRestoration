@@ -1,2 +1,10 @@
-node_modules
-certs
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/obj/Debug
+/node_modules
+/SNAPRestoration.sln
+/SNAPRestoration.njsproj
+/package-lock.json
+/certs
