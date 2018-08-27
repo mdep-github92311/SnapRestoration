@@ -7,6 +7,7 @@ module.exports = function (app) {
     const bodyParser = require('body-parser');
     const promise = require('bluebird');
     var bcrypt = require('bcrypt');
+    const saltRounds = 10;
     //
     //   var testQuery = require("/loopback-getting-started/common/javascripts/query.js");
     //
@@ -1094,12 +1095,19 @@ module.exports = function (app) {
             console.log("Check Login", req.query)
             const loginCred = req.query;
             //console.log(req.query)
-            db.any('SELECT * FROM users WHERE user_name = $1 AND password = $2 LIMIT 1', [loginCred[0], loginCred[1]])
+            db.any('SELECT * FROM users WHERE user_name = $1 LIMIT 1', loginCred[0])
                 .then(function (user) {
-                    console.log("check user account", user)
-                    req.session.user = user;
-                    console.log(req.session)
-                    res.end(JSON.stringify(user));
+                    if (user.length > 0) {
+                        var correct = bcrypt.compareSync(loginCred[1], user[0].password); // true
+                        if (correct) {
+                            console.log("check user account", user)
+                            req.session.user = user;
+                            console.log(req.session)
+                            res.end(JSON.stringify(user));
+                        }
+                    }
+                    res.statusMessage = "Incorrect username/password combination";
+                    res.status(400).end();
                 })
                 .catch(function (err) {
                     throw err;
@@ -1134,6 +1142,8 @@ module.exports = function (app) {
         })
         .post('/resetPass', checkAuth, (req, res) => {
             const userUpdate = req.body;
+            var salt = bcrypt.genSaltSync(saltRounds);
+            userUpdate[1] = bcrypt.hashSync(userUpdate[1], salt);
 
             db.none(`UPDATE users SET password = $2, password_reset = 1 WHERE user_name = $1 `, userUpdate)
                 .then(function () {
@@ -1168,6 +1178,8 @@ module.exports = function (app) {
 
         .post('/changePass', checkAuth, (req, res) => {
             const userUpdate = req.body;
+            var salt = bcrypt.genSaltSync(saltRounds);
+            userUpdate[1] = bcrypt.hashSync(userUpdate[1], salt);
             db.none(`UPDATE users SET password = $2, password_reset = 0 WHERE user_name = $1 `, userUpdate)
                 .then(function () {
                     console.log('password reset');
@@ -1184,6 +1196,8 @@ module.exports = function (app) {
 
         .post('/addUser', checkAuth, (req, res) => {
             const user = req.body;
+            var salt = bcrypt.genSaltSync(saltRounds);
+            user[5] = bcrypt.hashSync(user[5], salt);
             db.none(`INSERT INTO users(user_name, first_name, last_name, agency, password) VALUES($1,$2,$3,$4,$5)`, user)
                 .then(function () {
                     console.log('user added');
