@@ -22,25 +22,25 @@
     </head>
     <body>
         <div id="loginDIV" class="container">
-          <form class="form-signin" action="#" onsubmit="login();return false">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <h5 id="warning1" style="display:none; color:red; background-color:#dfdfdf; padding-top: 5px;padding-bottom: 5px;padding-left: 5px;">Incorrect username/password combination</h5>
-            <label for="inputUsername" class="sr-only">Email address</label>
-            <input type="text" id="username" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="password" class="form-control" placeholder="Password" required>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" value="remember-me"> Remember me
-              </label>
-            </div>
-            <button onclick="goBack(); return false;" class="btn btn-lg btn-secondary btn-block">Go Back</button>
-            <button id="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
-          </form>
+            <form id="loginForm" class="form-signin" action="#">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <h5 id="warning1" style="display:none; color:red; background-color:#dfdfdf; padding-top: 5px;padding-bottom: 5px;padding-left: 5px;"></h5>
+                <label for="inputUsername" class="sr-only">Email address</label>
+                <input type="text" id="username" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Password" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <input type="submit" value="Sign in" id="submit" class="btn btn-lg btn-primary btn-block" />
+                <button id="returnPage" class="btn btn-lg btn-secondary btn-block">Go Back</button>
+            </form>
 
         </div> <!-- /container -->
         <div id="changeDIV" style="display:none;" class="container">
-          <form class="form-change" action="#" onsubmit="change();return false">
+          <form id="changePassForm" class="form-change" action="#" onsubmit="change();return false">
             <h2 class="form-change-heading">Change password</h2>
             <h5 id="warning2" style="display:none; color:red; background-color:#dfdfdf; padding-top: 5px;padding-bottom: 5px;padding-left: 5px;">Passwords do not match!</h5>
             <label for="inputPass" class="sr-only">New Password: </label>
@@ -48,77 +48,86 @@
             <label for="inputConPass" class="sr-only">Confirm New Password: </label>
             <input type="password" id="password2" class="form-control" placeholder="Confirm Password" required>
             
-            <button id="submit" class="btn btn-lg btn-primary btn-block">Save</button>
+            <input type="submit" value="Save" id="save" class="btn btn-lg btn-primary btn-block" />
           </form>
 
         </div> <!-- /container -->
     </body>
-    <script>
-        var user = null;
-        function login() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var info = {};
-            info['user'] = username;
-            info['password'] = password;
-            $.ajax({
-                type: "POST",
-                url: "/login",
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(info),
-                success: function (data) { 
-                  console.log(data);
-                  if(data.length == 0) { 
+</html>
+<script>
+    var user = null;
+    $("#loginForm").submit(function (e) {
+        e.preventDefault();
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var info = {};
+        info['user'] = username;
+        info['password'] = password;
+        console.log(info);
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(info),
+            success: function (data) {
+                console.log(data);
+                if (data.status >= 400) {
+                    document.getElementById('warning1').innerHTML = data.status;
                     document.getElementById('warning1').style.display = "block";
-                  }
-                  else if (data[0].password_reset == 1) {
-                      user = data[0].user_name;
-                      document.getElementById('loginDIV').style.display = "none";
-                      document.getElementById('changeDIV').style.display = "block";
-                  }
-                  else
-                    window.location.href = '/';
-                  
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.warn(XMLHttpRequest.responseText);
                 }
-            })
-        }
-        function change() {
-            var pass1 = document.getElementById('password1').value;
-            var pass2 = document.getElementById('password2').value;
-            console.log(pass1.length)
-            if (pass1.length < 8) {
-                document.getElementById('warning2').innerHTML = "Passwords must be at least 8 characters";
+                else if (data[0].password_reset == 1) {
+                    user = data[0].user_name;
+                    document.getElementById('loginDIV').style.display = "none";
+                    document.getElementById('changeDIV').style.display = "block";
+                }
+                else
+                    goBack();
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.warn(XMLHttpRequest.responseText, errorThrown);
+                document.getElementById('warning1').innerHTML = errorThrown;
+                document.getElementById('warning1').style.display = "block";
+            }
+        })
+    });
+    $("#changePassForm").submit(function (e) {
+        e.preventDefault();
+        var pass1 = document.getElementById('password1').value;
+        var pass2 = document.getElementById('password2').value;
+        console.log(pass1.length)
+        if (pass1.length < 8) {
+            document.getElementById('warning2').innerHTML = "Passwords must be at least 8 characters";
+            document.getElementById('warning2').style.display = "block";
+        } else {
+            if (pass1 == pass2) {
+                $.ajax({
+                    type: "POST",
+                    url: "/changePass",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify([user, pass1]),
+                    success: function (data) {
+                        console.log(data);
+                        goBack();
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.warn(XMLHttpRequest.responseText);
+                    }
+                })
+            }
+            else {
+                document.getElementById('warning2').innerHTML = "Passwords do not match!";
                 document.getElementById('warning2').style.display = "block";
-            } else {
-                if (pass1 == pass2) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/changePass",
-                        dataType : "json",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify([user, pass1]),
-                        success: function (data) { 
-                          console.log(data);
-                          window.location.href = '/';
-                          
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            console.warn(XMLHttpRequest.responseText);
-                        }
-                    })
-                }
-                else {
-                    document.getElementById('warning2').innerHTML = "Passwords do not match!";
-                    document.getElementById('warning2').style.display = "block";
-                }
             }
         }
-        function goBack() {
-            window.location=document.referrer;
-        }
-    </script>
-</html>
+    })
+    $("#returnPage").click(function () {
+        goBack();
+    })
+    function goBack() {
+        window.location = document.referrer;
+    }
+</script>

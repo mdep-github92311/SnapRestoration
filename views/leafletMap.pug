@@ -126,8 +126,9 @@ html
                   a(href='login.html')
                     b Login
                 li#logoutTab
-                  a(href='javascript:logout();')
-                    b Logout
+                  b(style='color: #9d9d9d') Hello, 
+                    span#username Username
+                  a(href='javascript:logout();', style='display: inline-block; padding-left: 0px;') &nbsp(logout)
                                 
       #overlay
       #map
@@ -144,6 +145,7 @@ html
                 success: function (data) { 
                   console.log(data);
                   loggedIn = true;
+                  document.getElementById('username').innerHTML = data.user;
                   document.getElementById('logoutTab').style.display = "block";
                   document.getElementById('loginTab').style.display = "none";
                   document.getElementById('adminTab').style.display = "block";

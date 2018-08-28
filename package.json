@@ -16,6 +16,7 @@
     "postinstall": "./offline/offline-npm --postinstall ; "
   },
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.17.2",
     "browserify": "^14.4.0",
     "client-certificate-auth": "^0.3.0",
