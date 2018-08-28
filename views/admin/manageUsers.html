@@ -246,18 +246,19 @@
               </span>	
             </div><!-- /input-group -->
             <br>
-            <div id = "Items">
-              <div id="reviewItems"></div>
-              
-                  <div class="loading"></div>
-              <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
-                <thead><tr><th>Username</th><th>First Name</th><th>Last Name</th><th>Agency</th><th>Action</th></tr></thead>
-                <tbody id="tableItems">
-                  </tbody>
-              </table>
-              <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
-              <span id="pageNumber" style="font-size: 1.5em;">1</span>
-              <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+            <div id="Items">
+                <div id="reviewItems"></div>
+
+                <div class="loading"></div>
+                <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
+                    <thead><tr><th>Username</th><th>First Name</th><th>Last Name</th><th>Agency</th><th>Action</th></tr></thead>
+                    <tbody id="tableItems"></tbody>
+                </table>
+                <a id="pageLeft5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
+                <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+                <span id="pageNumber" style="font-size: 1.5em;">1</span>
+                <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                <a id="pageRight5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>
             </div>
           </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
@@ -375,6 +376,14 @@
                 document.getElementById("buttons").style.display = "none"; 
               
             }
+            $('#pageLeft5').click(function () {
+                $("#tableItems").html('')
+                if (pageNumber >= 5)
+                    pageNumber -= 5;
+                else
+                    pageNumber = 0;
+                writeTables(currRecords);
+            });
             $('#pageLeft').click(function(){
                 // console.log(currRecords)
                 $("#tableItems").html('')
@@ -389,6 +398,14 @@
                   pageNumber++;
                 writeTables(currRecords);
             });
+            $('#pageRight5').click(function () {
+                $("#tableItems").html('')
+                if ((pageNumber + 5) * 10 < currRecords.overallCount)
+                    pageNumber += 5;
+                else
+                    pageNumber = Math.ceil(currRecords.overallCount / 10);
+                writeTables(currRecords);
+            });
                     
             function writeTables(defs) {
               //console.log(defs);
@@ -397,7 +414,7 @@
                 //count.innerHTML = "There are " + defs.overallCount + " overall markers";
                 var count = 0;
                 // table.fnClearTable();
-                $("#pageNumber").html(pageNumber+1)
+                $("#pageNumber").html((pageNumber + 1) + "/" + (currRecords.overallCount > 0 ? Math.ceil(currRecords.overallCount / 10) : 1))
                 $("#tableItems").html('<tr><td colspan=5>Unable to load users</td></tr>');
                 if (defs != null) {
                   $("#tableItems").html('');
