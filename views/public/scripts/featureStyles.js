@@ -444,6 +444,10 @@ function soil_vuln(feature) {
     return { color: "#a65628" };
 }
 
+function desert_complex(feature) {
+    return { color: "#f2a274" };
+}
+
 function roadColor(feature) {
     return { color: "#000000",
         weight: 3,
