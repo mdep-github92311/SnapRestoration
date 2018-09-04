@@ -655,7 +655,7 @@ module.exports = function (app) {
             db.none(`UPDATE resto_polygon
       SET agency = $2, region = $3, ecosystem = $4, resto_code = $5, resto_acti = $6, te_action = $7,
       non_list_a = $8, comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, treatment_ = $13, acres_rest = $14, kmsq_resto = $15, gps_date = $16, gps_photo = $17,
-      photo_azim = $18, signed = $19, deep_till = $20, barrier_in = $21, mulch = $22, monitoring = $23, previously = $24, shape_leng = $27, shape_area = $28
+      photo_azim = $18, signed = $19, deep_till = $20, barrier_in = $21, mulch = $22, monitoring = $23, previously = $24, shape_area = $27
       WHERE gid = $1 `, restoPolyUpdate)
                 .then(function () {
                     console.log('restoration polygon updated');
@@ -677,7 +677,7 @@ module.exports = function (app) {
             db.none(`UPDATE resto_line
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_act = $7, te_act = $8,
       nonlists_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
-      miles_rest = $19, km_resto = $20, gps_photo = $21, photo_azim = $22, monitoring = $23, previously = $24, qa_qc = $25, shape_leng = $27
+      miles_rest = $19, km_resto = $20, gps_photo = $21, photo_azim = $22, monitoring = $23, previously = $24, qa_qc = $25
       WHERE gid = $1 `, restoLineUpdate)
                 .then(function () {
                     console.log('restoration line updated');
@@ -701,7 +701,7 @@ module.exports = function (app) {
             db.none(`UPDATE barrier
       SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, 
-           qa_qc = $18, shape_leng = $20
+           qa_qc = $18
       WHERE gid = $1 `, barrierUpdate)
                 .then(function () {
                     console.log('barrier updated');
@@ -745,7 +745,7 @@ module.exports = function (app) {
       SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
         use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, assessibil = $16, visibility = $17, comments = $18,
         primary_ob = $19, secondary_ = $20, acres_rest = $21, kmsq_resto = $22, treated = $23, dist_sever = $24, cultural = $25, t_e_specie = $26, gps_photo = $27, site_vulne = $28,
-        photo_azim = $29, qa_qc = $30, old_distco = $31, shape_leng = $34, shape_area = $35
+        photo_azim = $29, qa_qc = $30, old_distco = $31, shape_area = $34
       WHERE gid = $1 `, distPolyUpdate)
                 .then(function () {
                     console.log('dist polygon updated');
@@ -768,7 +768,7 @@ module.exports = function (app) {
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
         use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, width = $14, type = $15, plant_dama = $16, accessibil = $17, visibility = $18, comments = $19,
         primary_ob = $20, secondary_ = $21, miles_dist = $22, km_dist = $23, treated = $24, dist_sever = $25, cultural = $26, t_e_specie = $27, gps_photo = $28, soil_vulne = $29,
-        photo_azim = $30, qa_qc = $31, old_dist_c = $32, shape_leng = $34
+        photo_azim = $30, qa_qc = $31, old_dist_c = $32
       WHERE gid = $1 `, distLineUpdate)
                 .then(function () {
                     console.log('dist line updated');
