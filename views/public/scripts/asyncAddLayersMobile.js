@@ -181,7 +181,7 @@ async function createLayer(data, layerName) {
                     onEachFeature: onEachBLMRegion
                 }).addTo(map);
 
-                control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
+                control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -196,7 +196,7 @@ async function createLayer(data, layerName) {
                     onEachFeature: onEachFSRegion
                 }).addTo(map);
 
-                control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
+                control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -211,7 +211,7 @@ async function createLayer(data, layerName) {
                     onEachFeature: onEachNVCounty
                 }).addTo(map);
 
-                control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Counties', expanded: false });
+                control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -226,7 +226,7 @@ async function createLayer(data, layerName) {
                     onEachFeature: onEachMDIBound
                 }).addTo(map);
 
-                control.addOverlay(mdiBound, layerName, { groupName: 'Boundaries', expanded: false });
+                control.addOverlay(mdiBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -241,7 +241,7 @@ async function createLayer(data, layerName) {
                     onEachFeature: onEachMDEPBound
                 }).addTo(map);
 
-                control.addOverlay(mdepBound, layerName, { groupName: 'Boundaries', expanded: false });
+                control.addOverlay(mdepBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -257,7 +257,7 @@ async function createLayer(data, layerName) {
                 }).addTo(map);
 
 
-                control.addOverlay(roads, layerName, { groupName: 'Roads', expanded: false });
+                control.addOverlay(roads, layerName, { groupName: 'Misc', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -273,7 +273,7 @@ async function createLayer(data, layerName) {
                     style: soil_vuln
                 }).addTo(map);
 
-                control.addOverlay(snapExtent, layerName, { groupName: 'Misc', expanded: false });
+                control.addOverlay(snapExtent, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -287,7 +287,7 @@ async function createLayer(data, layerName) {
                     style: desert_complex
                 }).addTo(map);
 
-                control.addOverlay(desertComplex, layerName, { groupName: 'Misc', expanded: false });
+                control.addOverlay(desertComplex, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -312,8 +312,8 @@ async function createLayer(data, layerName) {
             control.unSelectGroup('Disturbance Data');
             control.unSelectGroup('Restoration Data');
         }
-        control.unSelectGroup('Regions/ Counties');
-        control.unSelectGroup('Boundaries');
+        control.unSelectGroup('Regions/ Boundaries');
+        control.unSelectGroup('Regions/ Boundaries');
         control.unSelectGroup('Roads');
         control.unSelectGroup('Misc');
     }

@@ -751,835 +751,873 @@
          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="distPointForm" style="display: none;">
-         <label for="distPointForm">Disturbance Point Collection</label><br>
-         <label for="gid">GID: <br>
-            <input type="text" name="gid"><br>
-         </label>
-         <label for="agency">
-            Agency: <br>
-            <select id="agencyDPoint" name="agency">
-               <option value="0">BLM</option>
-               <option value="1">NPS</option>
-               <option value="2">FS</option>
-               <option value="3">FWS</option>
-               <option selected="selected" value="select"></option>
-            </select>
-            <br>
-         </label>
-         <label for="region">
-            Region: <br>
-            <select id="regionDPoint" name="region">
-               <option selected="selected" value="select"></option>
-               <option value="Amargosa Desert E">Amargosa Desert E</option>
-               <option value="Amargosa Desert W">Amargosa Desert W</option>
-               <option value="Black Mt Area">Black Mt Area</option>
-               <option value="California Wash">California Wash</option>
-               <option value="Colorado Valley">Colorado Valley</option>
-               <option value="Coyote Springs Valley">Coyote Springs Valley</option>
-               <option value="Crater Flat">Crater Flat</option>
-               <option value="Eldorado Valley">Eldorado Valley</option>
-               <option value="Forty-mile Canyon">Forty-mile Canyon</option>
-               <option value="Frenchman Flat">Frenchman Flat</option>
-               <option value="Garnet Valley">Garnet Valley</option>
-               <option value="Gold Butte Area">Gold Butte Area</option>
-               <option value="Greasewood Basin">Greasewood Basin</option>
-               <option value="Hidden Valley N">Hidden Valley N</option>
-               <option value="Hidden Valley S">Hidden Valley S</option>
-               <option value="Indian Springs Valley N">Indian Springs Valley N</option>
-               <option value="Indian Springs Valley S">Indian Springs Valley S</option>
-               <option value="Ivanpah N">Ivanpah N</option>
-               <option value="Ivanpah S">Ivanpah S</option>
-               <option value="Jean Lake Valley">Jean Lake Valley</option>
-               <option value="Las Vegas Valley">Las Vegas Valley</option>
-               <option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option>
-               <option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option>
-               <option value="Mercury Valley">Mercury Valley</option>
-               <option value="Mesquite Valley">Mesquite Valley</option>
-               <option value="Moapa Valley">Moapa Valley</option>
-               <option value="Muddy River Springs Area">Muddy River Springs Area</option>
-               <option value="Pahrump Valley">Pahrump Valley</option>
-               <option value="Piute Valley">Piute Valley</option>
-               <option value="Rock Valley">Rock Valley</option>
-               <option value="Three Lakes Valley N">Three Lakes Valley N</option>
-               <option value="Three Lakes Valley S">Three Lakes Valley S</option>
-               <option value="Tikapoo Valley">Tikapoo Valley</option>
-               <option value="Virgin River Valley">Virgin River Valley</option>
-            </select>
-            <br>
-         </label>
-         <label for="ecosystem">
-            Ecosystem: <br>
-            <select id="ecosystemDPoint" name="ecosystem">
-               <option selected="selected" value="select"></option>
-               <option value="Alpine">Alpine</option>
-               <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
-               <option value="Mixed Conifer">Mixed Conifer</option>
-               <option value="Pinon-Juniper">Pinon-Juniper</option>
-               <option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option>
-               <option value="Riparian">Riparian</option>
-               <option value="Wetland">Wetland</option>
-               <option value="Open Water">Open Water</option>
-               <option value="Spring">Spring</option>
-               <option value="Spring Channel">Spring Channel</option>
-               <option value="Dune">Dune</option>
-               <option value="Mojave Desert Scrub">Mojave Desert Scrub</option>
-            </select>
-            <br>
-         </label>
-         <label for="gps_date">Date collected: <br>
-            <input type="date" name="gps_date"><br>
-         </label>
-         <label for="dist_code">Disturbance Code: <br>
-            <input type="text" name="dist_code"><br></label>
-         <label for="use_freq">
-            Frequent Use: <br>
-            <select id="use_freqDPoint" name="use_freq">
-               <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="use_recent">
-            Recent Use: <br>
-            <select id="use_recentDPoint" name="use_recent">
-               <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_pt_ty">
-            Disturbance Type: <br>
-            <select id="dist_pt_tyDPoint" name="dist_pt_ty">
-               <option selected="selected" value="select"></option>
-               <option value="Dumpsite">Dumpsite</option>
-               <option value="Fire Ring">Fire Ring</option>
-               <option value="Graffiti">Graffiti</option>
-               <option value="Plant Collection">Plant Collection</option>
-               <option value="Mine Shaft">Mine Shaft</option>
-               <option value="Shooting Range">Shooting Range</option>
-               <option value="Bike Trail">Location along Bike Trail</option>
-               <option value="Campsite">Campsite</option>
-               <option value="Incursion">Incursion</option>
-               <option value="Hillclimb">Hillclimb</option>
-               <option value="*Other - See Notes*">*Other - See Notes*</option>
-            </select>
-            <br>
-         </label>
-         <label for="accessibil">
-            Accessibility: <br>
-            <select id="accessibilDPoint" name="accessibil">
-               <option selected="selected" value="select"></option>
-               <option value="High">High</option>
-               <option value="Medium">Medium</option>
-               <option value="Low">Low</option>
-            </select>
-            <br>
-         </label>
-         <label for="visibility">
-            Visibility: <br>
-            <select id="visibilityDPoint" name="visibility">
-               <option selected="selected" value="select"></option>
-               <option value="High">High</option>
-               <option value="Medium">Medium</option>
-               <option value="Low">Low</option>
-            </select>
-            <br>
-         </label>
-         <label for="comments">Comments: <br>
-            <input type="text" name="comments"><br>
-         </label>
-         <label for="primary_ob">Who collected the data? <br>
-            <input type="text" name="primary_ob"><br>
-         </label>
-         <label for="secondary_">Who was with you? <br>
-            <input type="text" name="secondary_"><br>
-         </label>
-         <label for="previously">
-            Previously Restored: <br>
-            <select id="previouslyDPoint" name="previously">
-               <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="project_na">Project Name: <br>
-            <input type="text" name="project_na"><br>
-         </label>
-         <label for="estimate_s">Estimated Size: <br>
-            <input type="text" name="estimate_s"><br>
-         </label>
-         <label for="treated">
-            Was the disturbance treated? <br>
-            <select id="treatedDPoint" name="treated">
-               <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No*</option>
-            </select>
-            <br>
-         </label>
-         <label for="cultural">
-            Are cultural resources impacted? <br>
-            <select id="culturalDPoint" name="cultural">
-              <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="t_e_specie">
-            Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) <br>
-            <select id="t_e_specieDPoint" name="t_e_specie">
-               <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="gps_photo">
-            Is there a GPS tagged photo? <br>
-            <select id="gps_photoDPoint" name="gps_photo">
-               <option selected="selected" value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="soil_vulne">
-            Soil Vunerability: <br>
-            <select id="soil_vulneDPoint" name="soil_vulne">
-              <option selected="selected" value="select"></option>
-               <option value="Low">Low</option>
-               <option value="Low/ Medium">Low/ Medium</option>
-               <option value="Medium">Medium</option>
-               <option value="Medium/ High">Medium/ High</option>
-               <option value="High">High</option>
-               <option value="Not Characterized">Not Characterized</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_use">
-            Disturbance Use: <br>
-            <select id="dist_useDPoint" name="dist_use">
-               <option selected="selected" value="select"></option>
-               <option value="Social">Social</option>
-               <option value="Mine">Mine</option>
-               <option value="Old utility">Old utility</option>
-               <option value="Random / Blazed">Random / Blazed</option>
-               <option value="Gov_Operation">Gov_Operation</option>
-               <option value="*Other - See Commnets">*Other - See Commnets</option>
-            </select>
-            <br>
-         </label>
-         <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="number" name="photo_azim" min="1" max="360"><br>
-         </label>
-         <label for="qa_qc">QA/QC: <br>
-            <input type="text" name="qa_qc"><br>
-         </label>
-         <label for="old_distco">Old Disturbance Code: <br>
-            <input type="text" name="old_distco"><br>
-         </label>
-         
-         <br><br><input id="distPointEditButton" type="button" class="btn btn-default" value="Save">
-         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
+          <label for="distPointForm">Disturbance Point Collection</label><br>
+          <label for="gid">
+              GID: <br>
+              <input type="text" name="gid"><br>
+          </label>
+          <label for="agency">
+              Agency: <br>
+              <select id="agencyDPoint" name="agency">
+                  <option value="0">BLM</option>
+                  <option value="1">NPS</option>
+                  <option value="2">FS</option>
+                  <option value="3">FWS</option>
+                  <option selected="selected" value="select"></option>
+              </select>
+              <br>
+          </label>
+          <label for="region">
+              Region: <br>
+              <select id="regionDPoint" name="region">
+                  <option selected="selected" value="select"></option>
+                  <option value="Amargosa Desert E">Amargosa Desert E</option>
+                  <option value="Amargosa Desert W">Amargosa Desert W</option>
+                  <option value="Black Mt Area">Black Mt Area</option>
+                  <option value="California Wash">California Wash</option>
+                  <option value="Colorado Valley">Colorado Valley</option>
+                  <option value="Coyote Springs Valley">Coyote Springs Valley</option>
+                  <option value="Crater Flat">Crater Flat</option>
+                  <option value="Eldorado Valley">Eldorado Valley</option>
+                  <option value="Forty-mile Canyon">Forty-mile Canyon</option>
+                  <option value="Frenchman Flat">Frenchman Flat</option>
+                  <option value="Garnet Valley">Garnet Valley</option>
+                  <option value="Gold Butte Area">Gold Butte Area</option>
+                  <option value="Greasewood Basin">Greasewood Basin</option>
+                  <option value="Hidden Valley N">Hidden Valley N</option>
+                  <option value="Hidden Valley S">Hidden Valley S</option>
+                  <option value="Indian Springs Valley N">Indian Springs Valley N</option>
+                  <option value="Indian Springs Valley S">Indian Springs Valley S</option>
+                  <option value="Ivanpah N">Ivanpah N</option>
+                  <option value="Ivanpah S">Ivanpah S</option>
+                  <option value="Jean Lake Valley">Jean Lake Valley</option>
+                  <option value="Las Vegas Valley">Las Vegas Valley</option>
+                  <option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option>
+                  <option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option>
+                  <option value="Mercury Valley">Mercury Valley</option>
+                  <option value="Mesquite Valley">Mesquite Valley</option>
+                  <option value="Moapa Valley">Moapa Valley</option>
+                  <option value="Muddy River Springs Area">Muddy River Springs Area</option>
+                  <option value="Pahrump Valley">Pahrump Valley</option>
+                  <option value="Piute Valley">Piute Valley</option>
+                  <option value="Rock Valley">Rock Valley</option>
+                  <option value="Three Lakes Valley N">Three Lakes Valley N</option>
+                  <option value="Three Lakes Valley S">Three Lakes Valley S</option>
+                  <option value="Tikapoo Valley">Tikapoo Valley</option>
+                  <option value="Virgin River Valley">Virgin River Valley</option>
+              </select>
+              <br>
+          </label>
+          <label for="ecosystem">
+              Ecosystem: <br>
+              <select id="ecosystemDPoint" name="ecosystem">
+                  <option selected="selected" value="select"></option>
+                  <option value="Alpine">Alpine</option>
+                  <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
+                  <option value="Mixed Conifer">Mixed Conifer</option>
+                  <option value="Pinon-Juniper">Pinon-Juniper</option>
+                  <option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option>
+                  <option value="Riparian">Riparian</option>
+                  <option value="Wetland">Wetland</option>
+                  <option value="Open Water">Open Water</option>
+                  <option value="Spring">Spring</option>
+                  <option value="Spring Channel">Spring Channel</option>
+                  <option value="Dune">Dune</option>
+                  <option value="Mojave Desert Scrub">Mojave Desert Scrub</option>
+              </select>
+              <br>
+          </label>
+          <label for="gps_date">
+              Date collected: <br>
+              <input type="date" name="gps_date"><br>
+          </label>
+          <label for="dist_code">
+              Disturbance Code: <br>
+              <input type="text" name="dist_code"><br>
+          </label>
+          <label for="use_freq">
+              Frequent Use: <br>
+              <select id="use_freqDPoint" name="use_freq">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="use_recent">
+              Recent Use: <br>
+              <select id="use_recentDPoint" name="use_recent">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_pt_ty">
+              Disturbance Type: <br>
+              <select id="dist_pt_tyDPoint" name="dist_pt_ty">
+                  <option selected="selected" value="select"></option>
+                  <option value="Dumpsite">Dumpsite</option>
+                  <option value="Fire Ring">Fire Ring</option>
+                  <option value="Graffiti">Graffiti</option>
+                  <option value="Plant Collection">Plant Collection</option>
+                  <option value="Mine Shaft">Mine Shaft</option>
+                  <option value="Shooting Range">Shooting Range</option>
+                  <option value="Bike Trail">Location along Bike Trail</option>
+                  <option value="Campsite">Campsite</option>
+                  <option value="Incursion">Incursion</option>
+                  <option value="Hillclimb">Hillclimb</option>
+                  <option value="*Other - See Notes*">*Other - See Notes*</option>
+              </select>
+              <br>
+          </label>
+          <label for="accessibil">
+              Accessibility: <br>
+              <select id="accessibilDPoint" name="accessibil">
+                  <option selected="selected" value="select"></option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+              </select>
+              <br>
+          </label>
+          <label for="visibility">
+              Visibility: <br>
+              <select id="visibilityDPoint" name="visibility">
+                  <option selected="selected" value="select"></option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+              </select>
+              <br>
+          </label>
+          <label for="comments">
+              Comments: <br>
+              <input type="text" name="comments"><br>
+          </label>
+          <label for="primary_ob">
+              Who collected the data? <br>
+              <input type="text" name="primary_ob"><br>
+          </label>
+          <label for="secondary_">
+              Who was with you? <br>
+              <input type="text" name="secondary_"><br>
+          </label>
+          <label for="previously">
+              Previously Restored: <br>
+              <select id="previouslyDPoint" name="previously">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="project_na">
+              Project Name: <br>
+              <input type="text" name="project_na"><br>
+          </label>
+          <label for="estimate_s">
+              Estimated Size: <br>
+              <input type="text" name="estimate_s"><br>
+          </label>
+          <label for="treated">
+              Was the disturbance treated? <br>
+              <select id="treatedDPoint" name="treated">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No*</option>
+              </select>
+              <br>
+          </label>
+          <label for="cultural">
+              Are cultural resources impacted? <br>
+              <select id="culturalDPoint" name="cultural">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="t_e_specie">
+              Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) <br>
+              <select id="t_e_specieDPoint" name="t_e_specie">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="soil_vulne">
+              Soil Vunerability: <br>
+              <select id="soil_vulneDPoint" name="soil_vulne">
+                  <option selected="selected" value="select"></option>
+                  <option value="Low">Low</option>
+                  <option value="Low/ Medium">Low/ Medium</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Medium/ High">Medium/ High</option>
+                  <option value="High">High</option>
+                  <option value="Not Characterized">Not Characterized</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_use">
+              Disturbance Use: <br>
+              <select id="dist_useDPoint" name="dist_use">
+                  <option selected="selected" value="select"></option>
+                  <option value="Social">Social</option>
+                  <option value="Mine">Mine</option>
+                  <option value="Old utility">Old utility</option>
+                  <option value="Random / Blazed">Random / Blazed</option>
+                  <option value="Gov_Operation">Gov_Operation</option>
+                  <option value="*Other - See Commnets">*Other - See Commnets</option>
+              </select>
+              <br>
+          </label>
+          <label for="gps_photo">
+              Is there a GPS tagged photo? <br>
+              <select id="gps_photoDPoint" name="gps_photo">
+                  <option selected="selected" value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="photo_azim">
+              Which way is photo facing (degrees)? <br>
+              <input type="number" name="photo_azim" min="1" max="360"><br>
+          </label>
+          <label for="qa_qc">
+              QA/QC: <br>
+              <input type="text" name="qa_qc"><br>
+          </label>
+          <label for="old_distco">
+              Old Disturbance Code: <br>
+              <input type="text" name="old_distco"><br>
+          </label>
+
+          <br><br><input id="distPointEditButton" type="button" class="btn btn-default" value="Save">
+          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="distPolyForm" style="display: none;">
-         <label for="distPolyForm">Disturbance Polygon Collection</label><br>
-         <label for="gid">GID: <br>
-            <input type="text" name="gid"><br>
-         </label>
-         <label for="agency">
-            Agency: <br>
-            <select id="agencyDPoly" name="agency">
-               <option value="0">BLM</option>
-               <option value="1">NPS</option>
-               <option value="2">FS</option>
-               <option value="3">FWS</option>
-               <option selected="selected" value="select"></option>
-            </select>
-            <br>
-         </label>
-         <label for="region">
-            Region: <br>
-            <select id="regionDPoly" name="region">
-               <option value="select"></option>
-               <option value="Amargosa Desert E">Amargosa Desert E</option>
-               <option value="Amargosa Desert W">Amargosa Desert W</option>
-               <option value="Black Mt Area">Black Mt Area</option>
-               <option value="California Wash">California Wash</option>
-               <option value="Colorado Valley">Colorado Valley</option>
-               <option value="Coyote Springs Valley">Coyote Springs Valley</option>
-               <option value="Crater Flat">Crater Flat</option>
-               <option value="Eldorado Valley">Eldorado Valley</option>
-               <option value="Forty-mile Canyon">Forty-mile Canyon</option>
-               <option value="Frenchman Flat">Frenchman Flat</option>
-               <option value="Garnet Valley">Garnet Valley</option>
-               <option value="Gold Butte Area">Gold Butte Area</option>
-               <option value="Greasewood Basin">Greasewood Basin</option>
-               <option value="Hidden Valley N">Hidden Valley N</option>
-               <option value="Hidden Valley S">Hidden Valley S</option>
-               <option value="Indian Springs Valley N">Indian Springs Valley N</option>
-               <option value="Indian Springs Valley S">Indian Springs Valley S</option>
-               <option value="Ivanpah N">Ivanpah N</option>
-               <option value="Ivanpah S">Ivanpah S</option>
-               <option value="Jean Lake Valley">Jean Lake Valley</option>
-               <option value="Las Vegas Valley">Las Vegas Valley</option>
-               <option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option>
-               <option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option>
-               <option value="Mercury Valley">Mercury Valley</option>
-               <option value="Mesquite Valley">Mesquite Valley</option>
-               <option value="Moapa Valley">Moapa Valley</option>
-               <option value="Muddy River Springs Area">Muddy River Springs Area</option>
-               <option value="Pahrump Valley">Pahrump Valley</option>
-               <option value="Piute Valley">Piute Valley</option>
-               <option value="Rock Valley">Rock Valley</option>
-               <option value="Three Lakes Valley N">Three Lakes Valley N</option>
-               <option value="Three Lakes Valley S">Three Lakes Valley S</option>
-               <option value="Tikapoo Valley">Tikapoo Valley</option>
-               <option value="Virgin River Valley">Virgin River Valley</option>
-            </select>
-            <br>
-         </label>
-         <label for="ecosystem">
-            Ecosystem: <br>
-            <select id="ecosystemDPoly" name="ecosystem">
-               <option value="select"></option>
-               <option value="Alpine">Alpine</option>
-               <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
-               <option value="Mixed Conifer">Mixed Conifer</option>
-               <option value="Pinon-Juniper">Pinon-Juniper</option>
-               <option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option>
-               <option value="Riparian">Riparian</option>
-               <option value="Wetland">Wetland</option>
-               <option value="Open Water">Open Water</option>
-               <option value="Spring">Spring</option>
-               <option value="Spring Channel">Spring Channel</option>
-               <option value="Dune">Dune</option>
-               <option value="Mojave Desert Scrub">Mojave Desert Scrub</option>
-            </select>
-            <br>
-         </label>
-         <label for="gps_date">Date collected: <br>
-            <input type="date" name="gps_date"><br>
-         </label>
-         <label for="dist_code">Disturbance Code: <br>
-            <input type="text" name="dist_code"><br>
-         </label>
-         <label for="dist_use">
-            Disturbance Use: <br>
-            <select id="dist_useDPoly" name="dist_use">
-               <option value="select"></option>
-               <option value="Social">Social</option>
-               <option value="Mine">Mine</option>
-               <option value="Old utility">Old utility</option>
-               <option value="Random / Blazed">Random / Blazed</option>
-               <option value="Gov_Operation">Gov_Operation</option>
-               <option value="*Other - See Commnets">*Other - See Commnets</option>
-            </select>
-            <br>
-         </label>
-         <label for="use_freq">
-            Frequent Use: <br>
-            <select id="use_freqDPoly" name="use_freq">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="use_recent">
-            Recent Use: <br>
-            <select id="use_recentDPoly" name="use_recent">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="site_stabi">
-            Site Stability: <br>
-            <select id="site_stabiDPoly" name="site_stabi">
-               <option value="select"></option>
-               <option value="Unstable">Unstable</option>
-               <option value="Poor">Poor</option>
-               <option value="Moderate">Moderate</option>
-               <option value="Good">Good</option>
-               <option value="Stable">Stable</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_crust">
-            Disturbed Soil Crust: <br>
-            <select id="dist_crustDPoly" name="dist_crust">
-               <option value="select"></option>
-               <option value="0 - No Crust">0 - No Crust</option>
-               <option value="1 - Alkali">1 - Alkali</option>
-               <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
-               <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
-               <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
-               <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
-            </select>
-            <br>
-         </label>
-         <label for="undist_cru">
-            Undisturbed Crust: <br>
-            <select id="undist_cruDPoly" name="undist_cru">
-               <option value="select"></option>
-               <option value="0 - No Crust">0 - No Crust</option>
-               <option value="1 - Alkali">1 - Alkali</option>
-               <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
-               <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
-               <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
-               <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
-            </select>
-            <br>
-         </label>
-         <label for="depth">
-            Depth: <br>
-            <select id="depthDPoly" name="depth">
-               <option value="select"></option>
-               <option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option>
-               <option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option>
-               <option value="3 - Rut 4" '="" -="" 8'''="">3 - Rut 4'' - 8''</option>
-               <option value="4 - Rut > 8" ''="">4 - Rut &gt; 8''</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_poly_">
-            Disturbance Polygon: <br>
-            <select id="dist_poly_" name="dist_poly_">
-               <option value="select"></option>
-               <option value="Donuts/ Random Tracks">Donuts/ Random Tracks</option>
-               <option value="Pullouts">Pullouts</option>
-               <option value="Denuded Area">Denuded Area</option>
-               <option value="Scrape">Scrape</option>
-               <option value="Burn">Burn</option>
-               <option value="*Other - See Comments">*Other - See Comments</option>
-            </select>
-            <br>
-         </label>
-         <label for="plant_dama">
-            Plant Canopy Damage: <br>
-            <select id="plant_damaDPoly" name="plant_dama">
-               <option value="select"></option>
-               <option value="0 - Intact">0 - Intact</option>
-               <option value="1 - Most symmetrical">1 - Most symmetrical</option>
-               <option value="2 - Many irregular, few dissected">2 - Many irregular, few dissected</option>
-               <option value="3 - Many dissected, few highly dissected">3 - Many dissected, few highly dissected</option>
-               <option value="4 - Many highly dissected, roots exposed">4 - Many highly dissected, roots exposed</option>
-               <option value="5 - Many with roots exposed or detached">5 - Many with roots exposed or detached</option>
-               <option value="6 - Denuded">6 - Denuded</option>
-            </select>
-            <br>
-         </label>
-         <label for="assessibil">
-            Accessibility: <br>
-            <select id="assessibilDPoly" name="assessibil">
-               <option value="select"></option>
-               <option value="High">High</option>
-               <option value="Medium">Medium</option>
-               <option value="Low">Low</option>
-            </select>
-            <br>
-         </label>
-        <label for="visibility">
-            Visibility: <br>
-            <select id="visibilityDPoly" name="visibility">
-               <option value="select"></option>
-               <option value="High">High</option>
-               <option value="Medium">Medium</option>
-               <option value="Low">Low</option>
-            </select>
-            <br>
-         </label>
-         <label for="comments">Comments: <br>
-            <input type="text" name="comments"><br>
-         </label>
-         <label for="primary_ob">Who collected the data? <br>
-            <input type="text" name="primary_ob"><br>
-         </label>
-         <label for="secondary_">Who was with you? <br>
-            <input type="text" name="secondary_"><br>
-         </label>
-         <label for="acres_rest">Acres Restored: <br>
-            <input type="text" name="acres_rest"><br>
-         </label>
-         <label for="kmsq_resto">Km^2 Restored: <br>
-            <input type="text" name="kmsq_resto"><br>
-         </label>
-         <label for="treated">
-            Was the disturbance treated? <br>
-            <select id="treatedDPoly" name="treated">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No*</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_sever">Disturbance Severity: <br>
-            <input type="text" name="dist_sever"><br>
-         </label>
-         <label for="cultural">
-            Are cultural resources impacted? <br>
-            <select id="culturalDPoly" name="cultural">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="t_e_specie">
-            Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) <br>
-            <select id="t_e_specieDPoly" name="t_e_specie">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="gps_photo">
-            Is there a GPS tagged photo? <br>
-            <select id="gps_photoDPoly" name="gps_photo">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="site_vulne">
-            Site Vulnerability <br>
-            <select id="site_vulneDPoly" name="site_vulne">
-               <option value="select"></option>
-               <option value="Low">Low</option>
-               <option value="Low/ Medium">Low/ Medium</option>
-               <option value="Medium">Medium</option>
-               <option value="Medium/ High">Medium/ High</option>
-               <option value="High">High</option>
-               <option value="Not Characterized">Not Characterized</option>
-            </select>
-            <br>
-         </label>
-         <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="number" name="photo_azim" min="1" max="360"><br>
-         </label>
-         <label for="qa_qc">QA/QC: <br>
-            <input type="text" name="qa_qc"><br>
-         </label>
-         <label for="old_distco">Old Disturbance Code: <br>
-            <input type="text" name="old_distco"><br>
-         </label>
-         <label for="shape_star">Shape Star: <br>
-            <input type="text" name="shape_star"><br>
-         </label>
-         <label for="shape_area">Shape Area: <br>
-            <input type="text" name="shape_area"><br>
-         </label>
-         
-         <br><br><input id="distPolyEditButton" type="button" class="btn btn-default" value="Save">
-         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
+          <label for="distPolyForm">Disturbance Polygon Collection</label><br>
+          <label for="gid">
+              GID: <br>
+              <input type="text" name="gid"><br>
+          </label>
+          <label for="agency">
+              Agency: <br>
+              <select id="agencyDPoly" name="agency">
+                  <option value="0">BLM</option>
+                  <option value="1">NPS</option>
+                  <option value="2">FS</option>
+                  <option value="3">FWS</option>
+                  <option selected="selected" value="select"></option>
+              </select>
+              <br>
+          </label>
+          <label for="region">
+              Region: <br>
+              <select id="regionDPoly" name="region">
+                  <option value="select"></option>
+                  <option value="Amargosa Desert E">Amargosa Desert E</option>
+                  <option value="Amargosa Desert W">Amargosa Desert W</option>
+                  <option value="Black Mt Area">Black Mt Area</option>
+                  <option value="California Wash">California Wash</option>
+                  <option value="Colorado Valley">Colorado Valley</option>
+                  <option value="Coyote Springs Valley">Coyote Springs Valley</option>
+                  <option value="Crater Flat">Crater Flat</option>
+                  <option value="Eldorado Valley">Eldorado Valley</option>
+                  <option value="Forty-mile Canyon">Forty-mile Canyon</option>
+                  <option value="Frenchman Flat">Frenchman Flat</option>
+                  <option value="Garnet Valley">Garnet Valley</option>
+                  <option value="Gold Butte Area">Gold Butte Area</option>
+                  <option value="Greasewood Basin">Greasewood Basin</option>
+                  <option value="Hidden Valley N">Hidden Valley N</option>
+                  <option value="Hidden Valley S">Hidden Valley S</option>
+                  <option value="Indian Springs Valley N">Indian Springs Valley N</option>
+                  <option value="Indian Springs Valley S">Indian Springs Valley S</option>
+                  <option value="Ivanpah N">Ivanpah N</option>
+                  <option value="Ivanpah S">Ivanpah S</option>
+                  <option value="Jean Lake Valley">Jean Lake Valley</option>
+                  <option value="Las Vegas Valley">Las Vegas Valley</option>
+                  <option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option>
+                  <option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option>
+                  <option value="Mercury Valley">Mercury Valley</option>
+                  <option value="Mesquite Valley">Mesquite Valley</option>
+                  <option value="Moapa Valley">Moapa Valley</option>
+                  <option value="Muddy River Springs Area">Muddy River Springs Area</option>
+                  <option value="Pahrump Valley">Pahrump Valley</option>
+                  <option value="Piute Valley">Piute Valley</option>
+                  <option value="Rock Valley">Rock Valley</option>
+                  <option value="Three Lakes Valley N">Three Lakes Valley N</option>
+                  <option value="Three Lakes Valley S">Three Lakes Valley S</option>
+                  <option value="Tikapoo Valley">Tikapoo Valley</option>
+                  <option value="Virgin River Valley">Virgin River Valley</option>
+              </select>
+              <br>
+          </label>
+          <label for="ecosystem">
+              Ecosystem: <br>
+              <select id="ecosystemDPoly" name="ecosystem">
+                  <option value="select"></option>
+                  <option value="Alpine">Alpine</option>
+                  <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
+                  <option value="Mixed Conifer">Mixed Conifer</option>
+                  <option value="Pinon-Juniper">Pinon-Juniper</option>
+                  <option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option>
+                  <option value="Riparian">Riparian</option>
+                  <option value="Wetland">Wetland</option>
+                  <option value="Open Water">Open Water</option>
+                  <option value="Spring">Spring</option>
+                  <option value="Spring Channel">Spring Channel</option>
+                  <option value="Dune">Dune</option>
+                  <option value="Mojave Desert Scrub">Mojave Desert Scrub</option>
+              </select>
+              <br>
+          </label>
+          <label for="gps_date">
+              Date collected: <br>
+              <input type="date" name="gps_date"><br>
+          </label>
+          <label for="dist_code">
+              Disturbance Code: <br>
+              <input type="text" name="dist_code"><br>
+          </label>
+          <label for="dist_use">
+              Disturbance Use: <br>
+              <select id="dist_useDPoly" name="dist_use">
+                  <option value="select"></option>
+                  <option value="Social">Social</option>
+                  <option value="Mine">Mine</option>
+                  <option value="Old utility">Old utility</option>
+                  <option value="Random / Blazed">Random / Blazed</option>
+                  <option value="Gov_Operation">Gov_Operation</option>
+                  <option value="*Other - See Commnets">*Other - See Commnets</option>
+              </select>
+              <br>
+          </label>
+          <label for="use_freq">
+              Frequent Use: <br>
+              <select id="use_freqDPoly" name="use_freq">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="use_recent">
+              Recent Use: <br>
+              <select id="use_recentDPoly" name="use_recent">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="site_stabi">
+              Site Stability: <br>
+              <select id="site_stabiDPoly" name="site_stabi">
+                  <option value="select"></option>
+                  <option value="Unstable">Unstable</option>
+                  <option value="Poor">Poor</option>
+                  <option value="Moderate">Moderate</option>
+                  <option value="Good">Good</option>
+                  <option value="Stable">Stable</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_crust">
+              Disturbed Soil Crust: <br>
+              <select id="dist_crustDPoly" name="dist_crust">
+                  <option value="select"></option>
+                  <option value="0 - No Crust">0 - No Crust</option>
+                  <option value="1 - Alkali">1 - Alkali</option>
+                  <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
+                  <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
+                  <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
+                  <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
+              </select>
+              <br>
+          </label>
+          <label for="undist_cru">
+              Undisturbed Crust: <br>
+              <select id="undist_cruDPoly" name="undist_cru">
+                  <option value="select"></option>
+                  <option value="0 - No Crust">0 - No Crust</option>
+                  <option value="1 - Alkali">1 - Alkali</option>
+                  <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
+                  <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
+                  <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
+                  <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
+              </select>
+              <br>
+          </label>
+          <label for="depth">
+              Depth: <br>
+              <select id="depthDPoly" name="depth">
+                  <option value="select"></option>
+                  <option value="1 - Broken < 2" '' ="">1 - Broken &lt; 2''</option>
+                  <option value="2 - Rut 2" '="" -="" 4' '' ="">2 - Rut 2'' - 4''</option>
+                  <option value="3 - Rut 4" '="" -="" 8' '' ="">3 - Rut 4'' - 8''</option>
+                  <option value="4 - Rut > 8" '' ="">4 - Rut &gt; 8''</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_poly_">
+              Disturbance Polygon: <br>
+              <select id="dist_poly_" name="dist_poly_">
+                  <option value="select"></option>
+                  <option value="Donuts/ Random Tracks">Donuts/ Random Tracks</option>
+                  <option value="Pullouts">Pullouts</option>
+                  <option value="Denuded Area">Denuded Area</option>
+                  <option value="Scrape">Scrape</option>
+                  <option value="Burn">Burn</option>
+                  <option value="*Other - See Comments">*Other - See Comments</option>
+              </select>
+              <br>
+          </label>
+          <label for="plant_dama">
+              Plant Canopy Damage: <br>
+              <select id="plant_damaDPoly" name="plant_dama">
+                  <option value="select"></option>
+                  <option value="0 - Intact">0 - Intact</option>
+                  <option value="1 - Most symmetrical">1 - Most symmetrical</option>
+                  <option value="2 - Many irregular, few dissected">2 - Many irregular, few dissected</option>
+                  <option value="3 - Many dissected, few highly dissected">3 - Many dissected, few highly dissected</option>
+                  <option value="4 - Many highly dissected, roots exposed">4 - Many highly dissected, roots exposed</option>
+                  <option value="5 - Many with roots exposed or detached">5 - Many with roots exposed or detached</option>
+                  <option value="6 - Denuded">6 - Denuded</option>
+              </select>
+              <br>
+          </label>
+          <label for="assessibil">
+              Accessibility: <br>
+              <select id="assessibilDPoly" name="assessibil">
+                  <option value="select"></option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+              </select>
+              <br>
+          </label>
+          <label for="visibility">
+              Visibility: <br>
+              <select id="visibilityDPoly" name="visibility">
+                  <option value="select"></option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+              </select>
+              <br>
+          </label>
+          <label for="comments">
+              Comments: <br>
+              <input type="text" name="comments"><br>
+          </label>
+          <label for="primary_ob">
+              Who collected the data? <br>
+              <input type="text" name="primary_ob"><br>
+          </label>
+          <label for="secondary_">
+              Who was with you? <br>
+              <input type="text" name="secondary_"><br>
+          </label>
+          <label for="acres_rest">
+              Acres Restored: <br>
+              <input type="text" name="acres_rest"><br>
+          </label>
+          <label for="kmsq_resto">
+              Km^2 Restored: <br>
+              <input type="text" name="kmsq_resto"><br>
+          </label>
+          <label for="treated">
+              Was the disturbance treated? <br>
+              <select id="treatedDPoly" name="treated">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No*</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_sever">
+              Disturbance Severity: <br>
+              <input type="text" name="dist_sever"><br>
+          </label>
+          <label for="cultural">
+              Are cultural resources impacted? <br>
+              <select id="culturalDPoly" name="cultural">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="t_e_specie">
+              Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) <br>
+              <select id="t_e_specieDPoly" name="t_e_specie">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="site_vulne">
+              Site Vulnerability <br>
+              <select id="site_vulneDPoly" name="site_vulne">
+                  <option value="select"></option>
+                  <option value="Low">Low</option>
+                  <option value="Low/ Medium">Low/ Medium</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Medium/ High">Medium/ High</option>
+                  <option value="High">High</option>
+                  <option value="Not Characterized">Not Characterized</option>
+              </select>
+              <br>
+          </label>
+          <label for="gps_photo">
+              Is there a GPS tagged photo? <br>
+              <select id="gps_photoDPoly" name="gps_photo">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="photo_azim">
+              Which way is photo facing (degrees)? <br>
+              <input type="number" name="photo_azim" min="1" max="360"><br>
+          </label>
+          <label for="qa_qc">
+              QA/QC: <br>
+              <input type="text" name="qa_qc"><br>
+          </label>
+          <label for="old_distco">
+              Old Disturbance Code: <br>
+              <input type="text" name="old_distco"><br>
+          </label>
+          <label for="shape_star">
+              Shape Star: <br>
+              <input type="text" name="shape_star"><br>
+          </label>
+          <label for="shape_area">
+              Shape Area: <br>
+              <input type="text" name="shape_area"><br>
+          </label>
+
+          <br><br><input id="distPolyEditButton" type="button" class="btn btn-default" value="Save">
+          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
       <form id="distLineForm" style="display: none;">
-         <label for="distLineForm">Disturbance Line Collection</label><br>
-         <label for="gid">GID: <br>
-            <input type="text" name="gid"><br>
-         </label>
-         <label for="agency">
-            Agency: <br>
-            <select id="agencyDLine" name="agency">
-               <option value="0">BLM</option>
-               <option value="1">NPS</option>
-               <option value="2">FS</option>
-               <option value="3">FWS</option>
-               <option selected="selected" value="select"></option>
-            </select>
-            <br>
-         </label>
-         <label for="region">
-            Region: <br>
-            <select id="regionDLine" name="region">
-               <option value="select"></option>
-               <option value="Amargosa Desert E">Amargosa Desert E</option>
-               <option value="Amargosa Desert W">Amargosa Desert W</option>
-               <option value="Black Mt Area">Black Mt Area</option>
-               <option value="California Wash">California Wash</option>
-               <option value="Colorado Valley">Colorado Valley</option>
-               <option value="Coyote Springs Valley">Coyote Springs Valley</option>
-               <option value="Crater Flat">Crater Flat</option>
-               <option value="Eldorado Valley">Eldorado Valley</option>
-               <option value="Forty-mile Canyon">Forty-mile Canyon</option>
-               <option value="Frenchman Flat">Frenchman Flat</option>
-               <option value="Garnet Valley">Garnet Valley</option>
-               <option value="Gold Butte Area">Gold Butte Area</option>
-               <option value="Greasewood Basin">Greasewood Basin</option>
-               <option value="Hidden Valley N">Hidden Valley N</option>
-               <option value="Hidden Valley S">Hidden Valley S</option>
-               <option value="Indian Springs Valley N">Indian Springs Valley N</option>
-               <option value="Indian Springs Valley S">Indian Springs Valley S</option>
-               <option value="Ivanpah N">Ivanpah N</option>
-               <option value="Ivanpah S">Ivanpah S</option>
-               <option value="Jean Lake Valley">Jean Lake Valley</option>
-               <option value="Las Vegas Valley">Las Vegas Valley</option>
-               <option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option>
-               <option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option>
-               <option value="Mercury Valley">Mercury Valley</option>
-               <option value="Mesquite Valley">Mesquite Valley</option>
-               <option value="Moapa Valley">Moapa Valley</option>
-               <option value="Muddy River Springs Area">Muddy River Springs Area</option>
-               <option value="Pahrump Valley">Pahrump Valley</option>
-               <option value="Piute Valley">Piute Valley</option>
-               <option value="Rock Valley">Rock Valley</option>
-               <option value="Three Lakes Valley N">Three Lakes Valley N</option>
-               <option value="Three Lakes Valley S">Three Lakes Valley S</option>
-               <option value="Tikapoo Valley">Tikapoo Valley</option>
-               <option value="Virgin River Valley">Virgin River Valley</option>
-            </select>
-            <br>
-         </label>
-         <label for="ecosystem">
-            Ecosystem: <br>
-            <select id="ecosystemDLine" name="ecosystem">
-               <option value="select"></option>
-               <option value="Alpine">Alpine</option>
-               <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
-               <option value="Mixed Conifer">Mixed Conifer</option>
-               <option value="Pinon-Juniper">Pinon-Juniper</option>
-               <option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option>
-               <option value="Riparian">Riparian</option>
-               <option value="Wetland">Wetland</option>
-               <option value="Open Water">Open Water</option>
-               <option value="Spring">Spring</option>
-               <option value="Spring Channel">Spring Channel</option>
-               <option value="Dune">Dune</option>
-               <option value="Mojave Desert Scrub">Mojave Desert Scrub</option>
-            </select>
-            <br>
-         </label>
-         <label for="gps_date">Date collected: <br>
-            <input type="date" name="gps_date"><br>
-         </label>
-         <label for="dist_code">Disturbance Code: <br>
-            <input type="text" name="dist_code"><br>
-         </label>
-         <label for="dist_use">
-            Disturbance Use: <br>
-            <select id="dist_useDLine" name="dist_use">
-               <option value="select"></option>
-               <option value="Social">Social</option>
-               <option value="Mine">Mine</option>
-               <option value="Old utility">Old utility</option>
-               <option value="Random / Blazed">Random / Blazed</option>
-               <option value="Gov_Operation">Gov_Operation</option>
-               <option value="*Other - See Commnets">*Other - See Commnets</option>
-            </select>
-            <br>
-         </label>
-         <label for="use_freq">
-            Frequent Use: <br>
-            <select id="use_freqDLine" name="use_freq">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="use_recent">
-            Recent Use: <br>
-            <select id="use_recentDLine" name="use_recent">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="site_stabi">
-            Site Stability: <br>
-            <select id="site_stabiDLine" name="site_stabi">
-               <option value="select"></option>
-               <option value="Unstable">Unstable</option>
-               <option value="Poor">Poor</option>
-               <option value="Moderate">Moderate</option>
-               <option value="Good">Good</option>
-               <option value="Stable">Stable</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_crust">
-            Disturbed Soil Crust: <br>
-            <select id="dist_crustDLine" name="dist_crust">
-               <option value="select"></option>
-               <option value="0 - No Crust">0 - No Crust</option>
-               <option value="1 - Alkali">1 - Alkali</option>
-               <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
-               <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
-               <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
-               <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
-            </select>
-            <br>
-         </label>
-         <label for="undist_cru">
-            Undisturbed Crust: <br>
-            <select id="undist_cruDLine" name="undist_cru">
-               <option value="select"></option>
-               <option value="0 - No Crust">0 - No Crust</option>
-               <option value="1 - Alkali">1 - Alkali</option>
-               <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
-               <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
-               <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
-               <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
-            </select>
-            <br>
-         </label>
-         <label for="depth">
-            Depth: <br>
-            <select id="depthDLine" name="depth">
-               <option value="select"></option>
-               <option value="1 - Broken < 2" ''="">1 - Broken &lt; 2''</option>
-               <option value="2 - Rut 2" '="" -="" 4'''="">2 - Rut 2'' - 4''</option>
-               <option value="3 - Rut 4" '="" -="" 8'''="">3 - Rut 4'' - 8''</option>
-               <option value="4 - Rut > 8" ''="">4 - Rut &gt; 8''</option>
-            </select>
-            <br>
-         </label>
-         <label for="width">
-            Width: <br>
-            <select id="widthDLine" name="width">
-               <option value="select"></option>
-               <option value="1 - 2 ft - Dirt Bike">1 - 2 ft - Dirt Bike</option>
-               <option value="2 - 4 ft - ATV">2 - 4 ft - ATV</option>
-               <option value="3 - 6 ft - Vehicle">3 - 6 ft - Vehicle</option>
-               <option value="4 - > 6ft">4 - &gt; 6ft</option>
-               <option value="*Other - See Notes*">*Other - See Notes*</option>
-            </select>
-            <br>
-         </label>
-         <label for="type">
-            Type: <br>
-            <select id="typeDLine" name="type">
-               <option value="select"></option>
-               <option value="One-track">One-track</option>
-               <option value="Two-track">Two-track</option>
-               <option value="Random">Random</option>
-               <option value="Road">Road</option>
-               <option value="*Other - See Comments">*Other - See Comments</option>
-            </select>
-            <br>
-         </label>
-         <label for="plant_dama">
-            Plant Canopy Damage: <br>
-            <select id="plant_damaDLine" name="plant_dama">
-               <option value="select"></option>
-               <option value="0 - Intact">0 - Intact</option>
-               <option value="1 - Most symmetrical">1 - Most symmetrical</option>
-               <option value="2 - Many irregular, few dissected">2 - Many irregular, few dissected</option>
-               <option value="3 - Many dissected, few highly dissected">3 - Many dissected, few highly dissected</option>
-               <option value="4 - Many highly dissected, roots exposed">4 - Many highly dissected, roots exposed</option>
-               <option value="5 - Many with roots exposed or detached">5 - Many with roots exposed or detached</option>
-               <option value="6 - Denuded">6 - Denuded</option>
-            </select>
-            <br>
-         </label>
-         <label for="accessibil">
-            Accessibility: <br>
-            <select id="accessibilDLine" name="accessibil">
-               <option value="select"></option>
-               <option value="High">High</option>
-               <option value="Medium">Medium</option>
-               <option value="Low">Low</option>
-            </select>
-            <br>
-         </label>
-         <label for="visibility">
-            Visibility: <br>
-            <select id="visibilityDLine" name="visibility">
-               <option value="select"></option>
-               <option value="High">High</option>
-               <option value="Medium">Medium</option>
-               <option value="Low">Low</option>
-            </select>
-            <br>
-         </label>
-         <label for="comments">Comments: <br>
-            <input type="text" name="comments"><br>
-         </label>
-         <label for="primary_ob">Who collected the data? <br>
-            <input type="text" name="primary_ob"><br>
-         </label>
-         <label for="secondary_">Who was with you? <br>
-            <input type="text" name="secondary_"><br>
-         </label>
-         <label for="miles_dist">Miles Disturbed: <br>
-            <input type="text" name="miles_dist"><br>
-         </label>
-         <label for="km_dist">Km Disturbed: <br>
-            <input type="text" name="km_dist"><br>
-         </label>
-         <label for="treated">
-            Was the disturbance treated? <br>
-            <select id="treatedDLine" name="treated">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="dist_sever">Disturbance Severity: <br>
-            <input type="text" name="dist_sever"><br>
-         </label>
-         <label for="cultural">
-            Are cultural resources impacted? <br>
-            <select id="culturalDLine" name="cultural">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="t_e_specie">
-            Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) <br>
-            <select id="t_e_specieDLine" name="t_e_specie">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="gps_photo">
-            Is there a GPS tagged photo? <br>
-            <select id="gps_photoDLine" name="gps_photo">
-               <option value="select"></option>
-               <option value="Yes">Yes</option>
-               <option value="No">No</option>
-            </select>
-            <br>
-         </label>
-         <label for="soil_vulne">
-            Soil Vunerability: <br>
-            <select id="soil_vulneDLine" name="soil_vulne">
-               <option value="select"></option>
-               <option value="Low">Low</option>
-               <option value="Low/ Medium">Low/ Medium</option>
-               <option value="Medium">Medium</option>
-               <option value="Medium/ High">Medium/ High</option>
-               <option value="High">High</option>
-               <option value="Not Characterized">Not Characterized</option>
-            </select>
-            <br>
-         </label>
-         <label for="photo_azim">Which way is photo facing (degrees)? <br>
-            <input type="number" name="photo_azim" min="1" max="360"><br>
-         </label>
-         <label for="qa_qc">QA/QC: <br>
-            <input type="text" name="qa_qc"><br>
-         </label>
-         <label for="old_dist_c">Old Disturbance Code: <br>
-            <input type="text" name="old_dist_c"><br>
-         </label>
-         
-         <br><br><input id="distLineEditButton" type="button" class="btn btn-default" value="Save">
-         <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
+          <label for="distLineForm">Disturbance Line Collection</label><br>
+          <label for="gid">
+              GID: <br>
+              <input type="text" name="gid"><br>
+          </label>
+          <label for="agency">
+              Agency: <br>
+              <select id="agencyDLine" name="agency">
+                  <option value="0">BLM</option>
+                  <option value="1">NPS</option>
+                  <option value="2">FS</option>
+                  <option value="3">FWS</option>
+                  <option selected="selected" value="select"></option>
+              </select>
+              <br>
+          </label>
+          <label for="region">
+              Region: <br>
+              <select id="regionDLine" name="region">
+                  <option value="select"></option>
+                  <option value="Amargosa Desert E">Amargosa Desert E</option>
+                  <option value="Amargosa Desert W">Amargosa Desert W</option>
+                  <option value="Black Mt Area">Black Mt Area</option>
+                  <option value="California Wash">California Wash</option>
+                  <option value="Colorado Valley">Colorado Valley</option>
+                  <option value="Coyote Springs Valley">Coyote Springs Valley</option>
+                  <option value="Crater Flat">Crater Flat</option>
+                  <option value="Eldorado Valley">Eldorado Valley</option>
+                  <option value="Forty-mile Canyon">Forty-mile Canyon</option>
+                  <option value="Frenchman Flat">Frenchman Flat</option>
+                  <option value="Garnet Valley">Garnet Valley</option>
+                  <option value="Gold Butte Area">Gold Butte Area</option>
+                  <option value="Greasewood Basin">Greasewood Basin</option>
+                  <option value="Hidden Valley N">Hidden Valley N</option>
+                  <option value="Hidden Valley S">Hidden Valley S</option>
+                  <option value="Indian Springs Valley N">Indian Springs Valley N</option>
+                  <option value="Indian Springs Valley S">Indian Springs Valley S</option>
+                  <option value="Ivanpah N">Ivanpah N</option>
+                  <option value="Ivanpah S">Ivanpah S</option>
+                  <option value="Jean Lake Valley">Jean Lake Valley</option>
+                  <option value="Las Vegas Valley">Las Vegas Valley</option>
+                  <option value="Meadow Valley Wash Upper">Meadow Valley Wash Upper</option>
+                  <option value="Meadow Valley Wash Lower">Meadow Valley Wash Lower</option>
+                  <option value="Mercury Valley">Mercury Valley</option>
+                  <option value="Mesquite Valley">Mesquite Valley</option>
+                  <option value="Moapa Valley">Moapa Valley</option>
+                  <option value="Muddy River Springs Area">Muddy River Springs Area</option>
+                  <option value="Pahrump Valley">Pahrump Valley</option>
+                  <option value="Piute Valley">Piute Valley</option>
+                  <option value="Rock Valley">Rock Valley</option>
+                  <option value="Three Lakes Valley N">Three Lakes Valley N</option>
+                  <option value="Three Lakes Valley S">Three Lakes Valley S</option>
+                  <option value="Tikapoo Valley">Tikapoo Valley</option>
+                  <option value="Virgin River Valley">Virgin River Valley</option>
+              </select>
+              <br>
+          </label>
+          <label for="ecosystem">
+              Ecosystem: <br>
+              <select id="ecosystemDLine" name="ecosystem">
+                  <option value="select"></option>
+                  <option value="Alpine">Alpine</option>
+                  <option value="Bristlecone/ Limber Pine">Bristlecone/ Limber Pine</option>
+                  <option value="Mixed Conifer">Mixed Conifer</option>
+                  <option value="Pinon-Juniper">Pinon-Juniper</option>
+                  <option value="Blackbrush/ Shadscale">Blackbrush/ Shadscale</option>
+                  <option value="Riparian">Riparian</option>
+                  <option value="Wetland">Wetland</option>
+                  <option value="Open Water">Open Water</option>
+                  <option value="Spring">Spring</option>
+                  <option value="Spring Channel">Spring Channel</option>
+                  <option value="Dune">Dune</option>
+                  <option value="Mojave Desert Scrub">Mojave Desert Scrub</option>
+              </select>
+              <br>
+          </label>
+          <label for="gps_date">
+              Date collected: <br>
+              <input type="date" name="gps_date"><br>
+          </label>
+          <label for="dist_code">
+              Disturbance Code: <br>
+              <input type="text" name="dist_code"><br>
+          </label>
+          <label for="dist_use">
+              Disturbance Use: <br>
+              <select id="dist_useDLine" name="dist_use">
+                  <option value="select"></option>
+                  <option value="Social">Social</option>
+                  <option value="Mine">Mine</option>
+                  <option value="Old utility">Old utility</option>
+                  <option value="Random / Blazed">Random / Blazed</option>
+                  <option value="Gov_Operation">Gov_Operation</option>
+                  <option value="*Other - See Commnets">*Other - See Commnets</option>
+              </select>
+              <br>
+          </label>
+          <label for="use_freq">
+              Frequent Use: <br>
+              <select id="use_freqDLine" name="use_freq">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="use_recent">
+              Recent Use: <br>
+              <select id="use_recentDLine" name="use_recent">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="site_stabi">
+              Site Stability: <br>
+              <select id="site_stabiDLine" name="site_stabi">
+                  <option value="select"></option>
+                  <option value="Unstable">Unstable</option>
+                  <option value="Poor">Poor</option>
+                  <option value="Moderate">Moderate</option>
+                  <option value="Good">Good</option>
+                  <option value="Stable">Stable</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_crust">
+              Disturbed Soil Crust: <br>
+              <select id="dist_crustDLine" name="dist_crust">
+                  <option value="select"></option>
+                  <option value="0 - No Crust">0 - No Crust</option>
+                  <option value="1 - Alkali">1 - Alkali</option>
+                  <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
+                  <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
+                  <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
+                  <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
+              </select>
+              <br>
+          </label>
+          <label for="undist_cru">
+              Undisturbed Crust: <br>
+              <select id="undist_cruDLine" name="undist_cru">
+                  <option value="select"></option>
+                  <option value="0 - No Crust">0 - No Crust</option>
+                  <option value="1 - Alkali">1 - Alkali</option>
+                  <option value="2 - Cyano-patchy">2 - Cyano-patchy</option>
+                  <option value="3 - Cyano-continuous">3 - Cyano-continuous</option>
+                  <option value="4 - Lichen-patchy">4 - Lichen-patchy</option>
+                  <option value="5 - Lichen-continuous">5 - Lichen-continuous</option>
+              </select>
+              <br>
+          </label>
+          <label for="depth">
+              Depth: <br>
+              <select id="depthDLine" name="depth">
+                  <option value="select"></option>
+                  <option value="1 - Broken < 2" '' ="">1 - Broken &lt; 2''</option>
+                  <option value="2 - Rut 2" '="" -="" 4' '' ="">2 - Rut 2'' - 4''</option>
+                  <option value="3 - Rut 4" '="" -="" 8' '' ="">3 - Rut 4'' - 8''</option>
+                  <option value="4 - Rut > 8" '' ="">4 - Rut &gt; 8''</option>
+              </select>
+              <br>
+          </label>
+          <label for="width">
+              Width: <br>
+              <select id="widthDLine" name="width">
+                  <option value="select"></option>
+                  <option value="1 - 2 ft - Dirt Bike">1 - 2 ft - Dirt Bike</option>
+                  <option value="2 - 4 ft - ATV">2 - 4 ft - ATV</option>
+                  <option value="3 - 6 ft - Vehicle">3 - 6 ft - Vehicle</option>
+                  <option value="4 - > 6ft">4 - &gt; 6ft</option>
+                  <option value="*Other - See Notes*">*Other - See Notes*</option>
+              </select>
+              <br>
+          </label>
+          <label for="type">
+              Type: <br>
+              <select id="typeDLine" name="type">
+                  <option value="select"></option>
+                  <option value="One-track">One-track</option>
+                  <option value="Two-track">Two-track</option>
+                  <option value="Random">Random</option>
+                  <option value="Road">Road</option>
+                  <option value="*Other - See Comments">*Other - See Comments</option>
+              </select>
+              <br>
+          </label>
+          <label for="plant_dama">
+              Plant Canopy Damage: <br>
+              <select id="plant_damaDLine" name="plant_dama">
+                  <option value="select"></option>
+                  <option value="0 - Intact">0 - Intact</option>
+                  <option value="1 - Most symmetrical">1 - Most symmetrical</option>
+                  <option value="2 - Many irregular, few dissected">2 - Many irregular, few dissected</option>
+                  <option value="3 - Many dissected, few highly dissected">3 - Many dissected, few highly dissected</option>
+                  <option value="4 - Many highly dissected, roots exposed">4 - Many highly dissected, roots exposed</option>
+                  <option value="5 - Many with roots exposed or detached">5 - Many with roots exposed or detached</option>
+                  <option value="6 - Denuded">6 - Denuded</option>
+              </select>
+              <br>
+          </label>
+          <label for="accessibil">
+              Accessibility: <br>
+              <select id="accessibilDLine" name="accessibil">
+                  <option value="select"></option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+              </select>
+              <br>
+          </label>
+          <label for="visibility">
+              Visibility: <br>
+              <select id="visibilityDLine" name="visibility">
+                  <option value="select"></option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+              </select>
+              <br>
+          </label>
+          <label for="comments">
+              Comments: <br>
+              <input type="text" name="comments"><br>
+          </label>
+          <label for="primary_ob">
+              Who collected the data? <br>
+              <input type="text" name="primary_ob"><br>
+          </label>
+          <label for="secondary_">
+              Who was with you? <br>
+              <input type="text" name="secondary_"><br>
+          </label>
+          <label for="miles_dist">
+              Miles Disturbed: <br>
+              <input type="text" name="miles_dist"><br>
+          </label>
+          <label for="km_dist">
+              Km Disturbed: <br>
+              <input type="text" name="km_dist"><br>
+          </label>
+          <label for="treated">
+              Was the disturbance treated? <br>
+              <select id="treatedDLine" name="treated">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="dist_sever">
+              Disturbance Severity: <br>
+              <input type="text" name="dist_sever"><br>
+          </label>
+          <label for="cultural">
+              Are cultural resources impacted? <br>
+              <select id="culturalDLine" name="cultural">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="t_e_specie">
+              Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) <br>
+              <select id="t_e_specieDLine" name="t_e_specie">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="soil_vulne">
+              Soil Vunerability: <br>
+              <select id="soil_vulneDLine" name="soil_vulne">
+                  <option value="select"></option>
+                  <option value="Low">Low</option>
+                  <option value="Low/ Medium">Low/ Medium</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Medium/ High">Medium/ High</option>
+                  <option value="High">High</option>
+                  <option value="Not Characterized">Not Characterized</option>
+              </select>
+              <br>
+          </label>
+          <label for="gps_photo">
+              Is there a GPS tagged photo? <br>
+              <select id="gps_photoDLine" name="gps_photo">
+                  <option value="select"></option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+              </select>
+              <br>
+          </label>
+          <label for="photo_azim">
+              Which way is photo facing (degrees)? <br>
+              <input type="number" name="photo_azim" min="1" max="360"><br>
+          </label>
+          <label for="qa_qc">
+              QA/QC: <br>
+              <input type="text" name="qa_qc"><br>
+          </label>
+          <label for="old_dist_c">
+              Old Disturbance Code: <br>
+              <input type="text" name="old_dist_c"><br>
+          </label>
+
+          <br><br><input id="distLineEditButton" type="button" class="btn btn-default" value="Save">
+          <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal' type="button">Cancel</button>
       </form>
    </div>
 </div>

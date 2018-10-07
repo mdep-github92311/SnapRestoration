@@ -1,344 +1,373 @@
 <!DOCTYPE html>
 <html>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src='../admin/checkLogin.js'></script>
-    <head>
-        <title>SNAP Admin</title>
-        <script src='../public/scripts/polyfill.min.js'></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
-        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
-        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
-        <script src="../public/scripts/asyncGetDataV2.js"> </script>
-        
-        <style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src='../admin/checkLogin.js'></script>
+<head>
+    <title>SNAP Admin</title>
+    <script src='../public/scripts/polyfill.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+    <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+    <script src="../public/scripts/asyncGetDataV2.js"></script>
+
+    <style>
         html, body {
             width: 100%;
         }
+
         #Items {
-          text-align: center !important;
-          margin: 0 auto;
+            text-align: center !important;
+            margin: 0 auto;
         }
-        #mapID { 
-          height: 380px;
-          width: 280px;
+
+        #mapID {
+            height: 380px;
+            width: 280px;
         }
+
         #side_tab {
-          font-size: 2em;
-          padding: 4px;
-          border: 1pt solid black;
+            font-size: 2em;
+            padding: 4px;
+            border: 1pt solid black;
         }
+
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
             text-align: center;
         }
+
         th, td {
             padding: 5px;
             text-align: left;
         }
+
         table.center {
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .container {
             position: relative;
             width: 50px;
             padding-left: 0px;
             margin: 0 auto 40px auto;
-        
             -webkit-perspective: 800px;
-               -moz-perspective: 800px;
-                -ms-perspective: 800px;
-                 -o-perspective: 800px;
-                    perspective: 800px;
+            -moz-perspective: 800px;
+            -ms-perspective: 800px;
+            -o-perspective: 800px;
+            perspective: 800px;
         }
-        .container .card {
-            height: 100%;
-        
-            -webkit-transition: -webkit-transform 1s;
-               -moz-transition:    -moz-transform 1s;
-                -ms-transition:     -ms-transform 1s;
-                 -o-transition:      -o-transform 1s;
-                    transition:         transform 1s;
-        
-            -webkit-transform-style: preserve-3d;
-               -moz-transform-style: preserve-3d;
+
+            .container .card {
+                height: 100%;
+                -webkit-transition: -webkit-transform 1s;
+                -moz-transition: -moz-transform 1s;
+                -ms-transition: -ms-transform 1s;
+                -o-transition: -o-transform 1s;
+                transition: transform 1s;
+                -webkit-transform-style: preserve-3d;
+                -moz-transform-style: preserve-3d;
                 -ms-transform-style: preserve-3d;
-                 -o-transform-style: preserve-3d;
-                    transform-style: preserve-3d;
-        }
-        .container .card .face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            color: #fff;
-            text-align: center;
-        
-            -webkit-backface-visibility: hidden;
-               -moz-backface-visibility: hidden;
-                -ms-backface-visibility: hidden;
-                 -o-backface-visibility: hidden;
+                -o-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+            }
+
+                .container .card .face {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    font-family: Arial, sans-serif;
+                    font-weight: bold;
+                    color: #fff;
+                    text-align: center;
+                    -webkit-backface-visibility: hidden;
+                    -moz-backface-visibility: hidden;
+                    -ms-backface-visibility: hidden;
+                    -o-backface-visibility: hidden;
                     backface-visibility: hidden;
-        }
-        .container .card.flipped,
-        .container .card .face2 {
-            -webkit-transform: rotateY(180deg);
-               -moz-transform: rotateY(180deg);
-                -ms-transform: rotateY(180deg);
-                 -o-transform: rotateY(180deg);
+                }
+
+                .container .card.flipped,
+                .container .card .face2 {
+                    -webkit-transform: rotateY(180deg);
+                    -moz-transform: rotateY(180deg);
+                    -ms-transform: rotateY(180deg);
+                    -o-transform: rotateY(180deg);
                     transform: rotateY(180deg);
-        }
+                }
+
         .store {
             display: none;
         }
+
         .buttons {
             text-align: center;
         }
-        
-        li:active { 
+
+        li:active {
             background-color: #337ab7;
-            color:white;
+            color: white;
         }
+
         li:hover {
-          background-color: #337ab7;
-          color:white;
+            background-color: #337ab7;
+            color: white;
         }
+
         #side_tab_filters {
-          cursor:pointer;
+            cursor: pointer;
         }
-        
+
         .loader {
-          margin-left: 50%;
-          margin-top: 10%;
-          border: 16px solid #f3f3f3;
-          border-radius: 50%;
-          border-top: 16px solid #3498db;
-          width: 120px;
-          height: 120px;
-          -webkit-animation: spin 2s linear infinite; /* Safari */
-          animation: spin 2s linear infinite;
+            margin-left: 50%;
+            margin-top: 10%;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
         }
-                
-                
+
+
         /* Safari */
         @-webkit-keyframes spin {
-          0% { -webkit-transform: rotate(0deg); }
-          100% { -webkit-transform: rotate(360deg); }
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
         }
-        
+
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-        
+
         .row {
-          margin-left: 30% !important;
+            margin-left: 30% !important;
         }
-        
-        
-        </style>
-    </head>
-    <body>
-        <div id="header">
-          <nav role="navigation" class="navbar navbar-default navbar-inverse">
+    </style>
+</head>
+<body>
+    <div id="header">
+        <nav role="navigation" class="navbar navbar-default navbar-inverse">
             <div class="container-fluid">
-              <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="pull-left">
-                  <div class="container">
-                    <div class="card">
-                      <div class="face face1"></div>
-                      <div class="face face2"></div>
-                    </div>
-                    <ul class="store">
-                      <li>
-                        <div class="content content1"><img alt="Brand" src="../public/css/images/logos/blm.png" width="45px" height="45px" float="left"/></div>
-                      </li>
-                      <li>
-                        <div class="content content2"> <img alt="Brand" src="../public/css/images/logos/fs.png" width="38px" height="45px" float="left"/></div>
-                      </li>
-                      <li>
-                        <div class="content content3"> <img alt="Brand" src="../public/css/images/logos/fws.png" width="45px" height="45px" float="left"/></div>
-                      </li>
-                      <li>
-                        <div class="content content4">  <img alt="Brand" src="../public/css/images/logos/nps.png" width="45px" height="45px" float="left"/></div>
-                      </li>
-                    </ul>
-                  </div>
-                  <script>
-                    var topLogo = 1;
-                    var currLogo = 1;
-                    var facingUp = true;
-                    function flipLogo(n) {
-                      if (topLogo === n) return;
-                      // Replace the contents of the current back-face with the contents
-                      // of the element that should rotate into view.
-                      var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
-                      var nextContent = $('.store' + n).html();
-                      var nextContent = $('.store li:nth-child(' + n + ')').html();
-                      curBackFace.html(nextContent);
-                      // Rotate the content
-                      $('.card').toggleClass('flipped');
-                      topLogo = n;
-                      facingUp = !facingUp;
-                    }
-                    setInterval(function() {
-                      flipLogo(currLogo);
-                      if(currLogo > 3)
-                        currLogo = 1;
-                      else
-                        currLogo++;
-                    }, 5000);
-                    $(document).ready(function(){
-                      // Add the appropriate content to the initial "front side"
-                      var frontFace = $('.face1');
-                      var frontContent = $('.store li:first-child').html();
-                      frontFace.html(frontContent);
-                    });
-                  </script></a>
-                  <div class="navbar-brand">SNAP Restoration</div>
-              </div>
+                <div class="navbar-header">
+                    <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="pull-left">
+                        <div class="container">
+                            <div class="card">
+                                <div class="face face1"></div>
+                                <div class="face face2"></div>
+                            </div>
+                            <ul class="store">
+                                <li>
+                                    <div class="content content1"><img alt="Brand" src="../public/css/images/logos/blm.png" width="45px" height="45px" float="left" /></div>
+                                </li>
+                                <li>
+                                    <div class="content content2"> <img alt="Brand" src="../public/css/images/logos/fs.png" width="38px" height="45px" float="left" /></div>
+                                </li>
+                                <li>
+                                    <div class="content content3"> <img alt="Brand" src="../public/css/images/logos/fws.png" width="45px" height="45px" float="left" /></div>
+                                </li>
+                                <li>
+                                    <div class="content content4">  <img alt="Brand" src="../public/css/images/logos/nps.png" width="45px" height="45px" float="left" /></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <script>
+                            var topLogo = 1;
+                            var currLogo = 1;
+                            var facingUp = true;
+                            function flipLogo(n) {
+                                if (topLogo === n) return;
+                                // Replace the contents of the current back-face with the contents
+                                // of the element that should rotate into view.
+                                var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
+                                var nextContent = $('.store' + n).html();
+                                var nextContent = $('.store li:nth-child(' + n + ')').html();
+                                curBackFace.html(nextContent);
+                                // Rotate the content
+                                $('.card').toggleClass('flipped');
+                                topLogo = n;
+                                facingUp = !facingUp;
+                            }
+                            setInterval(function () {
+                                flipLogo(currLogo);
+                                if (currLogo > 3)
+                                    currLogo = 1;
+                                else
+                                    currLogo++;
+                            }, 5000);
+                            $(document).ready(function () {
+                                // Add the appropriate content to the initial "front side"
+                                var frontFace = $('.face1');
+                                var frontContent = $('.store li:first-child').html();
+                                frontFace.html(frontContent);
+                            });
+                        </script>
+                    </a>
+                    <div class="navbar-brand">SNAP Restoration</div>
+                </div>
                 <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
-                <ul style="border-left: 1px solid #000000;" class="nav navbar-nav">
-                  <li><a href="/">Map View</a></li>
-                  <li class="active"><a href="">Admin</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="logoutTab">
-                        <b style="color: #9d9d9d;">
-                            Hello,
-                            <span id="username">Username</span>
-                        </b>
-                        <a href="javascript:logout();" style="display: inline-block; padding-left: 0px;">&nbsp(logout)</a>
-                    </li>
-                </ul>
-              </div>
+                    <ul style="border-left: 1px solid #000000;" class="nav navbar-nav">
+                        <li><a href="/">Map View</a></li>
+                        <li class="active"><a href="">Admin</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="logoutTab">
+                            <b style="color: #9d9d9d;">
+                                Hello,
+                                <span id="username">Username</span>
+                            </b>
+                            <a href="javascript:logout();" style="display: inline-block; padding-left: 0px;">&nbsp(logout)</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </nav>
-        </div>
-        <div style="float:left;">
-          <div id="side_tab">
+        </nav>
+    </div>
+    <div style="float:left;">
+        <div id="side_tab">
             <ul class="nav nav-pills nav-stacked">
-              <li role="presentation"><a href="Add.html">Submissions</a></li>
-              <li role="presentation"><a href="Edit.html">Edit Records</a></li>
-              <li role="presentation"><a href="manageUsers.html">Manage Users</a></li>
-              <li role="presentation" class="active"><a href="#">View Reports</a></li>
+                <li role="presentation"><a href="Add.html">Submissions</a></li>
+                <li role="presentation"><a href="Edit.html">Edit Records</a></li>
+                <li role="presentation"><a href="manageUsers.html">Manage Users</a></li>
+                <li role="presentation" class="active"><a href="#">View Reports</a></li>
             </ul>
-          </div>
         </div>
-        
-        <div class="row">
-          <div class="col-lg-6">
-              <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
                 <thead><tr><th>Report</th><th>Action</th></tr></thead>
                 <tbody id="tableItems">
-                  <tr>
-                    <td>Disturbance Points</td>
-                    <td><button id="DPointsReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
-                  <tr>
-                    <td>Disturbance Polygons</td>
-                    <td><button id="DPolysReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
-                  <tr>
-                    <td>Disturbance Lines</td>
-                    <td><button id="DLinesReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
-                  <tr>
-                    <td>Restoration Points</td>
-                    <td><button id="RPointsReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
-                  <tr>
-                    <td>Restoration Polygons</td>
-                    <td><button id="RPolysReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
-                  <tr>
-                    <td>Restoration Lines</td>
-                    <td><button id="RLinesReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
-                  <tr>
-                    <td>Barriers</td>
-                    <td><button id="BarriersReport" class="btn btn-primary">Download CSV</button></td>
-                  </tr>
+                    <tr>
+                        <td>Disturbance Points</td>
+                        <td><button id="DPointsReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
+                    <tr>
+                        <td>Disturbance Polygons</td>
+                        <td><button id="DPolysReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
+                    <tr>
+                        <td>Disturbance Lines</td>
+                        <td><button id="DLinesReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
+                    <tr>
+                        <td>Restoration Points</td>
+                        <td><button id="RPointsReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
+                    <tr>
+                        <td>Restoration Polygons</td>
+                        <td><button id="RPolysReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
+                    <tr>
+                        <td>Restoration Lines</td>
+                        <td><button id="RLinesReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
+                    <tr>
+                        <td>Barriers</td>
+                        <td><button id="BarriersReport" class="btn btn-primary">Download CSV</button></td>
+                    </tr>
                 </tbody>
-              </table>
-            </div>
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-      <script>
-      function generateReport(data, title)
-      {
-        let csv = "";
-        // Loop the array of objects
-        for(let row = 0; row < data.features.length; row++){
-            let keysAmount = Object.keys(data.features[row].properties).length
-            let keysCounter = 0
-        
-            // If this is the first row, generate the headings
-            if(row === 0){
-               for(let key in data.features[row].properties){
-                   csv += key + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
-                   keysCounter++
-               }
+            </table>
+        </div>
+    </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+    <script>
+        function generateReport(data, title) {
+            let csv = "";
+            // Loop the array of objects
+            for (let row = 0; row < data.features.length; row++) {
+                let keysAmount = Object.keys(data.features[row].properties).length
+                let keysCounter = 0
+
+                // If this is the first row, generate the headings
+                if (row === 0) {
+                    for (let key in data.features[row].properties) {
+                        csv += key + (keysCounter + 1 < keysAmount ? ',' : '\r\n')
+                        keysCounter++
+                    }
+                }
+                else {
+                    for (let key in data.features[row].properties) {
+                        csv += data.features[row].properties[key] + (keysCounter + 1 < keysAmount ? ',' : '\r\n')
+                        keysCounter++
+                    }
+                }
+                keysCounter = 0
             }
-            else{
-               for(let key in data.features[row].properties){
-                   csv += data.features[row].properties[key] + (keysCounter+1 < keysAmount ? ',' : '\r\n' )
-                   keysCounter++
-               }
-            }
-            keysCounter = 0
+            // Once we are done looping, download the .csv by creating a link
+            var link = document.createElement('a')
+            link.id = 'download-csv'
+            link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+            link.setAttribute('download', title + '.csv');
+            $("#download-csv").remove();
+            document.body.appendChild(link)
+            document.querySelector('#download-csv').click()
         }
-        // Once we are done looping, download the .csv by creating a link
-        var link = document.createElement('a')
-        link.id = 'download-csv'
-        link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
-        link.setAttribute('download', title+'.csv');
-        $("#download-csv").remove();
-        document.body.appendChild(link)
-        document.querySelector('#download-csv').click()
-      }
-        $("#DPointsReport").click(function(){
-          getData('DistPoints', 'distPointGeoJSON').then(function(items){
-            generateReport(items.distPoints, "DisturbancePointsReport");
-          });
+        function getFormattedDate() {
+            var date = new Date();
+            var year = date.getFullYear();
+
+            var month = (1 + date.getMonth()).toString();
+            month = month.length > 1 ? month : '0' + month;
+
+            var day = date.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+
+            return month + '/' + day + '/' + year;
+        }
+        $("#DPointsReport").click(function () {
+            getData('DistPoints', 'distPointGeoJSON').then(function (items) {
+                generateReport(items.distPoints, "DisturbancePoints-" + getFormattedDate());
+            });
         });
-        $("#DPolysReport").click(function(){
-          getData('DistPolygons', 'distPolyGeoJSON').then(function(items){
-            generateReport(items.distPolys, "DisturbancePolygonsReport");
-          });
+        $("#DPolysReport").click(function () {
+            getData('DistPolygons', 'distPolyGeoJSON').then(function (items) {
+                generateReport(items.distPolys, "DisturbancePolygons-" + getFormattedDate());
+            });
         });
-        $("#DLinesReport").click(function(){
-          getData('DistLines', 'distLineGeoJSON').then(function(items){
-            generateReport(items.distLines, "DisturbanceLinesReport");
-          });
+        $("#DLinesReport").click(function () {
+            getData('DistLines', 'distLineGeoJSON').then(function (items) {
+                generateReport(items.distLines, "DisturbanceLines-" + getFormattedDate());
+            });
         });
-        $("#RPointsReport").click(function(){
-          getData('RestoPoints', 'restoPointGeoJSON').then(function(items){
-            generateReport(items.restoPoints, "RestorationPointsReport");
-          });
+        $("#RPointsReport").click(function () {
+            getData('RestoPoints', 'restoPointGeoJSON').then(function (items) {
+                generateReport(items.restoPoints, "RestorationPoints-" + getFormattedDate());
+            });
         });
-        $("#RPolysReport").click(function(){
-          getData('RestoPolygons', 'restoPolyGeoJSON').then(function(items){
-            generateReport(items.restoPolys, "RestorationPolygonsReport");
-          });
+        $("#RPolysReport").click(function () {
+            getData('RestoPolygons', 'restoPolyGeoJSON').then(function (items) {
+                generateReport(items.restoPolys, "RestorationPolygons-" + getFormattedDate());
+            });
         });
-        $("#RLinesReport").click(function(){
-          getData('RestoLines', 'restoLineGeoJSON').then(function(items){
-            generateReport(items.restoLines, "RestorationLinesReport");
-          });
+        $("#RLinesReport").click(function () {
+            getData('RestoLines', 'restoLineGeoJSON').then(function (items) {
+                generateReport(items.restoLines, "RestorationLines-" + getFormattedDate());
+            });
         });
-        $("#BarriersReport").click(function(){
-          getData('Barriers', 'barrierGeoJSON').then(function(items){
-            generateReport(items.barriers, "BarriersReport");
-          });
+        $("#BarriersReport").click(function () {
+            getData('Barriers', 'barrierGeoJSON').then(function (items) {
+                generateReport(items.barriers, "Barriers-" + getFormattedDate());
+            });
         });
-      </script>
-    </body>
+    </script>
+</body>
 </html>
