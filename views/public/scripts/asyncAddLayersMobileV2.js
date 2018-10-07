@@ -189,7 +189,7 @@ var createLayer = function () {
                         blmRegions = _context.sent;
 
 
-                        control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
+                        control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -209,7 +209,7 @@ var createLayer = function () {
                         fsRegions = _context.sent;
 
 
-                        control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Counties', expanded: false });
+                        control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -229,7 +229,7 @@ var createLayer = function () {
                         nvCounties = _context.sent;
 
 
-                        control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Counties', expanded: false });
+                        control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -249,7 +249,7 @@ var createLayer = function () {
                         mdiBound = _context.sent;
 
 
-                        control.addOverlay(mdiBound, layerName, { groupName: 'Boundaries', expanded: false });
+                        control.addOverlay(mdiBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -269,7 +269,7 @@ var createLayer = function () {
                         mdepBound = _context.sent;
 
 
-                        control.addOverlay(mdepBound, layerName, { groupName: 'Boundaries', expanded: false });
+                        control.addOverlay(mdepBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -289,7 +289,7 @@ var createLayer = function () {
                         roads = _context.sent;
 
 
-                        control.addOverlay(roads, layerName, { groupName: 'Roads', expanded: false });
+                        control.addOverlay(roads, layerName, { groupName: 'Misc', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -310,7 +310,7 @@ var createLayer = function () {
                         snapExtent = _context.sent;
 
 
-                        control.addOverlay(snapExtent, layerName, { groupName: 'Misc', expanded: false });
+                        control.addOverlay(snapExtent, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -329,7 +329,7 @@ var createLayer = function () {
                         desertComplex = _context.sent;
 
 
-                        control.addOverlay(desertComplex, layerName, { groupName: 'Misc', expanded: false });
+                        control.addOverlay(desertComplex, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
                         return _context.abrupt("break", 132);
@@ -360,8 +360,8 @@ var createLayer = function () {
                             control.unSelectGroup('Disturbance Data');
                             control.unSelectGroup('Restoration Data');
                         }
-                        control.unSelectGroup('Regions/ Counties');
-                        control.unSelectGroup('Boundaries');
+                        control.unSelectGroup('Regions/ Boundaries');
+                        control.unSelectGroup('Regions/ Boundaries');
                         control.unSelectGroup('Roads');
                         control.unSelectGroup('Misc');
                         _context.next = 142;
