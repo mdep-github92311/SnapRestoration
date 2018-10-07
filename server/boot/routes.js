@@ -27,7 +27,7 @@ module.exports = function (app) {
     };
     //"postgres://postgres:anthony@localhost:5432/mip"; // Your Database Connection
     const db = pgp(conString);
-
+    
     const upsert = require("../../common/javascripts/upsertQuery.js");
 
     function Inserts(template, data) {
@@ -609,8 +609,8 @@ module.exports = function (app) {
             db.none(`UPDATE dist_line_sub
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
         use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, width = $14, type = $15, plant_dama = $16, accessibil = $17, visibility = $18, comments = $19,
-        primary_ob = $20, secondary_ = $21, miles_dist = $22, km_dist = $23, treated = $24, dist_sever = $25, cultural = $26, t_e_specie = $27, gps_photo = $28, soil_vulne = $29,
-        photo_azim = $30, qa_qc = $31, old_dist_c = $32, shape_stle = $33, shape_leng = $34
+        primary_ob = $20, secondary_ = $21, miles_dist = $22, km_dist = $23, treated = $24, dist_sever = $25, cultural = $26, t_e_specie = $27, soil_vulne = $28,
+        gps_photo = $29, photo_azim = $30, qa_qc = $31, old_dist_c = $32, shape_stle = $33, shape_leng = $34
       WHERE gid = $1 `, distLineUpdate)
                 .then(function () {
                     console.log('dist line updated');
@@ -719,11 +719,12 @@ module.exports = function (app) {
 
         .post('/distPointFormEdit', (req, res) => {
             const distPointUpdate = req.body;
-
+            console.log("Dist Point update");
+            console.log(distPointUpdate);
             db.none(`UPDATE dist_point
-      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $21, dist_use = $6, use_freq = $7, use_recent = $8,
-        dist_pt_ty = $9, accessibil = $10, visibility = $11, comments = $12, primary_ob = $13, secondary_ = $14, previously = $15, project_na = $16, estimate_s = $17, 
-        treated = $18, cultural = $19, t_e_specie = $20, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8, use_recent = $9,
+        dist_pt_ty = $10, accessibil = $11, visibility = $12, comments = $13, primary_ob = $14, secondary_ = $15, previously = $16, project_na = $17, estimate_s = $18, 
+        treated = $19, cultural = $20, t_e_specie = $21, soil_vulne = $22, gps_photo = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
       WHERE gid = $1 `, distPointUpdate)
                 .then(function () {
                     console.log('dist point updated');

@@ -45,6 +45,7 @@
     "pug": "^2.0.0-rc.4",
     "serve-favicon": "^2.0.1",
     "shpjs": "^3.4.2",
+    "simple-sql-model": "^0.9.4",
     "strong-error-handler": "^2.0.0",
     "tilestrata-headers": "^0.3.0"
   },
