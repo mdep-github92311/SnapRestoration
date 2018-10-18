@@ -477,7 +477,7 @@ async function getLayers() {
                         }).catch(Dexie.BulkError, function (e) {
                             // Explicitely catching the bulkAdd() operation makes those successful
                             // additions commit despite that there were errors.
-                            console.error("Some snapExtent did not succeed. However, " +
+                            console.error("Some snapExtent did not succeed. However, " +    
                                 100000 - e.failures.length + " snapExtent was added successfully");
                         });
                         count += 5;
