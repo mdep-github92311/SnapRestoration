@@ -320,11 +320,13 @@
               </thead>
               <tbody id="tableItems"></tbody>
           </table>
-          <a id="pageLeft5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
-          <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
-          <span id="pageNumber" style="font-size: 1.5em;">1</span>
-          <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
-          <a id="pageRight5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>
+          <a id="pageLeft50" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>&nbsp
+          <a id="pageLeft5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>&nbsp
+          <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>&nbsp
+          <span id="pageNumber" style="font-size: 1.5em;">1</span>&nbsp
+          <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>&nbsp
+          <a id="pageRight5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>&nbsp
+          <a id="pageRight50" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a>
 
       </div>
     </div>
@@ -486,34 +488,43 @@
         maxZoom: 11
       });
       }
+      $('#pageLeft50').click(function () {
+          $("#tableItems").html('')
+          changePage(-50);
+          writeTables(currRecords);
+      })
       $('#pageLeft5').click(function () {
           $("#tableItems").html('')
-          if (pageNumber >= 5)
-              pageNumber -= 5;
-          else
-              pageNumber = 0;
+          changePage(-5);
           writeTables(currRecords);
       })
     $('#pageLeft').click(function() {
       $("#tableItems").html('')
-      if (pageNumber != 0)
-        pageNumber--;
+          changePage(-1);
       writeTables(currRecords);
     });
     $('#pageRight').click(function() {
       $("#tableItems").html('')
-      if ((pageNumber + 1) * 10 < currRecords.overallCount)
-        pageNumber++;
+          changePage(1);
       writeTables(currRecords);
       });
       $('#pageRight5').click(function () {
           $("#tableItems").html('')
-          if ((pageNumber + 5) * 10 < currRecords.overallCount)
-              pageNumber += 5;
-          else
-              pageNumber = Math.ceil(currRecords.overallCount / 10);
+          changePage(5);
           writeTables(currRecords);
       });
+      $('#pageRight50').click(function () {
+          $("#tableItems").html('')
+          changePage(50);
+          writeTables(currRecords);
+      });
+    function changePage(change){
+      pageNumber += change;
+      if (pageNumber > Math.ceil(currRecords.overallCount / 10) - 1)
+        pageNumber = Math.ceil(currRecords.overallCount / 10) - 1;
+      else if (pageNumber < 0)
+        pageNumber = 0;
+    }
     $('#myModal').on('shown.bs.modal', function() {
       setTimeout(function() {
         console.log("invalidate")
@@ -526,7 +537,6 @@
         }
       }, 5);
     });
-
     function writeTables(defs) {
       var item = document.getElementById('tableItems');
       var count = 0;
