@@ -461,11 +461,7 @@ function onEachBarrier(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -503,11 +499,7 @@ function onEachDistLine(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -541,11 +533,7 @@ function onEachDistPoint(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -579,11 +567,7 @@ function onEachDistPoly(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -611,11 +595,7 @@ function onEachDistPolyCent(feature, layer) {
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
             //console.log(prop + ' : ' + feature.properties[prop]);
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -641,11 +621,7 @@ function onEachRestoPoly(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -672,11 +648,7 @@ function onEachRestoPoint(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 //console.log(prop + ' : ' + feature.properties[prop]);
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } 
@@ -702,11 +674,7 @@ function onEachRestoPolyCent(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -730,11 +698,7 @@ function onEachRestoLine(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
@@ -760,11 +724,7 @@ function onEachBLMRegion(feature, layer) {
     //     var popUpContent = [];
     //     // iterating through the "properties" so it can be displayed in the pop-ups
     //     for (var prop in feature.properties) {
-    //         if (prop.toLowerCase() == "gid")
-    //        {
-    //            //do nothing
-    //        }
-    //        else if (prop.toLowerCase() == 'agency') {
+    //         if (prop.toLowerCase() == 'agency') {
     //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
     //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
     //     }
@@ -784,11 +744,7 @@ function onEachFSRegion(feature, layer) {
     //     var popUpContent = [];
     //     // iterating through the "properties" so it can be displayed in the pop-ups
     //     for (var prop in feature.properties) {
-    //         if (prop.toLowerCase() == "gid")
-    //        {
-    //            //do nothing
-    //        }
-    //        else if (prop.toLowerCase() == 'agency') {
+    //         if (prop.toLowerCase() == 'agency') {
     //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
     //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
     //     }
@@ -808,11 +764,7 @@ function onEachMDEPBound(feature, layer) {
     //     var popUpContent = [];
     //     // iterating through the "properties" so it can be displayed in the pop-ups
     //     for (var prop in feature.properties) {
-    //         if (prop.toLowerCase() == "gid")
-    //        {
-    //            //do nothing
-    //        }
-    //        else if (prop.toLowerCase() == 'agency') {
+    //         if (prop.toLowerCase() == 'agency') {
     //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
     //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
     //     }
@@ -832,11 +784,7 @@ function onEachMDIBound(feature, layer) {
     //     var popUpContent = [];
     //     // iterating through the "properties" so it can be displayed in the pop-ups
     //     for (var prop in feature.properties) {
-    //         if (prop.toLowerCase() == "gid")
-    //        {
-    //            //do nothing
-    //        }
-    //        else if (prop.toLowerCase() == 'agency') {
+    //         if (prop.toLowerCase() == 'agency') {
     //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
     //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
     //     }
@@ -856,11 +804,7 @@ function onEachNVCounty(feature, layer) {
     //     var popUpContent = [];
     //     // iterating through the "properties" so it can be displayed in the pop-ups
     //     for (var prop in feature.properties) {
-    //         if (prop.toLowerCase() == "gid")
-    //        {
-    //            //do nothing
-    //        }
-    //        else if (prop.toLowerCase() == 'agency') {
+    //         if (prop.toLowerCase() == 'agency') {
     //             popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
     //         } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
     //     }
@@ -880,11 +824,7 @@ function onEachSoilVuln(feature, layer) {
         var popUpContent = [];
         // iterating through the "properties" so it can be displayed in the pop-ups
         for (var prop in feature.properties) {
-            if (prop.toLowerCase() == "gid")
-            {
-                //do nothing
-            }
-            else if (prop.toLowerCase() == 'agency') {
+            if (prop.toLowerCase() == 'agency') {
                 popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + myAgency(feature.properties[prop]));
             } else popUpContent.push('<B>' + setProp(prop) + '</B>' + ' : ' + feature.properties[prop]);
         }
