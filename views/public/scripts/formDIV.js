@@ -105,8 +105,41 @@ $(document).ready(function () {
     //console.log(data);
       // Waits for form to be loaded before populating Data
       setTimeout(function(){ 
+        var formName = null;
+        switch (dataType) {
+          case 'restoPoints':
+            createLayerEdit(data, 'Restoration Points')
+            formName = "restoPointFormEdit";
+            break;
+          case 'restoPolys':
+            createLayerEdit(data, 'Restoration Polygon')
+            formName = "restoPolyFormEdit";
+            break;
+          case 'restoLines':
+            createLayerEdit(data, 'Restoration Lines')
+            formName = "restoLineFormEdit";
+            break;
+          case 'barriers':
+            createLayerEdit(data, 'Barrier')
+            formName = "barrierFormEdit";
+            break;
+          case 'distPoints':
+            createLayerEdit(data, 'Disturbance Points')
+            formName = "distPointFormEdit";
+            break;
+          case 'distPolys':
+            createLayerEdit(data, 'Disturbance Polygon')
+            formName = "distPolyFormEdit";
+            break;
+          case 'distLines':
+            createLayerEdit(data, 'Disturbance Lines')
+            formName = "distLineFormEdit";
+            break;
+          
+        }
+        
         $.each(data.properties, function(name, val){
-          var $el = $('[name="'+name+'_Edit"]'), type = $el.attr('type');
+          var $el = $('#' +formName + ' [name="'+name+'"]'), type = $el.attr('type');
           switch(type){
             case 'checkbox':
               $el.attr('checked', 'checked');
@@ -119,30 +152,6 @@ $(document).ready(function () {
                 $el.val(val);
             }
         }); 
-        switch (dataType) {
-          case 'restoPoints':
-            createLayerEdit(data, 'Restoration Points')
-            break;
-          case 'restoPolys':
-            createLayerEdit(data, 'Restoration Polygon')
-            break;
-          case 'restoLines':
-            createLayerEdit(data, 'Restoration Lines')
-            break;
-          case 'barriers':
-            createLayerEdit(data, 'Barrier')
-            break;
-          case 'distPoints':
-            createLayerEdit(data, 'Disturbance Points')
-            break;
-          case 'distPolys':
-            createLayerEdit(data, 'Disturbance Polygon')
-            break;
-          case 'distLines':
-            createLayerEdit(data, 'Disturbance Lines')
-            break;
-          
-        }
         $('#restoPointFormEdit').toggle(
           dataType === 'restoPoints'
         );
