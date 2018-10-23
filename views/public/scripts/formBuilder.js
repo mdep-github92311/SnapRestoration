@@ -1,5 +1,14 @@
 "use strict";
 
+function createForms(formNameAddition) {
+    return formBuilder("restoPointForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'comments', 'primary_ob', 'secondary_', 'project_na', 'sqft_resto','gps_photo', 'photo_azim', 'previously', 'qa_qc' ]) 
+      + formBuilder("restoPolyForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'resto_code', 'resto_acti', 'te_action', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'acres_rest', 'kmqs_resto', 'gps_date', 'gps_photo', 'photo_azim', 'signed', 'deep_till', 'barrier_in', 'mulch', 'monitoring', 'previously', 'shape_area']) 
+      + formBuilder("restoLineForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'gps_date', 'resto_code', 'resto_act', 'te_act', 'nonlists_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'signed', 'mulch', 'deep_till', 'barrier_in', 'miles_rest', 'km_resto', 'gps_photo', 'photo_azim', 'monitoring', 'previously', 'qa_qc']) 
+      + formBuilder("barrierForm" + formNameAddition, ['agency', 'regions', 'ecosystem', 'gps_date', 'barr_code', 'barr_actio', 'barr_type', 'comments', 'primary_ob', 'secondary_', 'project_na', 'barr_miles', 'barr_km', 'previously', 'gps_photo', 'photo_azim', 'qa_qc']) 
+      + formBuilder("distPointForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'gps_date', 'dist_code', 'use_freq', 'use_recent', 'dist_pt_ty', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'previously', 'project_na', 'estimate_s', 'treated', 'cultural', 't_e_specie', 'soil_vulne', 'dist_use', 'gps_photo', 'photo_azim', 'qa_qc', 'old_distco']) 
+      + formBuilder("distPolyForm" + formNameAddition, ['agency', 'regions', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'dist_poly_', 'plant_dama', 'assessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'acres_rest', 'kmsq_resto', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'site_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_distco', 'shape_area']) 
+      + formBuilder("distLineForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'width', 'type', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'miles_dist', 'km_dist', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'soil_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c'])
+}
 function formBuilder(formName, parts) {
     var form = "<form id='" + formName + "' method=\"POST\" style=\"display: none;\"> ";
     for (var index in parts)
@@ -79,7 +88,11 @@ function formParts(part) {
             return "<label for=\"gid\">GID: <br>\n            <input class=\"form-control\" type=\"text\" name=\"gid\">\n            <br>\n         </label>";
             break;
         case 'gps_date':
-            return "<label for=\"gps_date\">Date collected: <br>\n            <input class=\"form-control\" type=\"date\" name=\"gps_date\"><br>\n         </label>";
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear()+"-"+(month)+"-"+(day);
+            return "<label for=\"gps_date\">Date collected: <br>\n            <input class=\"form-control\" type=\"date\" value=\""+today+"\" name=\"gps_date\"><br>\n         </label>";
             break;
         case 'gps_photo':
             return "<label for=\"gps_photo\">\n            Is there a GPS tagged photo? <br>\n            <select class=\"form-control\" name=\"gps_photo\">\n               <option value=\"select\"></option>\n               <option value=\"Yes\">Yes</option>\n               <option value=\"No\">No</option>\n            </select>\n            <br>\n         </label>";

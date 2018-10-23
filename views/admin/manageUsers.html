@@ -496,23 +496,25 @@
               
             
           }
-          $.ajax({
-            type: "GET",
-            datatype: "json",
-            url: '/getUsers',
-            contentType: 'application/json',
-            success: function (data) {
-              console.log("success!!");
-              console.log(JSON.parse(data));
-              currRecords = JSON.parse(data);
-              writeTables(currRecords);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-            }
-         })
+          function getUsers(){
+            $.ajax({
+              type: "GET",
+              datatype: "json",
+              url: '/getUsers',
+              contentType: 'application/json',
+              success: function (data) {
+                console.log("success!!");
+                console.log(JSON.parse(data));
+                currRecords = JSON.parse(data);
+                writeTables(currRecords);
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log("some error");
+              }
+           })
+          }
           
-          
+          getUsers();
           $("#tableItems").html('');
           
           document.getElementById("searchButton").addEventListener("click", function(){
