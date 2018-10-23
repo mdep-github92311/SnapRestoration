@@ -273,7 +273,7 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="input-group">	
-              <input type="text" id="searchID"class="form-control" placeholder="Search by keyword">	
+              <input type="text" id="searchID"class="form-control" placeholder="Search by GID">	
               <span class="input-group-btn">	
                 <button id="searchButton" class="btn btn-default" type="button">Search</button>	
               </span>	
@@ -928,126 +928,56 @@
       $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
       if (currRecords.barriers.features != null) {
         currRecords.barriers.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ barriers: { features: searched } });
       }
       else if (currRecords.distPoints.features != null) {
         currRecords.distPoints.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ distPoints: { features: searched } });
       }
       else if (currRecords.distLines.features != null) {
         currRecords.distLines.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ distLines: { features: searched } });
       }
       else if (currRecords.distPolys.features != null) {
         currRecords.distPolys.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ distPolys: { features: searched } });
       }
       else if (currRecords.restoPoints.features != null) {
         currRecords.restoPoints.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ restoPoints: { features: searched } });
       }
       else if (currRecords.restoLines.features != null) {
         currRecords.restoLines.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ restoLines: { features: searched } });
       }
       else if (currRecords.restoPolys.features != null) {
         currRecords.restoPolys.features.forEach(function(feature) {
-          for (prop in feature.properties) {
-            if (prop == "agency") {
-              if (getAgency(feature.properties[prop]).toLowerCase().includes(searchedValue)) {
-                searched.push(feature);
-                return;
-              }
-            }
-            else if (feature.properties[prop] != null && feature.properties[prop].toString().toLowerCase().includes(searchedValue)) {
-              searched.push(feature);
-              return;
-            }
-          }
+          if (feature.properties.gid == searchedValue)
+            searched.push(feature);
         });
         $("#tableItems").html('');
         writeTables({ restoPolys: { features: searched } });
