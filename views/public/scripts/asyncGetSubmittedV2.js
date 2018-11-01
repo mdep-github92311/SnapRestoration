@@ -1,7 +1,7 @@
 "use strict";
 
 var getSubmissions = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(type, geoJSONstring) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(type) {
     var barriers, distPoints, distPolys, distLines, restoLines, restoPoints, restoPolys, overallCount, subs;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -12,117 +12,151 @@ var getSubmissions = function () {
             _context.prev = 2;
 
             if (!(type != 'AllSubs')) {
-              _context.next = 11;
+              _context.next = 30;
               break;
             }
 
-            _context.t0 = $;
-            _context.next = 7;
-            return $.getJSON('../../api/' + type + '/' + geoJSONstring, function (data) {
-              switch (type) {
-                case 'BarrierSubs':
-                  barriers = data[0].row_to_json;
-                  if (barriers.features != null) overallCount += barriers.features.length;
-                  break;
-                case 'DistPointSubs':
-                  distPoints = data[0].row_to_json;
-                  if (distPoints.features != null) overallCount += distPoints.features.length;
-                  break;
-                case 'DistLineSubs':
-                  distLines = data[0].row_to_json;
-                  if (distLines.features != null) overallCount += distLines.features.length;
-                  break;
-                case 'DistPolygonSubs':
-                  distPolys = data[0].row_to_json;
-                  if (distPolys.features != null) overallCount += distPolys.features.length;
-                  break;
-                case 'RestoPointSubs':
-                  restoPoints = data[0].row_to_json;
-                  if (restoPoints.features != null) overallCount += restoPoints.features.length;
-                  break;
-                case 'RestoLineSubs':
-                  restoLines = data[0].row_to_json;
-                  if (restoLines.features != null) overallCount += restoLines.features.length;
-                  break;
-                case 'RestoPolygonSubs':
-                  restoPolys = data[0].row_to_json;
-                  if (restoPolys.features != null) overallCount += restoPolys.features.length;
-                  break;
-
-              }
-            });
-
-          case 7:
-            _context.t1 = _context.sent;
-
-            _context.t0.when.call(_context.t0, _context.t1);
-
-            _context.next = 34;
+            _context.t0 = type;
+            _context.next = _context.t0 === 'barriers' ? 7 : _context.t0 === 'distPoints' ? 10 : _context.t0 === 'distLines' ? 13 : _context.t0 === 'distPolys' ? 16 : _context.t0 === 'restoPoints' ? 19 : _context.t0 === 'restoLines' ? 22 : _context.t0 === 'restoPolys' ? 25 : 28;
             break;
 
-          case 11:
-            _context.t2 = $;
-            _context.next = 14;
+          case 7:
+            _context.next = 9;
             return $.getJSON('../../api/BarrierSubs/barrierSubGeoJSON', function (data) {
               barriers = data[0].row_to_json;
               if (barriers.features != null) overallCount += barriers.features.length;
             });
 
-          case 14:
-            _context.t3 = _context.sent;
-            _context.next = 17;
+          case 9:
+            return _context.abrupt('break', 28);
+
+          case 10:
+            _context.next = 12;
             return $.getJSON('../../api/DistPointSubs/distPointSubGeoJSON', function (data) {
               distPoints = data[0].row_to_json;
               if (distPoints.features != null) overallCount += distPoints.features.length;
             });
 
-          case 17:
-            _context.t4 = _context.sent;
-            _context.next = 20;
+          case 12:
+            return _context.abrupt('break', 28);
+
+          case 13:
+            _context.next = 15;
             return $.getJSON('../../api/DistLineSubs/distLineSubGeoJSON', function (data) {
               distLines = data[0].row_to_json;
               if (distLines.features != null) overallCount += distLines.features.length;
             });
 
-          case 20:
-            _context.t5 = _context.sent;
-            _context.next = 23;
+          case 15:
+            return _context.abrupt('break', 28);
+
+          case 16:
+            _context.next = 18;
             return $.getJSON('../../api/DistPolygonSubs/distPolySubGeoJSON', function (data) {
               distPolys = data[0].row_to_json;
               if (distPolys.features != null) overallCount += distPolys.features.length;
             });
 
-          case 23:
-            _context.t6 = _context.sent;
-            _context.next = 26;
+          case 18:
+            return _context.abrupt('break', 28);
+
+          case 19:
+            _context.next = 21;
+            return $.getJSON('../../api/RestoPointSubs/restoPointSubGeoJSON', function (data) {
+              restoPoints = data[0].row_to_json;
+              if (restoPoints.features != null) overallCount += restoPoints.features.length;
+            });
+
+          case 21:
+            return _context.abrupt('break', 28);
+
+          case 22:
+            _context.next = 24;
+            return $.getJSON('../../api/RestoLineSubs/restoLineSubGeoJSON', function (data) {
+              restoLines = data[0].row_to_json;
+              if (restoLines.features != null) overallCount += restoLines.features.length;
+            });
+
+          case 24:
+            return _context.abrupt('break', 28);
+
+          case 25:
+            _context.next = 27;
+            return $.getJSON('../../api/RestoPolygonSubs/restoPolySubGeoJSON', function (data) {
+              restoPolys = data[0].row_to_json;
+              if (restoPolys.features != null) overallCount += restoPolys.features.length;
+            });
+
+          case 27:
+            return _context.abrupt('break', 28);
+
+          case 28:
+            _context.next = 53;
+            break;
+
+          case 30:
+            _context.t1 = $;
+            _context.next = 33;
+            return $.getJSON('../../api/BarrierSubs/barrierSubGeoJSON', function (data) {
+              barriers = data[0].row_to_json;
+              if (barriers.features != null) overallCount += barriers.features.length;
+            });
+
+          case 33:
+            _context.t2 = _context.sent;
+            _context.next = 36;
+            return $.getJSON('../../api/DistPointSubs/distPointSubGeoJSON', function (data) {
+              distPoints = data[0].row_to_json;
+              if (distPoints.features != null) overallCount += distPoints.features.length;
+            });
+
+          case 36:
+            _context.t3 = _context.sent;
+            _context.next = 39;
+            return $.getJSON('../../api/DistLineSubs/distLineSubGeoJSON', function (data) {
+              distLines = data[0].row_to_json;
+              if (distLines.features != null) overallCount += distLines.features.length;
+            });
+
+          case 39:
+            _context.t4 = _context.sent;
+            _context.next = 42;
+            return $.getJSON('../../api/DistPolygonSubs/distPolySubGeoJSON', function (data) {
+              distPolys = data[0].row_to_json;
+              if (distPolys.features != null) overallCount += distPolys.features.length;
+            });
+
+          case 42:
+            _context.t5 = _context.sent;
+            _context.next = 45;
             return $.getJSON('../../api/RestoPointSubs/restoPointSubGeoJSON', function (data) {
               //console.log(data);
               restoPoints = data[0].row_to_json;
               if (restoPoints.features != null) overallCount += restoPoints.features.length;
             });
 
-          case 26:
-            _context.t7 = _context.sent;
-            _context.next = 29;
+          case 45:
+            _context.t6 = _context.sent;
+            _context.next = 48;
             return $.getJSON('../../api/RestoLineSubs/restoLineSubGeoJSON', function (data) {
               restoLines = data[0].row_to_json;
               if (restoLines.features != null) overallCount += restoLines.features.length;
             });
 
-          case 29:
-            _context.t8 = _context.sent;
-            _context.next = 32;
+          case 48:
+            _context.t7 = _context.sent;
+            _context.next = 51;
             return $.getJSON('../../api/RestoPolygonSubs/restoPolySubGeoJSON', function (data) {
               restoPolys = data[0].row_to_json;
               if (restoPolys.features != null) overallCount += restoPolys.features.length;
             });
 
-          case 32:
-            _context.t9 = _context.sent;
+          case 51:
+            _context.t8 = _context.sent;
 
-            _context.t2.when.call(_context.t2, _context.t3, _context.t4, _context.t5, _context.t6, _context.t7, _context.t8, _context.t9);
+            _context.t1.when.call(_context.t1, _context.t2, _context.t3, _context.t4, _context.t5, _context.t6, _context.t7, _context.t8);
 
-          case 34:
+          case 53:
             subs = {
               barriers: barriers,
               distPoints: distPoints,
@@ -135,21 +169,21 @@ var getSubmissions = function () {
             };
             return _context.abrupt('return', subs);
 
-          case 38:
-            _context.prev = 38;
-            _context.t10 = _context['catch'](2);
+          case 57:
+            _context.prev = 57;
+            _context.t9 = _context['catch'](2);
 
-            console.error(_context.t10);
+            console.error(_context.t9);
 
-          case 41:
+          case 60:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[2, 38]]);
+    }, _callee, this, [[2, 57]]);
   }));
 
-  return function getSubmissions(_x, _x2) {
+  return function getSubmissions(_x) {
     return _ref.apply(this, arguments);
   };
 }();
