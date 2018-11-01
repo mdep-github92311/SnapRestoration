@@ -1,603 +1,433 @@
 <!DOCTYPE html>
 <html>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src='../admin/checkLogin.js'></script>
-    <head>
-        <title>SNAP Admin</title>
-        <script src='../public/scripts/polyfill.min.js'></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
-        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
-        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
-        
-        <style>
-        html, body {
-            width: 100%;
-        }
-        #Items {
-          text-align: center !important;
-          margin: 0 auto;
-        }
-        #mapID { 
-          height: 380px;
-          width: 280px;
-        }
-        #side_tab {
-          font-size: 2em;
-          padding: 4px;
-          border: 1pt solid black;
-        }
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            text-align: center;
-        }
-        th, td {
-            padding: 5px;
-            text-align: left;
-        }
-        table.center {
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .container {
-            position: relative;
-            width: 50px;
-            padding-left: 0px;
-            margin: 0 auto 40px auto;
-        
-            -webkit-perspective: 800px;
-               -moz-perspective: 800px;
-                -ms-perspective: 800px;
-                 -o-perspective: 800px;
-                    perspective: 800px;
-        }
-        .container .card {
-            height: 100%;
-        
-            -webkit-transition: -webkit-transform 1s;
-               -moz-transition:    -moz-transform 1s;
-                -ms-transition:     -ms-transform 1s;
-                 -o-transition:      -o-transform 1s;
-                    transition:         transform 1s;
-        
-            -webkit-transform-style: preserve-3d;
-               -moz-transform-style: preserve-3d;
-                -ms-transform-style: preserve-3d;
-                 -o-transform-style: preserve-3d;
-                    transform-style: preserve-3d;
-        }
-        .container .card .face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            color: #fff;
-            text-align: center;
-        
-            -webkit-backface-visibility: hidden;
-               -moz-backface-visibility: hidden;
-                -ms-backface-visibility: hidden;
-                 -o-backface-visibility: hidden;
-                    backface-visibility: hidden;
-        }
-        .container .card.flipped,
-        .container .card .face2 {
-            -webkit-transform: rotateY(180deg);
-               -moz-transform: rotateY(180deg);
-                -ms-transform: rotateY(180deg);
-                 -o-transform: rotateY(180deg);
-                    transform: rotateY(180deg);
-        }
-        .store {
-            display: none;
-        }
-        .buttons {
-            text-align: center;
-        }
-        
-        li:active { 
-            background-color: #337ab7;
-            color:white;
-        }
-        li:hover {
-          background-color: #337ab7;
-          color:white;
-        }
-        #side_tab_filters {
-          cursor:pointer;
-        }
-        
-        .loader {
-          margin-left: 50%;
-          margin-top: 10%;
-          border: 16px solid #f3f3f3;
-          border-radius: 50%;
-          border-top: 16px solid #3498db;
-          width: 120px;
-          height: 120px;
-          -webkit-animation: spin 2s linear infinite; /* Safari */
-          animation: spin 2s linear infinite;
-        }
-                
-                
-        /* Safari */
-        @-webkit-keyframes spin {
-          0% { -webkit-transform: rotate(0deg); }
-          100% { -webkit-transform: rotate(360deg); }
-        }
-        
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
-        .row {
-          margin-left: 30% !important;
-        }
-        
-        
-        </style>
-    </head>
-    <body>
-        <div id="header">
-          <nav role="navigation" class="navbar navbar-default navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="pull-left">
-                  <div class="container">
-                    <div class="card">
-                      <div class="face face1"></div>
-                      <div class="face face2"></div>
-                    </div>
-                    <ul class="store">
-                      <li>
-                        <div class="content content1"><img alt="Brand" src="../public/css/images/logos/blm.png" width="45px" height="45px" float="left"/></div>
-                      </li>
-                      <li>
-                        <div class="content content2"> <img alt="Brand" src="../public/css/images/logos/fs.png" width="38px" height="45px" float="left"/></div>
-                      </li>
-                      <li>
-                        <div class="content content3"> <img alt="Brand" src="../public/css/images/logos/fws.png" width="45px" height="45px" float="left"/></div>
-                      </li>
-                      <li>
-                        <div class="content content4">  <img alt="Brand" src="../public/css/images/logos/nps.png" width="45px" height="45px" float="left"/></div>
-                      </li>
-                    </ul>
-                  </div>
-                  <script>
-                    var topLogo = 1;
-                    var currLogo = 1;
-                    var facingUp = true;
-                    function flipLogo(n) {
-                      if (topLogo === n) return;
-                      // Replace the contents of the current back-face with the contents
-                      // of the element that should rotate into view.
-                      var curBackFace = $('.' + (facingUp ? 'face2' : 'face1'));
-                      var nextContent = $('.store' + n).html();
-                      var nextContent = $('.store li:nth-child(' + n + ')').html();
-                      curBackFace.html(nextContent);
-                      // Rotate the content
-                      $('.card').toggleClass('flipped');
-                      topLogo = n;
-                      facingUp = !facingUp;
-                    }
-                    setInterval(function() {
-                      flipLogo(currLogo);
-                      if(currLogo > 3)
-                        currLogo = 1;
-                      else
-                        currLogo++;
-                    }, 5000);
-                    $(document).ready(function(){
-                      // Add the appropriate content to the initial "front side"
-                      var frontFace = $('.face1');
-                      var frontContent = $('.store li:first-child').html();
-                      frontFace.html(frontContent);
-                    });
-                  </script></a>
-                  <div class="navbar-brand">SNAP Restoration</div>
-              </div>
-                <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
-                <ul style="border-left: 1px solid #000000;" class="nav navbar-nav">
-                  <li><a href="/">Map View</a></li>
-                  <li class="active"><a href="">Admin</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="logoutTab">
-                        <b style="color: #9d9d9d;">
-                            Hello,
-                            <span id="username">Username</span>
-                        </b>
-                        <a href="javascript:logout();" style="display: inline-block; padding-left: 0px;">&nbsp(logout)</a>
-                    </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-        <div style="float:left;">
-          <div id="side_tab">
-            <ul class="nav nav-pills nav-stacked">
-              <li role="presentation"><a href="Add.html">Submissions</a></li>
-              <li role="presentation"><a href="Edit.html">Edit Records</a></li>
-              <li role="presentation" class="active"><a href="#">Manage Users</a></li>
-              <li role="presentation"><a href="viewReports.html">View Reports</a></li>
-            </ul>
-          </div>
-          <hr>
-          <h4 style="text-align: center;">Options</h4>
-          <ul class="list-group">
-              <li id="barrierFilter" class="list-group-item btn btn-default"data-toggle='modal' data-target='#myModal' onClick="addUser()">Add new user</li>
-            </ul>
-        </div>
-        
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src='../admin/checkLogin.js'></script>
+
+<head>
+  <title>SNAP Admin</title>
+  <script src='../public/scripts/polyfill.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+  <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.9/leaflet.draw.css" />
+  <link rel='stylesheet' href="../public/css/admin.css" />
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+
+</head>
+
+<body>
+  <div id="header"></div>
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <span>Navigation</span>
+        </li>
+        <li><a href="Add.html">Submissions</a></li>
+        <li><a href="Edit.html">Edit Records</a></li>
+        <li><a class="active">Manage Users</a></li>
+        <li><a href="viewReports.html">View Reports</a></li>
+        <li class="sidebar-brand">
+          <span>Options</span>
+        </li>
+        <li id="addUser" data-toggle='modal' data-target='#myModal' onClick="addUser()">Add new user</li>
+      </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-6">
-            <div class="input-group">	
-              <input type="text" id="searchID"class="form-control" placeholder="Search by username...">	
+          <div class="col-lg-8">
+            <div class="input-group">
+              <input type="text" id="searchID" class="form-control" placeholder="Search by username...">
               <span class="input-group-btn">	
-                <button id="searchButton" class="btn btn-default" type="button">Search</button>	
-              </span>	
-            </div><!-- /input-group -->
+                              <button id="searchButton" class="btn btn-default" type="button">Search</button>	
+                            </span>
+            </div>
+            <!-- /input-group -->
             <br>
             <div id="Items">
-                <div id="reviewItems"></div>
+              <div id="reviewItems"></div>
 
-                <div class="loading"></div>
-                <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
-                    <thead><tr><th>Username</th><th>First Name</th><th>Last Name</th><th>Agency</th><th>Action</th></tr></thead>
-                    <tbody id="tableItems"></tbody>
-                </table>
-                <a id="pageLeft50" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>&nbsp
-                <a id="pageLeft5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>&nbsp
-                <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>&nbsp
-                <span id="pageNumber" style="font-size: 1.5em;">1</span>&nbsp
-                <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>&nbsp
-                <a id="pageRight5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>&nbsp
-                <a id="pageRight50" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a>
+              <div class="loading"></div>
+              <table id="tableID" class="table table-bordered table-striped center" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Agency</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="tableItems"></tbody>
+              </table>
+              <a id="pageLeft50" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>&nbsp
+              <a id="pageLeft5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>&nbsp
+              <a id="pageLeft" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>&nbsp
+              <span id="pageNumber" style="font-size: 1.5em;">1</span>&nbsp
+              <a id="pageRight" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>&nbsp
+              <a id="pageRight5" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a>&nbsp
+              <a id="pageRight50" style="cursor:pointer; font-size: 1.5em;"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a>
             </div>
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
-      
-        <script>
-            var currRecords = null;
-            mapMarkers = [];
-            var currentData = [];
-            var invalidated = false;
-            var pageNumber = 0;
-            function getAgency(agency){
-                switch (agency) {
-                    case 0:
-                      return "BLM";
-                      break;
-                    case 1:
-                      return "NPS";
-                      break;
-                    case 2:
-                      return "FS";
-                      break;
-                    case 3: 
-                      return "FWS";
-                      break;
-                    default:
-                      return "null";
-                      break;
-                }
-            }
-            function populateModal(data) {
-                this.currentData = data;
-                document.getElementById("editInfo").innerHTML = "";
-                document.getElementById("pInfo").style.display = "";  
-                document.getElementById("buttons").style.display = ""; 
-            
-                console.log(data);
-            
-                $("#myModalLabel").html("<h1> User Info </h1>");
-                $("#pInfo").html("");
-              
-                for (var prop in data) {
-                    if(prop == 'agency')
-                        $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + getAgency(data[prop]));
-                    else
-                        $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + data[prop]);
-                }
-            
-            }
-            function generatePassword() {
-                var length = 8,
-                    charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-                    retVal = "";
-                for (var i = 0, n = charset.length; i < length; ++i) {
-                    retVal += charset.charAt(Math.floor(Math.random() * n));
-                }
-                return retVal;
-            }
-            function copyToClipboard(pass) {
-                var dummy = $('<input>').val(pass).appendTo('#resetInfo').select()
-                document.execCommand('copy')
-                dummy.css('display','none');
-                dummy.remove();
-            }
-            function resetPass(data) {
-                var tempPass = generatePassword();
-                console.log(data)
-                $.ajax({
-                    type: "POST",
-                    datatype: "json",
-                    url: '/resetPass',
-                    contentType: 'application/json',
-                    data: JSON.stringify([data.user_name,tempPass]),
-                    success: function (data) {
-                        document.getElementById("resetButton").style.display = "none"; 
-                        document.getElementById("clipButton").style.display = "inline-block"; 
-                        document.getElementById('resetInfo').innerHTML = '<h4>Password has been successfully reset!</h4><h5>New password is: <Strong id="tempPass">'+tempPass+'</Strong></h5>'
-                        document.getElementById("clipButton").addEventListener("click", function(){
-                            copyToClipboard(tempPass);
-                        })
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        console.log("some error");
-                    }
-                })
-            }
-            function deleteUser(data) {
-                $.ajax({
-                    type: "POST",
-                    datatype: "json",
-                    url: '/deleteUser',
-                    contentType: 'application/json',
-                    data: JSON.stringify({username: data.user_name}),
-                    success: function (data) {
-                        document.getElementById("deleteButton").style.display = "none";  
-                        document.getElementById('deleteInfo').innerHTML = '<h4>User has been deleted</h4>';
-                        window.location.reload(true); 
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        console.log("some error");
-                    }
-                })
-            }
-            function addUser() {
-                document.getElementById("pInfo").style.display = "none";  
-                document.getElementById("resetButton").style.display = "none"; 
-                document.getElementById("clipButton").style.display = "none"; 
-                document.getElementById("resetPass").style.display = "none"; 
-                document.getElementById("deleteUser").style.display = 'none';
-                
-                $("#myModalLabel").html("<h1> Add User </h1>");
-                var div = document.getElementById("editInfo");
-                div.innerHTML = "";
-                div.style.display ="";
-                $("#editInfo").load("../public/scripts/addUser.html");
-                document.getElementById("buttons").style.display = "none"; 
-              
-            }
-            
-              $('#pageLeft50').click(function () {
-                  $("#tableItems").html('')
-                  changePage(-50);
-                  writeTables(currRecords);
-              })
-              $('#pageLeft5').click(function () {
-                  $("#tableItems").html('')
-                  changePage(-5);
-                  writeTables(currRecords);
-              })
-            $('#pageLeft').click(function() {
-              $("#tableItems").html('')
-                  changePage(-1);
-              writeTables(currRecords);
-            });
-            $('#pageRight').click(function() {
-              $("#tableItems").html('')
-                  changePage(1);
-              writeTables(currRecords);
-              });
-              $('#pageRight5').click(function () {
-                  $("#tableItems").html('')
-                  changePage(5);
-                  writeTables(currRecords);
-              });
-              $('#pageRight50').click(function () {
-                  $("#tableItems").html('')
-                  changePage(50);
-                  writeTables(currRecords);
-              });
-            function changePage(change){
-              pageNumber += change;
-              if (pageNumber > Math.ceil(currRecords.overallCount / 10) - 1)
-                pageNumber = Math.ceil(currRecords.overallCount / 10) - 1;
-              else if (pageNumber < 0)
-                pageNumber = 0;
-            } 
-            function writeTables(defs) {
-              //console.log(defs);
-                //var count = document.getElementById('reviewItems');
-                var item = document.getElementById('tableItems');
-                //count.innerHTML = "There are " + defs.overallCount + " overall markers";
-                var count = 0;
-                // table.fnClearTable();
-                $("#pageNumber").html((pageNumber + 1) + "/" + (currRecords.overallCount > 0 ? Math.ceil(currRecords.overallCount / 10) : 1))
-                $("#tableItems").html('<tr><td colspan=5>Unable to load users</td></tr>');
-                if (defs != null) {
-                  $("#tableItems").html('');
-                  defs.forEach(function(features) {
-                  count++;
-                  if (count > (pageNumber+1)*10 || count-1 < pageNumber*10)
-                    return;
-                  
-                  $("#tableItems").append("<tr><td>"+ features.user_name
-                            + "</td><td>"+ features.first_name
-                            + "</td><td>"+ features.last_name
-                            + "</td><td>"+ getAgency(features.agency)
-                            + "</td><td><div style='width:100%;'><a id='user"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-default btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> View"
-                            + "</button></a>&nbsp"
-                            + "<a id='reset"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-warning btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-repeat\" aria-hidden=\"true\"></span> Reset Password"
-                            + "</button></a>&nbsp"
-                            + "<a id='delete"+ count +"' data-toggle='modal' data-target='#myModal' href='#'>"
-                            + "<button type=\"button\" class=\"btn btn-danger btn-sm\">"
-                            + "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete"
-                            + "</button></a></div>"
-                            +"</td></tr>");
-                  var userID = "#user" + count;
-                  var resetID = "#reset" + count;
-                  var deleteID = "#delete" + count;
-                  
-                  $(userID).click(function(){
-                      document.getElementById("resetPass").style.display = 'none';
-                      document.getElementById("deleteUser").style.display = 'none';
-                      document.getElementById("userInfo").style.display = 'block';
-                      var elem = document.getElementById("pInfo");
-                      elem.style.display = ""; 
-                      populateModal(features);
-                  });
-                  $(resetID).click(function(){
-                      currentData = features;
-                      document.getElementById("userInfo").style.display = 'none';
-                      document.getElementById("deleteUser").style.display = 'none';
-                      document.getElementById("resetPass").style.display = 'block';
-                      document.getElementById("resetButton").style.display = "inline-block"; 
-                      document.getElementById("clipButton").style.display = "none"; 
-                      $("#myModalLabel").html("<h1> Password Reset </h1>");
-                      document.getElementById("userToReset").innerHTML = "<Strong>"+features.user_name+"</Strong>";
-                      var elem = document.getElementById("pInfo");
-                      elem.style.display = ""; 
-                  });
-                  $(deleteID).click(function(){
-                      currentData = features;
-                      document.getElementById("userInfo").style.display = 'none';
-                      document.getElementById("resetPass").style.display = 'none';
-                      document.getElementById("deleteUser").style.display = 'block';
-                      document.getElementById("deleteButton").style.display = "inline-block"; 
-                      document.getElementById("clipButton").style.display = "none"; 
-                      $("#myModalLabel").html("<h1> User Delete </h1>");
-                      document.getElementById("userToDelete").innerHTML = "<Strong>"+features.user_name+"</Strong>";
-                      var elem = document.getElementById("pInfo");
-                      elem.style.display = ""; 
-                  });
-                });
-              }
-              count = 0;
-            
-            var items = document.getElementById("tableItems");
-            document.getElementById("tableID").appendChild(items);
-            document.getElementById("tableID").style.textAlign = "center"; 
-            
-              
-            
-          }
-          $.ajax({
-            type: "GET",
-            datatype: "json",
-            url: '/getUsers',
-            contentType: 'application/json',
-            success: function (data) {
-              console.log("success!!");
-              console.log(JSON.parse(data));
-              currRecords = JSON.parse(data);
-              writeTables(currRecords);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              console.log("some error");
-            }
-         })
-          
-          
-          $("#tableItems").html('');
-          
-          document.getElementById("searchButton").addEventListener("click", function(){
-            console.log($("#searchID").val());
-            if ($("#searchID").val() == ''){
-              $("#tableItems").html('');
-              writeTables(currRecords);
-              return;
-            }
-            $("#tableItems").html('<tr><td colspan=5>No records match that Username</td></tr>');
-            if (currRecords != null) {
-                currRecords.forEach(function(feature) {
-                if (feature.user_name == $("#searchID").val()) {
-                    $("#tableItems").html('');
-                    writeTables(features);
-                  }
-              });
-            }
-          });
-        </script>
-        
-        
-        <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel"> </h4>
-                      </div>
-                      <div class="modal-body">
-                        <div id="userInfo">
-                            <div id="pInfo"></div>
-                            <div id='editInfo'></div>
-                            <hr>
-                            <div id='buttons'>
-                              <button id="editButton" class="btn btn-default">Edit</button>
-                              <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
-                            </div>
-                        </div>
-                        <div id="resetPass">
-                            <div id="resetInfo"><h5>Are you sure you want to reset <span id='userToReset'>username</span>'s password?</h5></div>
-                            <button id="resetButton" class="btn btn-default">Confirm</button>
-                            <button id="clipButton" class="btn btn-default">Copy to Clipboard</button>
-                            <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
-                        </div>
-                        <div id="deleteUser">
-                            <div id="deleteInfo"><h5>Are you sure you want to delete <span id='userToDelete'>username</span>?</h5></div>
-                            <button id="deleteButton" class="btn btn-default">Confirm</button>
-                            <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
-                        </div>
-                      </div>
-            
-                    </div>
-                  </div>
-                </div>
-                
-        <script>
-            var currUser = null;
-              function editForm(){
-                $("#editInfo").load("../public/scripts/editUser.html");
-              }
-              
-              // Listener for the Edit Button
-              document.getElementById("editButton").addEventListener('click',function () {
-                document.getElementById("pInfo").style.display = "none";  
-                var div = document.getElementById("editInfo");
-                div.innerHTML = "";
-                div.style.display ="";
-                editForm();
-                document.getElementById("buttons").style.display = "none"; 
-                console.log("edit button click");
-              }); 
-              
-              document.getElementById("resetButton").addEventListener('click',function () {
-                resetPass(currentData);
-              }); 
-              
-              document.getElementById("deleteButton").addEventListener('click',function () {
-                document.getElementById("deleteButton").style.display = "none";  
-                deleteUser(currentData);
-              }); 
-            </script>
-        
+          </div>
+          <!-- /.col-lg-6 -->
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
 
-    </body>
-    </body>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"> </h4>
+        </div>
+        <div class="modal-body">
+          <div id="userInfo">
+            <div id="pInfo"></div>
+            <div id='editInfo'></div>
+            <hr>
+            <div id='buttons'>
+              <button id="editButton" class="btn btn-default">Edit</button>
+              <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
+            </div>
+          </div>
+          <div id="resetPass">
+            <div id="resetInfo">
+              <h5>Are you sure you want to reset <span id='userToReset'>username</span>'s password?</h5>
+            </div>
+            <button id="resetButton" class="btn btn-default">Confirm</button>
+            <button id="clipButton" class="btn btn-default">Copy to Clipboard</button>
+            <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
+          </div>
+          <div id="deleteUser">
+            <div id="deleteInfo">
+              <h5>Are you sure you want to delete <span id='userToDelete'>username</span>?</h5>
+            </div>
+            <button id="deleteButton" class="btn btn-default">Confirm</button>
+            <button id="cancelButton" class="btn btn-default" data-toggle='modal' data-target='#myModal'>Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script>
+    var currRecords = null;
+    mapMarkers = [];
+    var currentData = [];
+    var invalidated = false;
+    var pageNumber = 0;
+
+    function getAgency(agency) {
+      switch (agency) {
+        case 0:
+          return "BLM";
+          break;
+        case 1:
+          return "NPS";
+          break;
+        case 2:
+          return "FS";
+          break;
+        case 3:
+          return "FWS";
+          break;
+        default:
+          return "null";
+          break;
+      }
+    }
+
+    function populateModal(data) {
+      this.currentData = data;
+      document.getElementById("editInfo").innerHTML = "";
+      document.getElementById("pInfo").style.display = "";
+      document.getElementById("buttons").style.display = "";
+
+      console.log(data);
+
+      $("#myModalLabel").html("<h1> User Info </h1>");
+      $("#pInfo").html("");
+
+      for (var prop in data) {
+        if (prop == 'agency')
+          $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + getAgency(data[prop]));
+        else
+          $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + data[prop]);
+      }
+
+    }
+
+    function generatePassword() {
+      var length = 8,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+      for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+      }
+      return retVal;
+    }
+
+    function copyToClipboard(pass) {
+      var dummy = $('<input>').val(pass).appendTo('#resetInfo').select()
+      document.execCommand('copy')
+      dummy.css('display', 'none');
+      dummy.remove();
+    }
+
+    function resetPass(data) {
+      var tempPass = generatePassword();
+      console.log(data)
+      $.ajax({
+        type: "POST",
+        datatype: "json",
+        url: '/resetPass',
+        contentType: 'application/json',
+        data: JSON.stringify([data.user_name, tempPass]),
+        success: function(data) {
+          document.getElementById("resetButton").style.display = "none";
+          document.getElementById("clipButton").style.display = "inline-block";
+          document.getElementById('resetInfo').innerHTML = '<h4>Password has been successfully reset!</h4><h5>New password is: <Strong id="tempPass">' + tempPass + '</Strong></h5>'
+          document.getElementById("clipButton").addEventListener("click", function() {
+            copyToClipboard(tempPass);
+          })
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log("some error");
+        }
+      })
+    }
+
+    function deleteUser(data) {
+      $.ajax({
+        type: "POST",
+        datatype: "json",
+        url: '/deleteUser',
+        contentType: 'application/json',
+        data: JSON.stringify({ username: data.user_name }),
+        success: function(data) {
+          document.getElementById("deleteButton").style.display = "none";
+          document.getElementById('deleteInfo').innerHTML = '<h4>User has been deleted</h4>';
+          window.location.reload(true);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log("some error");
+        }
+      })
+    }
+
+    function addUser() {
+      document.getElementById("pInfo").style.display = "none";
+      document.getElementById("resetButton").style.display = "none";
+      document.getElementById("clipButton").style.display = "none";
+      document.getElementById("resetPass").style.display = "none";
+      document.getElementById("deleteUser").style.display = 'none';
+
+      $("#myModalLabel").html("<h1> Add User </h1>");
+      var div = document.getElementById("editInfo");
+      div.innerHTML = "";
+      div.style.display = "";
+      $("#editInfo").load("../public/scripts/addUser.html");
+      document.getElementById("buttons").style.display = "none";
+
+    }
+
+    $('#pageLeft50').click(function() {
+      $("#tableItems").html('')
+      changePage(-50);
+      writeTables(currRecords);
+    })
+    $('#pageLeft5').click(function() {
+      $("#tableItems").html('')
+      changePage(-5);
+      writeTables(currRecords);
+    })
+    $('#pageLeft').click(function() {
+      $("#tableItems").html('')
+      changePage(-1);
+      writeTables(currRecords);
+    });
+    $('#pageRight').click(function() {
+      $("#tableItems").html('')
+      changePage(1);
+      writeTables(currRecords);
+    });
+    $('#pageRight5').click(function() {
+      $("#tableItems").html('')
+      changePage(5);
+      writeTables(currRecords);
+    });
+    $('#pageRight50').click(function() {
+      $("#tableItems").html('')
+      changePage(50);
+      writeTables(currRecords);
+    });
+
+    function changePage(change) {
+      pageNumber += change;
+      if (pageNumber > Math.ceil(currRecords.overallCount / 10) - 1)
+        pageNumber = Math.ceil(currRecords.overallCount / 10) - 1;
+      else if (pageNumber < 0)
+        pageNumber = 0;
+    }
+
+    function writeTables(defs) {
+      //console.log(defs);
+      //var count = document.getElementById('reviewItems');
+      var item = document.getElementById('tableItems');
+      //count.innerHTML = "There are " + defs.overallCount + " overall markers";
+      var count = 0;
+      // table.fnClearTable();
+      $("#pageNumber").html((pageNumber + 1) + "/" + (currRecords.overallCount > 0 ? Math.ceil(currRecords.overallCount / 10) : 1))
+      $("#tableItems").html('<tr><td colspan=5>Unable to load users</td></tr>');
+      if (defs != null) {
+        $("#tableItems").html('');
+        defs.forEach(function(features) {
+          count++;
+          if (count > (pageNumber + 1) * 10 || count - 1 < pageNumber * 10)
+            return;
+
+          $("#tableItems").append("<tr><td>" + features.user_name +
+            "</td><td>" + features.first_name +
+            "</td><td>" + features.last_name +
+            "</td><td>" + getAgency(features.agency) +
+            "</td><td><div style='width:100%;'><a id='user" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" +
+            "<button type=\"button\" class=\"btn btn-default btn-sm\">" +
+            "<span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> View" +
+            "</button></a>&nbsp" +
+            "<a id='reset" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" +
+            "<button type=\"button\" class=\"btn btn-warning btn-sm\">" +
+            "<span class=\"glyphicon glyphicon-repeat\" aria-hidden=\"true\"></span> Reset Password" +
+            "</button></a>&nbsp" +
+            "<a id='delete" + count + "' data-toggle='modal' data-target='#myModal' href='#'>" +
+            "<button type=\"button\" class=\"btn btn-danger btn-sm\">" +
+            "<span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span> Delete" +
+            "</button></a></div>" +
+            "</td></tr>");
+          var userID = "#user" + count;
+          var resetID = "#reset" + count;
+          var deleteID = "#delete" + count;
+
+          $(userID).click(function() {
+            document.getElementById("resetPass").style.display = 'none';
+            document.getElementById("deleteUser").style.display = 'none';
+            document.getElementById("userInfo").style.display = 'block';
+            var elem = document.getElementById("pInfo");
+            elem.style.display = "";
+            populateModal(features);
+          });
+          $(resetID).click(function() {
+            currentData = features;
+            document.getElementById("userInfo").style.display = 'none';
+            document.getElementById("deleteUser").style.display = 'none';
+            document.getElementById("resetPass").style.display = 'block';
+            document.getElementById("resetButton").style.display = "inline-block";
+            document.getElementById("clipButton").style.display = "none";
+            $("#myModalLabel").html("<h1> Password Reset </h1>");
+            document.getElementById("userToReset").innerHTML = "<Strong>" + features.user_name + "</Strong>";
+            var elem = document.getElementById("pInfo");
+            elem.style.display = "";
+          });
+          $(deleteID).click(function() {
+            currentData = features;
+            document.getElementById("userInfo").style.display = 'none';
+            document.getElementById("resetPass").style.display = 'none';
+            document.getElementById("deleteUser").style.display = 'block';
+            document.getElementById("deleteButton").style.display = "inline-block";
+            document.getElementById("clipButton").style.display = "none";
+            $("#myModalLabel").html("<h1> User Delete </h1>");
+            document.getElementById("userToDelete").innerHTML = "<Strong>" + features.user_name + "</Strong>";
+            var elem = document.getElementById("pInfo");
+            elem.style.display = "";
+          });
+        });
+      }
+      count = 0;
+
+      var items = document.getElementById("tableItems");
+      document.getElementById("tableID").appendChild(items);
+      document.getElementById("tableID").style.textAlign = "center";
+
+
+
+    }
+
+    function getUsers() {
+      $.ajax({
+        type: "GET",
+        datatype: "json",
+        url: '/getUsers',
+        contentType: 'application/json',
+        success: function(data) {
+          console.log("success!!");
+          console.log(JSON.parse(data));
+          currRecords = JSON.parse(data);
+          writeTables(currRecords);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log("some error");
+        }
+      })
+    }
+
+    getUsers();
+    $("#tableItems").html('');
+
+    document.getElementById("searchButton").addEventListener("click", function() {
+      console.log($("#searchID").val());
+      if ($("#searchID").val() == '') {
+        $("#tableItems").html('');
+        writeTables(currRecords);
+        return;
+      }
+      $("#tableItems").html('<tr><td colspan=5>No records match that Username</td></tr>');
+      if (currRecords != null) {
+        currRecords.forEach(function(feature) {
+          if (feature.user_name == $("#searchID").val()) {
+            $("#tableItems").html('');
+            writeTables(features);
+          }
+        });
+      }
+    });
+    var currUser = null;
+
+    function editForm() {
+      $("#editInfo").load("../public/scripts/editUser.html");
+    }
+
+    // Listener for the Edit Button
+    document.getElementById("editButton").addEventListener('click', function() {
+      document.getElementById("pInfo").style.display = "none";
+      var div = document.getElementById("editInfo");
+      div.innerHTML = "";
+      div.style.display = "";
+      editForm();
+      document.getElementById("buttons").style.display = "none";
+      console.log("edit button click");
+    });
+
+    document.getElementById("resetButton").addEventListener('click', function() {
+      resetPass(currentData);
+    });
+
+    document.getElementById("deleteButton").addEventListener('click', function() {
+      document.getElementById("deleteButton").style.display = "none";
+      deleteUser(currentData);
+    });
+  </script>
+</body>
+
 </html>

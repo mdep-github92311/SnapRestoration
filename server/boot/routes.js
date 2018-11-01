@@ -1198,7 +1198,8 @@ module.exports = function (app) {
         .post('/addUser', checkAuth, (req, res) => {
             const user = req.body;
             var salt = bcrypt.genSaltSync(saltRounds);
-            user[5] = bcrypt.hashSync(user[5], salt);
+            console.log(user, saltRounds, salt)
+            user[4] = bcrypt.hashSync(user[4], salt);
             db.none(`INSERT INTO users(user_name, first_name, last_name, agency, password) VALUES($1,$2,$3,$4,$5)`, user)
                 .then(function () {
                     console.log('user added');
