@@ -21,7 +21,8 @@
 </head>
 
 <body>
-  <div id="header"></div>
+  <div id="header"><nav role="navigation" class="navbar navbar-default navbar-inverse"></nav></div>
+  <div><!--#include file="../public/shared/navbar.html" --></div>
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -274,7 +275,7 @@
     $('#pageRight50').click(function() {
       changePage(50);
     });
-
+    
     function changePage(change) {
       $("#tableItems").html('')
       pageNumber += change;
@@ -286,6 +287,7 @@
     }
 
     function writeTables(defs) {
+      $("#tableItems").html('')
       var item = document.getElementById('tableItems');
       var count = 0;
       $("#pageNumber").html((pageNumber + 1) + "/" + (currRecords.overallCount > 0 ? Math.ceil(currRecords.overallCount / 10) : 1))

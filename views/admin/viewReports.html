@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div id="header"></div>
+    <div id="header"><nav role="navigation" class="navbar navbar-default navbar-inverse"></nav></div>
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
@@ -92,6 +92,7 @@
     <script>
         function generateReport(data, title) {
             let csv = "";
+            console.log(data)
             // Loop the array of objects
             for (let row = 0; row < data.features.length; row++) {
                 let keysAmount = Object.keys(data.features[row].properties).length
@@ -135,37 +136,37 @@
             return month + '/' + day + '/' + year;
         }
         $("#DPointsReport").click(function() {
-            getData('DistPoints', 'distPointGeoJSON').then(function(items) {
+            getData('distPoints').then(function(items) {
                 generateReport(items.distPoints, "DisturbancePoints-" + getFormattedDate());
             });
         });
         $("#DPolysReport").click(function() {
-            getData('DistPolygons', 'distPolyGeoJSON').then(function(items) {
+            getData('distPolygons').then(function(items) {
                 generateReport(items.distPolys, "DisturbancePolygons-" + getFormattedDate());
             });
         });
         $("#DLinesReport").click(function() {
-            getData('DistLines', 'distLineGeoJSON').then(function(items) {
+            getData('distLines').then(function(items) {
                 generateReport(items.distLines, "DisturbanceLines-" + getFormattedDate());
             });
         });
         $("#RPointsReport").click(function() {
-            getData('RestoPoints', 'restoPointGeoJSON').then(function(items) {
+            getData('restoPoints').then(function(items) {
                 generateReport(items.restoPoints, "RestorationPoints-" + getFormattedDate());
             });
         });
         $("#RPolysReport").click(function() {
-            getData('RestoPolygons', 'restoPolyGeoJSON').then(function(items) {
+            getData('restoPolygons').then(function(items) {
                 generateReport(items.restoPolys, "RestorationPolygons-" + getFormattedDate());
             });
         });
         $("#RLinesReport").click(function() {
-            getData('RestoLines', 'restoLineGeoJSON').then(function(items) {
+            getData('restoLines').then(function(items) {
                 generateReport(items.restoLines, "RestorationLines-" + getFormattedDate());
             });
         });
         $("#BarriersReport").click(function() {
-            getData('Barriers', 'barrierGeoJSON').then(function(items) {
+            getData('barriers').then(function(items) {
                 generateReport(items.barriers, "Barriers-" + getFormattedDate());
             });
         });
