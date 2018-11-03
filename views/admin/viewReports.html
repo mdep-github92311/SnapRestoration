@@ -141,7 +141,7 @@
             });
         });
         $("#DPolysReport").click(function() {
-            getData('distPolygons').then(function(items) {
+            getData('distPolys').then(function(items) {
                 generateReport(items.distPolys, "DisturbancePolygons-" + getFormattedDate());
             });
         });
@@ -156,7 +156,7 @@
             });
         });
         $("#RPolysReport").click(function() {
-            getData('restoPolygons').then(function(items) {
+            getData('restoPolys').then(function(items) {
                 generateReport(items.restoPolys, "RestorationPolygons-" + getFormattedDate());
             });
         });

@@ -275,7 +275,24 @@
     $('#pageRight50').click(function() {
       changePage(50);
     });
-    
+    setTimeout(function(){
+      sortHeader("GID")
+    }, 2000)
+    function sortHeader(col){
+      switch (col) {
+        case 'gid':
+          console.log(currRecords)
+          currRecords[currFilter].features.sort(function(a,b) {
+            console.log(a,b)
+            return b.properties.gid - a.properties.gid
+          })
+          break;
+        
+        default:
+          // code
+      }
+      writeTables(currRecords[currFilter])
+    }
     function changePage(change) {
       $("#tableItems").html('')
       pageNumber += change;
