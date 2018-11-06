@@ -151,6 +151,7 @@ table.center {
     font-size: 18px;
     line-height: 60px;
     background: #00000017;
+    cursor: default !important;
 }
 
 .sidebar-nav>.sidebar-brand a {
