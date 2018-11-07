@@ -17,7 +17,9 @@ function getAgency(agency) {
             break;
     }
 }
-
+function searchBy(elem){
+    $("#searchBy").html(elem.innerText + " ").append($("<span>", {class: "caret"}));
+}
 function sortProp(a, b) {
     console.log(a, b)
     if (a === null) {
