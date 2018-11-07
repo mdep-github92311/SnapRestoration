@@ -151,6 +151,7 @@ table.center {
     font-size: 18px;
     line-height: 60px;
     background: #00000017;
+    cursor: default !important;
 }
 
 .sidebar-nav>.sidebar-brand a {
@@ -188,4 +189,31 @@ table.center {
         position: relative;
         margin-right: 0;
     }
+}
+
+/* Table header sorting icons */
+th.sortable {
+  position: relative;
+  cursor: pointer;
+  padding-right: 40px !important;
+}
+
+th.sortable::after {
+  font-family: FontAwesome;
+  content: "\f0dc";
+  position: absolute;
+  right: 8px;
+  color: #999;
+}
+
+th.sortable.asc::after {
+  content: "\f0d8";
+}
+
+th.sortable.desc::after {
+  content: "\f0d7";
+}
+
+th.sortable:hover::after {
+  color: #333;
 }
