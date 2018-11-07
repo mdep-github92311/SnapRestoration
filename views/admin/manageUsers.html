@@ -45,7 +45,16 @@
         <div class="row">
           <div class="col-lg-8">
             <div class="input-group">
-              <input type="text" id="searchID" class="form-control" placeholder="Search by username...">
+              <div class="input-group-btn">
+                <button type="button" value="user_name" id="searchBy" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Username <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a onclick="searchBy(this,'user_name')">Username </a></li>
+                  <li><a onclick="searchBy(this,'first_name')">First Name </a></li>
+                  <li><a onclick="searchBy(this,'last_name')">Last Name </a></li>
+                  <li><a onclick="searchBy(this,'agency')">Agency </a></li>
+                </ul>
+              </div><!-- /btn-group -->
+              <input type="text" id="searchID" class="form-control" placeholder="Search by...">
               <span class="input-group-btn">	
                               <button id="searchButton" class="btn btn-default" type="button">Search</button>	
                             </span>
@@ -350,22 +359,38 @@
 
     getUsers();
     $("#tableItems").html('');
-
-    document.getElementById("searchButton").addEventListener("click", function() {
-      console.log($("#searchID").val());
+    $("#searchID").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#searchButton").click();
+        }
+    });
+    $("#searchButton").click(function() {
       if ($("#searchID").val() == '') {
         $("#tableItems").html('');
         writeTables(currRecords);
         return;
       }
-      $("#tableItems").html('<tr><td colspan=5>No records match that Username</td></tr>');
+      var searched = [];
+      var searchedValue = $("#searchID").val().toLowerCase();
+      var prop = $("#searchBy").val()
+      $("#tableItems").html('<tr><td colspan=5>No records match searched value</td></tr>');
       if (currRecords != null) {
         currRecords.forEach(function(feature) {
-          if (feature.user_name == $("#searchID").val()) {
-            $("#tableItems").html('');
-            writeTables(features);
+          if(feature[prop] != null) {
+            switch (prop) {
+              case 'agency':
+                if (getAgency(feature[prop]).toLowerCase() == searchedValue)
+                  searched.push(feature)
+                break;
+              default:
+                if (feature[prop].toLowerCase().indexOf(searchedValue) != -1)
+                  searched.push(feature);
+            }
           }
         });
+        $("#tableItems").html('');
+        pageNumber = 0;
+        writeTables(searched);
       }
     });
     var currUser = null;

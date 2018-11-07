@@ -79,10 +79,10 @@
               <div class="input-group-btn">
                 <button type="button" id="searchBy" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GID <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a onclick="searchBy(this)">GID </a></li>
-                  <li><a onclick="searchBy(this)">Agency </a></li>
-                  <li><a onclick="searchBy(this)">Region </a></li>
-                  <li><a onclick="searchBy(this)">Ecosystem </a></li>
+                  <li><a onclick="searchBy(this, 'gid')">GID </a></li>
+                  <li><a onclick="searchBy(this, 'agency')">Agency </a></li>
+                  <li><a onclick="searchBy(this, 'region')">Region </a></li>
+                  <li><a onclick="searchBy(this, 'ecosystem')">Ecosystem </a></li>
                 </ul>
               </div><!-- /btn-group -->
               <input type="text" id="searchID" class="form-control" placeholder="Search by...">
@@ -333,14 +333,14 @@
       }
       var searched = [];
       var searchedValue = $("#searchID").val().toLowerCase();
-      var prop = $("#searchBy")[0].childNodes[0].nodeValue.trim().toLowerCase()
+      var prop = $("#searchBy").val()
       $("#tableItems").html('<tr><td colspan=5>No records match that ID</td></tr>');
       if (currRecords[currFilter].features != null) {
         currRecords[currFilter].features.forEach(function(feature) {
           if(feature.properties[prop] != null) {
             switch (prop) {
               case 'agency':
-                if (getAgency(feature.properties[prop]).toLowerCase() == searchedValue.toLowerCase())
+                if (getAgency(feature.properties[prop]).toLowerCase() == searchedValue)
                   searched.push(feature)
                 break;
               case 'gid':
@@ -348,7 +348,7 @@
                   searched.push(feature)
                 break;
               default:
-                if (feature.properties[prop].toLowerCase().indexOf(searchedValue.toLowerCase()) != -1)
+                if (feature.properties[prop].toLowerCase().indexOf(searchedValue) != -1)
                   searched.push(feature);
             }
           }

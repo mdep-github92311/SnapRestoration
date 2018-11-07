@@ -17,8 +17,11 @@ function getAgency(agency) {
             break;
     }
 }
-function searchBy(elem){
-    $("#searchBy").html(elem.innerText + " ").append($("<span>", {class: "caret"}));
+function searchBy(elem, val){
+    console.log(elem)
+    console.log(val)
+    $("#searchBy").html(elem.innerText + " ").append($("<span>", {class: "caret"})).val(val);
+    
 }
 function sortProp(a, b) {
     console.log(a, b)
