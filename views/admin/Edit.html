@@ -159,6 +159,7 @@
     var currFilter = "barriers"
     mapMarkers = [];
     var currentData = [];
+    var shownRecords = null;
     //sets the type of form to be saved
     var formType = 'reg';
     var invalidated = false;
@@ -248,13 +249,13 @@
       });
     }
 
-    function writeTables(defs) {
+    function writeTables() {
       $("#tableItems").html('')
       var item = document.getElementById('tableItems');
       var count = 0;
       $("#pageNumber").html((pageNumber + 1) + "/" + (currRecords.overallCount > 0 ? Math.ceil(currRecords.overallCount / 10) : 1))
-      if (defs != null && defs.features != null)
-        defs.features.forEach(function(features) {
+      if (shownRecords != null && shownRecords.features != null)
+        shownRecords.features.forEach(function(features) {
           count++;
           if (count > (pageNumber + 1) * 10 || count - 1 < pageNumber * 10)
             return;
@@ -293,7 +294,8 @@
         $(filter.children()[0]).html($("<span>", { class: 'badge' }).html(defs.overallCount))
         currRecords = defs;
         currFilter = type;
-        writeTables(defs[currFilter]);
+        shownRecords = defs[currFilter];
+        writeTables();
       });
     }
     
@@ -328,7 +330,8 @@
     $("#searchButton").click(function() {
       if ($("#searchID").val() == '') {
         $("#tableItems").html('');
-        writeTables(currRecords[currFilter]);
+        shownRecords = currRecords[currFilter];
+        writeTables();
         return;
       }
       var searched = [];
@@ -355,7 +358,8 @@
         });
         $("#tableItems").html('');
         pageNumber = 0;
-        writeTables({ features: searched });
+        shownRecords = { features: searched };
+        writeTables();
       }
     });
 

@@ -149,7 +149,7 @@
         $(".desc").removeClass("desc");
         $(col).addClass("asc")
         currRecords.sort(function(a, b) {
-            switch (col.innerText) {
+            switch (col.innerText.trim()) {
                 case 'Agency':
                     return sortProp(getAgency(a.agency), getAgency(b.agency))
                 case 'First Name':

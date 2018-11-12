@@ -18,13 +18,10 @@ function getAgency(agency) {
     }
 }
 function searchBy(elem, val){
-    console.log(elem)
-    console.log(val)
     $("#searchBy").html(elem.innerText + " ").append($("<span>", {class: "caret"})).val(val);
     
 }
 function sortProp(a, b) {
-    console.log(a, b)
     if (a === null) {
         return 1;
     }
@@ -44,15 +41,15 @@ function sortProp(a, b) {
 
 function sortHeader(col) {
     if ($(col).hasClass("asc")) {
-        currRecords[currFilter].features.reverse();
+        shownRecords.features.reverse();
         $(col).removeClass("asc").addClass("desc")
     }
     else {
         $(".asc").removeClass("asc");
         $(".desc").removeClass("desc");
         $(col).addClass("asc")
-        currRecords[currFilter].features.sort(function(a, b) {
-            switch (col.innerText) {
+        shownRecords.features.sort(function(a, b) {
+            switch (col.innerText.trim()) {
                 case 'GID':
                     return sortProp(a.properties.gid, b.properties.gid);
                 case 'Agency':
@@ -65,7 +62,7 @@ function sortHeader(col) {
         })
     }
     pageNumber = 0;
-    writeTables(currRecords[currFilter])
+    writeTables(shownRecords)
 }
 
 function changePage(change) {
@@ -75,5 +72,5 @@ function changePage(change) {
         pageNumber = Math.ceil(currRecords.overallCount / 10) - 1;
     else if (pageNumber < 0)
         pageNumber = 0;
-    writeTables(currRecords[currFilter]);
+    writeTables(shownRecords);
 }
