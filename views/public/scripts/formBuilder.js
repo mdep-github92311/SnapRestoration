@@ -40,7 +40,7 @@ function formParts(part) {
                             selected = fsRegions;
                             break;
                         default:
-                            selected = null;
+                            selected = blmRegions.concat(npsRegions).concat(fsRegions).sort();
                     }
                     regions.html("");
                     $.each(selected, function(ind, val){
