@@ -1,6 +1,8 @@
 "use strict";
 
 function createForms(formNameAddition) {
+    if (!formNameAddition)
+        formNameAddition = '';
     var forms = $("<div>").append(formBuilder("restoPointForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'comments', 'primary_ob', 'secondary_', 'project_na', 'sqft_resto','gps_photo', 'photo_azim', 'previously', 'qa_qc' ]) )
                           .append(formBuilder("restoPolyForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'resto_code', 'resto_acti', 'te_action', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'acres_rest', 'kmqs_resto', 'gps_date', 'gps_photo', 'photo_azim', 'signed', 'deep_till', 'barrier_in', 'mulch', 'monitoring', 'previously', 'shape_area']) )
                           .append(formBuilder("restoLineForm" + formNameAddition, ['agency', 'region', 'ecosystem', 'gps_date', 'resto_code', 'resto_act', 'te_act', 'nonlists_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'signed', 'mulch', 'deep_till', 'barrier_in', 'miles_rest', 'km_resto', 'gps_photo', 'photo_azim', 'monitoring', 'previously', 'qa_qc']) )
