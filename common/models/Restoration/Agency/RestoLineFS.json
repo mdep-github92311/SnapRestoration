@@ -106,7 +106,7 @@
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "resto_act",
+        "columnName": "resto_acti",
         "dataType": "character varying",
         "dataLength": 50,
         "dataPrecision": null,
@@ -136,7 +136,7 @@
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "nonlists_a",
+        "columnName": "non_list_a",
         "dataType": "character varying",
         "dataLength": 5,
         "dataPrecision": null,

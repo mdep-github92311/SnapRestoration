@@ -224,7 +224,7 @@ $(document).ready(function () {
         db.barrierSub.toArray(function (test) {
           var num = 0;
           test.forEach(function(data){
-            tableContent.append("<tr><td>Barrier: "+data.properties.regions+"</td><td><button class='btn btn-default' id="+('barrID'+num)+">Edit</button></td></tr>");
+            tableContent.append("<tr><td>Barrier: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('barrID'+num)+">Edit</button></td></tr>");
             const index = num;
             $('#barrID'+num).click(function(){
               //console.log('Button ID: ' + (num));
@@ -345,7 +345,7 @@ $(document).ready(function () {
         db.distPolySub.toArray(function (test) {
           var num = 0;
           test.forEach(function(data){
-            tableContent.append("<tr><td>Disturbance Polygon: "+data.properties.regions+"</td><td><button class='btn btn-default' id="+('distPyID'+(num))+">Edit</button></td></tr>");
+            tableContent.append("<tr><td>Disturbance Polygon: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('distPyID'+(num))+">Edit</button></td></tr>");
             const index = num;
             
             $('#distPyID'+(num)).click(function(){

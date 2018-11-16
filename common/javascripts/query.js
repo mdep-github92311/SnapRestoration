@@ -270,7 +270,7 @@ exports.barrier_sub_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc) AS l) ) AS properties
     FROM barrier_sub AS lg) AS f) AS fc;`;
 
@@ -306,7 +306,7 @@ exports.dist_point_sub_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point_sub As lg) As f) As fc`;
 
 exports.dist_poly_sub_query =
@@ -321,9 +321,9 @@ exports.dist_poly_sub_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco) 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c) 
       As l)) As properties
     FROM dist_polygon_sub As lg) As f) As fc`;
 
@@ -339,9 +339,9 @@ exports.dist_poly_centroid_sub_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid_sub As lg) As f) As fc`;
     
@@ -373,7 +373,7 @@ exports.resto_line_sub_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
     FROM resto_line_sub As lg) As f) As fc`;
@@ -427,7 +427,7 @@ exports.barrier_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg) AS f) AS fc;`;
 
@@ -463,7 +463,7 @@ exports.dist_point_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point As lg) As f) As fc`;
 
 exports.dist_poly_query =
@@ -478,9 +478,9 @@ exports.dist_poly_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c,
       shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon As lg) As f) As fc`;
@@ -497,9 +497,9 @@ exports.dist_poly_centroid_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid As lg) As f) As fc`;
 
@@ -531,7 +531,7 @@ exports.resto_line_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
     FROM resto_line As lg) As f) As fc`;
@@ -718,7 +718,7 @@ exports.barrier_sub_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_stle, shape_leng) AS l) ) AS properties
     FROM barrier_sub AS lg) AS f) AS fc;`;
 
@@ -754,7 +754,7 @@ exports.dist_point_sub_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point_sub As lg) As f) As fc`;
 
 exports.dist_poly_sub_query =
@@ -769,9 +769,9 @@ exports.dist_poly_sub_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, shape_star, shape_stle, shape_leng, shape_area) 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, shape_star, shape_stle, shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon_sub As lg) As f) As fc`;
 
@@ -787,9 +787,9 @@ exports.dist_poly_centroid_sub_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid_sub As lg) As f) As fc`;
     
@@ -821,7 +821,7 @@ exports.resto_line_sub_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_stle, shape_leng) As l)) As properties
     FROM resto_line_sub As lg) As f) As fc`;
@@ -882,7 +882,7 @@ exports.resto_poly_centroid_sub_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg WHERE agency = 0) AS f) AS fc;`;
 
@@ -918,7 +918,7 @@ exports.dist_point_blm_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point As lg WHERE agency = 0) As f) As fc`;
 
 exports.dist_poly_blm_query =
@@ -933,9 +933,9 @@ exports.dist_poly_blm_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c,
       shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon As lg WHERE agency = 0) As f) As fc`;
@@ -952,9 +952,9 @@ exports.dist_poly_centroid_blm_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid As lg WHERE agency = 0) As f) As fc`;
 
@@ -986,7 +986,7 @@ exports.resto_line_blm_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
     FROM resto_line As lg WHERE agency = 0) As f) As fc`;
@@ -1045,7 +1045,7 @@ exports.resto_poly_centroid_blm_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg WHERE agency = 1) AS f) AS fc;`;
 
@@ -1081,7 +1081,7 @@ exports.dist_point_fs_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point As lg WHERE agency = 1) As f) As fc`;
 
 exports.dist_poly_fs_query =
@@ -1096,9 +1096,9 @@ exports.dist_poly_fs_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c,
       shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon As lg WHERE agency = 1) As f) As fc`;
@@ -1115,9 +1115,9 @@ exports.dist_poly_centroid_fs_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid As lg WHERE agency = 1) As f) As fc`;
 
@@ -1149,7 +1149,7 @@ exports.resto_line_fs_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
     FROM resto_line As lg WHERE agency = 1) As f) As fc`;
@@ -1208,7 +1208,7 @@ exports.resto_poly_centroid_fs_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg WHERE agency = 2) AS f) AS fc;`;
 
@@ -1244,7 +1244,7 @@ exports.dist_point_fws_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point As lg WHERE agency = 2) As f) As fc`;
 
 exports.dist_poly_fws_query =
@@ -1259,9 +1259,9 @@ exports.dist_poly_fws_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c,
       shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon As lg WHERE agency = 2) As f) As fc`;
@@ -1278,9 +1278,9 @@ exports.dist_poly_centroid_fws_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid As lg WHERE agency = 2) As f) As fc`;
 
@@ -1312,7 +1312,7 @@ exports.resto_line_fws_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
     FROM resto_line As lg WHERE agency = 2) As f) As fc`;
@@ -1371,7 +1371,7 @@ exports.resto_poly_centroid_fws_query =
       Row_to_json((SELECT
         l
     FROM (SELECT
-      gid, agency, regions AS region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
+      gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
     FROM barrier AS lg WHERE agency = 3) AS f) AS fc;`;
 
@@ -1407,7 +1407,7 @@ exports.dist_point_nps_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
-      gps_photo, soil_vulne, photo_azim, qa_qc, old_distco) As l)) As properties
+      gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
     FROM dist_point As lg WHERE agency = 3) As f) As fc`;
 
 exports.dist_poly_nps_query =
@@ -1422,9 +1422,9 @@ exports.dist_poly_nps_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco,
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c,
       shape_leng, shape_area) 
       As l)) As properties
     FROM dist_polygon As lg WHERE agency = 3) As f) As fc`;
@@ -1441,9 +1441,9 @@ exports.dist_poly_centroid_nps_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, regions AS region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
-      undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
-      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, 
+      gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, site_stabi, dist_crust, 
+      undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
+      kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
     FROM dist_poly_centroid As lg WHERE agency = 3) As f) As fc`;
 
@@ -1475,7 +1475,7 @@ exports.resto_line_nps_query =
       row_to_json((SELECT 
         l 
     FROM (SELECT 
-      gid, agency, region, ecosystem, gps_date, resto_code, resto_act, te_act, nonlists_a, comments, primary_ob, 
+      gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
     FROM resto_line As lg WHERE agency = 3) As f) As fc`;

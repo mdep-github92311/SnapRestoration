@@ -191,8 +191,8 @@ module.exports = function (app) {
             }
             console.log(restoLineArray);
 
-            db.none(`INSERT INTO resto_line_sub (agency, region, ecosystem, gps_date, resto_code, resto_act, te_act,
-      nonlists_a, comments, primary_ob, secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in,
+            db.none(`INSERT INTO resto_line_sub (agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act,
+      non_list_a, comments, primary_ob, secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in,
       miles_rest, km_resto, gps_photo, photo_azim, monitoring, previously, qa_qc, shape_leng, geom) VALUES $1`
                 + restoLineUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($26)))`, restoLineArray))
@@ -214,7 +214,7 @@ module.exports = function (app) {
             // restoLineSub.push(parseInt(req.body[k])); } else if (k === 'miles_restRL' || k === 'km_restoRL' || k ===
             // 'shape_stleRL' || k === 'shape_lengRL') { restoLineSub.push(parseFloat(req.body[k])); } else {
             // restoLineSub.push(req.body[k]); } } db.none('INSERT INTO resto_line_sub (agency, region, ecosystem,
-            // gps_date, resto_code, resto_act,' + ' te_act, nonlists_a, comments, primary_ob, secondary_, project_na,
+            // gps_date, resto_code, resto_acti,' + ' te_act, non_list_a, comments, primary_ob, secondary_, project_na,
             // treatment_, signed, mulch,' + ' deep_till, barrier_in, miles_rest, km_resto, gps_photo, photo_azim,
             // monitoring, previously, qa_qc,' + ' shape_stle, shape_leng) ' + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
             // $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21,' + ' $22, $23, $24, $25, $26, $27);',
@@ -235,7 +235,7 @@ module.exports = function (app) {
                 barrierArray.push(barrierProperties)
             }
             // console.log(barrierArray)
-            db.none(`INSERT INTO barrier_sub (agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
+            db.none(`INSERT INTO barrier_sub (agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
            shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
            $11, $12, $13, $14, $15, $16, $17, $18, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($19)))`, barrierArray))
@@ -268,7 +268,7 @@ module.exports = function (app) {
 
             db.none(`INSERT INTO dist_point_sub (agency, region, ecosystem, gps_date, dist_code, use_freq, use_recent,
       dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
-      cultural, t_e_specie, gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
+      cultural, t_e_specie, gps_photo, soil_vulne, dist_use, photo_azim, qa_qc, old_dist_c, geom) VALUES $1` +
                 distPointUpSert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, ST_Force2D(ST_GeomFromGeoJSON($26))`, distPointArray))
                 .then(function () {
@@ -300,7 +300,7 @@ module.exports = function (app) {
             //       db.none('INSERT INTO dist_point_sub (agency, region, ecosystem, gps_date, dist_code, use_freq,' +
             //         ' use_recent, dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously,' +
             //         ' project_na, estimate_s, treated, cultural, t_e_specie, gps_photo, soil_vulne, dist_use, photo_azim,' +
-            //         ' qa_qc, old_distco) ' +
+            //         ' qa_qc, old_dist_c) ' +
             //         'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21,' +
             //         ' $22, $23, $24, $25, $26);', distPointSub)
             //         .then(function () {
@@ -329,10 +329,10 @@ module.exports = function (app) {
                 distPolyArrary.push(distPolyProp)
             }
 
-            db.none(`INSERT INTO dist_polygon_sub (agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
-      use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
+            db.none(`INSERT INTO dist_polygon_sub (agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq,
+      use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments,
       primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
-      photo_azim, qa_qc, old_distco, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
+      photo_azim, qa_qc, old_dist_c, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
                 Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($33)))`,
                     distPolyArrary))
@@ -358,10 +358,10 @@ module.exports = function (app) {
             //           distPolySub.push(parseInt(req.body[k]));
             //         } else if (k === 'acres_restDBPY' || k === 'kmsq_restoDBPY' || k === 'shape_starDBPY' || k ===
             // 'shape_stleDBPY' || k === 'shape_lengDBPY' || k === 'shape_areaDBPY') { distPolySub.push(parseFloat(req.body[k])); }
-            // else { distPolySub.push(req.body[k]); } } db.none('INSERT INTO dist_polygon_sub (agency, regions, ecosystem,
+            // else { distPolySub.push(req.body[k]); } } db.none('INSERT INTO dist_polygon_sub (agency, region, ecosystem,
             // gps_date, dist_code, dist_use,' + ' use_freq, use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_,
-            // plant_dama, assessibil,' + ' visibility, comments, primary_ob, secondary_, acres_rest, kmsq_resto, treated,
-            // dist_sever, cultural,' + ' t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_distco, shape_star, shape_stle,
+            // plant_dama, accessibil,' + ' visibility, comments, primary_ob, secondary_, acres_rest, kmsq_resto, treated,
+            // dist_sever, cultural,' + ' t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, shape_star, shape_stle,
             // shape_leng,' + ' shape_area) ' + 'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
             // $17, $18, $19, $20, $21,' + ' $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35);', distPolySub)
             // .then(function () { console.log('dist poly form submitted'); res.status(200) .json({ status: 'success', message:
@@ -517,8 +517,8 @@ module.exports = function (app) {
             const restoLineUpdate = req.body;
 
             db.none(`UPDATE resto_line_sub
-      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_act = $7, te_act = $8,
-      nonlists_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_acti = $7, te_act = $8,
+      non_list_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
       miles_rest = $19, km_resto = $20, gps_photo = $21, photo_azim = $22, monitoring = $23, previously = $24, qa_qc = $25, shape_stle = $26, shape_leng = $27
       WHERE gid = $1 `, restoLineUpdate)
                 .then(function () {
@@ -541,7 +541,7 @@ module.exports = function (app) {
             const barrierUpdate = req.body;
 
             db.none(`UPDATE barrier_sub
-      SET agency = $2:name, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
+      SET agency = $2:name, region = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, qa_qc = $18,
            shape_stle = $19, shape_leng = $20
       WHERE gid = $1:name`, barrierUpdate)
@@ -565,7 +565,7 @@ module.exports = function (app) {
             db.none(`UPDATE dist_point_sub
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $21, dist_use = $6, use_freq = $7, use_recent = $8,
         dist_pt_ty = $9, accessibil = $10, visibility = $11, comments = $12, primary_ob = $13, secondary_ = $14, previously = $15, project_na = $16, estimate_s = $17, treated = $18, 
-        cultural = $19, t_e_specie = $20, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+        cultural = $19, t_e_specie = $20, gps_photo = $22, soil_vulne = $23, photo_azim = $24, qa_qc = $25, old_dist_c = $26
       WHERE gid = $1 `, distPointUpdate)
                 .then(function () {
                     console.log('dist point updated');
@@ -584,10 +584,10 @@ module.exports = function (app) {
             const distPolyUpdate = req.body;
 
             db.none(`UPDATE dist_polygon_sub
-      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
-        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, assessibil = $16, visibility = $17, comments = $18,
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
+        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, accessibil = $16, visibility = $17, comments = $18,
         primary_ob = $19, secondary_ = $20, acres_rest = $21, kmsq_resto = $22, treated = $23, dist_sever = $24, cultural = $25, t_e_specie = $26, gps_photo = $27, site_vulne = $28,
-        photo_azim = $29, qa_qc = $30, old_distco = $31, shape_star = $32, shape_stle = $33, shape_leng = $34, shape_area = $35
+        photo_azim = $29, qa_qc = $30, old_dist_c = $31, shape_star = $32, shape_stle = $33, shape_leng = $34, shape_area = $35
       WHERE gid = $1 `, distPolyUpdate)
                 .then(function () {
                     console.log('dist polygon updated');
@@ -675,8 +675,8 @@ module.exports = function (app) {
             const restoLineUpdate = req.body;
 
             db.none(`UPDATE resto_line
-      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_act = $7, te_act = $8,
-      nonlists_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, resto_code = $6, resto_acti = $7, te_act = $8,
+      non_list_a = $9, comments = $10, primary_ob = $11, secondary_ = $12, project_na = $13, treatment_ = $14, signed = $15, mulch = $16, deep_till = $17, barrier_in = $18,
       miles_rest = $19, km_resto = $20, gps_photo = $21, photo_azim = $22, monitoring = $23, previously = $24, qa_qc = $25
       WHERE gid = $1 `, restoLineUpdate)
                 .then(function () {
@@ -699,7 +699,7 @@ module.exports = function (app) {
             const barrierUpdate = req.body;
 
             db.none(`UPDATE barrier
-      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, 
            qa_qc = $18
       WHERE gid = $1 `, barrierUpdate)
@@ -724,7 +724,7 @@ module.exports = function (app) {
             db.none(`UPDATE dist_point
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8, use_recent = $9,
         dist_pt_ty = $10, accessibil = $11, visibility = $12, comments = $13, primary_ob = $14, secondary_ = $15, previously = $16, project_na = $17, estimate_s = $18, 
-        treated = $19, cultural = $20, t_e_specie = $21, soil_vulne = $22, gps_photo = $23, photo_azim = $24, qa_qc = $25, old_distco = $26
+        treated = $19, cultural = $20, t_e_specie = $21, soil_vulne = $22, gps_photo = $23, photo_azim = $24, qa_qc = $25, old_dist_c = $26
       WHERE gid = $1 `, distPointUpdate)
                 .then(function () {
                     console.log('dist point updated');
@@ -743,10 +743,10 @@ module.exports = function (app) {
             const distPolyUpdate = req.body;
 
             db.none(`UPDATE dist_polygon
-      SET agency = $2, regions = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
-        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, assessibil = $16, visibility = $17, comments = $18,
+      SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, dist_code = $6, dist_use = $7, use_freq = $8,
+        use_recent = $9, site_stabi = $10, dist_crust = $11, undist_cru = $12, depth = $13, dist_poly_ = $14, plant_dama = $15, accessibil = $16, visibility = $17, comments = $18,
         primary_ob = $19, secondary_ = $20, acres_rest = $21, kmsq_resto = $22, treated = $23, dist_sever = $24, cultural = $25, t_e_specie = $26, gps_photo = $27, site_vulne = $28,
-        photo_azim = $29, qa_qc = $30, old_distco = $31, shape_area = $34
+        photo_azim = $29, qa_qc = $30, old_dist_c = $31, shape_area = $34
       WHERE gid = $1 `, distPolyUpdate)
                 .then(function () {
                     console.log('dist polygon updated');
@@ -892,8 +892,8 @@ module.exports = function (app) {
             restoLineArray.push(restoLineProp);
 
 
-            db.none(`INSERT INTO resto_line (agency, region, ecosystem, gps_date, resto_code, resto_act, te_act,
-      nonlists_a, comments, primary_ob, secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in,
+            db.none(`INSERT INTO resto_line (agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act,
+      non_list_a, comments, primary_ob, secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in,
       miles_rest, km_resto, gps_photo, photo_azim, monitoring, previously, qa_qc, shape_leng, geom) VALUES $1`
                 + restoLineUpSert, Inserts(`$2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, $27, ST_Force2D(ST_GeomFromGeoJSON($28))`, restoLineArray))
@@ -936,7 +936,7 @@ module.exports = function (app) {
             barrierProperties.push(barrierIndexedDB.geometry);
             barrierArray.push(barrierProperties)
             // console.log(barrierArray);
-            db.none(`INSERT INTO barrier (agency, regions, ecosystem, gps_date, barr_code, barr_actio, barr_type,
+            db.none(`INSERT INTO barrier (agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
            shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$2, $3, $4, $5, $6, $7, $8, $9, $10,
            $11, $12, $13, $14, $15, $16, $17, $18, $20, ST_Force2D(ST_GeomFromGeoJSON($21))`, barrierArray))
@@ -979,7 +979,7 @@ module.exports = function (app) {
             console.log(distPointProp);
             db.none(`INSERT INTO dist_point (agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent,
       dist_pt_ty, accessibil, visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated,
-      cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_distco, geom) VALUES $1` +
+      cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, geom) VALUES $1` +
                 distPointUpSert, Inserts(`$2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, $26, ST_Force2D(ST_GeomFromGeoJSON($27))`, distPointArray))
                 .then(function () {
@@ -1018,10 +1018,10 @@ module.exports = function (app) {
             distPolyProp.push(distPolyIndexedDB.geometry);
             distPolyArrary.push(distPolyProp)
 
-            db.none(`INSERT INTO dist_polygon (agency, regions, ecosystem, gps_date, dist_code, dist_use, use_freq,
-      use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, assessibil, visibility, comments,
+            db.none(`INSERT INTO dist_polygon (agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq,
+      use_recent, site_stabi, dist_crust, undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments,
       primary_ob, secondary_, acres_rest, kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne,
-      photo_azim, qa_qc, old_distco, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
+      photo_azim, qa_qc, old_dist_c, shape_leng, shape_area, geom) VALUES $1` + distPolyUpSert,
                 Inserts(`$2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19,
         $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $34, $35, ST_Force2D(ST_GeomFromGeoJSON($36))`,
                     distPolyArrary))
