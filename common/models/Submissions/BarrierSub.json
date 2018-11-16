@@ -39,14 +39,14 @@
         "nullable": "YES"
       }
     },
-    "regions": {
+    "region": {
       "type": "String",
       "required": false,
       "length": 30,
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "regions",
+        "columnName": "region",
         "dataType": "character varying",
         "dataLength": 30,
         "dataPrecision": null,

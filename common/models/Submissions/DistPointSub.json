@@ -390,7 +390,7 @@
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "old_distco",
+        "columnName": "old_dist_c",
         "dataType": "character varying",
         "dataLength": 50,
         "dataPrecision": null,

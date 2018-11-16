@@ -39,14 +39,14 @@
         "nullable": "YES"
       }
     },
-    "regions": {
+    "region": {
       "type": "String",
       "required": false,
       "length": 30,
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "regions",
+        "columnName": "region",
         "dataType": "character varying",
         "dataLength": 30,
         "dataPrecision": null,
@@ -234,14 +234,14 @@
         "nullable": "YES"
       }
     },
-    "assessibil": {
+    "accessibil": {
       "type": "String",
       "required": false,
       "length": 10,
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "assessibil",
+        "columnName": "accessibil",
         "dataType": "character varying",
         "dataLength": 10,
         "dataPrecision": null,
@@ -466,7 +466,7 @@
       "precision": null,
       "scale": null,
       "postgresql": {
-        "columnName": "old_distco",
+        "columnName": "old_dist_c",
         "dataType": "character varying",
         "dataLength": 50,
         "dataPrecision": null,
