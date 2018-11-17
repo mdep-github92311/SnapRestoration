@@ -34,6 +34,8 @@ $(document).ready(function () {
       agencyID = 'FS';
     else if (e.currentTarget.value == 3)
       agencyID = 'FWS';
+    else
+      agencyID = null;
     var newDate = new Date();
     var newDay = ("0" + newDate.getDate()).slice(-2);
     var newMonth = ("0" + (newDate.getMonth() + 1)).slice(-2);

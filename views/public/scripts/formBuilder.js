@@ -19,36 +19,48 @@ function formBuilder(formName, parts) {
     form.append($("<input>", {type:"submit", class:"btn btn-primary", value: "Submit"}))
     return form;
 }
-
+function getRegions(val){
+    const blmRegions = ['','Amargosa Desert E','Amargosa Desert W','Black Mt Area','California Wash','Colorado Valley','Coyote Springs Valley','Crater Flat','Eldorado Valley','Forty-mile Canyon','Frenchman Flat','Garnet Valley','Gold Butte Area','Greasewood Basin','Hidden Valley N','Hidden Valley S','Indian Springs Valley N','Indian Springs Valley S','Ivanpah N','Ivanpah S','Jean Lake Valley','Las Vegas Valley','Meadow Valley Wash Lower','Meadow Valley Wash Upper','Mercury Valley','Mesquite Valley','Moapa Valley','Muddy River Springs Area','Pahrump Valley','Piute Valley','Rock Valley','Three Lakes Valley N','Three Lakes Valley S','Tikapoo Valley','Virgin River Valley'];
+    const fsRegions = ['','Cold Creek','Kyle Canyon','Lee Canyon','Lovell','Potosi','Stirling','Wheeler','Clark/Wallace Canyon','Trout/Carpenter Canyon'];
+    const npsRegions = ['','Boulder City','Callville Bay','Cottonwood Cove','Echo Bay','Gold Butte','Government Wash','Katherine','Lakeshore','Overton Beach','Parashant','Pearce Ferry','Temple Bar','Willow Beach'];
+    const fwsRegions = ['','Ash Meadows','Desert Clark','Desert Lincoln','Moapa Valley','Pahranagat'];
+    var selected = null;
+    switch (val){
+        case '0': 
+            selected = blmRegions;
+            break;
+        case '1':
+            selected = npsRegions;
+            break;
+        case '2':
+            selected = fsRegions;
+            break;
+        case '3':
+            selected = fwsRegions;
+            break;
+        default:
+            selected = blmRegions.concat(npsRegions).concat(fsRegions).concat(fwsRegions).sort();
+            selected = selected.filter(function(item, pos) {
+                return selected.indexOf(item) == pos;
+            })
+    }
+    return selected;
+}
 function formParts(part) {
     switch (part) {
         case 'agency':
             var span = $("<span>");
-            var regions = $("<select>", {class: "form-control", name: "region"}).append($("<option>", {value: null}).text("select an agency")).data({changeRegions: function(val){
-                    var blmRegions = ['Amargosa Desert E','Amargosa Desert W','Black Mt Area','California Wash','Colorado Valley','Coyote Springs Valley','Crater Flat','Eldorado Valley','Forty-mile Canyon','Frenchman Flat','Garnet Valley','Gold Butte Area','Greasewood Basin','Hidden Valley N','Hidden Valley S','Indian Springs Valley N','Indian Springs Valley S','Ivanpah N','Ivanpah S','Jean Lake Valley','Las Vegas Valley','Meadow Valley Wash Upper','Meadow Valley Wash Lower','Mercury Valley','Mesquite Valley','Moapa Valley','Muddy River Springs Area','Pahrump Valley','Piute Valley','Rock Valley','Three Lakes Valley N','Three Lakes Valley S','Tikapoo Valley','Virgin River Valley'];
-                    var fsRegions = ['Carpenter Canyon','Charleston Wilderness','Clark Canyon','Cold Creek','Kyle Canyon','LaMadre Wilderness','Lee Canyon','Lovell','Potosi','Rainbow Wilderness','Stirling','Trout Canyon','Wallace Canyon','Wheeler'];
-                    var npsRegions = ['Great Basin National Park','Tule Springs Fossil Beds National Monument','Lake Mead National Recreation Area'];
-                    var selected = null;
-                    switch (val){
-                        case '0': 
-                            selected = blmRegions;
-                            break;
-                        case '1':
-                            selected = npsRegions;
-                            break;
-                        case '2':
-                            selected = fsRegions;
-                            break;
-                        default:
-                            selected = blmRegions.concat(npsRegions).concat(fsRegions).sort();
-                    }
+            var regions = $("<select>", {class: "form-control", name: "region"}).data({changeRegions: function(val){
                     regions.html("");
-                    $.each(selected, function(ind, val){
+                    $.each(getRegions(val), function(ind, val){
                         regions.append($("<option>", {value: val}).text(val));
                     });
                 }
             });
-            var agency = $("<select>", {class: 'form-control', name: 'agency'}).append($("<option>").text(""))
+            $.each(getRegions(null), function(ind, val){
+                regions.append($("<option>", {value: val}).text(val));
+            });
+            var agency = $("<select>", {class: 'form-control', name: 'agency', required: 'required'}).append($("<option>", {value:-1}).text(""))
                                                                                .append($("<option>", {value:0}).text("BLM"))
                                                                                .append($("<option>", {value:1}).text("NPS"))
                                                                                .append($("<option>", {value:2}).text("FS"))
@@ -90,7 +102,7 @@ function formParts(part) {
             return $("<label>", {for: "comments"}).text("Comments: ").append($("<input>", {class: "form-control", name:"comments", type:"text"}))
             break;
         case 'cultural':
-            return $("<label>", {for:"cultural"}).text("Are cultural resources impacted?: ").append($("<select>", {class:"form-control", name:"cultural"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            return $("<label>", {for:"cultural"}).text("Are cultural resources impacted?: ").append($("<select>", {class:"form-control", name:"cultural", required: 'required'}).append($("<option>", {value: "Yes", selected: "selected"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'deep_till':
             return $("<label>", {for:"deep_till"}).text("Deep Tillage: ").append($("<select>", {class:"form-control", name:"deep_till"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")).append($("<option>", {value: "N/A"}).text("N/A")))
@@ -99,7 +111,7 @@ function formParts(part) {
             return $("<label>", {for:"depth"}).text("Depth: ").append($("<select>", {class:"form-control", name:"depth"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: '1 - Broken < 2"'}).text('1 - Broken < 2"')).append($("<option>", {value: '2 - Rut 2" - 4"'}).text('2 - Rut 2" - 4"')).append($("<option>", {value: '3 - Rut 4" - 8"'}).text('3 - Rut 4" - 8"')).append($("<option>", {value: '4 - Rut > 8"'}).text('4 - Rut > 8"')))
             break;
         case 'dist_code':
-            return $("<label>", {for: "dist_code"}).text("Disturbance Code: ").append($("<input>", {class: "form-control", name:"dist_code", type:"text"}))
+            return $("<label>", {for: "dist_code"}).text("Disturbance Code: ").append($("<input>", {class: "form-control", name:"dist_code", type:"text", required: 'required'}))
             break;
         case 'dist_crust':
             return $("<label>", {for:"dist_crust"}).text("Disturbed Soil Crust: ").append($("<select>", {class:"form-control", name:"dist_crust"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "0 - No Crust"}).text("0 - No Crust")).append($("<option>", {value: "1 - Alkali"}).text("1 - Alkali")).append($("<option>", {value: "2 - Cyano-patchy"}).text("2 - Cyano-patchy")).append($("<option>", {value: "3 - Cyano-continuous"}).text("3 - Cyano-continuous")).append($("<option>", {value: "4 - Lichen-patchy"}).text("4 - Lichen-patchy")).append($("<option>", {value: "5 - Lichen-continuous"}).text("5 - Lichen-continuous")))
@@ -130,10 +142,10 @@ function formParts(part) {
             var day = ("0" + now.getDate()).slice(-2);
             var month = ("0" + (now.getMonth() + 1)).slice(-2);
             var today = now.getFullYear()+"-"+(month)+"-"+(day);
-            return $("<label>", {for: "gps_date"}).text("Date Collected: ").append($("<input>", {class: "form-control", name:"gps_date", type:"date", value: today}))
+            return $("<label>", {for: "gps_date"}).text("Date Collected: ").append($("<input>", {class: "form-control", name:"gps_date", type:"date", value: today, required: 'required'}))
             break;
         case 'gps_photo':
-            return $("<label>", {for:"gps_photo"}).text("Is there a GPS tagged photo? ").append($("<select>", {class:"form-control", name:"gps_photo"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"})))
+            return $("<label>", {for:"gps_photo"}).text("Is there a GPS tagged photo? ").append($("<select>", {class:"form-control", name:"gps_photo"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'km_dist':
             return $("<label>", {for: "km_dist"}).text("Km Disturbed: ").append($("<input>", {class: "form-control", name:"km_dist", type:"text"}))
@@ -181,7 +193,7 @@ function formParts(part) {
             return $("<label>", {for:"previously"}).text("Previously Restored: ").append($("<select>", {class:"form-control", name:"previously"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")).append($("<option>", {value: "Unknown"}).text("Unknown")))
             break;
         case 'primary_ob':
-            return $("<label>", {for: "primary_ob"}).text("Who collected the data? ").append($("<input>", {class: "form-control", name:"primary_ob", type:"text"}))
+            return $("<label>", {for: "primary_ob"}).text("Who collected the data? ").append($("<input>", {class: "form-control", name:"primary_ob", type:"text", required: 'required'}))
             break;
         case 'project_na':
             return $("<label>", {for: "project_na"}).text("Project Name: ").append($("<input>", {class: "form-control", name:"project_na", type:"text"}))
@@ -204,7 +216,7 @@ function formParts(part) {
             return $("<label>", {for:"resto_acti"}).text("Restoration Activity: ").append($("<select>", {class:"form-control", name:"resto_acti"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Fire Ring Removal"}).text("Fire Ring Removal")).append($("<option>", {value: "Graffiti Removal"}).text("Graffiti Removal")).append($("<option>", {value: "Garbage Removal"}).text("Garbage Removal")).append($("<option>", {value: "Outplanting"}).text("Outplanting")).append($("<option>", {value: "Transplanting"}).text("Transplanting")).append($("<option>", {value: "*Other - See Comments"}).text("*Other - See Comments")))
             break;
         case 'resto_code':
-            return $("<label>", {for: "resto_code"}).text("Restoration Code: ").append($("<input>", {class: "form-control", name:"resto_code", type:"text"}))
+            return $("<label>", {for: "resto_code"}).text("Restoration Code: ").append($("<input>", {class: "form-control", name:"resto_code", type:"text", required: 'required'}))
             break;
         case 'secondary_':
             return $("<label>", {for: "secondary_"}).text("Who was with you? ").append($("<input>", {class: "form-control", name:"secondary_", type:"text"}))
@@ -231,7 +243,7 @@ function formParts(part) {
             return $("<label>", {for:"soil_vulne"}).text("Soil Vulnerability: ").append($("<select>", {class:"form-control", name:"soil_vulne"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Low"}).text("Low")).append($("<option>", {value: "Low/ Medium"}).text("Low/ Medium")).append($("<option>", {value: "Medium"}).text("Medium")).append($("<option>", {value: "Medium/ High"}).text("Medium/ High")).append($("<option>", {value: "High"}).text("High")).append($("<option>", {value: "Not Characterized"}).text("Not Characterized")))
             break;
         case 't_e_specie':
-            return $("<label>", {for:"t_e_specie"}).text('Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) ').append($("<select>", {class:"form-control", name:"t_e_specie"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            return $("<label>", {for:"t_e_specie"}).text('Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments)').append($("<select>", {class:"form-control", name:"t_e_specie", required: 'required'}).append($("<option>", {value: "Yes", selected: "selected"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'te_act':
             return $("<label>", {for:"te_act"}).text("Threatened or Endangered Species Activity: ").append($("<select>", {class:"form-control", name:"te_act"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")).append($("<option>", {value: "N/A"}).text("N/A*")))
