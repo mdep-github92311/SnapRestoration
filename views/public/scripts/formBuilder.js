@@ -102,7 +102,7 @@ function formParts(part) {
             return $("<label>", {for: "comments"}).text("Comments: ").append($("<input>", {class: "form-control", name:"comments", type:"text"}))
             break;
         case 'cultural':
-            return $("<label>", {for:"cultural"}).text("Are cultural resources impacted?: ").append($("<select>", {class:"form-control", name:"cultural", required: 'required'}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            return $("<label>", {for:"cultural"}).text("Are cultural resources impacted?: ").append($("<select>", {class:"form-control", name:"cultural", required: 'required'}).append($("<option>", {value: "Yes", selected: "selected"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'deep_till':
             return $("<label>", {for:"deep_till"}).text("Deep Tillage: ").append($("<select>", {class:"form-control", name:"deep_till"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")).append($("<option>", {value: "N/A"}).text("N/A")))
@@ -243,13 +243,13 @@ function formParts(part) {
             return $("<label>", {for:"soil_vulne"}).text("Soil Vulnerability: ").append($("<select>", {class:"form-control", name:"soil_vulne"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Low"}).text("Low")).append($("<option>", {value: "Low/ Medium"}).text("Low/ Medium")).append($("<option>", {value: "Medium"}).text("Medium")).append($("<option>", {value: "Medium/ High"}).text("Medium/ High")).append($("<option>", {value: "High"}).text("High")).append($("<option>", {value: "Not Characterized"}).text("Not Characterized")))
             break;
         case 't_e_specie':
-            return $("<label>", {for:"t_e_specie"}).text('Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments) ').append($("<select>", {class:"form-control", name:"t_e_specie"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            return $("<label>", {for:"t_e_specie"}).text('Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments)').append($("<select>", {class:"form-control", name:"t_e_specie", required: 'required'}).append($("<option>", {value: "Yes", selected: "selected"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'te_act':
             return $("<label>", {for:"te_act"}).text("Threatened or Endangered Species Activity: ").append($("<select>", {class:"form-control", name:"te_act"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")).append($("<option>", {value: "N/A"}).text("N/A*")))
             break;
         case 'te_action':
-            return $("<label>", {for:"te_action"}).text("T&E Species: ").append($("<select>", {class:"form-control", name:"te_action", required: 'required'}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            return $("<label>", {for:"te_action"}).text("T&E Species: ").append($("<select>", {class:"form-control", name:"te_action"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'treated':
             return $("<label>", {for:"treated"}).text("Was the disturbance treated? ").append($("<select>", {class:"form-control", name:"treated"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No*")))
