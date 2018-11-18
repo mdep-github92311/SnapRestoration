@@ -432,6 +432,14 @@ function fsRegion(feature) {
     return { color: "#54ff01" };
 }
 
+function fwsRegion(feature) {
+    return { color: "#005de8" };
+}
+
+function npsRegion(feature) {
+    return { color: "#8600ac" };
+}
+
 function mdep_i(feature) {
     return { color: "#377eb8" };
 }

@@ -36,13 +36,14 @@ const dbCache = new Dexie('CachedData');
 dbCache.version(1).stores({
     blmRegion: 'properties.gid, type, geometry',
     fsRegion: 'properties.gid, type, geometry',
+    fwsRegion: 'properties.gid, type, geometry',
+    npsRegion: 'properties.gid, type, geometry',
     mdepBound: 'properties.gid, type, geometry',
     mdiBound: 'properties.gid, type, geometry',
     nvCounties: 'properties.gid, type, geometry',
     roads: 'properties.gid, type, geometry',
     soilVuln: 'properties.gid, type, geometry',
-    snapExtent: 'properties.gid, type, geometry',
-    desertComplex: 'properties.gid, type, geometry'
+    snapExtent: 'properties.gid, type, geometry'
 });
 dbCache.open().then(function (db) {
     console.log('Opened CachedData DB');
@@ -171,7 +172,7 @@ async function createLayer(data, layerName) {
 
                 break;
 
-            case 'BLM':
+            case 'BLM Regions':
                 if (data.type == null) {
                     data = data;
                 }
@@ -200,6 +201,29 @@ async function createLayer(data, layerName) {
                 console.log(`added ${layerName} Unselected`);
 
                 break;
+                
+            case 'FWS Regions':
+                if (data.type == null) {
+                    data = data;
+                }
+                const fwsRegions = await L.geoJson(data, {
+                    pane: 'Regions',
+                    style: fwsRegion
+                }).addTo(map);
+
+                control.addOverlay(fwsRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                console.log(`added ${layerName} Unselected`);
+
+                break;
+            
+            case 'NPS Regions':
+                if (data.type == null) {
+                    data = data;
+                }
+                const npsRegions = await L.geoJson(data, {
+                    pane: 'Regions',
+                    style: npsRegion
+                }).addTo(map);
 
             case 'Nevada Counties':
                 if (data.type == null) {
@@ -274,20 +298,6 @@ async function createLayer(data, layerName) {
                 }).addTo(map);
 
                 control.addOverlay(snapExtent, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
-                console.log(`added ${layerName} Unselected`);
-
-                break;
-
-            case 'Refuges Desert Complex':
-                if (data.type == null) {
-                    data = data;
-                }
-                const desertComplex = await L.geoJson(data, {
-                    pane: 'Misc',
-                    style: desert_complex
-                }).addTo(map);
-
-                control.addOverlay(desertComplex, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                 console.log(`added ${layerName} Unselected`);
 
                 break;
@@ -375,7 +385,7 @@ async function getLayers() {
 
             await $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
                 createLayer(data[0].row_to_json, 'Disturbance Polygon');
-                count += 15;
+                count += 10;
             }),
 
             $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
@@ -402,70 +412,17 @@ async function getLayers() {
                 createLayer(data[0].row_to_json, 'Restoration Poly Cent');
                 count += 5;
             }),
-
-            dbCache.snapExtent.count(function (records) {
-                if (records > 0) {
-                    dbCache.snapExtent.toArray(function (data) {
-                        createLayer(data, 'Snap Extent');
-                        count += 5;
-                    });
-                    console.log("cached snapExtent loaded");
-                }
-                else {
-                    $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
-                        createLayer(data, 'Snap Extent');
-                        dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching snapExtent");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some snapExtent did not succeed. However, " +
-                                100000 - e.failures.length + " snapExtent was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
-                            console.log(JSON.stringify(jqXHR));
-                        })
-                }
-            }),
-            dbCache.desertComplex.count(function (records) {
-                if (records > 0) {
-                    dbCache.snapExtent.toArray(function (data) {
-                        createLayer(data, 'Refuges Desert Complex');
-                        count += 5;
-                    });
-                    console.log("cached Refuges Desert Complex loaded");
-                }
-                else {
-                    $.getJSON(baseUrl + '/public/geoJSON/desertComplex.json', function (data) {
-                        createLayer(data, 'Refuges Desert Complex');
-                        dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching Refuges Desert Complex");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some desertComplex did not succeed. However, " +
-                                100000 - e.failures.length + " desertComplex was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
-                            console.log(JSON.stringify(jqXHR));
-                        })
-                }
-            }),
             dbCache.blmRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.blmRegion.toArray(function (data) {
-                        createLayer(data, 'BLM');
+                        createLayer(data, 'BLM Regions');
                         count += 5;
                     });
                     console.log("cached blmRegion loaded");
                 }
                 else {
                     $.getJSON(baseUrl + '/public/geoJSON/blmRegions.json', function (data) {
-                        createLayer(data, 'BLM');
+                        createLayer(data, 'BLM Regions');
                         dbCache.blmRegion.bulkAdd(data.features).then(function (lastKey) {
                             console.log("Done caching BLM");
                         }).catch(Dexie.BulkError, function (e) {
@@ -500,6 +457,58 @@ async function getLayers() {
                             // additions commit despite that there were errors.
                             console.error("Some FS Regions did not succeed. However, " +
                                 100000 - e.failures.length + " FS Regions was added successfully");
+                        });
+                        count += 5;
+                    })
+                        .fail(function (jqXHR, textStatus, error) {
+                            console.log(JSON.stringify(jqXHR));
+                        })
+                }
+            }),
+            dbCache.fwsRegion.count(function (records) {
+                if (records > 0) {
+                    dbCache.fwsRegion.toArray(function (data) {
+                        createLayer(data, 'FWS Regions');
+                        count += 5;
+                    });
+                    console.log("cached FWS Regions loaded");
+                }
+                else {
+                    $.getJSON(baseUrl + '/public/geoJSON/fwsRegions.json', function (data) {
+                        createLayer(data, 'FWS Regions');
+                        dbCache.fwsRegion.bulkAdd(data.features).then(function (lastKey) {
+                            console.log("Done caching FWS Regions");
+                        }).catch(Dexie.BulkError, function (e) {
+                            // Explicitely catching the bulkAdd() operation makes those successful
+                            // additions commit despite that there were errors.
+                            console.error("Some fwsRegion did not succeed. However, " +
+                                100000 - e.failures.length + " fwsRegion was added successfully");
+                        });
+                        count += 5;
+                    })
+                        .fail(function (jqXHR, textStatus, error) {
+                            console.log(JSON.stringify(jqXHR));
+                        })
+                }
+            }),
+            dbCache.npsRegion.count(function (records) {
+                if (records > 0) {
+                    dbCache.npsRegion.toArray(function (data) {
+                        createLayer(data, 'NPS Regions');
+                        count += 5;
+                    });
+                    console.log("cached NPS Regions loaded");
+                }
+                else {
+                    $.getJSON(baseUrl + '/public/geoJSON/npsRegions.json', function (data) {
+                        createLayer(data, 'NPS Regions');
+                        dbCache.npsRegion.bulkAdd(data.features).then(function (lastKey) {
+                            console.log("Done caching NPS Regions");
+                        }).catch(Dexie.BulkError, function (e) {
+                            // Explicitely catching the bulkAdd() operation makes those successful
+                            // additions commit despite that there were errors.
+                            console.error("Some npsRegion did not succeed. However, " +
+                                100000 - e.failures.length + " npsRegion was added successfully");
                         });
                         count += 5;
                     })
@@ -588,7 +597,33 @@ async function getLayers() {
                             console.log(JSON.stringify(jqXHR));
                         });
                 }
-            })
+            }),
+            dbCache.snapExtent.count(function (records) {
+                if (records > 0) {
+                    dbCache.snapExtent.toArray(function (data) {
+                        createLayer(data, 'Snap Extent');
+                        count += 5;
+                    });
+                    console.log("cached snapExtent loaded");
+                }
+                else {
+                    $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
+                        createLayer(data, 'Snap Extent');
+                        dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
+                            console.log("Done caching snapExtent");
+                        }).catch(Dexie.BulkError, function (e) {
+                            // Explicitely catching the bulkAdd() operation makes those successful
+                            // additions commit despite that there were errors.
+                            console.error("Some snapExtent did not succeed. However, " +
+                                100000 - e.failures.length + " snapExtent was added successfully");
+                        });
+                        count += 5;
+                    })
+                        .fail(function (jqXHR, textStatus, error) {
+                            console.log(JSON.stringify(jqXHR));
+                        })
+                }
+            }),
         ).then(function () {
             //$.LoadingOverlay("hide");
             console.log(count);
@@ -646,7 +681,7 @@ async function getOfflineLayers() {
             dbCache.blmRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.blmRegion.toArray(function (data) {
-                        createLayer(data, 'BLM');
+                        createLayer(data, 'BLM Regions');
                     });
                     console.log("cached blmRegion loaded");
                 }
@@ -662,6 +697,25 @@ async function getOfflineLayers() {
                 }
                 count += 10;
             }),
+            dbCache.fwsRegion.count(function (records) {
+                if (records > 0) {
+                    dbCache.fwsRegion.toArray(function (data) {
+                        createLayer(data, 'FWS Regions');
+                    });
+                    console.log("cached fwsRegion loaded");
+                }
+                count += 5;
+            }),
+            
+            dbCache.npsRegion.count(function (records) {
+                if (records > 0) {
+                    dbCache.fsRegion.toArray(function (data) {
+                        createLayer(data, 'NPS Regions');
+                    });
+                    console.log("cached npsRegion loaded");
+                }
+                count += 5;
+            }),
 
             dbCache.mdepBound.count(function (records) {
                 if (records > 0) {
@@ -670,7 +724,7 @@ async function getOfflineLayers() {
                     });
                     console.log("cached mdepBound loaded");
                 }
-                count += 20;
+                count += 10;
             }),
 
             dbCache.mdiBound.count(function (records) {
