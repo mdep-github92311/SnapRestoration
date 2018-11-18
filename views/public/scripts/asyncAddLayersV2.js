@@ -2,14 +2,14 @@
 
 var createLayer = function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data, layerName) {
-        var barrier, distLines, distPoints, distPoly, distPolyCent, restoPoly, restoLine, restoPoint, restoPolyCent, blmRegions, fsRegions, nvCounties, mdiBound, mdepBound, roads, snapExtent, desertComplex, soilVuln;
+        var barrier, distLines, distPoints, distPoly, distPolyCent, restoPoly, restoLine, restoPoint, restoPolyCent, blmRegions, fsRegions, fwsRegions, npsRegions, nvCounties, mdiBound, mdepBound, roads, snapExtent, soilVuln;
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
                         _context.prev = 0;
                         _context.t0 = layerName;
-                        _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 11 : _context.t0 === 'Disturbance Points' ? 18 : _context.t0 === 'Disturbance Polygon' ? 25 : _context.t0 === 'Disturbance Poly Cent' ? 32 : _context.t0 === 'Restoration Polygon' ? 39 : _context.t0 === 'Restoration Lines' ? 46 : _context.t0 === 'Restoration Points' ? 53 : _context.t0 === 'Restoration Poly Cent' ? 60 : _context.t0 === 'BLM' ? 67 : _context.t0 === 'FS Regions' ? 74 : _context.t0 === 'Nevada Counties' ? 81 : _context.t0 === 'MDI Boundary' ? 88 : _context.t0 === 'MDEP Boundary' ? 95 : _context.t0 === 'Roads' ? 102 : _context.t0 === 'Snap Extent' ? 109 : _context.t0 === 'Refuges Desert Complex' ? 116 : _context.t0 === 'Soil Vulnerability' ? 123 : 130;
+                        _context.next = _context.t0 === 'Barrier' ? 4 : _context.t0 === 'Disturbance Lines' ? 11 : _context.t0 === 'Disturbance Points' ? 18 : _context.t0 === 'Disturbance Polygon' ? 25 : _context.t0 === 'Disturbance Poly Cent' ? 32 : _context.t0 === 'Restoration Polygon' ? 39 : _context.t0 === 'Restoration Lines' ? 46 : _context.t0 === 'Restoration Points' ? 53 : _context.t0 === 'Restoration Poly Cent' ? 60 : _context.t0 === 'BLM Regions' ? 67 : _context.t0 === 'FS Regions' ? 74 : _context.t0 === 'FWS Regions' ? 81 : _context.t0 === 'NPS Regions' ? 88 : _context.t0 === 'Nevada Counties' ? 95 : _context.t0 === 'MDI Boundary' ? 102 : _context.t0 === 'MDEP Boundary' ? 109 : _context.t0 === 'Roads' ? 116 : _context.t0 === 'Snap Extent' ? 123 : _context.t0 === 'Soil Vulnerability' ? 130 : 137;
                         break;
 
                     case 4:
@@ -27,7 +27,7 @@ var createLayer = function () {
                         control.addOverlay(barrier, layerName, { groupName: 'Barrier Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 11:
                         _context.next = 13;
@@ -44,7 +44,7 @@ var createLayer = function () {
                         control.addOverlay(distLines, layerName, { groupName: 'Disturbance Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 18:
                         _context.next = 20;
@@ -63,7 +63,7 @@ var createLayer = function () {
                         control.addOverlay(distPoints, layerName, { groupName: 'Disturbance Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 25:
                         _context.next = 27;
@@ -80,7 +80,7 @@ var createLayer = function () {
                         control.addOverlay(distPoly, layerName, { groupName: 'Disturbance Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 32:
                         _context.next = 34;
@@ -99,7 +99,7 @@ var createLayer = function () {
                         control.unSelectLayer(distPolyCent);
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 39:
                         _context.next = 41;
@@ -116,7 +116,7 @@ var createLayer = function () {
                         control.addOverlay(restoPoly, layerName, { groupName: 'Restoration Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 46:
                         _context.next = 48;
@@ -133,7 +133,7 @@ var createLayer = function () {
                         control.addOverlay(restoLine, layerName, { groupName: 'Restoration Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 53:
                         _context.next = 55;
@@ -152,7 +152,7 @@ var createLayer = function () {
                         control.addOverlay(restoPoint, layerName, { groupName: 'Restoration Data', expanded: true });
                         console.log("added " + layerName);
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 60:
                         _context.next = 62;
@@ -172,7 +172,7 @@ var createLayer = function () {
                         control.unSelectLayer(restoPolyCent);
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 67:
                         if (data.type == null) {
@@ -192,7 +192,7 @@ var createLayer = function () {
                         control.addOverlay(blmRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 74:
                         if (data.type == null) {
@@ -212,7 +212,7 @@ var createLayer = function () {
                         control.addOverlay(fsRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 81:
                         if (data.type == null) {
@@ -220,19 +220,18 @@ var createLayer = function () {
                         }
                         _context.next = 84;
                         return L.geoJson(data, {
-                            pane: 'Bounds_County',
-                            style: nv_county,
-                            onEachFeature: onEachNVCounty
+                            pane: 'Regions',
+                            style: fwsRegion
                         }).addTo(map);
 
                     case 84:
-                        nvCounties = _context.sent;
+                        fwsRegions = _context.sent;
 
 
-                        control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                        control.addOverlay(fwsRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 88:
                         if (data.type == null) {
@@ -240,19 +239,18 @@ var createLayer = function () {
                         }
                         _context.next = 91;
                         return L.geoJson(data, {
-                            pane: 'Bounds_County',
-                            style: mdep_i,
-                            onEachFeature: onEachMDIBound
+                            pane: 'Regions',
+                            style: npsRegion
                         }).addTo(map);
 
                     case 91:
-                        mdiBound = _context.sent;
+                        npsRegions = _context.sent;
 
 
-                        control.addOverlay(mdiBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                        control.addOverlay(npsRegions, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 95:
                         if (data.type == null) {
@@ -261,18 +259,18 @@ var createLayer = function () {
                         _context.next = 98;
                         return L.geoJson(data, {
                             pane: 'Bounds_County',
-                            style: mdep_i,
-                            onEachFeature: onEachMDEPBound
+                            style: nv_county,
+                            onEachFeature: onEachNVCounty
                         }).addTo(map);
 
                     case 98:
-                        mdepBound = _context.sent;
+                        nvCounties = _context.sent;
 
 
-                        control.addOverlay(mdepBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                        control.addOverlay(nvCounties, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 102:
                         if (data.type == null) {
@@ -280,40 +278,39 @@ var createLayer = function () {
                         }
                         _context.next = 105;
                         return L.geoJson(data, {
-                            pane: 'Lines',
-                            style: roadColor,
-                            interactive: false
+                            pane: 'Bounds_County',
+                            style: mdep_i,
+                            onEachFeature: onEachMDIBound
                         }).addTo(map);
 
                     case 105:
-                        roads = _context.sent;
+                        mdiBound = _context.sent;
 
 
-                        control.addOverlay(roads, layerName, { groupName: 'Misc', expanded: false });
+                        control.addOverlay(mdiBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 109:
-                        // console.log(data)
                         if (data.type == null) {
                             data = data;
                         }
-                        // console.log(data)
                         _context.next = 112;
                         return L.geoJson(data, {
-                            pane: 'Misc',
-                            style: soil_vuln
+                            pane: 'Bounds_County',
+                            style: mdep_i,
+                            onEachFeature: onEachMDEPBound
                         }).addTo(map);
 
                     case 112:
-                        snapExtent = _context.sent;
+                        mdepBound = _context.sent;
 
 
-                        control.addOverlay(snapExtent, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                        control.addOverlay(mdepBound, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 116:
                         if (data.type == null) {
@@ -321,40 +318,62 @@ var createLayer = function () {
                         }
                         _context.next = 119;
                         return L.geoJson(data, {
-                            pane: 'Misc',
-                            style: desert_complex
+                            pane: 'Lines',
+                            style: roadColor,
+                            interactive: false
                         }).addTo(map);
 
                     case 119:
-                        desertComplex = _context.sent;
+                        roads = _context.sent;
 
 
-                        control.addOverlay(desertComplex, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                        control.addOverlay(roads, layerName, { groupName: 'Misc', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
                     case 123:
+                        // console.log(data)
                         if (data.type == null) {
                             data = data;
                         }
+                        // console.log(data)
                         _context.next = 126;
+                        return L.geoJson(data, {
+                            pane: 'Misc',
+                            style: soil_vuln
+                        }).addTo(map);
+
+                    case 126:
+                        snapExtent = _context.sent;
+
+
+                        control.addOverlay(snapExtent, layerName, { groupName: 'Regions/ Boundaries', expanded: false });
+                        console.log("added " + layerName + " Unselected");
+
+                        return _context.abrupt("break", 137);
+
+                    case 130:
+                        if (data.type == null) {
+                            data = data;
+                        }
+                        _context.next = 133;
                         return L.geoJson(data, {
                             pane: 'Misc',
                             style: soil_vuln,
                             onEachFeature: onEachSoilVuln
                         }).addTo(map);
 
-                    case 126:
+                    case 133:
                         soilVuln = _context.sent;
 
 
                         control.addOverlay(soilVuln, layerName, { groupName: 'Misc', expanded: false });
                         console.log("added " + layerName + " Unselected");
 
-                        return _context.abrupt("break", 130);
+                        return _context.abrupt("break", 137);
 
-                    case 130:
+                    case 137:
                         if (isMobile) {
                             control.unSelectGroup('Barrier Data');
                             control.unSelectGroup('Disturbance Data');
@@ -364,21 +383,21 @@ var createLayer = function () {
                         control.unSelectGroup('Regions/ Boundaries');
                         control.unSelectGroup('Roads');
                         control.unSelectGroup('Misc');
-                        _context.next = 140;
+                        _context.next = 147;
                         break;
 
-                    case 137:
-                        _context.prev = 137;
+                    case 144:
+                        _context.prev = 144;
                         _context.t1 = _context["catch"](0);
 
                         console.error(_context.t1);
 
-                    case 140:
+                    case 147:
                     case "end":
                         return _context.stop();
                 }
             }
-        }, _callee, this, [[0, 137]]);
+        }, _callee, this, [[0, 144]]);
     }));
 
     return function createLayer(_x, _x2) {
@@ -488,33 +507,33 @@ var getLayers = function () {
                     case 31:
                         _context2.t7 = _context2.sent;
                         _context2.t8 =
-                            //createLayer('/public/geoJSON/roads.zip', 'Roads'),
+                        //createLayer('/public/geoJSON/roads.zip', 'Roads'),
 
-                            dbCache.roads.count(function (records) {
-                                if (records > 0) {
-                                    dbCache.roads.toArray(function (data) {
-                                        // console.log(data)
-                                        createLayer(data, 'Roads');
-                                        count += 15;
+                        dbCache.roads.count(function (records) {
+                            if (records > 0) {
+                                dbCache.roads.toArray(function (data) {
+                                    // console.log(data)
+                                    createLayer(data, 'Roads');
+                                    count += 15;
+                                });
+                                console.log("cached data loaded");
+                            } else {
+                                $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
+                                    createLayer(data, 'Roads');
+                                    // console.log(data);
+                                    dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
+                                        console.log("Done caching roads");
+                                    }).catch(Dexie.BulkError, function (e) {
+                                        // Explicitely catching the bulkAdd() operation makes those successful
+                                        // additions commit despite that there were errors.
+                                        console.error("Some roads did not succeed. However, " + 100000 - e.failures.length + " roads was added successfully");
                                     });
-                                    console.log("cached data loaded");
-                                } else {
-                                    $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
-                                        createLayer(data, 'Roads');
-                                        // console.log(data);
-                                        dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
-                                            console.log("Done caching roads");
-                                        }).catch(Dexie.BulkError, function (e) {
-                                            // Explicitely catching the bulkAdd() operation makes those successful
-                                            // additions commit despite that there were errors.
-                                            console.error("Some roads did not succeed. However, " + 100000 - e.failures.length + " roads was added successfully");
-                                        });
-                                        count += 10;
-                                    }).fail(function (jqXHR, textStatus, error) {
-                                        console.log(JSON.stringify(jqXHR));
-                                    });
-                                }
-                            });
+                                    count += 10;
+                                }).fail(function (jqXHR, textStatus, error) {
+                                    console.log(JSON.stringify(jqXHR));
+                                });
+                            }
+                        });
                         _context2.t9 = dbCache.soilVuln.count(function (records) {
                             if (records > 0) {
                                 dbCache.soilVuln.toArray(function (data) {
@@ -551,62 +570,16 @@ var getLayers = function () {
                             createLayer(data[0].row_to_json, 'Restoration Poly Cent');
                             count += 5;
                         });
-                        _context2.t12 = dbCache.snapExtent.count(function (records) {
-                            if (records > 0) {
-                                dbCache.snapExtent.toArray(function (data) {
-                                    createLayer(data, 'Snap Extent');
-                                    count += 5;
-                                });
-                                console.log("cached snapExtent loaded");
-                            } else {
-                                $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
-                                    createLayer(data, 'Snap Extent');
-                                    dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
-                                        console.log("Done caching snapExtent");
-                                    }).catch(Dexie.BulkError, function (e) {
-                                        // Explicitely catching the bulkAdd() operation makes those successful
-                                        // additions commit despite that there were errors.
-                                        console.error("Some snapExtent did not succeed. However, " + 100000 - e.failures.length + " snapExtent was added successfully");
-                                    });
-                                    count += 5;
-                                }).fail(function (jqXHR, textStatus, error) {
-                                    console.log(JSON.stringify(jqXHR));
-                                });
-                            }
-                        });
-                        _context2.t13 = dbCache.desertComplex.count(function (records) {
-                            if (records > 0) {
-                                dbCache.snapExtent.toArray(function (data) {
-                                    createLayer(data, 'Refuges Desert Complex');
-                                    count += 5;
-                                });
-                                console.log("cached Refuges Desert Complex loaded");
-                            } else {
-                                $.getJSON(baseUrl + '/public/geoJSON/desertComplex.json', function (data) {
-                                    createLayer(data, 'Refuges Desert Complex');
-                                    dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
-                                        console.log("Done caching Refuges Desert Complex");
-                                    }).catch(Dexie.BulkError, function (e) {
-                                        // Explicitely catching the bulkAdd() operation makes those successful
-                                        // additions commit despite that there were errors.
-                                        console.error("Some desertComplex did not succeed. However, " + 100000 - e.failures.length + " desertComplex was added successfully");
-                                    });
-                                    count += 5;
-                                }).fail(function (jqXHR, textStatus, error) {
-                                    console.log(JSON.stringify(jqXHR));
-                                });
-                            }
-                        });
-                        _context2.t14 = dbCache.blmRegion.count(function (records) {
+                        _context2.t12 = dbCache.blmRegion.count(function (records) {
                             if (records > 0) {
                                 dbCache.blmRegion.toArray(function (data) {
-                                    createLayer(data, 'BLM');
-                                    count += 5;
+                                    createLayer(data, 'BLM Regions');
+                                    count += 2;
                                 });
                                 console.log("cached blmRegion loaded");
                             } else {
                                 $.getJSON(baseUrl + '/public/geoJSON/blmRegions.json', function (data) {
-                                    createLayer(data, 'BLM');
+                                    createLayer(data, 'BLM Regions');
                                     dbCache.blmRegion.bulkAdd(data.features).then(function (lastKey) {
                                         console.log("Done caching BLM");
                                     }).catch(Dexie.BulkError, function (e) {
@@ -614,17 +587,17 @@ var getLayers = function () {
                                         // additions commit despite that there were errors.
                                         console.error("Some blmRegion did not succeed. However, " + 100000 - e.failures.length + " blmRegion was added successfully");
                                     });
-                                    count += 5;
+                                    count += 2;
                                 }).fail(function (jqXHR, textStatus, error) {
                                     console.log(JSON.stringify(jqXHR));
                                 });
                             }
                         });
-                        _context2.t15 = dbCache.fsRegion.count(function (records) {
+                        _context2.t13 = dbCache.fsRegion.count(function (records) {
                             if (records > 0) {
                                 dbCache.fsRegion.toArray(function (data) {
                                     createLayer(data, 'FS Regions');
-                                    count += 5;
+                                    count += 3;
                                 });
                                 console.log("cached fsRegion loaded");
                             } else {
@@ -637,7 +610,53 @@ var getLayers = function () {
                                         // additions commit despite that there were errors.
                                         console.error("Some FS Regions did not succeed. However, " + 100000 - e.failures.length + " FS Regions was added successfully");
                                     });
-                                    count += 5;
+                                    count += 3;
+                                }).fail(function (jqXHR, textStatus, error) {
+                                    console.log(JSON.stringify(jqXHR));
+                                });
+                            }
+                        });
+                        _context2.t14 = dbCache.fwsRegion.count(function (records) {
+                            if (records > 0) {
+                                dbCache.fwsRegion.toArray(function (data) {
+                                    createLayer(data, 'FWS Regions');
+                                    count += 2;
+                                });
+                                console.log("cached FWS Regions loaded");
+                            } else {
+                                $.getJSON(baseUrl + '/public/geoJSON/fwsRegions.json', function (data) {
+                                    createLayer(data, 'FWS Regions');
+                                    dbCache.fwsRegion.bulkAdd(data.features).then(function (lastKey) {
+                                        console.log("Done caching FWS Regions");
+                                    }).catch(Dexie.BulkError, function (e) {
+                                        // Explicitely catching the bulkAdd() operation makes those successful
+                                        // additions commit despite that there were errors.
+                                        console.error("Some fwsRegion did not succeed. However, " + 100000 - e.failures.length + " fwsRegion was added successfully");
+                                    });
+                                    count += 2;
+                                }).fail(function (jqXHR, textStatus, error) {
+                                    console.log(JSON.stringify(jqXHR));
+                                });
+                            }
+                        });
+                        _context2.t15 = dbCache.npsRegion.count(function (records) {
+                            if (records > 0) {
+                                dbCache.npsRegion.toArray(function (data) {
+                                    createLayer(data, 'NPS Regions');
+                                    count += 3;
+                                });
+                                console.log("cached NPS Regions loaded");
+                            } else {
+                                $.getJSON(baseUrl + '/public/geoJSON/npsRegions.json', function (data) {
+                                    createLayer(data, 'NPS Regions');
+                                    dbCache.npsRegion.bulkAdd(data.features).then(function (lastKey) {
+                                        console.log("Done caching NPS Regions");
+                                    }).catch(Dexie.BulkError, function (e) {
+                                        // Explicitely catching the bulkAdd() operation makes those successful
+                                        // additions commit despite that there were errors.
+                                        console.error("Some npsRegion did not succeed. However, " + 100000 - e.failures.length + " npsRegion was added successfully");
+                                    });
+                                    count += 3;
                                 }).fail(function (jqXHR, textStatus, error) {
                                     console.log(JSON.stringify(jqXHR));
                                 });
@@ -712,32 +731,55 @@ var getLayers = function () {
                                 });
                             }
                         });
+                        _context2.t19 = dbCache.snapExtent.count(function (records) {
+                            if (records > 0) {
+                                dbCache.snapExtent.toArray(function (data) {
+                                    createLayer(data, 'Snap Extent');
+                                    count += 5;
+                                });
+                                console.log("cached snapExtent loaded");
+                            } else {
+                                $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
+                                    createLayer(data, 'Snap Extent');
+                                    dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
+                                        console.log("Done caching snapExtent");
+                                    }).catch(Dexie.BulkError, function (e) {
+                                        // Explicitely catching the bulkAdd() operation makes those successful
+                                        // additions commit despite that there were errors.
+                                        console.error("Some snapExtent did not succeed. However, " + 100000 - e.failures.length + " snapExtent was added successfully");
+                                    });
+                                    count += 5;
+                                }).fail(function (jqXHR, textStatus, error) {
+                                    console.log(JSON.stringify(jqXHR));
+                                });
+                            }
+                        });
 
-                        _context2.t19 = function () {
+                        _context2.t20 = function () {
                             //$.LoadingOverlay("hide");
                             console.log(count);
                         };
 
-                        _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17, _context2.t18).then(_context2.t19);
+                        _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17, _context2.t18, _context2.t19).then(_context2.t20);
 
-                        _context2.next = 55;
+                        _context2.next = 56;
                         break;
 
-                    case 49:
-                        _context2.prev = 49;
-                        _context2.t20 = _context2["catch"](11);
+                    case 50:
+                        _context2.prev = 50;
+                        _context2.t21 = _context2["catch"](11);
 
-                        console.error(_context2.t20);
+                        console.error(_context2.t21);
                         console.log('Now Loading Offline layers');
                         count = 100;
                         getOfflineLayers();
 
-                    case 55:
+                    case 56:
                     case "end":
                         return _context2.stop();
                 }
             }
-        }, _callee2, this, [[11, 49]]);
+        }, _callee2, this, [[11, 50]]);
     }));
 
     return function getLayers() {
@@ -809,11 +851,11 @@ var getOfflineLayers = function () {
                             }), dbCache.blmRegion.count(function (records) {
                                 if (records > 0) {
                                     dbCache.blmRegion.toArray(function (data) {
-                                        createLayer(data, 'BLM');
+                                        createLayer(data, 'BLM Regions');
                                     });
                                     console.log("cached blmRegion loaded");
                                 }
-                                count += 10;
+                                count += 5;
                             }), dbCache.fsRegion.count(function (records) {
                                 if (records > 0) {
                                     dbCache.fsRegion.toArray(function (data) {
@@ -821,7 +863,23 @@ var getOfflineLayers = function () {
                                     });
                                     console.log("cached fsRegion loaded");
                                 }
-                                count += 10;
+                                count += 5;
+                            }), dbCache.fwsRegion.count(function (records) {
+                                if (records > 0) {
+                                    dbCache.fwsRegion.toArray(function (data) {
+                                        createLayer(data, 'FWS Regions');
+                                    });
+                                    console.log("cached fwsRegion loaded");
+                                }
+                                count += 5;
+                            }), dbCache.npsRegion.count(function (records) {
+                                if (records > 0) {
+                                    dbCache.fsRegion.toArray(function (data) {
+                                        createLayer(data, 'NPS Regions');
+                                    });
+                                    console.log("cached npsRegion loaded");
+                                }
+                                count += 5;
                             }), dbCache.mdepBound.count(function (records) {
                                 if (records > 0) {
                                     dbCache.mdepBound.toArray(function (data) {
@@ -902,13 +960,14 @@ var dbCache = new Dexie('CachedData');
 dbCache.version(1).stores({
     blmRegion: 'properties.gid, type, geometry',
     fsRegion: 'properties.gid, type, geometry',
+    fwsRegion: 'properties.gid, type, geometry',
+    npsRegion: 'properties.gid, type, geometry',
     mdepBound: 'properties.gid, type, geometry',
     mdiBound: 'properties.gid, type, geometry',
     nvCounties: 'properties.gid, type, geometry',
     roads: 'properties.gid, type, geometry',
     soilVuln: 'properties.gid, type, geometry',
-    snapExtent: 'properties.gid, type, geometry',
-    desertComplex: 'properties.gid, type, geometry'
+    snapExtent: 'properties.gid, type, geometry'
 });
 dbCache.open().then(function (db) {
     console.log('Opened CachedData DB');
