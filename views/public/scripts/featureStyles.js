@@ -429,15 +429,15 @@ function blmRegion(feature) {
 }
 
 function fsRegion(feature) {
-    return { color: "#54ff01" };
-}
-
-function fwsRegion(feature) {
     return { color: "#005de8" };
 }
 
-function npsRegion(feature) {
+function fwsRegion(feature) {
     return { color: "#8600ac" };
+}
+
+function npsRegion(feature) {
+    return { color: "#54ff01" };
 }
 
 function mdep_i(feature) {
