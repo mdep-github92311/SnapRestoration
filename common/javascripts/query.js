@@ -417,14 +417,14 @@ exports.resto_poly_centroid_sub_query =
 // Set up your database query to display GeoJSON
 exports.barrier_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
