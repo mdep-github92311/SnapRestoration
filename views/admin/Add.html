@@ -18,6 +18,7 @@
   <script src="../public/scripts/asyncGetSubmittedV2.js"></script>
   <script src="../public/scripts/featureStyles.js"></script>
   <script src="../public/scripts/shared.js"></script>
+  <script src="../public/scripts/formBuilder.js"></script>
 
 </head>
 
@@ -141,6 +142,7 @@
 
             <td style="height: 100%; width: 50%">
               <div id="mapID"></div>
+              <div id="coordError" style="display:none;">This feature does not have any coordinates defined</div>
             </td>
           </table>
           <div id='editInfo'></div>
@@ -241,12 +243,16 @@
             break;
         }
       }
+      if (!bounds)
+        $("#coordError").show();
+      else
+        $("#coordError").hide();
       // this will invalidate the size of the map to make it fit in the modal
       $('#myModal').on('shown.bs.modal', function() {
         setTimeout(function() {
           console.log("invalidate")
           map.invalidateSize();
-          if (!invalidated) {
+          if (!invalidated && bounds) {
             map.fitBounds(bounds, {
               maxZoom: 11
             });
@@ -265,9 +271,10 @@
       }
 
       // makes map look at the point
-      map.fitBounds(bounds, {
-        maxZoom: 11
-      });
+      if (bounds)
+        map.fitBounds(bounds, {
+          maxZoom: 11
+        });
     }
 
     function writeTables() {

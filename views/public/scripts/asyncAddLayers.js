@@ -30,18 +30,18 @@ function fixCollection(data) {
 }
 
 const dbCache = new Dexie('CachedData');
-
+console.log(dbCache)
 dbCache.version(1).stores({
-    blmRegion: 'properties.gid, type, geometry',
-    fsRegion: 'properties.gid, type, geometry',
-    fwsRegion: 'properties.gid, type, geometry',
-    npsRegion: 'properties.gid, type, geometry',
-    mdepBound: 'properties.gid, type, geometry',
-    mdiBound: 'properties.gid, type, geometry',
-    nvCounties: 'properties.gid, type, geometry',
-    roads: 'properties.gid, type, geometry',
-    soilVuln: 'properties.gid, type, geometry',
-    snapExtent: 'properties.gid, type, geometry'
+    blmRegion: '++id, type, geometry',
+    fsRegion: '++id, type, geometry',
+    fwsRegion: '++id, type, geometry',
+    npsRegion: '++id, type, geometry',
+    mdepBound: '++id, type, geometry',
+    mdiBound: '++id, type, geometry',
+    nvCounties: '++id, type, geometry',
+    roads: '++id, type, geometry',
+    soilVuln: '++id, type, geometry',
+    snapExtent: '++id, type, geometry'
 });
 dbCache.open().then(function (db) {
     console.log('Opened CachedData DB');
@@ -554,7 +554,7 @@ async function getLayers() {
                         })
                 }
             }),
-            dbCache.npsRegion.count(function (records) {
+            await dbCache.npsRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.npsRegion.toArray(function (data) {
                         createLayer(data, 'NPS Regions');
