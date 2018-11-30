@@ -639,7 +639,8 @@ var getLayers = function () {
                                 });
                             }
                         });
-                        _context2.t15 = dbCache.npsRegion.count(function (records) {
+                        _context2.next = 43;
+                        return dbCache.npsRegion.count(function (records) {
                             if (records > 0) {
                                 dbCache.npsRegion.toArray(function (data) {
                                     createLayer(data, 'NPS Regions');
@@ -662,6 +663,9 @@ var getLayers = function () {
                                 });
                             }
                         });
+
+                    case 43:
+                        _context2.t15 = _context2.sent;
                         _context2.t16 = dbCache.mdepBound.count(function (records) {
                             if (records > 0) {
                                 dbCache.mdepBound.toArray(function (data) {
@@ -762,11 +766,11 @@ var getLayers = function () {
 
                         _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17, _context2.t18, _context2.t19).then(_context2.t20);
 
-                        _context2.next = 56;
+                        _context2.next = 58;
                         break;
 
-                    case 50:
-                        _context2.prev = 50;
+                    case 52:
+                        _context2.prev = 52;
                         _context2.t21 = _context2["catch"](11);
 
                         console.error(_context2.t21);
@@ -774,12 +778,12 @@ var getLayers = function () {
                         count = 100;
                         getOfflineLayers();
 
-                    case 56:
+                    case 58:
                     case "end":
                         return _context2.stop();
                 }
             }
-        }, _callee2, this, [[11, 50]]);
+        }, _callee2, this, [[11, 52]]);
     }));
 
     return function getLayers() {

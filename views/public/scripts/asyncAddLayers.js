@@ -30,7 +30,6 @@ function fixCollection(data) {
 }
 
 const dbCache = new Dexie('CachedData');
-
 dbCache.version(1).stores({
     blmRegion: 'properties.gid, type, geometry',
     fsRegion: 'properties.gid, type, geometry',
@@ -554,7 +553,7 @@ async function getLayers() {
                         })
                 }
             }),
-            dbCache.npsRegion.count(function (records) {
+            await dbCache.npsRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.npsRegion.toArray(function (data) {
                         createLayer(data, 'NPS Regions');

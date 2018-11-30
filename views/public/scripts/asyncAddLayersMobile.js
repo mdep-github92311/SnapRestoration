@@ -491,7 +491,7 @@ async function getLayers() {
                         })
                 }
             }),
-            dbCache.npsRegion.count(function (records) {
+            await dbCache.npsRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.npsRegion.toArray(function (data) {
                         createLayer(data, 'NPS Regions');

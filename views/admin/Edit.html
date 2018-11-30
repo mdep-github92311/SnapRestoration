@@ -135,13 +135,14 @@
         </div>
         <div class="modal-body">
 
-          <table id='tableMap'>
-            <td>
+          <table id='tableMap'style="height: 100%; width: 100%">
+            <td style="height: 100%; width: 50%">
               <div id="pInfo"></div>
             </td>
 
-            <td>
+            <td style="height: 100%; width: 50%">
               <div id="mapID"></div>
+              <div id="coordError" style="display:none;">This feature does not have any coordinates defined</div>
             </td>
           </table>
           <div id='editInfo'></div>
@@ -221,11 +222,13 @@
             break;
         }
       }
+      console.log(bounds)
+      
       // this will invalidate the size of the map to make it fit in the modal
       $('#myModal').on('shown.bs.modal', function() {
         setTimeout(function() {
           map.invalidateSize();
-          if (!invalidated) {
+          if (!invalidated && bounds) {
             map.fitBounds(bounds, {
               maxZoom: 11
             });
@@ -234,7 +237,10 @@
         }, 5);
       });
       $("#pInfo").html("");
-
+      if (!bounds)
+        $("#coordError").show();
+      else
+        $("#coordError").hide();
       for (var prop in data.properties) {
         if (prop == 'agency') {
           $("#pInfo").append("<br /><B>" + prop + "</B>" + ' : ' + getAgency(data.properties[prop]));
@@ -244,9 +250,10 @@
       }
 
       // makes map look at the point
-      map.fitBounds(bounds, {
-        maxZoom: 11
-      });
+      if (bounds)
+        map.fitBounds(bounds, {
+          maxZoom: 11
+        });
     }
 
     function writeTables() {
@@ -389,7 +396,6 @@
   </script>
 
 
-</body>
 </body>
 
 </html>
