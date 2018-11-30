@@ -2,14 +2,14 @@
 // Set up your database query to display GeoJSON
 exports.barrier_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency) AS l) ) AS properties
@@ -260,14 +260,14 @@ exports.soil_vulnerability_query =
     
 exports.barrier_sub_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
@@ -708,14 +708,14 @@ exports.soil_vulnerability_query =
     
 exports.barrier_sub_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
@@ -872,14 +872,14 @@ exports.resto_poly_centroid_sub_query =
     
     exports.barrier_blm_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
@@ -1035,14 +1035,14 @@ exports.resto_poly_centroid_blm_query =
     
     exports.barrier_fs_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
@@ -1198,14 +1198,14 @@ exports.resto_poly_centroid_fs_query =
     
     exports.barrier_fws_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
@@ -1361,14 +1361,14 @@ exports.resto_poly_centroid_fws_query =
     
     exports.barrier_nps_query =
     `SELECT 
-      Row_to_json(fc)
+      row_to_json(fc)
     FROM (SELECT
       'FeatureCollection' AS type,
       Array_to_json(Array_agg(f)) AS features
     FROM (SELECT
       'Feature' AS type,
       ST_AsGeoJSON(geom) ::json AS geometry,
-      Row_to_json((SELECT
+      row_to_json((SELECT
         l
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
