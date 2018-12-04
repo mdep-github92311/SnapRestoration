@@ -16,6 +16,7 @@ function formBuilder(formName, parts) {
     var form = $("<form>", {id: formName, method:"POST", style:"display: none;"})
     for (var index in parts)
       form.append(formParts(parts[index]));
+    form.append($("<br>"));
     form.append($("<input>", {type:"submit", class:"btn btn-primary", value: "Submit"}))
     return form;
 }

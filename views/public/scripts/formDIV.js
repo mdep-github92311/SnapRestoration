@@ -175,38 +175,45 @@ $(document).ready(function () {
           loadSubs();
         }
         
-        $("#restoPointSaveEdit").on("click", function(event) {
+        $("#restoPointFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.restoPointSub, collectData('#restoPointFormEdit'));
           //console.log(currLayer)
           currLayer.editing.disable();
           map.removeLayer(currLayer);
         });
-        $("#restoPolySaveEdit").on("click", function(event) {
+        $("#restoPolyFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.restoPolySub, collectData('#restoPolyFormEdit'));
           currLayer.editing.disable();
           map.removeLayer(currLayer);
         });
-        $("#restoLineSaveEdit").on("click", function(event) {
+        $("#restoLineFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.restoLineSub, collectData('#restoLineFormEdit'));
           currLayer.editing.disable();
           map.removeLayer(currLayer);
         });
-        $("#barrierSaveEdit").on("click", function(event) {
+        $("#barrierFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.barrierSub, collectData('#barrierFormEdit'));
           currLayer.editing.disable();
           map.removeLayer(currLayer);
         });
-        $("#distPointSaveEdit").on("click", function(event) {
+        $("#distPointFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.distPointSub, collectData('#distPointFormEdit'));
           currLayer.editing.disable();
           map.removeLayer(currLayer);
         });
-        $("#distPolySaveEdit").on("click", function(event) {
+        $("#distPolyFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.distPolySub, collectData('#distPolyFormEdit'));
           currLayer.editing.disable();
           map.removeLayer(currLayer);
         });
-        $("#distLineSaveEdit").on("click", function(event) {
+        $("#distLineFormEdit").on("submit", function(event) {
+          event.preventDefault();
           saveEditedForm(db.distLineSub, collectData('#distLineFormEdit'));
           currLayer.editing.disable();
           map.removeLayer(currLayer);
