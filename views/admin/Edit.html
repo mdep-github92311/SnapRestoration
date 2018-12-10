@@ -19,6 +19,7 @@
   <script src="../public/scripts/asyncGetDataV2.js"></script>
   <script src="../public/scripts/featureStyles.js"></script>
   <script src="../public/scripts/shared.js"></script>
+  <script src="../public/scripts/formBuilder.js"></script>
 </head>
 
 <body>
@@ -202,14 +203,16 @@
               style: myStyleLines,
             }).addTo(map);
             this.mapMarkers.push(marker);
-            bounds = marker._layers[marker._leaflet_id - 1].getBounds();
+            if (marker._layers[marker._leaflet_id - 1].feature.geometry.coordinates.length > 0)
+              bounds = marker._layers[marker._leaflet_id - 1].getBounds();
             break;
           case 'MultiPolygon':
             var marker = L.geoJson(data, {
               style: myStyleDistPoly
             }).addTo(map);
             this.mapMarkers.push(marker);
-            bounds = marker._layers[marker._leaflet_id - 1].getBounds();
+            if (marker._layers[marker._leaflet_id - 1].feature.geometry.coordinates.length > 0)
+              bounds = marker._layers[marker._leaflet_id - 1].getBounds();
   
             break;
           default:
@@ -217,12 +220,12 @@
               style: myStyleDistPoly
             }).addTo(map);
             this.mapMarkers.push(marker);
-            bounds = marker._layers[marker._leaflet_id - 1].getBounds();
+            if (marker._layers[marker._leaflet_id - 1].feature.geometry.coordinates.length > 0)
+              bounds = marker._layers[marker._leaflet_id - 1].getBounds();
   
             break;
         }
       }
-      console.log(bounds)
       
       // this will invalidate the size of the map to make it fit in the modal
       $('#myModal').on('shown.bs.modal', function() {
@@ -378,10 +381,116 @@
       id: 'rogerdodger617.2p4pk9co',
       accessToken: 'pk.eyJ1Ijoicm9nZXJkb2RnZXI2MTciLCJhIjoiY2l5aG83M3pzMDR3aDJ3cndobzdzOWFhMSJ9.b6ssRylqfIz40O7vKcDb2g'
     }).addTo(map);
-
+    
+    function editData(submission, route) {
+      if (submission != null) {
+         $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: route,
+            contentType: 'application/json',
+            data: JSON.stringify(submission),
+            success: function (data) {
+              window.location.reload(true); 
+              console.log("success!!");
+              console.log(data);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              console.log("some error");
+            }
+         })
+      }
+    } 
+   
+    function collectData(form, route) {
+      var obj = [currentData.properties.gid];
+      $(form).serializeArray().reduce(function(i, item) {
+         if (item.value === '' || item.value === 'select') {
+            obj.push(null);
+         } else if (item.name === 'gid' || item.name === 'agency' || item.name === 'dist_sever' || item.name === 'photo_azim') {
+            obj.push(parseInt(item.value));
+         } else if (item.name === 'acres_rest' || item.name === 'kmsq_resto' || item.name === 'shape_star' || item.name === 'estimate_s') {
+            obj.push(parseFloat(item.value));
+         } else if (item.name === 'barr_miles' || item.name === 'bar_km' || item.name === 'miles_dist' || item.name === 'km_dist') {
+            obj.push(parseFloat(item.value));
+         } else if (item.name === 'miles_rest' || item.name === 'km_resto' || item.name === 'shape_stle' || item.name === 'shape_leng') {
+            obj.push(parseFloat(item.value));
+         } else {
+            obj.push(item.value);
+         }
+         
+      }, {});
+      editData(obj,route);
+   }
     function editForm() {
-      $("#editInfo").load("../public/scripts/editForm.html");
-      console.log("data check -- " + this.currentData.dataType);
+      var form;
+      var buttons = [$("<br>"), $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Save Changes', value: 'Save Changes'}).click(function(){
+        console.log("here")
+        switch(currentData.dataType){
+          case 'restoPoints':
+            collectData('#restoPointForm','/restoPointFormEdit');
+            break;
+          case 'restoPolys':
+            collectData('#restoPolyForm','/restoPolyFormEdit');
+            break;
+          case 'restoLines':
+            collectData('#restoLineForm','/restoLineFormEdit');
+            break;
+          case 'barriers':
+            collectData('#barrierForm','/barrierFormEdit');
+            break;
+          case 'distPoints':
+            collectData('#distPointForm','/distPointFormEdit');
+            break;
+          case 'distPolys':
+            collectData('#distPolyForm','/distPolyFormEdit');
+            break;
+          case 'distLines':
+            collectData('#distLineForm','/distLineFormEdit');
+            break;
+        }
+      })];
+      switch(currentData.dataType){
+        case 'restoPoints':
+          form = createForm('restoPointForm', null, buttons);
+          break;
+        case 'restoPolys':
+          form = createForm('restoPolyForm', null, buttons);
+          break;
+        case 'restoLines':
+          form = createForm('restoLineForm', null, buttons);
+          break;
+        case 'barriers':
+          form = createForm('barrierForm', null, buttons);
+          break;
+        case 'distPoints':
+          form = createForm('distPointForm', null, buttons);
+          break;
+        case 'distPolys':
+          form = createForm('distPolyForm', null, buttons);
+          break;
+        case 'distLines':
+          form = createForm('distLineForm', null, buttons);
+          break;
+      }
+      $("#editInfo").html(form);
+      $.each(currentData.properties, function(name, val){
+        var $el = $('[name="'+name+'"]'),
+           type = $el.attr('type');
+        switch(type){
+           case 'checkbox':
+              $el.attr('checked', 'checked');
+              break;
+           case 'radio':
+              $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+              break;
+           default:
+              if (val != null && val != '')
+                 $el.val(val);
+              else if (val == 0)
+                 $el.val(val);
+       }
+     });
     }
     
     // Listener for the Edit Button

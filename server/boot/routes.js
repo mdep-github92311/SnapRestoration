@@ -64,7 +64,7 @@ module.exports = function (app) {
     }
 
     app.use(bodyParser.json())
-        .post('/restoPointFormSubmit', (req, res) => {
+        .post('/restoPointFormSubmit', checkAuth, (req, res) => {
 
             const restoPointUpsert = upsert.restoPointSub;
 
@@ -121,7 +121,7 @@ module.exports = function (app) {
             // .then(function () { console.log('resto point form submitted'); res.status(200) .json({ status: 'success',
             // message: 'sent resto point query' }) }) .catch(function (err) { throw err; });
         })
-        .post('/restoPolyFormSubmit', (req, res) => {
+        .post('/restoPolyFormSubmit', checkAuth, (req, res) => {
             const restoPolyUpsert = upsert.restoPolySub;
 
             const restoPolyIndexedDB = req.body;
@@ -176,7 +176,7 @@ module.exports = function (app) {
             // .then(function () { console.log('resto poly form submitted'); res.status(200) .json({ status: 'success',
             // message: 'sent resto poly query' }) }) .catch(function (err) { throw err; });
         })
-        .post('/restoLineFormSubmit', (req, res) => {
+        .post('/restoLineFormSubmit', checkAuth, (req, res) => {
             const restoLineUpSert = upsert.restoLineSub;
 
             const restoLineIndexedDB = req.body;
@@ -221,7 +221,7 @@ module.exports = function (app) {
             // restoLineSub) .then(function () { console.log('resto line form submitted'); res.status(200) .json({ status:
             // 'success', message: 'sent resto line query' }) }) .catch(function (err) { throw err; });
         })
-        .post('/barrierFormSubmit', (req, res) => {
+        .post('/barrierFormSubmit', checkAuth, (req, res) => {
             const barrierUpsert = upsert.barrierSub;
 
             const barrierIndexedDB = req.body;
@@ -237,8 +237,8 @@ module.exports = function (app) {
             // console.log(barrierArray)
             db.none(`INSERT INTO barrier_sub (agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
-           shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-           $11, $12, $13, $14, $15, $16, $17, $18, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($19)))`, barrierArray))
+           geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+           $11, $12, $13, $14, $15, $16, $17, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($18)))`, barrierArray))
                 .then(function () {
                     console.log('barrier form submitted');
                     console.log(barrierIndexedDB);
@@ -252,7 +252,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/distPointFormSubmit', (req, res) => {
+        .post('/distPointFormSubmit', checkAuth, (req, res) => {
             const distPointUpSert = upsert.distPointSub;
 
             const distPointIndexedDB = req.body;
@@ -315,7 +315,7 @@ module.exports = function (app) {
             //           throw err;
             //         });
         })
-        .post('/distPolyFormSubmit', (req, res) => {
+        .post('/distPolyFormSubmit', checkAuth, (req, res) => {
             const distPolyUpSert = upsert.distPolySub;
 
             const distPolyIndexedDB = req.body;
@@ -367,7 +367,7 @@ module.exports = function (app) {
             // .then(function () { console.log('dist poly form submitted'); res.status(200) .json({ status: 'success', message:
             // 'sent dist poly query' }); }) .catch(function (err) { throw err; });
         })
-        .post('/distLineFormSubmit', (req, res) => {
+        .post('/distLineFormSubmit', checkAuth, (req, res) => {
             const distLineUpsert = upsert.distLineSub;
 
             const distLineIndexedDB = req.body;
@@ -416,7 +416,7 @@ module.exports = function (app) {
         })
 
 
-        .post('/deleteSubmission', (req, res) => {
+        .post('/deleteSubmission', checkAuth, (req, res) => {
             const data = req.body
             var table = ``;
             console.log(data)
@@ -467,7 +467,7 @@ module.exports = function (app) {
 
 
 
-        .post('/restoPointSubFormEdit', (req, res) => {
+        .post('/restoPointSubFormEdit', checkAuth, (req, res) => {
             //const restoPointUpsert = upsert.restoPointSub;
             const restoPointUpdate = req.body;
 
@@ -490,7 +490,7 @@ module.exports = function (app) {
 
         })
 
-        .post('/restoPolySubFormEdit', (req, res) => {
+        .post('/restoPolySubFormEdit', checkAuth, (req, res) => {
             const restoPolyUpdate = req.body;
 
             db.none(`UPDATE resto_polygon_sub
@@ -513,7 +513,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/restoLineSubFormEdit', (req, res) => {
+        .post('/restoLineSubFormEdit', checkAuth, (req, res) => {
             const restoLineUpdate = req.body;
 
             db.none(`UPDATE resto_line_sub
@@ -537,9 +537,8 @@ module.exports = function (app) {
 
 
 
-        .post('/barrierSubFormEdit', (req, res) => {
+        .post('/barrierSubFormEdit', checkAuth, (req, res) => {
             const barrierUpdate = req.body;
-
             db.none(`UPDATE barrier_sub
       SET agency = $2:name, region = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, qa_qc = $18,
@@ -559,7 +558,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/distPointSubFormEdit', (req, res) => {
+        .post('/distPointSubFormEdit', checkAuth, (req, res) => {
             const distPointUpdate = req.body;
 
             db.none(`UPDATE dist_point_sub
@@ -580,7 +579,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/distPolySubFormEdit', (req, res) => {
+        .post('/distPolySubFormEdit', checkAuth, (req, res) => {
             const distPolyUpdate = req.body;
 
             db.none(`UPDATE dist_polygon_sub
@@ -603,7 +602,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/distLineSubFormEdit', (req, res) => {
+        .post('/distLineSubFormEdit', checkAuth, (req, res) => {
             const distLineUpdate = req.body;
 
             db.none(`UPDATE dist_line_sub
@@ -626,7 +625,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/restoPointFormEdit', (req, res) => {
+        .post('/restoPointFormEdit', checkAuth, (req, res) => {
             //const restoPointUpsert = upsert.restoPointSub;
             const restoPointUpdate = req.body;
 
@@ -649,7 +648,7 @@ module.exports = function (app) {
 
         })
 
-        .post('/restoPolyFormEdit', (req, res) => {
+        .post('/restoPolyFormEdit', checkAuth, (req, res) => {
             const restoPolyUpdate = req.body;
 
             db.none(`UPDATE resto_polygon
@@ -671,7 +670,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/restoLineFormEdit', (req, res) => {
+        .post('/restoLineFormEdit', checkAuth, (req, res) => {
             const restoLineUpdate = req.body;
 
             db.none(`UPDATE resto_line
@@ -695,9 +694,8 @@ module.exports = function (app) {
 
 
 
-        .post('/barrierFormEdit', (req, res) => {
+        .post('/barrierFormEdit', checkAuth, (req, res) => {
             const barrierUpdate = req.body;
-
             db.none(`UPDATE barrier
       SET agency = $2, region = $3, ecosystem = $4, gps_date = $5, barr_code = $6, barr_actio = $7, barr_type = $8,
            comments = $9, primary_ob = $10, secondary_ = $11, project_na = $12, barr_miles = $13, barr_km = $14, previously = $15, gps_photo = $16, photo_azim = $17, 
@@ -717,7 +715,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/distPointFormEdit', (req, res) => {
+        .post('/distPointFormEdit', checkAuth, (req, res) => {
             const distPointUpdate = req.body;
             console.log("Dist Point update");
             console.log(distPointUpdate);
@@ -739,7 +737,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/distPolyFormEdit', (req, res) => {
+        .post('/distPolyFormEdit', checkAuth, (req, res) => {
             const distPolyUpdate = req.body;
 
             db.none(`UPDATE dist_polygon
@@ -762,7 +760,7 @@ module.exports = function (app) {
                 })
         })
 
-        .post('/distLineFormEdit', (req, res) => {
+        .post('/distLineFormEdit', checkAuth, (req, res) => {
             const distLineUpdate = req.body;
 
             db.none(`UPDATE dist_line
@@ -793,7 +791,7 @@ module.exports = function (app) {
         /////  Submissions Confirmed /////
         //////////////////////////////////
 
-        .post('/restoPointConfirm', (req, res) => {
+        .post('/restoPointConfirm', checkAuth, (req, res) => {
 
             console.log(req.body);
             const restoPointUpsert = upsert.restoPoint;
@@ -836,7 +834,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/restoPolyConfirm', (req, res) => {
+        .post('/restoPolyConfirm', checkAuth, (req, res) => {
             const restoPolyUpsert = upsert.restoPoly;
 
             const restoPolyIndexedDB = req.body;
@@ -878,7 +876,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/restoLineConfirm', (req, res) => {
+        .post('/restoLineConfirm', checkAuth, (req, res) => {
             const restoLineUpSert = upsert.restoLine;
 
             const restoLineIndexedDB = req.body;
@@ -920,7 +918,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/barrierConfirm', (req, res) => {
+        .post('/barrierConfirm', checkAuth, (req, res) => {
             const barrierUpsert = upsert.barrier;
 
             const barrierIndexedDB = req.body;
@@ -963,7 +961,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/distPointConfirm', (req, res) => {
+        .post('/distPointConfirm', checkAuth, (req, res) => {
             const distPointUpSert = upsert.distPoint;
 
             const distPointIndexedDB = req.body;
@@ -1005,7 +1003,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/distPolyConfirm', (req, res) => {
+        .post('/distPolyConfirm', checkAuth, (req, res) => {
             const distPolyUpSert = upsert.distPoly;
 
             const distPolyIndexedDB = req.body;
@@ -1048,7 +1046,7 @@ module.exports = function (app) {
                     throw err;
                 })
         })
-        .post('/distLineConfirm', (req, res) => {
+        .post('/distLineConfirm', checkAuth, (req, res) => {
             const distLineUpsert = upsert.distLine;
 
             const distLineIndexedDB = req.body;
