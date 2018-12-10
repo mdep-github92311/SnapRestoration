@@ -237,8 +237,8 @@ module.exports = function (app) {
             // console.log(barrierArray)
             db.none(`INSERT INTO barrier_sub (agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type,
            comments, primary_ob, secondary_, project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc,
-           shape_leng, geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
-           $11, $12, $13, $14, $15, $16, $17, $18, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($19)))`, barrierArray))
+           geom) VALUES $1` + barrierUpsert, Inserts(`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+           $11, $12, $13, $14, $15, $16, $17, ST_Force2D(ST_Multi(ST_GeomFromGeoJSON($18)))`, barrierArray))
                 .then(function () {
                     console.log('barrier form submitted');
                     console.log(barrierIndexedDB);

@@ -226,7 +226,6 @@
             break;
         }
       }
-      console.log(bounds)
       
       // this will invalidate the size of the map to make it fit in the modal
       $('#myModal').on('shown.bs.modal', function() {
@@ -421,13 +420,11 @@
          }
          
       }, {});
-      console.log(form);
-      
       editData(obj,route);
    }
     function editForm() {
       var form;
-      var buttons = [$("<br>"), $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Submit', value: 'Submit'}).click(function(){
+      var buttons = [$("<br>"), $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Save Changes', value: 'Save Changes'}).click(function(){
         console.log("here")
         switch(currentData.dataType){
           case 'restoPoints':
