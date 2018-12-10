@@ -21,8 +21,8 @@
 $(document).ready(function () {
   "use strict";
   
-  $(createForms()).appendTo('#sidebar2');
-  var changeForm = createForms("Edit");
+  $(createForms(null, [$('<br>'),$("<input>", {type:"submit", class:"btn btn-primary", value: "Submit"})])).appendTo('#sidebar2');
+  var changeForm = createForms("Edit",[$('<br>'),$("<input>", {type:"submit", class:"btn btn-primary", value: "Submit"})]);
   
   $( "select[name='agency']" ).change(function(e) {
     var agencyID = null;

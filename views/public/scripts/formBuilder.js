@@ -1,23 +1,47 @@
 "use strict";
 
-function createForms(formNameAddition) {
+function createForms(formNameAddition, buttons) {
     if (!formNameAddition)
         formNameAddition = '';
-    var forms = $("<div>").append(formBuilder("restoPointForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'comments', 'primary_ob', 'secondary_', 'project_na', 'sqft_resto','gps_photo', 'photo_azim', 'previously', 'qa_qc' ]) )
-                          .append(formBuilder("restoPolyForm" + formNameAddition, ['agency', 'ecosystem', 'resto_code', 'resto_acti', 'te_action', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'acres_rest', 'kmqs_resto', 'gps_date', 'gps_photo', 'photo_azim', 'signed', 'deep_till', 'barrier_in', 'mulch', 'monitoring', 'previously', 'shape_area']) )
-                          .append(formBuilder("restoLineForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'te_act', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'signed', 'mulch', 'deep_till', 'barrier_in', 'miles_rest', 'km_resto', 'gps_photo', 'photo_azim', 'monitoring', 'previously', 'qa_qc']) )
-                          .append(formBuilder("barrierForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'barr_code', 'barr_actio', 'barr_type', 'comments', 'primary_ob', 'secondary_', 'project_na', 'barr_miles', 'barr_km', 'previously', 'gps_photo', 'photo_azim', 'qa_qc']) )
-                          .append(formBuilder("distPointForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'use_freq', 'use_recent', 'dist_pt_ty', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'previously', 'project_na', 'estimate_s', 'treated', 'cultural', 't_e_specie', 'soil_vulne', 'dist_use', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c']) )
-                          .append(formBuilder("distPolyForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'dist_poly_', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'acres_rest', 'kmsq_resto', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'site_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c', 'shape_area']) )
-                          .append(formBuilder("distLineForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'width', 'type', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'miles_dist', 'km_dist', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'soil_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c']))
+    var forms = $("<div>").append(formBuilder("restoPointForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'comments', 'primary_ob', 'secondary_', 'project_na', 'sqft_resto','gps_photo', 'photo_azim', 'previously', 'qa_qc' ], buttons) )
+                          .append(formBuilder("restoPolyForm" + formNameAddition, ['agency', 'ecosystem', 'resto_code', 'resto_acti', 'te_action', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'acres_rest', 'kmqs_resto', 'gps_date', 'gps_photo', 'photo_azim', 'signed', 'deep_till', 'barrier_in', 'mulch', 'monitoring', 'previously', 'shape_area'], buttons) )
+                          .append(formBuilder("restoLineForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'te_act', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'signed', 'mulch', 'deep_till', 'barrier_in', 'miles_rest', 'km_resto', 'gps_photo', 'photo_azim', 'monitoring', 'previously', 'qa_qc'], buttons) )
+                          .append(formBuilder("barrierForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'barr_code', 'barr_actio', 'barr_type', 'comments', 'primary_ob', 'secondary_', 'project_na', 'barr_miles', 'barr_km', 'previously', 'gps_photo', 'photo_azim', 'qa_qc'], buttons) )
+                          .append(formBuilder("distPointForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'use_freq', 'use_recent', 'dist_pt_ty', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'previously', 'project_na', 'estimate_s', 'treated', 'cultural', 't_e_specie', 'soil_vulne', 'dist_use', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c'], buttons) )
+                          .append(formBuilder("distPolyForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'dist_poly_', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'acres_rest', 'kmsq_resto', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'site_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c', 'shape_area'], buttons) )
+                          .append(formBuilder("distLineForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'width', 'type', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'miles_dist', 'km_dist', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'soil_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c'], buttons))
     return forms;
 }
-function formBuilder(formName, parts) {
+function createForm(form, formNameAddition, buttons) {
+    if (!formNameAddition)
+        formNameAddition = '';
+    switch(form){
+        case 'restoPointForm':
+            return formBuilder("restoPointForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'comments', 'primary_ob', 'secondary_', 'project_na', 'sqft_resto','gps_photo', 'photo_azim', 'previously', 'qa_qc' ], buttons).show()
+        case 'restoPolyForm':
+            return formBuilder("restoPolyForm" + formNameAddition, ['agency', 'ecosystem', 'resto_code', 'resto_acti', 'te_action', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'acres_rest', 'kmqs_resto', 'gps_date', 'gps_photo', 'photo_azim', 'signed', 'deep_till', 'barrier_in', 'mulch', 'monitoring', 'previously', 'shape_area'], buttons).show()
+        case 'restoLineForm':
+            return formBuilder("restoLineForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'resto_code', 'resto_acti', 'te_act', 'non_list_a', 'comments', 'primary_ob', 'secondary_', 'project_na', 'treatment_', 'signed', 'mulch', 'deep_till', 'barrier_in', 'miles_rest', 'km_resto', 'gps_photo', 'photo_azim', 'monitoring', 'previously', 'qa_qc'], buttons).show()
+        case 'barrierForm':
+            return formBuilder("barrierForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'barr_code', 'barr_actio', 'barr_type', 'comments', 'primary_ob', 'secondary_', 'project_na', 'barr_miles', 'barr_km', 'previously', 'gps_photo', 'photo_azim', 'qa_qc'], buttons).show()
+        case 'distPointForm':
+            return formBuilder("distPointForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'use_freq', 'use_recent', 'dist_pt_ty', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'previously', 'project_na', 'estimate_s', 'treated', 'cultural', 't_e_specie', 'soil_vulne', 'dist_use', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c'], buttons).show()
+        case 'distPolyForm':
+            return formBuilder("distPolyForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'dist_poly_', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'acres_rest', 'kmsq_resto', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'site_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c', 'shape_area'], buttons).show()
+        case 'distLineForm':
+            return formBuilder("distLineForm" + formNameAddition, ['agency', 'ecosystem', 'gps_date', 'dist_code', 'dist_use', 'use_freq', 'use_recent', 'site_stabi', 'dist_crust', 'undist_cru', 'depth', 'width', 'type', 'plant_dama', 'accessibil', 'visibility', 'comments', 'primary_ob', 'secondary_', 'miles_dist', 'km_dist', 'treated', 'dist_sever', 'cultural', 't_e_specie', 'soil_vulne', 'gps_photo', 'photo_azim', 'qa_qc', 'old_dist_c'], buttons).show()
+    }
+}
+function formBuilder(formName, parts, buttons) {
+    console.log(buttons)
     var form = $("<form>", {id: formName, method:"POST", style:"display: none;"})
     for (var index in parts)
       form.append(formParts(parts[index]));
-    form.append($("<br>"));
-    form.append($("<input>", {type:"submit", class:"btn btn-primary", value: "Submit"}))
+    if (buttons) {
+        buttons.forEach(function(button){
+            form.append(button.clone(true, true))
+        });
+    }
     return form;
 }
 function getRegions(val){
