@@ -3,7 +3,12 @@ html, body {
   padding: 0;
   margin: 0;
 }
-
+li > a {
+  cursor: pointer;
+}
+li.disabled {
+  background-color: lightgrey !important;
+}
 @media only screen 
   and (min-device-width: 280px) 
   and (max-device-width: 350px)
