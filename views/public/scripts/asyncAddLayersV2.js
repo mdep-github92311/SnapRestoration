@@ -16,6 +16,7 @@ var createLayer = function () {
                         _context.next = 6;
                         return L.geoJson(data, {
                             pane: 'Lines',
+                            type: 'Barrier',
                             style: myBarrierLines,
                             onEachFeature: onEachBarrier
                         }).addTo(map);
@@ -33,6 +34,7 @@ var createLayer = function () {
                         _context.next = 13;
                         return L.geoJson(data, {
                             pane: 'Lines',
+                            type: 'Disturbance',
                             style: myStyleLines,
                             onEachFeature: onEachDistLine
                         }).addTo(map);
@@ -50,6 +52,7 @@ var createLayer = function () {
                         _context.next = 20;
                         return L.geoJson(data, {
                             pane: 'Points',
+                            type: 'Disturbance',
                             style: myStyleDistPoints,
                             // changing the default point makers to circle markers
                             pointToLayer: pointToLayer,
@@ -69,6 +72,7 @@ var createLayer = function () {
                         _context.next = 27;
                         return L.geoJson(data, {
                             pane: 'Polygons',
+                            type: 'Disturbance',
                             style: myStyleDistPoly,
                             onEachFeature: onEachDistPoly
                         }).addTo(map);
@@ -85,7 +89,8 @@ var createLayer = function () {
                     case 32:
                         _context.next = 34;
                         return L.geoJson(data, {
-                            pane: 'Points',
+                            pane: 'Polygons',
+                            type: 'Disturbance',
                             style: myStyleDistPoly,
                             // changing the default point makers to circle markers
                             pointToLayer: pointToLayer,
@@ -105,6 +110,7 @@ var createLayer = function () {
                         _context.next = 41;
                         return L.geoJson(data, {
                             pane: 'Polygons',
+                            type: 'Restoration',
                             style: myStyleRestoPoly,
                             onEachFeature: onEachRestoPoly
                         }).addTo(map);
@@ -122,6 +128,7 @@ var createLayer = function () {
                         _context.next = 48;
                         return L.geoJson(data, {
                             pane: 'Lines',
+                            type: 'Restoration',
                             style: myStyleLines,
                             onEachFeature: onEachRestoLine
                         }).addTo(map);
@@ -139,6 +146,7 @@ var createLayer = function () {
                         _context.next = 55;
                         return L.geoJson(data, {
                             pane: 'Points',
+                            type: 'Restoration',
                             style: myStylePoints,
                             // changing the default point makers to circle markers
                             pointToLayer: pointToLayer,
@@ -157,7 +165,8 @@ var createLayer = function () {
                     case 60:
                         _context.next = 62;
                         return L.geoJson(data, {
-                            pane: 'Points',
+                            pane: 'Polygons',
+                            type: 'Restoration',
                             style: myStylePoints,
                             // changing the default point makers to circle markers
                             pointToLayer: pointToLayer,
@@ -960,7 +969,6 @@ function fixCollection(data) {
 }
 
 var dbCache = new Dexie('CachedData');
-
 dbCache.version(1).stores({
     blmRegion: '++id, type, geometry',
     fsRegion: '++id, type, geometry',

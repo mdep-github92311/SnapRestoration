@@ -610,33 +610,35 @@ html
             #searchBarTag
               #searchFilters(style="display:none;")
                 button.btn.btn-danger#filterBack Back
+                #filterError.alert.alert-danger(role='alert', style='margin-top: 10px; display: none;')
+                  | Error: No filters were selected
                 h5 Select Feature Type
                 ul.nav.nav-pills.nav-justified.filterType
                   li(role='presentation', style='background-color: white;')
-                    a(data-toggle='tab', value='D' ) Disturbance
+                    a(data-toggle='tab', value='Disturbance' ) Disturbance
                   li(role='presentation', style='background-color: white;')
-                    a(data-toggle='tab', value='R' ) Restoration
+                    a(data-toggle='tab', value='Restoration' ) Restoration
                   li(role='presentation', style='background-color: white;')
-                    a(data-toggle='tab', value='B' ) Barrier
+                    a(data-toggle='tab', value='Barrier' ) Barrier
                 h5 Select Feature Shape
                 ul.nav.nav-pills.nav-justified.filterShape
                   li(role='presentation', style='background-color: white;')
-                    a#markerFilter(data-toggle='tab', value='M' ) Point
+                    a#markerFilter(data-toggle='tab', value='Points' ) Point
                   li(role='presentation', style='background-color: white;')
-                    a#lineFilter(data-toggle='tab', value='L' ) Line
+                    a#lineFilter(data-toggle='tab', value='Lines' ) Line
                   li(role='presentation', style='background-color: white;')
-                    a#polygonFilter(data-toggle='tab', value='P' ) Polygon
+                    a#polygonFilter(data-toggle='tab', value='Polygon' ) Polygon
                 #filterForm
                 #filterSearchButton(class="btn btn-primary") Save Filters
               #searchStep
                 .input-group
                   span.input-group-btn
+                    button#filterClear.btn.btn-warning(type='button' style='display: none;') Clear
                     button#filterSearch.btn.btn-default(type='button') Filters
-                    button#filterClear.btn.btn-warning(type='button' style='display: none;') Clear Filters
                   input#searchID.form-control(type='text', placeholder='Search by keyword...')
                   span.input-group-btn
                     button#searchButton.btn.btn-default(type='button') Search
-                table(style="width: 100%")
+                table.table.table-striped-faded(style="width: 100%")
                   thead
                   tr
                     th GID
@@ -648,7 +650,6 @@ html
                     th Date
                     th Observer
                     th T&E Species
-                    th(style="width: 56px") Action
                   tbody#filteredFeatures
             #filters
               

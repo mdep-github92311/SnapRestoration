@@ -217,9 +217,9 @@ h1 {
 }
 
 table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      text-align: center;
+      /*border: 1px solid black;*/
+      /*border-collapse: collapse;*/
+      /*text-align: center;*/
 }
 
 .drawingController {
@@ -371,4 +371,17 @@ However, delay the fade out process for 2.5 seconds */
 @keyframes fadeout {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
+}
+
+.table-striped-faded>tbody>tr:nth-of-type(odd) {
+    background-color: #ffffff80;
+}
+
+.table-striped-faded>tbody>tr:nth-of-type(even) {
+    background-color: #dadada80;
+}
+
+.table-striped-faded>tbody>tr:hover {
+    background-color: #dadada;
+    cursor: pointer;
 }
