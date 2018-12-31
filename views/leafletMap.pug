@@ -596,9 +596,13 @@ html
                 span.glyphicon.glyphicon-menu-left(aria-hidden='true')
             #editSaved
             #savedContent
-              #savedCount
-              table#tableSubs
-                #saved
+              table.table.table-striped-faded#tableSubs
+                thead
+                  tr  
+                    th Type/Shape
+                    th Region
+                    th Date
+                tbody#saved
               br
               button#sync.btn.btn-primary Submit All Forms
               
@@ -640,15 +644,15 @@ html
                     button#searchButton.btn.btn-default(type='button') Search
                 table.table.table-striped-faded(style="width: 100%")
                   thead
-                  tr
-                    th GID
-                    th Type/Shape
-                    th Agency
-                    th Region
-                    th Code
-                    th Date
-                    th Observer
-                    th T&E Species
+                    tr
+                      th GID
+                      th Type/Shape
+                      th Agency
+                      th Region
+                      th Code
+                      th Date
+                      th Observer
+                      th T&E Species
                   tbody#filteredFeatures
             #filters
               
