@@ -58,6 +58,7 @@ async function createLayer(data, layerName) {
             case 'Barrier':
                 const barrier = await L.geoJson(data, {
                     pane: 'Lines',
+                    type: 'Barrier',
                     style: myBarrierLines,
                     onEachFeature: onEachBarrier
                 }).addTo(map);
@@ -70,6 +71,7 @@ async function createLayer(data, layerName) {
             case 'Disturbance Lines':
                 const distLines = await L.geoJson(data, {
                     pane: 'Lines',
+                    type: 'Disturbance',
                     style: myStyleLines,
                     onEachFeature: onEachDistLine
                 }).addTo(map);
@@ -82,6 +84,7 @@ async function createLayer(data, layerName) {
             case 'Disturbance Points':
                 const distPoints = await L.geoJson(data, {
                     pane: 'Points',
+                    type: 'Disturbance',
                     style: myStyleDistPoints,
                     // changing the default point makers to circle markers
                     pointToLayer: pointToLayer,
@@ -96,6 +99,7 @@ async function createLayer(data, layerName) {
             case 'Disturbance Polygon':
                 const distPoly = await L.geoJson(data, {
                     pane: 'Polygons',
+                    type: 'Disturbance',
                     style: myStyleDistPoly,
                     onEachFeature: onEachDistPoly
                 }).addTo(map);
@@ -107,7 +111,8 @@ async function createLayer(data, layerName) {
 
             case 'Disturbance Poly Cent':
                 const distPolyCent = await L.geoJson(data, {
-                    pane: 'Points',
+                    pane: 'Polygons',
+                    type: 'Disturbance',
                     style: myStyleDistPoly,
                     // changing the default point makers to circle markers
                     pointToLayer: pointToLayer,
@@ -122,6 +127,7 @@ async function createLayer(data, layerName) {
             case 'Restoration Polygon':
                 const restoPoly = await L.geoJson(data, {
                     pane: 'Polygons',
+                    type: 'Restoration',
                     style: myStyleRestoPoly,
                     onEachFeature: onEachRestoPoly
                 }).addTo(map);
@@ -134,6 +140,7 @@ async function createLayer(data, layerName) {
             case 'Restoration Lines':
                 const restoLine = await L.geoJson(data, {
                     pane: 'Lines',
+                    type: 'Restoration',
                     style: myStyleLines,
                     onEachFeature: onEachRestoLine
                 }).addTo(map);
@@ -146,6 +153,7 @@ async function createLayer(data, layerName) {
             case 'Restoration Points':
                 const restoPoint = await L.geoJson(data, {
                     pane: 'Points',
+                    type: 'Restoration',
                     style: myStylePoints,
                     // changing the default point makers to circle markers
                     pointToLayer: pointToLayer,
@@ -159,7 +167,8 @@ async function createLayer(data, layerName) {
 
             case 'Restoration Poly Cent':
                 const restoPolyCent = await L.geoJson(data, {
-                    pane: 'Points',
+                    pane: 'Polygons',
+                    type: 'Restoration',
                     style: myStylePoints,
                     // changing the default point makers to circle markers
                     pointToLayer: pointToLayer,

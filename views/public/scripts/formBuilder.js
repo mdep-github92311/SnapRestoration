@@ -169,6 +169,9 @@ function formParts(part) {
             var today = now.getFullYear()+"-"+(month)+"-"+(day);
             return $("<label>", {for: "gps_date"}).text("Date Collected: ").append($("<input>", {class: "form-control", name:"gps_date", type:"date", value: today, required: 'required'}))
             break;
+        case 'gps_date_search':
+            return $("<label>", {for: "gps_date"}).text("Date Collected: ").append($("<input>", {class: "form-control", name:"gps_date", type:"date"}))
+            break;
         case 'gps_photo':
             return $("<label>", {for:"gps_photo"}).text("Is there a GPS tagged photo? ").append($("<select>", {class:"form-control", name:"gps_photo"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
@@ -269,6 +272,9 @@ function formParts(part) {
             break;
         case 't_e_specie':
             return $("<label>", {for:"t_e_specie"}).text('Are Threatened or Endangered Species impacted? (If "Yes" include species names in comments)').append($("<select>", {class:"form-control", name:"t_e_specie", required: 'required'}).append($("<option>", {value: "Yes", selected: "selected"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            break;
+        case 't_e_specie_search':
+            return $("<label>", {for:"t_e_specie"}).text('Are Threatened or Endangered Species impacted?').append($("<select>", {class:"form-control", name:"t_e_specie"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
             break;
         case 'te_act':
             return $("<label>", {for:"te_act"}).text("Threatened or Endangered Species Activity: ").append($("<select>", {class:"form-control", name:"te_act"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")).append($("<option>", {value: "N/A"}).text("N/A*")))

@@ -165,6 +165,7 @@ $(document).ready(function () {
             db.add(newRecord)
             .then(function (data) {
               console.log('Form updated: ' + data);
+              loadSubs();
             })
             .catch(Dexie.BulkError, function (err) {
               console.warn(err);
@@ -220,164 +221,50 @@ $(document).ready(function () {
         });
     }, 400);
   }
-  
-  var tableContent = $("#saved");
-  var counts = 0;
-  loadSubs();
-  function loadSubs() {
-    counts = 0;
-    tableContent.html("");
-    db.barrierSub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.barrierSub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Barrier: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('barrID'+num)+">Edit</button></td></tr>");
-            const index = num;
-            $('#barrID'+num).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'barriers', index);
-            });
-            num++;
-          });
-        });
-      }
-    });
-    db.restoLineSub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.restoLineSub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Restoration Line: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('restoLID'+num)+">Edit</button></td></tr>");
-            const index = num;
-            $('#restoLID'+(num)).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'restoLines', index);
-            });
-            num++;
-          });
-          
-          //console.log(test);
-        });
-      }
-    });
-    db.restoPointSub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.restoPointSub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Restoration Point: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('restoPID'+(num))+">Edit</button></td></tr>");
-            const index = num;
-            
-            $('#restoPID'+(num)).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'restoPoints', index);
-            });
-            num++;
-          });
-          
-          //console.log(test);
-        });
-      }
-    });
-    db.restoPolySub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.restoPolySub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Restoration Polygon: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('restoPyID'+(num))+">Edit</button></td></tr>");
-            const index = num;
-            
-            $('#restoPyID'+(num)).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'restoPolys', index);
-            });
-            num++;
-          });
-          
-          //console.log(test);
-        });
-      }
-    });
-    db.distLineSub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.distLineSub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Disturbance Line: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('distLID'+(num))+">Edit</button></td></tr>");
-            const index = num;
-            
-            $('#distLID'+(num)).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'distLines', index);
-            });
-            num++;
-          });
-          
-          //console.log(test);
-        });
-      }
-    });
-    db.distPointSub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.distPointSub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Disturbance Point: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('distPID'+(num))+">Edit</button></td></tr>");
-            const index = num;
-            $('#distPID'+(num)).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'distPoints', index);
-            });
-            num++;
-          });
-          
-          //console.log(test);
-        });
-      }
-    });
-    db.distPolySub.count(function (count) { 
-      if (count > 0) {
-        counts += count;
-        db.distPolySub.toArray(function (test) {
-          var num = 0;
-          test.forEach(function(data){
-            tableContent.append("<tr><td>Disturbance Polygon: "+data.properties.region+"</td><td><button class='btn btn-default' id="+('distPyID'+(num))+">Edit</button></td></tr>");
-            const index = num;
-            
-            $('#distPyID'+(num)).click(function(){
-              //console.log('Button ID: ' + (num));
-              $("#savedContent").css("display", "none");
-              editForm(data,'distPolys', index);
-            });
-            num++;
-          });
-          
-          //console.log(test);
-        });
-      }
-    });
-    setTimeout(function(){ 
-      var items = document.getElementById("saved");
-      document.getElementById("tableSubs").appendChild(items);
-      document.getElementById("tableSubs").style.textAlign = "center";
-      document.getElementById('savedCount').innerHTML = "Total entries to be submitted: " + counts;
-    }, 1000);
+  function getTypeName(name){
+    switch (name){
+      case 'barrierSub':
+        return 'Barrier'
+      case 'distLineSub':
+        return 'Disturbance Line'
+      case 'distPointSub':
+        return 'Disturbance Point'
+      case 'distPolySub':
+        return 'Disturbance Polygon'
+      case 'restoLineSub':
+        return 'Restoration Line'
+      case 'restoPointSub':
+        return 'Restoration Point'
+      case 'restoPolySub':
+        return 'Restoration Polygon'
+    }
   }
-  $(document).on('click', "#sync", function () {
+  function loadSubs() {
+    $("#saved").html("");
+    for(let table in db._allTables){
+      db[table].toArray(function(array){
+        var num = 0;
+        array.forEach(function(data){
+          const index = num
+          var row = $("<tr>").append(
+                                "<td>"+getTypeName(table)+"</td>" +
+                                "<td>"+data.properties.region+"</td>" +
+                                "<td>"+data.properties.gps_date+"</td>")
+                             .click(function(){
+                                $("#savedContent").css("display", "none");
+                                console.log(index)
+                                editForm(data,table.replace("Sub", "s"), index);
+                             });
+          $("#saved").append(row)
+          num++;
+        })
+      })
+    }
     
+  }
+  loadSubs();
+  
+  $(document).on('click', "#sync", function () {
     if(!loggedIn){
       console.log('Not logged in')
       popupMessage('Please login to submit');
