@@ -1,0 +1,10 @@
+{
+  "name": "FeatureCounts",
+  "options": {
+    "idInjection": false,
+    "postgresql": {
+      "schema": "public",
+      "table": ""
+    }
+  }
+}

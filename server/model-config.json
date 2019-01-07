@@ -15,6 +15,7 @@
       "../common/models/Roads",
       "../common/models/Snap_Soil",
       "../common/models/Submissions",
+      "../common/models/Misc",
       "./models",
       "../Barrier",
       "../Boundaries",
@@ -23,7 +24,8 @@
       "../Restoration",
       "../Roads",
       "../Snap_Soil",
-      "../Submissions"
+      "../Submissions",
+      "../Misc"
     ],
     "mixins": [
       "loopback/common/mixins",
@@ -723,6 +725,18 @@
         "sharedMethods": {
           "*": false,
           "restoPolyCentNPSGeoJSON": true
+        }
+      }
+    }
+  },
+  "FeatureCounts": {
+    "dataSource": "mip",
+    "public": true,
+    "options": {
+    "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "featureCountsGeoJSON": true
         }
       }
     }
