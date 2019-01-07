@@ -981,21 +981,6 @@ html(manifest='cache.manifest', type='text/cache-manifest')
           control.addOverlay(roads, 'Roads', {groupName: 'Misc', expanded: false});
           control.addOverlay(soil, 'Soil', {groupName: 'Misc', expanded: false});
           
-          // var offlineLayers = null;
-          // function onAreaClick(feature, layer) {
-          //   $(layer).on('click', function () {
-          //     map.flyToBounds([layer._bounds._northEast,layer._bounds._southWest]); 
-          //     map.removeLayer(offlineLayers);
-              
-              
-          //   });
-          // }
-          // $.getJSON('/public/geoJSON/offlineAreas.json', function (data) {
-          //   offlineLayers = L.geoJson(data, {
-          //     onEachFeature: onAreaClick
-          //   }).addTo(map);
-          // });
-          //control.addOverlay(soil, 'soil', {groupName: 'soil', expanded: true});
           // creates a temp layer so it can store the new features
           var editableLayers = new L.FeatureGroup();
           map.addLayer(editableLayers);

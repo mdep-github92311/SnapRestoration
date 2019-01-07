@@ -119,6 +119,7 @@ li.disabled {
   color: black;
   font-size: 14px;
   padding: 0;
+  width: 100%;
 }
 
 #logoutTab {
