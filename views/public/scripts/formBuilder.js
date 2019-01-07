@@ -180,7 +180,7 @@ function formParts(part) {
             return $("<label>", {for: "gps_date"}).text("Date Collected: ").append($("<input>", {class: "form-control", name:"gps_date", type:"date"}))
             break;
         case 'gps_photo':
-            return $("<label>", {for:"gps_photo"}).text("Is there a GPS tagged photo? ").append($("<select>", {class:"form-control", name:"gps_photo"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No")))
+            return $("<br>").add($("<label>", {for:"gps_photo"}).text("Is there a GPS tagged photo? ").append($("<select>", {class:"form-control", name:"gps_photo"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "Yes"}).text("Yes")).append($("<option>", {value: "No"}).text("No"))))
             break;
         case 'km_dist':
             return $("<label>", {for: "km_dist"}).text("Km Disturbed: ").append($("<input>", {class: "form-control", name:"km_dist", type:"text"}))
@@ -219,7 +219,7 @@ function formParts(part) {
         //     return $("<label>", {for: "old_distco"}).text("Old Disturbance Code: ").append($("<input>", {class: "form-control", name:"old_distco", type:"text"}))
         //     break;
         case 'photo_azim':
-            return $("<label>", {for: "photo_azim"}).text("Which way is photo facing (degrees)? ").append($("<input>", {class: "form-control", name:"photo_azim", type:"number", min:1, max:360}))
+            return $("<label>", {for: "photo_azim"}).text("Which way is photo facing (degrees)? ").append($("<input>", {class: "form-control", name:"photo_azim", type:"number", min:1, max:360})).add($("<br>"))
             break;
         case 'plant_dama':
             return $("<label>", {for:"plant_dama"}).text("Plant Canopy Damage: ").append($("<select>", {class:"form-control", name:"plant_dama"}).append($("<option>", {selected: "selected"})).append($("<option>", {value: "0 - Intact"}).text("0 - Intact")).append($("<option>", {value: "1 - Most symmetrical"}).text("1 - Most symmetrical")).append($("<option>", {value: "2 - Many irregular, few dissected"}).text("2 - Many irregular, few dissected")).append($("<option>", {value: "3 - Many dissected, few highly dissected"}).text("3 - Many dissected, few highly dissected")).append($("<option>", {value: "4 - Many highly dissected, roots exposed"}).text("4 - Many highly dissected, roots exposed")).append($("<option>", {value: "5 - Many with roots exposed or detached"}).text("5 - Many with roots exposed or detached")).append($("<option>", {value: "6 - Denuded"}).text("6 - Denuded")))
