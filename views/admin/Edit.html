@@ -167,7 +167,16 @@
     var invalidated = false;
     var pageNumber = 0;
 
-
+    $.getJSON('../../api/FeatureCounts/featureCountsGeoJSON', function(data) {
+      console.log(data)
+      $("#barriersFilterCount").html(data[0]["barrier"]);
+      $("#restoPointsFilterCount").html(data[0]["resto_point"]);
+      $("#restoLinesFilterCount").html(data[0]["resto_line"]);
+      $("#restoPolysFilterCount").html(data[0]["resto_polygon"]);
+      $("#distPointsFilterCount").html(data[0]["dist_point"]);
+      $("#distLinesFilterCount").html(data[0]["dist_line"]);
+      $("#distPolysFilterCount").html(data[0]["dist_polygon"]);
+    });
     function populateModal(data, type) {
       var style;
       var bounds = null;
@@ -294,14 +303,12 @@
     function getNewFilter(type){
       var filter = $('#'+type+'Filter');
       pageNumber = 0;
-      filter.parent().find('li.active').children()[0].innerHTML = '';
       filter.parent().find('li.active').removeClass('active');
       filter.addClass('active');
       // table.fnClearTable();
       $("#tableItems").html('<div class="loader"></div>');
       getData(type).then(function(defs) {
         $("#tableItems").html('');
-        $(filter.children()[0]).html($("<span>", { class: 'badge' }).html(defs.overallCount))
         currRecords = defs;
         currFilter = type;
         shownRecords = defs[currFilter];

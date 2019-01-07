@@ -1514,4 +1514,13 @@ exports.resto_poly_centroid_nps_query =
       mulch, monitoring, previously, orig_fid) As l)) As properties
     FROM rest_poly_centroid As lg WHERE agency = 3) As f) As fc`;
 
+exports.feature_counts_query = 
+    `SELECT  
+      ( SELECT COUNT(*) FROM   barrier ) AS barrier,
+      ( SELECT COUNT(*) FROM   dist_line ) AS dist_line,
+      ( SELECT COUNT(*) FROM   dist_point ) AS dist_point,
+      ( SELECT COUNT(*) FROM   dist_polygon ) AS dist_polygon,
+      ( SELECT COUNT(*) FROM   resto_line ) AS resto_line,
+      ( SELECT COUNT(*) FROM   resto_point ) AS resto_point,
+      ( SELECT COUNT(*) FROM   resto_polygon ) AS resto_polygon;`;
     

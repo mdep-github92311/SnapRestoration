@@ -309,9 +309,9 @@
 
     getSubmissions('AllSubs', '').then(function(defs) {
       if (defs.barriers.features != null)
-        $("#barrierFilterCount").html(defs.barriers.features.length);
+        $("#barriersFilterCount").html(defs.barriers.features.length);
       else
-        $("#barrierFilterCount").html(0);
+        $("#barriersFilterCount").html(0);
 
       if (defs.restoPoints.features != null)
         $("#restoPointsFilterCount").html(defs.restoPoints.features.length);
