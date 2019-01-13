@@ -147,8 +147,8 @@
           </table>
           <div id='editInfo'></div>
           <div id='buttons'>
+            <button id="confirmButton" class="btn btn-primary">Confirm Submission</button>
             <button id="editButton" class="btn btn-default">Edit</button>
-            <button id="confirmButton" class="btn btn-default">Confirm Submission</button>
           </div>
         </div>
 
@@ -183,10 +183,21 @@
         }
       })
     }
+    function changeCurrentFeature(update){
+      var count = 0;
+      for (let prop in currentData.properties){
+        if (update[count] != null)
+          currentData.properties[prop] = update[count]
+        count++;
+      }
+      $("#table-content-"+currentData.properties.gid)[0].children[1].innerHTML = getAgency(currentData.properties.agency);
+      $("#table-content-"+currentData.properties.gid)[0].children[2].innerHTML = currentData.properties.region;
+      $("#table-content-"+currentData.properties.gid)[0].children[3].innerHTML = currentData.properties.ecosystem;
+    }
 
     function populateModal(data, type) {
       var style;
-      this.currentData = data;
+      currentData = data;
       document.getElementById("editInfo").innerHTML = "";
       document.getElementById("tableMap").style.display = "";
       document.getElementById("buttons").style.display = "";
@@ -281,24 +292,20 @@
       $("#tableItems").html('<tr><td colspan=5>No more submissions for this filter</td></tr>');
       if (shownRecords != null && shownRecords.features != null){
         $("#tableItems").html('');
-        shownRecords.features.forEach(function(features) {
+        shownRecords.features.forEach(function(feature) {
           count++;
           if (count > (pageNumber + 1) * 10 || count - 1 < pageNumber * 10)
             return;
-          features.dataType = currFilter;
-          var agen = getAgency(features.properties.agency);
+          feature.dataType = currFilter;
+          var agen = getAgency(feature.properties.agency);
 
-          $("#tableItems").append($("<tr>").append($("<td>").html(features.properties.gid))
+          $("#tableItems").append($("<tr>", {id: "table-content-"+feature.properties.gid}).append($("<td>").html(feature.properties.gid))
             .append($("<td>").html(agen))
-            .append($("<td>").html(features.properties.region ? features.properties.region : features.properties.regions ? features.properties.regions : ""))
-            .append($("<td>").html(features.properties.ecosystem))
-            .append($("<td>").append($("<a>", { id: "feature" + count, 'data-toggle': "modal", 'data-target': "#myModal", href: "#" })
+            .append($("<td>").html(feature.properties.region ? feature.properties.region : feature.properties.regions ? feature.properties.regions : ""))
+            .append($("<td>").html(feature.properties.ecosystem))
+            .append($("<td>").append($("<a>", { id: "feature" + count, 'data-toggle': "modal", 'data-target': "#myModal", href: "#" }).click(function() { populateModal(feature, "Test"); })
               .append($("<button>", { type: "button", class: "btn btn-default btn-sm" })
-                .append($("<span>", { class: "glyphicon glyphicon-edit", ariaHidden: "true" }).html("Edit"))))));
-
-          $("#feature" + count).click(function() {
-            populateModal(features, "Test");
-          });
+                .append($("<span>", { class: "glyphicon glyphicon-edit", ariaHidden: "true" }).html(" Review"))))));
 
         });
       }
@@ -464,8 +471,9 @@
         contentType: 'application/json',
         data: JSON.stringify(submission),
         success: function(data) {
-          window.location.reload(true);
-          console.log("success!!");
+          //window.location.reload(true);
+          changeCurrentFeature(submission);
+          populateModal(currentData);
           console.log(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -516,7 +524,7 @@
     function editForm() {
       var form;
       var buttons = [$("<br>"), 
-        $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Save Changes', value: 'Save Changes'}).click(function(){
+        $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Save', value: 'Save'}).click(function(){
           console.log("here")
           switch(currentData.dataType){
             case 'restoPoints':
@@ -541,6 +549,9 @@
               collectData('#distLineForm','/distLineSubFormEdit');
               break;
           }
+        }),
+        $("<button>", {type: 'button', class: 'btn btn-default', text: 'Back', value: 'Back'}).click(function(){
+          populateModal(currentData);
         })
       ];
       switch(currentData.dataType){
@@ -570,19 +581,23 @@
       $.each(currentData.properties, function(name, val){
         var $el = $('[name="'+name+'"]'),
            type = $el.attr('type');
-        switch(type){
-           case 'checkbox':
+        if ($el.length > 0)
+          switch(type){
+            case 'checkbox':
               $el.attr('checked', 'checked');
               break;
-           case 'radio':
+            case 'radio':
               $el.filter('[value="'+val+'"]').attr('checked', 'checked');
               break;
-           default:
-              if (val != null && val != '')
+            case 'date':
+            case 'text':
+              $el.val(val);
+              break;
+            default:
+              if (val != null && val != '' && val != ' ') 
                  $el.val(val);
-              else if (val == 0)
-                 $el.val(val);
-       }
+                
+         }
      });
     }
     
