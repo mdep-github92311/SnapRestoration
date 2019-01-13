@@ -13,7 +13,7 @@ exports.barrier_query =
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_leng) AS l) ) AS properties
-    FROM barrier AS lg) AS f) AS fc;`;
+    FROM barrier As lg ORDER BY gid) As f) As fc;`;
 
 exports.dist_line_query =
     `SELECT 
@@ -31,7 +31,7 @@ exports.dist_line_query =
       undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
       km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_leng) As l)) 
       As properties
-    FROM dist_line As lg) As f) As fc`;
+    FROM dist_line As lg ORDER BY gid) As f) As fc`;
 
 exports.dist_point_query =
     `SELECT 
@@ -48,7 +48,7 @@ exports.dist_point_query =
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
       gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
-    FROM dist_point As lg) As f) As fc`;
+    FROM dist_point As lg ORDER BY gid) As f) As fc`;
 
 exports.dist_poly_query =
     `SELECT 
@@ -67,7 +67,7 @@ exports.dist_poly_query =
       kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c,
       shape_leng, shape_area) 
       As l)) As properties
-    FROM dist_polygon As lg) As f) As fc`;
+    FROM dist_polygon As lg ORDER BY gid) As f) As fc`;
 
 exports.dist_poly_centroid_query =
     `SELECT 
@@ -85,7 +85,7 @@ exports.dist_poly_centroid_query =
       undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
       kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
-    FROM dist_poly_centroid As lg) As f) As fc`;
+    FROM dist_poly_centroid As lg ORDER BY gid) As f) As fc`;
 
 exports.restoPoint_query =
     `SELECT 
@@ -101,7 +101,7 @@ exports.restoPoint_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
       sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
-    FROM resto_point As lg) As f) As fc`;
+    FROM resto_point As lg ORDER BY gid) As f) As fc`;
 
 exports.resto_line_query =
     `SELECT 
@@ -118,7 +118,7 @@ exports.resto_line_query =
       gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_leng) As l)) As properties
-    FROM resto_line As lg) As f) As fc`;
+    FROM resto_line As lg ORDER BY gid) As f) As fc`;
 
 exports.resto_poly_query =
     `SELECT 
@@ -135,7 +135,7 @@ exports.resto_poly_query =
       gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
        project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
        mulch, monitoring, previously, shape_leng, shape_area) As l)) As properties
-    FROM resto_polygon As lg) As f) As fc`;
+    FROM resto_polygon As lg ORDER BY gid) As f) As fc`;
 
 exports.resto_poly_centroid_query =
     `SELECT 
@@ -152,7 +152,7 @@ exports.resto_poly_centroid_query =
       gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
       project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
       mulch, monitoring, previously, orig_fid) As l)) As properties
-    FROM rest_poly_centroid As lg) As f) As fc`;
+    FROM rest_poly_centroid As lg ORDER BY gid) As f) As fc`;
 
 exports.blm_regions_query =
     `SELECT 
@@ -304,7 +304,7 @@ exports.barrier_sub_query =
     FROM (SELECT
       gid, agency, region, ecosystem, gps_date, barr_code, barr_actio, barr_type, comments, primary_ob, secondary_,
       project_na, barr_miles, barr_km, previously, gps_photo, photo_azim, qa_qc, shape_stle, shape_leng) AS l) ) AS properties
-    FROM barrier_sub AS lg) AS f) AS fc;`;
+    FROM barrier_sub As lg ORDER BY gid) As f) As fc;`;
 
 exports.dist_line_sub_query =
     `SELECT 
@@ -322,7 +322,7 @@ exports.dist_line_sub_query =
       undist_cru, depth, width, type, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, miles_dist, 
       km_dist, treated, dist_sever, cultural, t_e_specie, gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c, shape_stle, shape_leng) As l)) 
       As properties
-    FROM dist_line_sub As lg) As f) As fc`;
+    FROM dist_line_sub As lg ORDER BY gid) As f) As fc`;
 
 exports.dist_point_sub_query =
     `SELECT 
@@ -339,7 +339,7 @@ exports.dist_point_sub_query =
       gid, agency, region, ecosystem, gps_date, dist_code, dist_use, use_freq, use_recent, dist_pt_ty, accessibil, 
       visibility, comments, primary_ob, secondary_, previously, project_na, estimate_s, treated, cultural, t_e_specie, 
       gps_photo, soil_vulne, photo_azim, qa_qc, old_dist_c) As l)) As properties
-    FROM dist_point_sub As lg) As f) As fc`;
+    FROM dist_point_sub As lg ORDER BY gid) As f) As fc`;
 
 exports.dist_poly_sub_query =
     `SELECT 
@@ -357,7 +357,7 @@ exports.dist_poly_sub_query =
       undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
       kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, shape_star, shape_stle, shape_leng, shape_area) 
       As l)) As properties
-    FROM dist_polygon_sub As lg) As f) As fc`;
+    FROM dist_polygon_sub As lg ORDER BY gid) As f) As fc`;
 
 exports.dist_poly_centroid_sub_query =
     `SELECT 
@@ -375,7 +375,7 @@ exports.dist_poly_centroid_sub_query =
       undist_cru, depth, dist_poly_, plant_dama, accessibil, visibility, comments, primary_ob, secondary_, acres_rest, 
       kmsq_resto, treated, dist_sever, cultural, t_e_specie, gps_photo, site_vulne, photo_azim, qa_qc, old_dist_c, 
       orig_fid) As l)) As properties
-    FROM dist_poly_centroid_sub As lg) As f) As fc`;
+    FROM dist_poly_centroid_sub As lg ORDER BY gid) As f) As fc`;
     
 exports.restoPointSub_query =
     `SELECT 
@@ -391,7 +391,7 @@ exports.restoPointSub_query =
     FROM (SELECT 
       gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, comments, primary_ob, secondary_, project_na, 
       sqft_resto, gps_photo, photo_azim, previously, qa_qc) As l)) As properties 
-    FROM resto_point_sub As lg) As f) As fc`;
+    FROM resto_point_sub As lg ORDER BY gid) As f) As fc`;
 
 exports.resto_line_sub_query =
     `SELECT 
@@ -408,7 +408,7 @@ exports.resto_line_sub_query =
       gid, agency, region, ecosystem, gps_date, resto_code, resto_acti, te_act, non_list_a, comments, primary_ob, 
       secondary_, project_na, treatment_, signed, mulch, deep_till, barrier_in, miles_rest, km_resto, gps_photo, 
       photo_azim, monitoring, previously, qa_qc, shape_stle, shape_leng) As l)) As properties
-    FROM resto_line_sub As lg) As f) As fc`;
+    FROM resto_line_sub As lg ORDER BY gid) As f) As fc`;
 
 exports.resto_poly_sub_query =
     `SELECT 
@@ -425,7 +425,7 @@ exports.resto_poly_sub_query =
       gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
        project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
        mulch, monitoring, previously, shape_star, shape_stle, shape_leng, shape_area) As l)) As properties
-    FROM resto_polygon_sub As lg) As f) As fc`;
+    FROM resto_polygon_sub As lg ORDER BY gid) As f) As fc`;
 
 exports.resto_poly_centroid_sub_query =
     `SELECT 
@@ -442,7 +442,7 @@ exports.resto_poly_centroid_sub_query =
       gid, agency, region, ecosystem, resto_code, resto_acti, te_action, non_list_a, comments, primary_ob, secondary_, 
       project_na, treatment_, acres_rest, kmsq_resto, gps_date, gps_photo, photo_azim, signed, deep_till, barrier_in, 
       mulch, monitoring, previously, orig_fid) As l)) As properties
-    FROM rest_poly_centroid_sub As lg) As f) As fc`;
+    FROM rest_poly_centroid_sub As lg ORDER BY gid) As f) As fc`;
     
     
     
