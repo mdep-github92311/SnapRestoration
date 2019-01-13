@@ -147,8 +147,8 @@
           </table>
           <div id='editInfo'></div>
           <div id='buttons'>
+            <button id="confirmButton" class="btn btn-primary">Confirm Submission</button>
             <button id="editButton" class="btn btn-default">Edit</button>
-            <button id="confirmButton" class="btn btn-default">Confirm Submission</button>
           </div>
         </div>
 
@@ -305,7 +305,7 @@
             .append($("<td>").html(feature.properties.ecosystem))
             .append($("<td>").append($("<a>", { id: "feature" + count, 'data-toggle': "modal", 'data-target': "#myModal", href: "#" }).click(function() { populateModal(feature, "Test"); })
               .append($("<button>", { type: "button", class: "btn btn-default btn-sm" })
-                .append($("<span>", { class: "glyphicon glyphicon-edit", ariaHidden: "true" }).html("Edit"))))));
+                .append($("<span>", { class: "glyphicon glyphicon-edit", ariaHidden: "true" }).html(" Review"))))));
 
         });
       }
@@ -524,7 +524,7 @@
     function editForm() {
       var form;
       var buttons = [$("<br>"), 
-        $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Save Changes', value: 'Save Changes'}).click(function(){
+        $("<button>", {type: 'button', class: 'btn btn-primary', text: 'Save', value: 'Save'}).click(function(){
           console.log("here")
           switch(currentData.dataType){
             case 'restoPoints':
@@ -549,6 +549,9 @@
               collectData('#distLineForm','/distLineSubFormEdit');
               break;
           }
+        }),
+        $("<button>", {type: 'button', class: 'btn btn-default', text: 'Back', value: 'Back'}).click(function(){
+          populateModal(currentData);
         })
       ];
       switch(currentData.dataType){
