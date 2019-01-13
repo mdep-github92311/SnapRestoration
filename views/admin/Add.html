@@ -183,10 +183,21 @@
         }
       })
     }
+    function changeCurrentFeature(update){
+      var count = 0;
+      for (let prop in currentData.properties){
+        if (update[count] != null)
+          currentData.properties[prop] = update[count]
+        count++;
+      }
+      $("#table-content-"+currentData.properties.gid)[0].children[1].innerHTML = getAgency(currentData.properties.agency);
+      $("#table-content-"+currentData.properties.gid)[0].children[2].innerHTML = currentData.properties.region;
+      $("#table-content-"+currentData.properties.gid)[0].children[3].innerHTML = currentData.properties.ecosystem;
+    }
 
     function populateModal(data, type) {
       var style;
-      this.currentData = data;
+      currentData = data;
       document.getElementById("editInfo").innerHTML = "";
       document.getElementById("tableMap").style.display = "";
       document.getElementById("buttons").style.display = "";
@@ -288,7 +299,7 @@
           features.dataType = currFilter;
           var agen = getAgency(features.properties.agency);
 
-          $("#tableItems").append($("<tr>").append($("<td>").html(features.properties.gid))
+          $("#tableItems").append($("<tr>", {id: "table-content-"+feature.properties.gid}).append($("<td>").html(features.properties.gid))
             .append($("<td>").html(agen))
             .append($("<td>").html(features.properties.region ? features.properties.region : features.properties.regions ? features.properties.regions : ""))
             .append($("<td>").html(features.properties.ecosystem))
@@ -464,8 +475,9 @@
         contentType: 'application/json',
         data: JSON.stringify(submission),
         success: function(data) {
-          window.location.reload(true);
-          console.log("success!!");
+          //window.location.reload(true);
+          changeCurrentFeature(submission);
+          populateModal(currentData);
           console.log(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
