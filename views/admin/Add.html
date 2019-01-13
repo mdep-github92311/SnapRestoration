@@ -570,19 +570,23 @@
       $.each(currentData.properties, function(name, val){
         var $el = $('[name="'+name+'"]'),
            type = $el.attr('type');
-        switch(type){
-           case 'checkbox':
+        if ($el.length > 0)
+          switch(type){
+            case 'checkbox':
               $el.attr('checked', 'checked');
               break;
-           case 'radio':
+            case 'radio':
               $el.filter('[value="'+val+'"]').attr('checked', 'checked');
               break;
-           default:
-              if (val != null && val != '')
+            case 'date':
+            case 'text':
+              $el.val(val);
+              break;
+            default:
+              if (val != null && val != '' && val != ' ') 
                  $el.val(val);
-              else if (val == 0)
-                 $el.val(val);
-       }
+                
+         }
      });
     }
     
