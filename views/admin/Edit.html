@@ -135,7 +135,7 @@
           <h4 class="modal-title" id="myModalLabel">Edit Feature</h4>
         </div>
         <div class="modal-body">
-
+          <div id="update-alert" class="alert alert-success" hidden>Record updated successfully</div>
           <table id='tableMap'style="height: 100%; width: 100%">
             <td style="height: 100%; width: 50%">
               <div id="pInfo"></div>
@@ -191,9 +191,10 @@
       var style;
       var bounds = null;
       currentData = data;
-      document.getElementById("editInfo").innerHTML = "";
-      document.getElementById("tableMap").style.display = "";
-      document.getElementById("buttons").style.display = "";
+      $("#update-alert").hide();
+      $("#editInfo").html("")
+      $("#tableMap").show();
+      $("#buttons").show();
       if (this.mapMarkers != null)
         for (var i = 0; i < this.mapMarkers.length; i++) {
           this.map.removeLayer(this.mapMarkers[i]);
@@ -408,6 +409,7 @@
               //window.location.reload(true); 
               changeCurrentFeature(submission);
               populateModal(currentData);
+              $("#update-alert").show();
               console.log(data);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
