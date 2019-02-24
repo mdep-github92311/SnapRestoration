@@ -291,7 +291,7 @@
     function writeTables() {
       var item = document.getElementById('tableItems');
       var count = 0;
-      $("#pageNumber").html((pageNumber + 1) + "/" + (currRecords.overallCount > 0 ? Math.ceil(currRecords.overallCount / 10) : 1))
+      $("#pageNumber").html((pageNumber + 1) + "/" + (shownRecords.features.length > 0 ? Math.ceil(shownRecords.features.length / 10) : 1))
       $("#tableItems").html('<tr><td colspan=5>No more submissions for this filter</td></tr>');
       if (shownRecords != null && shownRecords.features != null){
         $("#tableItems").html('');
@@ -365,7 +365,7 @@
         currRecords = defs;
         currFilter = type;
         $("#tableItems").html('');
-        $(filter.children()[0]).html($("<span>", { class: 'badge' }).html(defs.overallCount))
+        //$(filter.children()[0]).html($("<span>", { class: 'badge' }).html(defs.overallCount))
         shownRecords = defs[currFilter];
         writeTables();
       });
