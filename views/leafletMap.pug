@@ -642,26 +642,18 @@ html
                   input#searchID.form-control(type='text', placeholder='Search by keyword...')
                   span.input-group-btn
                     button#searchButton.btn.btn-default(type='button') Search
-                div
-                  div.col-md-2 GID
-                  div.col-md-2 Type/Shape
-                  div.col-md-2 Agency
-                  div.col-md-2 Region
-                  div.col-md-2 Code
-                  div.col-md-2 T&E Species
-                div#filteredFeatures(style="width: 100%")
-                // table.table.table-striped-faded(style="width: 100%")
-                //   thead
-                //     tr
-                //       th GID
-                //       th Type/Shape
-                //       th Agency
-                //       th Region
-                //       th Code
-                //       th Date
-                //       th Observer
-                //       th T&E Species
-                //   tbody#filteredFeatures
+                table.table.table-striped-faded(style="width: 100%")
+                  thead
+                    tr
+                      th GID
+                      th Type/Shape
+                      th Agency
+                      th Region
+                      th Code
+                      th Date
+                      th Observer
+                      th T&E Species
+                  tbody#filteredFeatures
             #filters
               
           
