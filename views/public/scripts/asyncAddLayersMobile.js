@@ -417,11 +417,11 @@ async function getLayers() {
                 count += 5;
             }),
 
-            $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
                 createLayer(data[0].row_to_json, 'Restoration Poly Cent');
                 count += 5;
             }),
-            dbCache.blmRegion.count(function (records) {
+            await dbCache.blmRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.blmRegion.toArray(function (data) {
                         createLayer(data, 'BLM Regions');
@@ -448,7 +448,7 @@ async function getLayers() {
                 }
             }),
 
-            dbCache.fsRegion.count(function (records) {
+            await dbCache.fsRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.fsRegion.toArray(function (data) {
                         createLayer(data, 'FS Regions');
@@ -474,7 +474,7 @@ async function getLayers() {
                         })
                 }
             }),
-            dbCache.fwsRegion.count(function (records) {
+            await dbCache.fwsRegion.count(function (records) {
                 if (records > 0) {
                     dbCache.fwsRegion.toArray(function (data) {
                         createLayer(data, 'FWS Regions');
@@ -527,7 +527,7 @@ async function getLayers() {
                 }
             }),
 
-            dbCache.mdepBound.count(function (records) {
+            await dbCache.mdepBound.count(function (records) {
                 if (records > 0) {
                     dbCache.mdepBound.toArray(function (data) {
                         createLayer(data, 'MDEP Boundary');
@@ -554,7 +554,7 @@ async function getLayers() {
                 }
             }),
 
-            dbCache.mdiBound.count(function (records) {
+            await dbCache.mdiBound.count(function (records) {
                 if (records > 0) {
                     dbCache.mdiBound.toArray(function (data) {
                         createLayer(data, 'MDI Boundary');
@@ -581,7 +581,7 @@ async function getLayers() {
                 }
             }),
 
-            dbCache.nvCounties.count(function (records) {
+            await dbCache.nvCounties.count(function (records) {
                 if (records > 0) {
                     dbCache.nvCounties.toArray(function (data) {
                         createLayer(data, 'Nevada Counties');
@@ -607,7 +607,7 @@ async function getLayers() {
                         });
                 }
             }),
-            dbCache.snapExtent.count(function (records) {
+            await dbCache.snapExtent.count(function (records) {
                 if (records > 0) {
                     dbCache.snapExtent.toArray(function (data) {
                         createLayer(data, 'Snap Extent');
