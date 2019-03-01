@@ -103,8 +103,8 @@ function sortHeader(col) {
 function changePage(change) {
     $("#tableItems").html('')
     pageNumber += change;
-    if (pageNumber > Math.ceil(shownRecords.length / 10) - 1)
-        pageNumber = Math.ceil(shownRecords.length / 10) - 1;
+    if (pageNumber > Math.ceil(shownRecords.features.length / 10) - 1)
+        pageNumber = Math.ceil(shownRecords.features.length / 10) - 1;
     else if (pageNumber < 0)
         pageNumber = 0;
     writeTables(shownRecords);
