@@ -239,27 +239,54 @@ $(document).ready(function () {
         return 'Restoration Polygon'
     }
   }
+  function appendSubTable(tableName, data, index){
+    var row = $("<tr>").append(
+                          "<td>"+getTypeName(tableName)+"</td>" +
+                          "<td>"+data.properties.region+"</td>" +
+                          "<td>"+data.properties.gps_date+"</td>")
+                       .click(function(){
+                          $("#savedContent").css("display", "none");
+                          editForm(data,tableName.replace("Sub", "s"), index);
+                       });
+    $("#saved").append(row)
+  }
   function loadSubs() {
     $("#saved").html("");
-    for(let table in db._allTables){
-      db[table].toArray(function(array){
-        var num = 0;
-        array.forEach(function(data){
-          const index = num
-          var row = $("<tr>").append(
-                                "<td>"+getTypeName(table)+"</td>" +
-                                "<td>"+data.properties.region+"</td>" +
-                                "<td>"+data.properties.gps_date+"</td>")
-                             .click(function(){
-                                $("#savedContent").css("display", "none");
-                                console.log(index)
-                                editForm(data,table.replace("Sub", "s"), index);
-                             });
-          $("#saved").append(row)
-          num++;
-        })
+    db["barrierSub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("barrierSub", data, index);
       })
-    }
+    })
+    db["distLineSub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("distLineSub", data, index);
+      })
+    })
+    db["distPointSub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("distPointSub", data, index);
+      })
+    })
+    db["distPolySub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("distPolySub", data, index);
+      })
+    })
+    db["restoLineSub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("restoLineSub", data, index);
+      })
+    })
+    db["restoPointSub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("restoPointSub", data, index);
+      })
+    })
+    db["restoPolySub"].toArray(function(array){
+      array.forEach(function(data, index){
+        appendSubTable("restoPolySub", data, index);
+      })
+    })
     
   }
   loadSubs();
