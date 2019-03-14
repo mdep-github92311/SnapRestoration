@@ -33,7 +33,7 @@ app.use(session({
   duration: 60 * 60 * 1000,
   activeDuration: 10 * 60 * 1000,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: true, maxage: 60 * 60 * 1000 }
 }))
 
 
