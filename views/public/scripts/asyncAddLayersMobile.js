@@ -633,6 +633,57 @@ async function getLayers() {
                         })
                 }
             }),
+            control.addOverlay(L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
+                name: "Roads",
+                storage: "Roads",
+                mbtileLayerName: "roads",
+                maxNativeZoom: 10,
+                minNativeZoom: 10,
+                minZoom: 6,
+                bounds: L.latLngBounds([36.9, -116.2], [35.0, -113.9]),
+                //legendIcon: drawRect,	
+                style: function(feature) {
+                    return {
+                        //interactive: true,
+                        pane: 'Roads',
+                        renderer: canvasRenderer,
+                        weight: 0.5,
+                        color: '#000000',
+                        opacity: 1,
+                        // dashArray: '5, 3',
+                        fillColor: '#000000',
+                        fillOpacity: 0.4,
+                        popup: false
+                        // fill: false
+                    }
+                }
+            }), 'Roads', {groupName: 'Misc', expanded: false}),
+            
+            control.addOverlay(L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+                name: "Soil Vulnerability",
+                storage: "Soil Vulnerability",
+                mbtileLayerName: "soil",
+                maxNativeZoom: 10,
+                minNativeZoom: 10,
+                minZoom: 6,
+                bounds: L.latLngBounds([36.9, -116.2], [35.0, -113.9]),
+                //legendIcon: drawRect,	
+                style: function(feature) {
+                    return {
+                        //interactive: true,
+                        pane: 'Misc',
+                        renderer: canvasRenderer,
+                        weight: 0.5,
+                        color: '#7c3400',
+                        opacity: 1,
+                        // dashArray: '5, 3',
+                        fillColor: '#7c3400',
+                        fillOpacity: 0.4,
+                        popup: true
+                        // fill: false
+                    }
+                }
+            }), 'Soil Vulnerability', {groupName: 'Misc', expanded: false})
         ).then(function () {
             //$.LoadingOverlay("hide");
             console.log(count);

@@ -483,7 +483,7 @@ function _createLayer() {
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 143]]);
+    }, _callee, null, [[0, 143]]);
   }));
   return _createLayer.apply(this, arguments);
 }
@@ -828,31 +828,87 @@ function _getLayers() {
 
           case 61:
             _context2.t17 = _context2.sent;
+            _context2.t18 = control.addOverlay(L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
+              name: "Roads",
+              storage: "Roads",
+              mbtileLayerName: "roads",
+              maxNativeZoom: 10,
+              minNativeZoom: 10,
+              minZoom: 6,
+              bounds: L.latLngBounds([36.9, -116.2], [35.0, -113.9]),
+              //legendIcon: drawRect,	
+              style: function style(feature) {
+                return {
+                  //interactive: true,
+                  pane: 'Roads',
+                  renderer: canvasRenderer,
+                  weight: 0.5,
+                  color: '#000000',
+                  opacity: 1,
+                  // dashArray: '5, 3',
+                  fillColor: '#000000',
+                  fillOpacity: 0.4,
+                  popup: false // fill: false
 
-            _context2.t18 = function () {
+                };
+              }
+            }), 'Roads', {
+              groupName: 'Misc',
+              expanded: false
+            });
+            _context2.t19 = control.addOverlay(L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+              name: "Soil Vulnerability",
+              storage: "Soil Vulnerability",
+              mbtileLayerName: "soil",
+              maxNativeZoom: 10,
+              minNativeZoom: 10,
+              minZoom: 6,
+              bounds: L.latLngBounds([36.9, -116.2], [35.0, -113.9]),
+              //legendIcon: drawRect,	
+              style: function style(feature) {
+                return {
+                  //interactive: true,
+                  pane: 'Misc',
+                  renderer: canvasRenderer,
+                  weight: 0.5,
+                  color: '#7c3400',
+                  opacity: 1,
+                  // dashArray: '5, 3',
+                  fillColor: '#7c3400',
+                  fillOpacity: 0.4,
+                  popup: true // fill: false
+
+                };
+              }
+            }), 'Soil Vulnerability', {
+              groupName: 'Misc',
+              expanded: false
+            });
+
+            _context2.t20 = function () {
               //$.LoadingOverlay("hide");
               console.log(count);
             };
 
-            _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17).then(_context2.t18);
+            _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17, _context2.t18, _context2.t19).then(_context2.t20);
 
-            _context2.next = 72;
+            _context2.next = 74;
             break;
 
-          case 66:
-            _context2.prev = 66;
-            _context2.t19 = _context2["catch"](11);
-            console.error(_context2.t19);
+          case 68:
+            _context2.prev = 68;
+            _context2.t21 = _context2["catch"](11);
+            console.error(_context2.t21);
             console.log('Now Loading Offline layers');
             count = 100;
             getOfflineLayers();
 
-          case 72:
+          case 74:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[11, 66]]);
+    }, _callee2, null, [[11, 68]]);
   }));
   return _getLayers.apply(this, arguments);
 }
@@ -985,7 +1041,7 @@ function _getOfflineLayers() {
             return _context3.stop();
         }
       }
-    }, _callee3, this);
+    }, _callee3);
   }));
   return _getOfflineLayers.apply(this, arguments);
 }
