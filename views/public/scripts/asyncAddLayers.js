@@ -711,7 +711,7 @@ async function getLayers() {
                     return {
                         //interactive: true,
                         pane: 'Roads',
-                        renderer: L.canvas(),
+                        renderer: canvasRenderer,
                         weight: 0.5,
                         color: '#000000',
                         opacity: 1,
@@ -737,7 +737,7 @@ async function getLayers() {
                     return {
                         //interactive: true,
                         pane: 'Misc',
-                        renderer: L.canvas(),
+                        renderer: canvasRenderer,
                         weight: 0.5,
                         color: '#7c3400',
                         opacity: 1,
