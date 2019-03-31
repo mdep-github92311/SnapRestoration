@@ -391,7 +391,7 @@ async function getLayers() {
 
             await $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
                 createLayer(data[0].row_to_json, 'Disturbance Lines');
-                count += 5;
+                count += 20;
             }),
 
             await $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
@@ -415,64 +415,64 @@ async function getLayers() {
             }),
             //createLayer('/public/geoJSON/roads.zip', 'Roads'),
 
-            await dbCache.roads.count(function (records) {
-                if (records > 0) {
-                    dbCache.roads.toArray(function (data) {
-                        // console.log(data)
-                        createLayer(data, 'Roads')
-                        count += 15;
-                    });
-                    console.log("cached data loaded");
-                }
-                else {
-                    $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
-                        createLayer(data, 'Roads');
-                        // console.log(data);
-                        dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching roads");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some roads did not succeed. However, " +
-                                100000 - e.failures.length + " roads was added successfully");
-                        });
-                        count += 10;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
-                            console.log(JSON.stringify(jqXHR));
-                        })
-                }
-            }),
+            // await dbCache.roads.count(function (records) {
+            //     if (records > 0) {
+            //         dbCache.roads.toArray(function (data) {
+            //             // console.log(data)
+            //             createLayer(data, 'Roads')
+            //             count += 15;
+            //         });
+            //         console.log("cached data loaded");
+            //     }
+            //     else {
+            //         $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
+            //             createLayer(data, 'Roads');
+            //             // console.log(data);
+            //             dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
+            //                 console.log("Done caching roads");
+            //             }).catch(Dexie.BulkError, function (e) {
+            //                 // Explicitely catching the bulkAdd() operation makes those successful
+            //                 // additions commit despite that there were errors.
+            //                 console.error("Some roads did not succeed. However, " +
+            //                     100000 - e.failures.length + " roads was added successfully");
+            //             });
+            //             count += 10;
+            //         })
+            //             .fail(function (jqXHR, textStatus, error) {
+            //                 console.log(JSON.stringify(jqXHR));
+            //             })
+            //     }
+            // }),
 
 
-            await dbCache.soilVuln.count(function (records) {
-                if (records > 0) {
-                    dbCache.soilVuln.toArray(function (data) {
-                        createLayer(data, 'Soil Vulnerability');
-                        count += 10;
-                    });
-                    console.log("cached data loaded");
+            // await dbCache.soilVuln.count(function (records) {
+            //     if (records > 0) {
+            //         dbCache.soilVuln.toArray(function (data) {
+            //             createLayer(data, 'Soil Vulnerability');
+            //             count += 10;
+            //         });
+            //         console.log("cached data loaded");
 
-                }
-                else {
-                    $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
-                        createLayer(data, 'Soil Vulnerability');
-                        // console.log(data);
-                        dbCache.soilVuln.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching soilVuln");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some soilVuln did not succeed. However, " +
-                                100000 - e.failures.length + " soilVuln was added successfully");
-                        });
-                        count += 10;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
-                            console.log(JSON.stringify(jqXHR));
-                        })
-                }
-            }),
+            //     }
+            //     else {
+            //         $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
+            //             createLayer(data, 'Soil Vulnerability');
+            //             // console.log(data);
+            //             dbCache.soilVuln.bulkAdd(data.features).then(function (lastKey) {
+            //                 console.log("Done caching soilVuln");
+            //             }).catch(Dexie.BulkError, function (e) {
+            //                 // Explicitely catching the bulkAdd() operation makes those successful
+            //                 // additions commit despite that there were errors.
+            //                 console.error("Some soilVuln did not succeed. However, " +
+            //                     100000 - e.failures.length + " soilVuln was added successfully");
+            //             });
+            //             count += 10;
+            //         })
+            //             .fail(function (jqXHR, textStatus, error) {
+            //                 console.log(JSON.stringify(jqXHR));
+            //             })
+            //     }
+            // }),
 
             await $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
                 createLayer(data[0].row_to_json, 'Restoration Polygon');
@@ -487,7 +487,7 @@ async function getLayers() {
                 if (records > 0) {
                     dbCache.blmRegion.toArray(function (data) {
                         createLayer(data, 'BLM Regions');
-                        count += 2;
+                        count += 5;
                     });
                     console.log("cached blmRegion loaded");
                 }
@@ -502,7 +502,7 @@ async function getLayers() {
                             console.error("Some blmRegion did not succeed. However, " +
                                 100000 - e.failures.length + " blmRegion was added successfully");
                         });
-                        count += 2;
+                        count += 5;
                     })
                         .fail(function (jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
@@ -514,7 +514,7 @@ async function getLayers() {
                 if (records > 0) {
                     dbCache.fsRegion.toArray(function (data) {
                         createLayer(data, 'FS Regions');
-                        count += 3;
+                        count += 5;
                     });
                     console.log("cached fsRegion loaded");
                 }
@@ -529,7 +529,7 @@ async function getLayers() {
                             console.error("Some FS Regions did not succeed. However, " +
                                 100000 - e.failures.length + " FS Regions was added successfully");
                         });
-                        count += 3;
+                        count += 5;
                     })
                         .fail(function (jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
@@ -540,7 +540,7 @@ async function getLayers() {
                 if (records > 0) {
                     dbCache.fwsRegion.toArray(function (data) {
                         createLayer(data, 'FWS Regions');
-                        count += 2;
+                        count += 5;
                     });
                     console.log("cached FWS Regions loaded");
                 }
@@ -555,7 +555,7 @@ async function getLayers() {
                             console.error("Some fwsRegion did not succeed. However, " +
                                 100000 - e.failures.length + " fwsRegion was added successfully");
                         });
-                        count += 2;
+                        count += 5;
                     })
                         .fail(function (jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
@@ -566,7 +566,7 @@ async function getLayers() {
                 if (records > 0) {
                     dbCache.npsRegion.toArray(function (data) {
                         createLayer(data, 'NPS Regions');
-                        count += 3;
+                        count += 5;
                     });
                     console.log("cached NPS Regions loaded");
                 }
@@ -581,7 +581,7 @@ async function getLayers() {
                             console.error("Some npsRegion did not succeed. However, " +
                                 100000 - e.failures.length + " npsRegion was added successfully");
                         });
-                        count += 3;
+                        count += 5;
                     })
                         .fail(function (jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
@@ -674,7 +674,7 @@ async function getLayers() {
                 if (records > 0) {
                     dbCache.snapExtent.toArray(function (data) {
                         createLayer(data, 'Snap Extent');
-                        count += 5;
+                        count = 100;
                     });
                     console.log("cached snapExtent loaded");
                 }
@@ -689,7 +689,7 @@ async function getLayers() {
                             console.error("Some snapExtent did not succeed. However, " +    
                                 100000 - e.failures.length + " snapExtent was added successfully");
                         });
-                        count += 5;
+                        count = 100;
                     })
                         .fail(function (jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));

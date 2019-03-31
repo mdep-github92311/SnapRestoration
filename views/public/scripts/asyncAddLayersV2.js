@@ -488,7 +488,7 @@ function _createLayer() {
             return _context.stop();
         }
       }
-    }, _callee, this, [[0, 144]]);
+    }, _callee, null, [[0, 144]]);
   }));
   return _createLayer.apply(this, arguments);
 }
@@ -568,7 +568,7 @@ function _getLayers() {
             _context2.next = 21;
             return $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Disturbance Lines');
-              count += 5;
+              count += 20;
             });
 
           case 21:
@@ -606,84 +606,27 @@ function _getLayers() {
           case 33:
             _context2.t7 = _context2.sent;
             _context2.next = 36;
-            return dbCache.roads.count(function (records) {
-              if (records > 0) {
-                dbCache.roads.toArray(function (data) {
-                  // console.log(data)
-                  createLayer(data, 'Roads');
-                  count += 15;
-                });
-                console.log("cached data loaded");
-              } else {
-                $.getJSON(baseUrl + '/public/geoJSON/roads.json', function (data) {
-                  createLayer(data, 'Roads'); // console.log(data);
-
-                  dbCache.roads.bulkAdd(data.features).then(function (lastKey) {
-                    console.log("Done caching roads");
-                  }).catch(Dexie.BulkError, function (e) {
-                    // Explicitely catching the bulkAdd() operation makes those successful
-                    // additions commit despite that there were errors.
-                    console.error("Some roads did not succeed. However, " + 100000 - e.failures.length + " roads was added successfully");
-                  });
-                  count += 10;
-                }).fail(function (jqXHR, textStatus, error) {
-                  console.log(JSON.stringify(jqXHR));
-                });
-              }
-            });
-
-          case 36:
-            _context2.t8 = _context2.sent;
-            _context2.next = 39;
-            return dbCache.soilVuln.count(function (records) {
-              if (records > 0) {
-                dbCache.soilVuln.toArray(function (data) {
-                  createLayer(data, 'Soil Vulnerability');
-                  count += 10;
-                });
-                console.log("cached data loaded");
-              } else {
-                $.getJSON(baseUrl + '/public/geoJSON/soil.json', function (data) {
-                  createLayer(data, 'Soil Vulnerability'); // console.log(data);
-
-                  dbCache.soilVuln.bulkAdd(data.features).then(function (lastKey) {
-                    console.log("Done caching soilVuln");
-                  }).catch(Dexie.BulkError, function (e) {
-                    // Explicitely catching the bulkAdd() operation makes those successful
-                    // additions commit despite that there were errors.
-                    console.error("Some soilVuln did not succeed. However, " + 100000 - e.failures.length + " soilVuln was added successfully");
-                  });
-                  count += 10;
-                }).fail(function (jqXHR, textStatus, error) {
-                  console.log(JSON.stringify(jqXHR));
-                });
-              }
-            });
-
-          case 39:
-            _context2.t9 = _context2.sent;
-            _context2.next = 42;
             return $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Polygon');
               count += 5;
             });
 
-          case 42:
-            _context2.t10 = _context2.sent;
-            _context2.next = 45;
+          case 36:
+            _context2.t8 = _context2.sent;
+            _context2.next = 39;
             return $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
               createLayer(data[0].row_to_json, 'Restoration Poly Cent');
               count += 5;
             });
 
-          case 45:
-            _context2.t11 = _context2.sent;
-            _context2.next = 48;
+          case 39:
+            _context2.t9 = _context2.sent;
+            _context2.next = 42;
             return dbCache.blmRegion.count(function (records) {
               if (records > 0) {
                 dbCache.blmRegion.toArray(function (data) {
                   createLayer(data, 'BLM Regions');
-                  count += 2;
+                  count += 5;
                 });
                 console.log("cached blmRegion loaded");
               } else {
@@ -696,21 +639,21 @@ function _getLayers() {
                     // additions commit despite that there were errors.
                     console.error("Some blmRegion did not succeed. However, " + 100000 - e.failures.length + " blmRegion was added successfully");
                   });
-                  count += 2;
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
             });
 
-          case 48:
-            _context2.t12 = _context2.sent;
-            _context2.next = 51;
+          case 42:
+            _context2.t10 = _context2.sent;
+            _context2.next = 45;
             return dbCache.fsRegion.count(function (records) {
               if (records > 0) {
                 dbCache.fsRegion.toArray(function (data) {
                   createLayer(data, 'FS Regions');
-                  count += 3;
+                  count += 5;
                 });
                 console.log("cached fsRegion loaded");
               } else {
@@ -723,21 +666,21 @@ function _getLayers() {
                     // additions commit despite that there were errors.
                     console.error("Some FS Regions did not succeed. However, " + 100000 - e.failures.length + " FS Regions was added successfully");
                   });
-                  count += 3;
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
             });
 
-          case 51:
-            _context2.t13 = _context2.sent;
-            _context2.next = 54;
+          case 45:
+            _context2.t11 = _context2.sent;
+            _context2.next = 48;
             return dbCache.fwsRegion.count(function (records) {
               if (records > 0) {
                 dbCache.fwsRegion.toArray(function (data) {
                   createLayer(data, 'FWS Regions');
-                  count += 2;
+                  count += 5;
                 });
                 console.log("cached FWS Regions loaded");
               } else {
@@ -750,21 +693,21 @@ function _getLayers() {
                     // additions commit despite that there were errors.
                     console.error("Some fwsRegion did not succeed. However, " + 100000 - e.failures.length + " fwsRegion was added successfully");
                   });
-                  count += 2;
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
             });
 
-          case 54:
-            _context2.t14 = _context2.sent;
-            _context2.next = 57;
+          case 48:
+            _context2.t12 = _context2.sent;
+            _context2.next = 51;
             return dbCache.npsRegion.count(function (records) {
               if (records > 0) {
                 dbCache.npsRegion.toArray(function (data) {
                   createLayer(data, 'NPS Regions');
-                  count += 3;
+                  count += 5;
                 });
                 console.log("cached NPS Regions loaded");
               } else {
@@ -777,16 +720,16 @@ function _getLayers() {
                     // additions commit despite that there were errors.
                     console.error("Some npsRegion did not succeed. However, " + 100000 - e.failures.length + " npsRegion was added successfully");
                   });
-                  count += 3;
+                  count += 5;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
             });
 
-          case 57:
-            _context2.t15 = _context2.sent;
-            _context2.next = 60;
+          case 51:
+            _context2.t13 = _context2.sent;
+            _context2.next = 54;
             return dbCache.mdepBound.count(function (records) {
               if (records > 0) {
                 dbCache.mdepBound.toArray(function (data) {
@@ -811,9 +754,9 @@ function _getLayers() {
               }
             });
 
-          case 60:
-            _context2.t16 = _context2.sent;
-            _context2.next = 63;
+          case 54:
+            _context2.t14 = _context2.sent;
+            _context2.next = 57;
             return dbCache.mdiBound.count(function (records) {
               if (records > 0) {
                 dbCache.mdiBound.toArray(function (data) {
@@ -838,9 +781,9 @@ function _getLayers() {
               }
             });
 
-          case 63:
-            _context2.t17 = _context2.sent;
-            _context2.next = 66;
+          case 57:
+            _context2.t15 = _context2.sent;
+            _context2.next = 60;
             return dbCache.nvCounties.count(function (records) {
               if (records > 0) {
                 dbCache.nvCounties.toArray(function (data) {
@@ -865,14 +808,14 @@ function _getLayers() {
               }
             });
 
-          case 66:
-            _context2.t18 = _context2.sent;
-            _context2.next = 69;
+          case 60:
+            _context2.t16 = _context2.sent;
+            _context2.next = 63;
             return dbCache.snapExtent.count(function (records) {
               if (records > 0) {
                 dbCache.snapExtent.toArray(function (data) {
                   createLayer(data, 'Snap Extent');
-                  count += 5;
+                  count = 100;
                 });
                 console.log("cached snapExtent loaded");
               } else {
@@ -885,40 +828,40 @@ function _getLayers() {
                     // additions commit despite that there were errors.
                     console.error("Some snapExtent did not succeed. However, " + 100000 - e.failures.length + " snapExtent was added successfully");
                   });
-                  count += 5;
+                  count = 100;
                 }).fail(function (jqXHR, textStatus, error) {
                   console.log(JSON.stringify(jqXHR));
                 });
               }
             });
 
-          case 69:
-            _context2.t19 = _context2.sent;
+          case 63:
+            _context2.t17 = _context2.sent;
 
-            _context2.t20 = function () {
+            _context2.t18 = function () {
               //$.LoadingOverlay("hide");
               console.log(count);
             };
 
-            _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17, _context2.t18, _context2.t19).then(_context2.t20);
+            _context2.t0.when.call(_context2.t0, _context2.t1, _context2.t2, _context2.t3, _context2.t4, _context2.t5, _context2.t6, _context2.t7, _context2.t8, _context2.t9, _context2.t10, _context2.t11, _context2.t12, _context2.t13, _context2.t14, _context2.t15, _context2.t16, _context2.t17).then(_context2.t18);
 
-            _context2.next = 80;
+            _context2.next = 74;
             break;
 
-          case 74:
-            _context2.prev = 74;
-            _context2.t21 = _context2["catch"](11);
-            console.error(_context2.t21);
+          case 68:
+            _context2.prev = 68;
+            _context2.t19 = _context2["catch"](11);
+            console.error(_context2.t19);
             console.log('Now Loading Offline layers');
             count = 100;
             getOfflineLayers();
 
-          case 80:
+          case 74:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[11, 74]]);
+    }, _callee2, null, [[11, 68]]);
   }));
   return _getLayers.apply(this, arguments);
 }
@@ -1069,7 +1012,7 @@ function _getOfflineLayers() {
             return _context3.stop();
         }
       }
-    }, _callee3, this);
+    }, _callee3);
   }));
   return _getOfflineLayers.apply(this, arguments);
 }
