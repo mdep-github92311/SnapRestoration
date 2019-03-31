@@ -425,3 +425,60 @@ html
           // After 3 seconds, remove the show class from DIV
           setTimeout(function(){ popup.className = popup.className.replace("show", ""); }, 3000);
         }
+        L.Canvas.include({
+          	_updatePoly: function (layer, closed) {
+          		if (!this._drawing) { return; }
+          
+          		var i, j, len2, p,
+          		    parts = layer._parts,
+          		    len = parts.length,
+          		    ctx = this._ctx;
+          
+          		if (!len) { return; }
+          
+          		// this._drawnLayers[layer._leaflet_id] = layer;
+          
+          		ctx.beginPath();
+          
+          		for (i = 0; i < len; i++) {
+          			for (j = 0, len2 = parts[i].length; j < len2; j++) {
+          				p = parts[i][j];
+          				ctx[j ? 'lineTo' : 'moveTo'](p.x, p.y);
+          			}
+          			if (closed) {
+          				ctx.closePath();
+          			}
+          		}
+          
+          		this._fillStroke(ctx, layer);
+          
+          		// TODO optimization: 1 fill/stroke for all features with equal style instead of 1 for each feature
+          	},
+          
+          	_updateCircle: function (layer) {
+          
+          		if (!this._drawing || layer._empty()) { return; }
+          
+          		var p = layer._point,
+          		    ctx = this._ctx,
+          		    r = Math.max(Math.round(layer._radius), 1),
+          		    s = (Math.max(Math.round(layer._radiusY), 1) || r) / r;
+          
+          		// this._drawnLayers[layer._leaflet_id] = layer;
+          
+          		if (s !== 1) {
+          			ctx.save();
+          			ctx.scale(1, s);
+          		}
+          
+          		ctx.beginPath();
+          		ctx.arc(p.x, p.y / s, r, 0, Math.PI * 2, false);
+          
+          		if (s !== 1) {
+          			ctx.restore();
+          		}
+          
+          		this._fillStroke(ctx, layer);
+          	},
+          
+          })
