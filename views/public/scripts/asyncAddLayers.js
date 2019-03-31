@@ -1,11 +1,12 @@
 var isMobile = false;
 // device detection
-if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
-    || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) isMobile = true;
+if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) ||
+    /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) isMobile = true;
+
 function hostReachable() {
 
     // Handle IE and more capable browsers
-    var xhr = new (window.ActiveXObject || XMLHttpRequest)("Microsoft.XMLHTTP");
+    var xhr = new(window.ActiveXObject || XMLHttpRequest)("Microsoft.XMLHTTP");
     var status;
 
     // Open new request as a HEAD to the root hostname with a random param to bust the cache
@@ -15,7 +16,8 @@ function hostReachable() {
     try {
         xhr.send();
         return (xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304));
-    } catch (error) {
+    }
+    catch (error) {
         return false;
     }
 
@@ -42,10 +44,10 @@ dbCache.version(1).stores({
     soilVuln: '++id, type, geometry',
     snapExtent: '++id, type, geometry'
 });
-dbCache.open().then(function (db) {
+dbCache.open().then(function(db) {
     console.log('Opened CachedData DB');
     //console.log(db);
-}).catch(function (err) {
+}).catch(function(err) {
     console.log(err)
 });
 var savedLayers = { Barriers: [], RPoints: [], RLines: [], RPolys: [], DPoints: [], DLines: [], DPolys: [] }
@@ -207,7 +209,7 @@ async function createLayer(data, layerName) {
                 console.log(`added ${layerName} Unselected`);
 
                 break;
-            
+
             case 'FWS Regions':
                 if (data.type == null) {
                     data = data;
@@ -221,7 +223,7 @@ async function createLayer(data, layerName) {
                 console.log(`added ${layerName} Unselected`);
 
                 break;
-            
+
             case 'NPS Regions':
                 if (data.type == null) {
                     data = data;
@@ -235,7 +237,7 @@ async function createLayer(data, layerName) {
                 console.log(`added ${layerName} Unselected`);
 
                 break;
-                
+
             case 'Nevada Counties':
                 if (data.type == null) {
                     data = data;
@@ -364,7 +366,7 @@ async function getLayers() {
         custom: progress.Init()
     });
     var count = 0;
-    const interval = setInterval(function () {
+    const interval = setInterval(function() {
         if (count >= 100) {
             clearInterval(interval);
             //delete progress;
@@ -379,37 +381,37 @@ async function getLayers() {
     ipAddress = "snap-restoration-brstillwell.c9users.io";
     try {
         $.when(
-            await $.getJSON(baseUrl + '/api/Barriers/barrierGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/Barriers/barrierGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Barrier');
                 count += 5;
             }),
 
-            await $.getJSON(baseUrl + '/api/DistPoints/distPointGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/DistPoints/distPointGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Disturbance Points');
                 count += 5;
             }),
 
-            await $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/DistLines/distLineGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Disturbance Lines');
                 count += 20;
             }),
 
-            await $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/DistPolygons/distPolyGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Disturbance Polygon');
                 count += 5;
             }),
 
-            await $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/DistPolyCentroids/distPolyCentGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Disturbance Poly Cent');
                 count += 5;
             }),
 
-            await $.getJSON(baseUrl + '/api/RestoPoints/restoPointGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/RestoPoints/restoPointGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Restoration Points');
                 count += 5;
             }),
 
-            await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/RestoLines/restoLineGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Restoration Lines');
                 count += 5;
             }),
@@ -474,229 +476,281 @@ async function getLayers() {
             //     }
             // }),
 
-            await $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/RestoPolygons/restoPolyGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Restoration Polygon');
                 count += 5;
             }),
 
-            await $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function (data) {
+            await $.getJSON(baseUrl + '/api/RestPolyCentroids/restoPolyCentGeoJSON', function(data) {
                 createLayer(data[0].row_to_json, 'Restoration Poly Cent');
                 count += 5;
             }),
-            await dbCache.blmRegion.count(function (records) {
+            await dbCache.blmRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.blmRegion.toArray(function (data) {
+                    dbCache.blmRegion.toArray(function(data) {
                         createLayer(data, 'BLM Regions');
                         count += 5;
                     });
                     console.log("cached blmRegion loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/blmRegions.json', function (data) {
-                        createLayer(data, 'BLM Regions');
-                        dbCache.blmRegion.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching BLM");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some blmRegion did not succeed. However, " +
-                                100000 - e.failures.length + " blmRegion was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/blmRegions.json', function(data) {
+                            createLayer(data, 'BLM Regions');
+                            dbCache.blmRegion.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching BLM");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some blmRegion did not succeed. However, " +
+                                    100000 - e.failures.length + " blmRegion was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
             }),
 
-            await dbCache.fsRegion.count(function (records) {
+            await dbCache.fsRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.fsRegion.toArray(function (data) {
+                    dbCache.fsRegion.toArray(function(data) {
                         createLayer(data, 'FS Regions');
                         count += 5;
                     });
                     console.log("cached fsRegion loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/fsRegions.json', function (data) {
-                        createLayer(data, 'FS Regions');
-                        dbCache.fsRegion.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching FS Regions");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some FS Regions did not succeed. However, " +
-                                100000 - e.failures.length + " FS Regions was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/fsRegions.json', function(data) {
+                            createLayer(data, 'FS Regions');
+                            dbCache.fsRegion.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching FS Regions");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some FS Regions did not succeed. However, " +
+                                    100000 - e.failures.length + " FS Regions was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
             }),
-            await dbCache.fwsRegion.count(function (records) {
+            await dbCache.fwsRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.fwsRegion.toArray(function (data) {
+                    dbCache.fwsRegion.toArray(function(data) {
                         createLayer(data, 'FWS Regions');
                         count += 5;
                     });
                     console.log("cached FWS Regions loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/fwsRegions.json', function (data) {
-                        createLayer(data, 'FWS Regions');
-                        dbCache.fwsRegion.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching FWS Regions");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some fwsRegion did not succeed. However, " +
-                                100000 - e.failures.length + " fwsRegion was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/fwsRegions.json', function(data) {
+                            createLayer(data, 'FWS Regions');
+                            dbCache.fwsRegion.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching FWS Regions");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some fwsRegion did not succeed. However, " +
+                                    100000 - e.failures.length + " fwsRegion was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
             }),
-            await dbCache.npsRegion.count(function (records) {
+            await dbCache.npsRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.npsRegion.toArray(function (data) {
+                    dbCache.npsRegion.toArray(function(data) {
                         createLayer(data, 'NPS Regions');
                         count += 5;
                     });
                     console.log("cached NPS Regions loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/npsRegions.json', function (data) {
-                        createLayer(data, 'NPS Regions');
-                        dbCache.npsRegion.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching NPS Regions");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some npsRegion did not succeed. However, " +
-                                100000 - e.failures.length + " npsRegion was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/npsRegions.json', function(data) {
+                            createLayer(data, 'NPS Regions');
+                            dbCache.npsRegion.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching NPS Regions");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some npsRegion did not succeed. However, " +
+                                    100000 - e.failures.length + " npsRegion was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
             }),
 
-            await dbCache.mdepBound.count(function (records) {
+            await dbCache.mdepBound.count(function(records) {
                 if (records > 0) {
-                    dbCache.mdepBound.toArray(function (data) {
+                    dbCache.mdepBound.toArray(function(data) {
                         createLayer(data, 'MDEP Boundary');
                         count += 5;
                     });
                     console.log("cached mdepBound loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/mdepBoundry.json', function (data) {
-                        createLayer(data, 'MDEP Boundary');
-                        dbCache.mdepBound.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching MDEP Boundary");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some MDEP Boundary did not succeed. However, " +
-                                100000 - e.failures.length + " MDEP Boundary was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/mdepBoundry.json', function(data) {
+                            createLayer(data, 'MDEP Boundary');
+                            dbCache.mdepBound.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching MDEP Boundary");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some MDEP Boundary did not succeed. However, " +
+                                    100000 - e.failures.length + " MDEP Boundary was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
             }),
 
-            await dbCache.mdiBound.count(function (records) {
+            await dbCache.mdiBound.count(function(records) {
                 if (records > 0) {
-                    dbCache.mdiBound.toArray(function (data) {
+                    dbCache.mdiBound.toArray(function(data) {
                         createLayer(data, 'MDI Boundary');
                         count += 5;
                     });
                     console.log("cached MDI Boundary loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/mdiBoundry.json', function (data) {
-                        createLayer(data, 'MDI Boundary');
-                        dbCache.mdiBound.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching MDI Boundary");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some MDI Boundary did not succeed. However, " +
-                                100000 - e.failures.length + " MDI Boundary was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/mdiBoundry.json', function(data) {
+                            createLayer(data, 'MDI Boundary');
+                            dbCache.mdiBound.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching MDI Boundary");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some MDI Boundary did not succeed. However, " +
+                                    100000 - e.failures.length + " MDI Boundary was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
             }),
 
-            await dbCache.nvCounties.count(function (records) {
+            await dbCache.nvCounties.count(function(records) {
                 if (records > 0) {
-                    dbCache.nvCounties.toArray(function (data) {
+                    dbCache.nvCounties.toArray(function(data) {
                         createLayer(data, 'Nevada Counties');
                         count += 5;
                     });
                     console.log("cached Nevada Counties loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/nvCounties.json', function (data) {
-                        createLayer(data, 'Nevada Counties');
-                        dbCache.nvCounties.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching Nevada Counties");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some Nevada Counties did not succeed. However, " +
-                                100000 - e.failures.length + " Nevada Counties was added successfully");
-                        });
-                        count += 5;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/nvCounties.json', function(data) {
+                            createLayer(data, 'Nevada Counties');
+                            dbCache.nvCounties.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching Nevada Counties");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some Nevada Counties did not succeed. However, " +
+                                    100000 - e.failures.length + " Nevada Counties was added successfully");
+                            });
+                            count += 5;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         });
                 }
             }),
 
-            await dbCache.snapExtent.count(function (records) {
+            await dbCache.snapExtent.count(function(records) {
                 if (records > 0) {
-                    dbCache.snapExtent.toArray(function (data) {
+                    dbCache.snapExtent.toArray(function(data) {
                         createLayer(data, 'Snap Extent');
                         count = 100;
                     });
                     console.log("cached snapExtent loaded");
                 }
                 else {
-                    $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function (data) {
-                        createLayer(data, 'Snap Extent');
-                        dbCache.snapExtent.bulkAdd(data.features).then(function (lastKey) {
-                            console.log("Done caching snapExtent");
-                        }).catch(Dexie.BulkError, function (e) {
-                            // Explicitely catching the bulkAdd() operation makes those successful
-                            // additions commit despite that there were errors.
-                            console.error("Some snapExtent did not succeed. However, " +    
-                                100000 - e.failures.length + " snapExtent was added successfully");
-                        });
-                        count = 100;
-                    })
-                        .fail(function (jqXHR, textStatus, error) {
+                    $.getJSON(baseUrl + '/public/geoJSON/snapExtents.json', function(data) {
+                            createLayer(data, 'Snap Extent');
+                            dbCache.snapExtent.bulkAdd(data.features).then(function(lastKey) {
+                                console.log("Done caching snapExtent");
+                            }).catch(Dexie.BulkError, function(e) {
+                                // Explicitely catching the bulkAdd() operation makes those successful
+                                // additions commit despite that there were errors.
+                                console.error("Some snapExtent did not succeed. However, " +
+                                    100000 - e.failures.length + " snapExtent was added successfully");
+                            });
+                            count = 100;
+                        })
+                        .fail(function(jqXHR, textStatus, error) {
                             console.log(JSON.stringify(jqXHR));
                         })
                 }
-            })
-        ).then(function () {
+            }),
+            control.addOverlay(L.mbTiles("public/data/roads/{z}/{x}/{y}.pbf", {
+                name: "Roads",
+                storage: "Roads",
+                mbtileLayerName: "roads",
+                maxNativeZoom: 10,
+                minNativeZoom: 10,
+                minZoom: 6,
+                bounds: L.latLngBounds([36.9, -116.2], [35.0, -113.9]),
+                //legendIcon: drawRect,	
+                style: function(feature) {
+                    return {
+                        //interactive: true,
+                        pane: 'Roads',
+                        renderer: canvasRenderer,
+                        weight: 0.5,
+                        color: '#000000',
+                        opacity: 1,
+                        // dashArray: '5, 3',
+                        fillColor: '#000000',
+                        fillOpacity: 0.4,
+                        popup: false
+                        // fill: false
+                    }
+                }
+            }), 'Roads', {groupName: 'Misc', expanded: false}),
+            
+            control.addOverlay(L.mbTiles("public/data/soil/{z}/{x}/{y}.pbf", {
+                name: "Soil Vulnerability",
+                storage: "Soil Vulnerability",
+                mbtileLayerName: "soil",
+                maxNativeZoom: 10,
+                minNativeZoom: 10,
+                minZoom: 6,
+                bounds: L.latLngBounds([36.9, -116.2], [35.0, -113.9]),
+                //legendIcon: drawRect,	
+                style: function(feature) {
+                    return {
+                        //interactive: true,
+                        pane: 'Misc',
+                        renderer: canvasRenderer,
+                        weight: 0.5,
+                        color: '#7c3400',
+                        opacity: 1,
+                        // dashArray: '5, 3',
+                        fillColor: '#7c3400',
+                        fillOpacity: 0.4,
+                        popup: true
+                        // fill: false
+                    }
+                }
+            }), 'Soil Vulnerability', {groupName: 'Misc', expanded: false})
+            
+        ).then(function() {
             //$.LoadingOverlay("hide");
             console.log(count);
         });
@@ -727,7 +781,7 @@ async function getOfflineLayers() {
         custom: progress.Init()
     });
     var count = 0;
-    const interval = setInterval(function () {
+    const interval = setInterval(function() {
         if (count >= 100) {
             clearInterval(interval);
             //delete progress;
@@ -740,18 +794,18 @@ async function getOfflineLayers() {
     var baseUrl = getUrl.origin;
     try {
         $.when(
-            dbCache.roads.count(function (records) {
+            dbCache.roads.count(function(records) {
                 if (records > 0) {
-                    dbCache.roads.toArray(function (data) {
+                    dbCache.roads.toArray(function(data) {
                         createLayer(data, 'Roads');
                     });
                     console.log("cached data loaded");
                 }
                 count += 20;
             }),
-            dbCache.soilVuln.count(function (records) {
+            dbCache.soilVuln.count(function(records) {
                 if (records > 0) {
-                    dbCache.soilVuln.toArray(function (data) {
+                    dbCache.soilVuln.toArray(function(data) {
                         createLayer(data, 'Soil Vulnerability');
                     });
                     console.log("cached data loaded");
@@ -759,9 +813,9 @@ async function getOfflineLayers() {
                 count += 20;
             }),
 
-            dbCache.snapExtent.count(function (records) {
+            dbCache.snapExtent.count(function(records) {
                 if (records > 0) {
-                    dbCache.snapExtent.toArray(function (data) {
+                    dbCache.snapExtent.toArray(function(data) {
                         createLayer(data, 'Snap Extent');
                     });
                     console.log("cached snapExtent loaded");
@@ -769,9 +823,9 @@ async function getOfflineLayers() {
                 count += 10;
             }),
 
-            dbCache.blmRegion.count(function (records) {
+            dbCache.blmRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.blmRegion.toArray(function (data) {
+                    dbCache.blmRegion.toArray(function(data) {
                         createLayer(data, 'BLM Regions');
                     });
                     console.log("cached blmRegion loaded");
@@ -779,29 +833,29 @@ async function getOfflineLayers() {
                 count += 5;
             }),
 
-            dbCache.fsRegion.count(function (records) {
+            dbCache.fsRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.fsRegion.toArray(function (data) {
+                    dbCache.fsRegion.toArray(function(data) {
                         createLayer(data, 'FS Regions');
                     });
                     console.log("cached fsRegion loaded");
                 }
                 count += 5;
             }),
-            
-            dbCache.fwsRegion.count(function (records) {
+
+            dbCache.fwsRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.fwsRegion.toArray(function (data) {
+                    dbCache.fwsRegion.toArray(function(data) {
                         createLayer(data, 'FWS Regions');
                     });
                     console.log("cached fwsRegion loaded");
                 }
                 count += 5;
             }),
-            
-            dbCache.npsRegion.count(function (records) {
+
+            dbCache.npsRegion.count(function(records) {
                 if (records > 0) {
-                    dbCache.fsRegion.toArray(function (data) {
+                    dbCache.fsRegion.toArray(function(data) {
                         createLayer(data, 'NPS Regions');
                     });
                     console.log("cached npsRegion loaded");
@@ -809,9 +863,9 @@ async function getOfflineLayers() {
                 count += 5;
             }),
 
-            dbCache.mdepBound.count(function (records) {
+            dbCache.mdepBound.count(function(records) {
                 if (records > 0) {
-                    dbCache.mdepBound.toArray(function (data) {
+                    dbCache.mdepBound.toArray(function(data) {
                         createLayer(data, 'MDEP Boundary');
                     });
                     console.log("cached mdepBound loaded");
@@ -819,9 +873,9 @@ async function getOfflineLayers() {
                 count += 10;
             }),
 
-            dbCache.mdiBound.count(function (records) {
+            dbCache.mdiBound.count(function(records) {
                 if (records > 0) {
-                    dbCache.mdiBound.toArray(function (data) {
+                    dbCache.mdiBound.toArray(function(data) {
                         createLayer(data, 'MDI Boundary');
                     });
                     console.log("cached MDI Boundary loaded");
@@ -829,17 +883,20 @@ async function getOfflineLayers() {
                 count += 10;
             }),
 
-            dbCache.nvCounties.count(function (records) {
+            dbCache.nvCounties.count(function(records) {
                 if (records > 0) {
-                    dbCache.nvCounties.toArray(function (data) {
+                    dbCache.nvCounties.toArray(function(data) {
                         createLayer(data, 'Nevada Counties');
                     });
                     console.log("cached Nevada Counties loaded");
                 }
                 count += 10;
             })
-        ).then(function () {
+        ).then(function() {
             //$.LoadingOverlay("hide");
+
+
+            
             console.log(count);
         });
     }
