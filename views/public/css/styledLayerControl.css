@@ -27,6 +27,7 @@
 	overflow-y: auto;
 	overflow-x: hidden;
 	height: auto;
+	max-height: 100% !important;
 }
 .ac-container label{
 	font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
